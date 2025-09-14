@@ -1,0 +1,111 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Bauhaus Color Palette */
+  --bauhaus-red: #dc143c;
+  --bauhaus-blue: #0048ba;
+  --bauhaus-yellow: #ffd700;
+  --bauhaus-black: #0a0a0a;
+  --bauhaus-white: #fafafa;
+  --bauhaus-gray: #71797e;
+
+  /* Semantic Colors */
+  --background: var(--bauhaus-white);
+  --foreground: var(--bauhaus-black);
+  --primary: var(--bauhaus-blue);
+  --secondary: var(--bauhaus-red);
+  --accent: var(--bauhaus-yellow);
+
+  /* Grid Unit */
+  --grid-unit: 8px;
+}
+
+@theme inline {
+  /* Custom Bauhaus Colors */
+  --color-bauhaus-red: #dc143c;
+  --color-bauhaus-blue: #0048ba;
+  --color-bauhaus-yellow: #ffd700;
+  --color-bauhaus-black: #0a0a0a;
+  --color-bauhaus-white: #fafafa;
+  --color-bauhaus-gray: #71797e;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+
+  /* Typography */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--bauhaus-black);
+    --foreground: var(--bauhaus-white);
+  }
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Bauhaus-inspired Utility Classes */
+.bauhaus-grid {
+  display: grid;
+  gap: var(--grid-unit);
+}
+
+.bauhaus-shape-circle {
+  border-radius: 50%;
+}
+
+.bauhaus-shape-square {
+  aspect-ratio: 1;
+}
+
+.bauhaus-border {
+  border: 3px solid currentColor;
+}
+
+/* Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
