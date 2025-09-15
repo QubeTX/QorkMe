@@ -72,19 +72,21 @@ export function UrlShortener() {
 
   return (
     <>
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl md:text-3xl mb-4">Shorten Your URL</CardTitle>
-        <CardDescription className="text-base">
-          Paste your long URL below and we&apos;ll create a short, memorable link for you
+      <CardHeader className="space-y-3 text-left md:text-center">
+        <CardTitle className="text-2xl md:text-3xl tracking-[0.2em] uppercase">
+          Launch a new short link
+        </CardTitle>
+        <CardDescription className="text-base text-text-secondary">
+          Paste the destination and tailor an optional alias. Our warm card surfaces keep every step grounded and legible.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-10">
           {/* Main URL Input */}
           <div className="space-y-3">
             <label
               htmlFor="url"
-              className="block text-sm font-semibold text-text-secondary uppercase tracking-wide"
+              className="block text-xs font-semibold text-text-muted uppercase tracking-[0.4em]"
             >
               Enter your URL
             </label>
@@ -111,7 +113,12 @@ export function UrlShortener() {
             <button
               type="button"
               onClick={() => setShowCustom(!showCustom)}
-              className="flex items-center gap-3 text-text-secondary hover:text-accent transition-all duration-300 group p-2 rounded-lg hover:bg-accent/5"
+              className="flex items-center gap-3 text-text-secondary hover:text-accent transition-all duration-300 group p-3 rounded-[var(--radius-md)]"
+              style={{
+                backgroundColor: showCustom
+                  ? 'color-mix(in srgb, var(--color-surface-muted) 65%, transparent)'
+                  : 'color-mix(in srgb, var(--color-surface) 88%, transparent)',
+              }}
             >
               <div
                 className={`transition-all duration-300 ${showCustom ? 'rotate-90 text-accent' : 'group-hover:scale-110'}`}
@@ -124,10 +131,16 @@ export function UrlShortener() {
             </button>
 
             {showCustom && (
-              <div className="animate-slideIn space-y-3 p-4 border border-border/50 rounded-lg bg-surface/50">
+              <div
+                className="animate-slideIn space-y-3 p-5 border rounded-[var(--radius-lg)]"
+                style={{
+                  borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
+                  backgroundColor: 'color-mix(in srgb, var(--color-surface) 90%, transparent)',
+                }}
+              >
                 <label
                   htmlFor="alias"
-                  className="block text-sm font-semibold text-text-secondary uppercase tracking-wide"
+                  className="block text-xs font-semibold text-text-muted uppercase tracking-[0.4em]"
                 >
                   Choose your custom alias
                 </label>
@@ -169,7 +182,7 @@ export function UrlShortener() {
           </div>
 
           {/* Submit Button */}
-          <div className="pt-4">
+          <div className="pt-2">
             <Button
               type="submit"
               variant="primary"

@@ -58,21 +58,36 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
   return (
     <div className="w-full space-y-6">
       {/* Success Message */}
-      <div className="flex items-center gap-3 text-primary animate-fadeIn">
-        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-          <CheckCircle size={24} />
+      <div className="flex items-center gap-3 text-secondary animate-fadeIn">
+        <div
+          className="w-12 h-12 rounded-full flex items-center justify-center"
+          style={{ background: 'color-mix(in srgb, var(--color-secondary) 18%, transparent)' }}
+        >
+          <CheckCircle size={24} className="text-secondary" />
         </div>
         <div>
-          <h2 className="font-display text-2xl font-bold">Success!</h2>
-          <p className="text-sm text-text-secondary">Your URL has been shortened</p>
+          <h2 className="font-display text-2xl font-bold text-secondary tracking-[0.25em] uppercase">
+            Link ready to share
+          </h2>
+          <p className="text-sm text-text-secondary">Copy, preview, or download a QR code below.</p>
         </div>
       </div>
 
       {/* Short URL Display Card */}
-      <Card elevated className="animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+      <Card
+        elevated
+        hoverable={false}
+        className="animate-fadeIn"
+        style={{
+          animationDelay: '0.1s',
+          borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
+        }}
+      >
         <CardHeader>
-          <CardTitle>Your Short URL</CardTitle>
-          <CardDescription>Share this link anywhere</CardDescription>
+          <CardTitle className="tracking-[0.2em] uppercase text-secondary">Your short link</CardTitle>
+          <CardDescription className="text-text-secondary">
+            Share this beautiful, trackable link with your audience in seconds.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -81,7 +96,11 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
                 type="text"
                 value={fullShortUrl}
                 readOnly
-                className="flex-1 px-4 py-3 bg-surface-elevated rounded-[var(--radius-md)] font-mono text-lg select-all border-2 border-border focus:border-primary focus:outline-none transition-colors"
+                className="flex-1 px-4 py-3 rounded-[var(--radius-md)] font-mono text-lg select-all border-2 focus:outline-none transition-colors"
+                style={{
+                  backgroundColor: 'color-mix(in srgb, var(--color-surface-elevated) 100%, transparent)',
+                  borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
+                }}
               />
               <Button
                 variant={copied ? 'accent' : 'primary'}
@@ -103,7 +122,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button variant="outline" size="sm" onClick={generateQrCode}>
                 <QrCode size={18} />
                 {showQr ? 'Hide' : 'Show'} QR Code
@@ -121,8 +140,15 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
 
       {/* QR Code Display */}
       {showQr && qrCodeUrl && (
-        <Card className="animate-fadeIn">
-          <CardContent className="text-center py-8">
+        <Card
+          hoverable={false}
+          className="animate-fadeIn"
+          style={{
+            borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
+            backgroundColor: 'color-mix(in srgb, var(--color-surface) 92%, transparent)',
+          }}
+        >
+          <CardContent className="text-center py-8 space-y-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-4" />
             <p className="text-text-secondary">Scan this QR code to visit your shortened URL</p>
@@ -131,9 +157,17 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
       )}
 
       {/* Original URL Info */}
-      <Card className="animate-fadeIn" style={{ animationDelay: '0.2s' }}>
-        <CardHeader>
-          <CardTitle className="text-lg">Link Details</CardTitle>
+      <Card
+        hoverable={false}
+        className="animate-fadeIn"
+        style={{
+          animationDelay: '0.2s',
+          borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
+          backgroundColor: 'color-mix(in srgb, var(--color-surface) 92%, transparent)',
+        }}
+      >
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-lg tracking-[0.2em] uppercase text-secondary">Link details</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -141,7 +175,12 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
               <Link2 className="text-text-muted mt-1" size={18} />
               <div className="flex-1">
                 <p className="text-sm font-medium text-text-secondary mb-1">Original URL</p>
-                <p className="text-sm break-all bg-surface-elevated p-3 rounded-[var(--radius-sm)] font-mono text-text-muted">
+                <p
+                  className="text-sm break-all p-3 rounded-[var(--radius-sm)] font-mono text-text-muted"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--color-surface-elevated) 96%, transparent)',
+                  }}
+                >
                   {longUrl}
                 </p>
               </div>
