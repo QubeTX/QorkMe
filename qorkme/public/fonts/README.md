@@ -9,6 +9,7 @@ This directory should contain the ZT Bros font files:
 Currently using Google Fonts Inter as fallback until ZT Bros fonts are obtained and added.
 
 To add the fonts:
+
 1. Obtain licensed ZT Bros font files in WOFF2 and WOFF formats
 2. Place them in this directory with naming convention:
    - ZTGatha-Bold.woff2 / ZTGatha-Bold.woff
