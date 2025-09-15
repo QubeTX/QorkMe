@@ -25,19 +25,20 @@ Before deployment, ensure you have:
 
 The project includes automated workflows for:
 
-- **Testing & Quality Checks**: Runs on all pushes and pull requests
-- **Preview Deployments**: Automatic preview URLs for pull requests
-- **Production Deployment**: Automatic deployment to Vercel on main branch
-- **Security Scanning**: Dependency audits and secret detection
+- **Testing & Quality Checks**: Runs on all pushes and pull requests (Node.js 18.x and 20.x)
+- **Preview Deployments**: Automatic preview URLs for pull requests with GitHub comments
+- **Production Deployment**: Automatic deployment to Vercel on main branch or manual dispatch
+- **Security Scanning**: Dependency audits with npm audit and Trufflehog secret detection
+- **GitHub Actions**: Uses latest actions/checkout@v4 and actions/setup-node@v4
 
 ### Required GitHub Secrets
 
-For the CI/CD pipeline to work, add these secrets to your repository:
+For the CI/CD pipeline to work, add these secrets to your GitHub repository Settings → Secrets and variables → Actions:
 
 ```
 VERCEL_TOKEN=xxx_xxxxxxxxxxxxxxxxxx
-VERCEL_ORG_ID=team_xxxxxxxxxxxxx
-VERCEL_PROJECT_ID=prj_xxxxxxxxxxxxx
+VERCEL_ORG_ID=team_xxxxxxxxxxxxx  # From .vercel/project.json
+VERCEL_PROJECT_ID=prj_xxxxxxxxxxxxx  # From .vercel/project.json
 ```
 
 ---
@@ -426,4 +427,4 @@ When approaching limits:
 
 ---
 
-**Note**: For production use with your Geek Squad clients, ensure you have proper error tracking (Sentry), analytics (Vercel Analytics), and uptime monitoring (Better Uptime) configured.
+**Note**: For production use, ensure you have proper error tracking (Sentry), analytics (Vercel Analytics), and uptime monitoring configured. The project includes comprehensive CI/CD automation and security scanning for enterprise deployment.

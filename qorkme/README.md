@@ -24,8 +24,8 @@ A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase
 
 ### Technical Excellence
 
-- **Next.js 15 with App Router**: Latest React features and server-side rendering
-- **TypeScript**: Full type safety throughout the application
+- **Next.js 15.5.3 with App Router**: Latest React 19 features and server-side rendering
+- **TypeScript 5**: Full type safety throughout the application
 - **Supabase Integration**: PostgreSQL database with real-time capabilities
 - **Scalable Architecture**: Designed to handle 200,000+ URLs efficiently
 - **Performance Optimized**: Database indexes and caching strategies
@@ -35,7 +35,7 @@ A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase
 
 ### Prerequisites
 
-- Node.js 18.17 or later
+- Node.js 18.17 or later (tested on 18.x and 20.x)
 - A Supabase account and project
 - Git
 
@@ -66,8 +66,8 @@ A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase
    ```
 
 4. **Set up the database**
-   - Copy the contents of `supabase/schema.sql`
-   - Run it in your Supabase SQL Editor
+   - Follow the complete setup guide in `supabase/SETUP_INSTRUCTIONS.md`
+   - Or copy the contents of `supabase/schema.sql` and run in your Supabase SQL Editor
 
 5. **Start the development server**
 
@@ -136,15 +136,15 @@ qorkme/
 
 ### Tech Stack
 
-- **Framework**: Next.js 15 with App Router
-- **Language**: TypeScript
+- **Framework**: Next.js 15.5.3 with App Router
+- **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
-- **Styling**: Tailwind CSS v4 with custom design tokens
-- **UI Components**: Custom Bauhaus-inspired components
-- **Icons**: Lucide React
-- **QR Codes**: qrcode library
-- **Notifications**: React Hot Toast
-- **ID Generation**: nanoid for secure short codes
+- **Styling**: Tailwind CSS v4 with custom Bauhaus design tokens
+- **UI Components**: Custom Bauhaus-inspired components with geometric elements
+- **Icons**: Lucide React v0.544.0
+- **QR Codes**: qrcode v1.5.4 library
+- **Notifications**: React Hot Toast v2.6.0
+- **ID Generation**: nanoid v5.1.5 for secure short codes
 
 ## Smart Short Code Algorithm
 
@@ -210,15 +210,16 @@ The project includes two GitHub Actions workflows:
 
 - **Multi-Node Testing**: Tests on Node.js 18.x and 20.x
 - **Code Quality**: ESLint, Prettier, and TypeScript checks
-- **Security Scanning**: Dependency audits and secret detection
-- **Preview Deployments**: Automatic preview URLs for pull requests
-- **Bundle Size Analysis**: Build size reporting
+- **Security Scanning**: Dependency audits with npm audit and Trufflehog secret detection
+- **Preview Deployments**: Automatic preview URLs for pull requests with GitHub comments
+- **Bundle Size Analysis**: Build size reporting and optimization checks
 
 #### 2. Production Deployment (`deploy.yml`)
 
-- **Automatic Deployment**: Triggers on main branch pushes
-- **Vercel Integration**: Seamless production deployment
-- **Commit Comments**: Automatic deployment status updates
+- **Automatic Deployment**: Triggers on main branch pushes or manual workflow dispatch
+- **Vercel Integration**: Seamless production deployment with CLI v4
+- **Commit Comments**: Automatic deployment status updates with production URLs
+- **Actions Versions**: Uses actions/checkout@v4 and actions/setup-node@v4
 
 ## Deployment & CI/CD
 
@@ -375,4 +376,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Built with care by [Your Name] - Bringing Bauhaus design principles to modern web applications.
+Built with passion - Bringing Bauhaus design principles to modern web applications.

@@ -132,7 +132,7 @@ vercel login
 
 ```bash
 # Navigate to project
-cd /Volumes/X9\ Pro/code/QorkMe/qorkme
+cd qorkme
 
 # Ensure all changes are committed
 git add .
@@ -305,20 +305,22 @@ The project includes two pre-configured workflows:
 The production deployment workflow (`.github/workflows/deploy.yml`) is already configured with:
 
 - **Automatic deployment** on main branch pushes
-- **Manual deployment** via workflow_dispatch
-- **Environment integration** with Vercel CLI
-- **Commit comments** with deployment status
+- **Manual deployment** via workflow_dispatch for manual triggers
+- **Environment integration** with latest Vercel CLI
+- **Commit comments** with deployment status and production URLs
+- **GitHub Actions Versions**: Uses actions/checkout@v4 and actions/setup-node@v4
 
 ### Step 4: CI Testing Workflow
 
 The CI testing workflow (`.github/workflows/ci.yml`) is already configured with:
 
 - **Multi-Node Testing**: Tests on Node.js 18.x and 20.x
-- **Code Quality Checks**: ESLint linting and TypeScript validation
-- **Prettier Formatting**: Automatic code formatting validation
-- **Security Scanning**: Dependency audits and secret detection
-- **Preview Deployments**: Automatic preview URLs for pull requests
+- **Code Quality Checks**: ESLint linting and TypeScript validation with strict checking
+- **Prettier Formatting**: Automatic code formatting validation (100-character line width)
+- **Security Scanning**: Dependency audits with npm audit and Trufflehog secret detection
+- **Preview Deployments**: Automatic preview URLs for pull requests with GitHub comments
 - **Bundle Size Analysis**: Build size reporting and optimization checks
+- **GitHub Actions Versions**: Uses actions/checkout@v4 and actions/setup-node@v4
 
 ---
 
