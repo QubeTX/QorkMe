@@ -1,110 +1,111 @@
 @import 'tailwindcss';
 
-/* Import Google Fonts as primary fonts until ZT Bros fonts are available */
-/* Using Outfit for headers (similar to ZT Gatha), Inter for body (similar to ZT Grafton), and JetBrains Mono for code */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
-/* ZT Bros Fonts - Will be used when font files are added to /public/fonts/ */
-/* Uncomment these when ZT Bros font files are available
+/* ZT Bros Oskon 90s Typography - Modern serif with bold character */
 @font-face {
-  font-family: 'ZT Gatha';
-  src:
-    url('/fonts/ZTGatha-Bold.woff2') format('woff2'),
-    url('/fonts/ZTGatha-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Gatha';
-  src:
-    url('/fonts/ZTGatha-Medium.woff2') format('woff2'),
-    url('/fonts/ZTGatha-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Grafton';
-  src:
-    url('/fonts/ZTGrafton-Regular.woff2') format('woff2'),
-    url('/fonts/ZTGrafton-Regular.woff') format('woff');
+  font-family: 'ZT Bros Oskon';
+  src: url('/fonts/ZTBrosOskon90s-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZT Grafton';
-  src:
-    url('/fonts/ZTGrafton-Medium.woff2') format('woff2'),
-    url('/fonts/ZTGrafton-Medium.woff') format('woff');
+  font-family: 'ZT Bros Oskon';
+  src: url('/fonts/ZTBrosOskon90s-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ZT Bros Oskon';
+  src: url('/fonts/ZTBrosOskon90s-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZT Grafton';
-  src:
-    url('/fonts/ZTGrafton-Semibold.woff2') format('woff2'),
-    url('/fonts/ZTGrafton-Semibold.woff') format('woff');
+  font-family: 'ZT Bros Oskon';
+  src: url('/fonts/ZTBrosOskon90s-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ZT Bros Oskon';
+  src: url('/fonts/ZTBrosOskon90s-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZT Mono';
-  src:
-    url('/fonts/ZTMono-Regular.woff2') format('woff2'),
-    url('/fonts/ZTMono-Regular.woff') format('woff');
-  font-weight: 400;
+  font-family: 'ZT Bros Oskon';
+  src: url('/fonts/ZTBrosOskon90s-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ZT Bros Oskon';
+  src: url('/fonts/ZTBrosOskon90s-Bold.woff2') format('woff2');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
-*/
+
+@font-face {
+  font-family: 'ZT Bros Oskon';
+  src: url('/fonts/ZTBrosOskon90s-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Import Google Fonts as fallbacks */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Crimson+Text:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* Light Theme - Earthy Natural Tones */
-  --color-background: #fdfbf7;
-  --color-surface: #ffffff;
+  /* Light Theme - Sandstone & Earth Tones */
+  --color-background: #f5e6d3; /* Warm sandstone */
+  --color-surface: #faf7f2; /* Light sand */
   --color-surface-elevated: #ffffff;
-  --color-primary: #87a96b;
-  --color-primary-hover: #749157;
-  --color-secondary: #c65d00;
-  --color-secondary-hover: #a34e00;
-  --color-accent: #228b22;
-  --color-accent-hover: #1a6b1a;
+  --color-primary: #8b7355; /* Desert sand brown */
+  --color-primary-hover: #6d5a44;
+  --color-secondary: #3e2723; /* Rich earth brown */
+  --color-secondary-hover: #2e1a17;
+  --color-accent: #5d4037; /* Medium earth brown */
+  --color-accent-hover: #4e342e;
 
   /* Text Colors */
-  --color-text-primary: #36454f;
-  --color-text-secondary: #5a6b78;
-  --color-text-muted: #8b9ca8;
-  --color-text-inverse: #fdfbf7;
+  --color-text-primary: #2e1a17; /* Deep brown */
+  --color-text-secondary: #5d4037; /* Medium brown */
+  --color-text-muted: #8b7355; /* Light brown */
+  --color-text-inverse: #faf7f2;
 
   /* Neutral Colors */
-  --color-border: #e5e2dc;
-  --color-border-hover: #d4d0c8;
-  --color-shadow: rgba(54, 69, 79, 0.08);
-  --color-shadow-hover: rgba(54, 69, 79, 0.12);
+  --color-border: #d4b896; /* Sandy border */
+  --color-border-hover: #c4a57d;
+  --color-shadow: rgba(62, 39, 35, 0.08);
+  --color-shadow-hover: rgba(62, 39, 35, 0.15);
 
   /* Semantic Colors */
-  --color-success: #4caf50;
-  --color-warning: #ff9800;
-  --color-error: #f44336;
-  --color-info: #2196f3;
+  --color-success: #7cb342; /* Earthy green */
+  --color-warning: #f57c00; /* Burnt orange */
+  --color-error: #c62828; /* Deep red */
+  --color-info: #5d4037; /* Earth brown for info */
 
   /* Grid Unit */
   --grid-unit: 8px;
 
   /* Border Radius */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
   /* Transitions */
@@ -114,34 +115,34 @@
 }
 
 [data-theme='dark'] {
-  /* Dark Theme - Deep Natural Tones */
-  --color-background: #1a1f2e;
-  --color-surface: #2a3142;
-  --color-surface-elevated: #353d52;
-  --color-primary: #b8d4b8;
-  --color-primary-hover: #a4c4a4;
-  --color-secondary: #ffb347;
-  --color-secondary-hover: #ffa31a;
-  --color-accent: #6b8e23;
-  --color-accent-hover: #5a7a1d;
+  /* Dark Theme - Deep Earth Tones */
+  --color-background: #1a1410; /* Dark earth */
+  --color-surface: #2e2520; /* Dark brown surface */
+  --color-surface-elevated: #3e342e;
+  --color-primary: #d4b896; /* Sandy tan */
+  --color-primary-hover: #e0c9a6;
+  --color-secondary: #f5e6d3; /* Light sandstone */
+  --color-secondary-hover: #faf7f2;
+  --color-accent: #c4a57d; /* Medium sand */
+  --color-accent-hover: #d4b896;
 
   /* Text Colors */
-  --color-text-primary: #f5f5f0;
-  --color-text-secondary: #d4d4cc;
-  --color-text-muted: #a8a89f;
-  --color-text-inverse: #1a1f2e;
+  --color-text-primary: #f5e6d3; /* Light sandstone */
+  --color-text-secondary: #d4b896; /* Sandy tan */
+  --color-text-muted: #8b7355; /* Muted brown */
+  --color-text-inverse: #1a1410;
 
   /* Neutral Colors */
-  --color-border: #3e4658;
-  --color-border-hover: #4a536b;
-  --color-shadow: rgba(0, 0, 0, 0.3);
-  --color-shadow-hover: rgba(0, 0, 0, 0.4);
+  --color-border: #4e3f36;
+  --color-border-hover: #5d4a3f;
+  --color-shadow: rgba(0, 0, 0, 0.4);
+  --color-shadow-hover: rgba(0, 0, 0, 0.5);
 
   /* Semantic Colors */
-  --color-success: #66bb6a;
-  --color-warning: #ffa726;
-  --color-error: #ef5350;
-  --color-info: #42a5f5;
+  --color-success: #9ccc65; /* Soft green */
+  --color-warning: #ffb74d; /* Warm orange */
+  --color-error: #e57373; /* Soft red */
+  --color-info: #c4a57d; /* Sandy info */
 }
 
 @theme inline {
@@ -162,10 +163,9 @@
   --color-border: var(--color-border);
   --color-border-hover: var(--color-border-hover);
 
-  /* Typography */
-  /* Using Google Fonts until ZT Bros fonts are available */
-  --font-display: 'Outfit', 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  /* Typography - ZT Bros Oskon with serif fallbacks */
+  --font-display: 'ZT Bros Oskon', 'Playfair Display', Georgia, serif;
+  --font-body: 'ZT Bros Oskon', 'Crimson Text', Georgia, serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
 
@@ -206,39 +206,49 @@ h5,
 h6 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   color: var(--color-text-primary);
+  letter-spacing: 0.02em;
 }
 
 h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  letter-spacing: -0.02em;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  letter-spacing: -0.01em;
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 600;
 }
 
 h4 {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 500;
 }
 
 h5 {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 h6 {
-  font-size: 1rem;
+  font-size: 1.125rem;
+  font-weight: 500;
 }
 
 p {
   color: var(--color-text-secondary);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 code,
@@ -249,41 +259,65 @@ pre {
 /* Card Styles */
 .card {
   background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: calc(var(--grid-unit) * 3);
-  box-shadow: 0 4px 6px var(--color-shadow);
+  border-radius: var(--radius-lg);
+  padding: calc(var(--grid-unit) * 4);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 2px 8px var(--color-shadow);
   transition:
     transform var(--transition-base),
-    box-shadow var(--transition-base);
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 12px var(--color-shadow-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px var(--color-shadow-hover);
+  border-color: var(--color-border-hover);
 }
 
 .card-elevated {
   background: var(--color-surface-elevated);
-  box-shadow: 0 8px 16px var(--color-shadow);
+  box-shadow: 0 12px 32px var(--color-shadow);
+  border: 2px solid var(--color-primary);
 }
 
 /* Button Base Styles */
 .btn {
-  font-family: var(--font-body);
-  font-weight: 500;
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  border: none;
+  gap: 0.75rem;
+  border: 2px solid transparent;
   outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+}
+
+.btn:hover::before {
+  transform: translateX(0);
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
@@ -291,16 +325,18 @@ pre {
 .input {
   background: var(--color-surface);
   border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   color: var(--color-text-primary);
   font-family: var(--font-body);
-  transition: all var(--transition-fast);
+  font-weight: 400;
+  transition: all var(--transition-base);
 }
 
 .input:focus {
-  border-color: var(--color-primary);
+  border-color: var(--color-secondary);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(135, 169, 107, 0.1);
+  box-shadow: 0 0 0 4px rgba(62, 39, 35, 0.08);
+  background: var(--color-background);
 }
 
 /* Animations */
@@ -371,14 +407,15 @@ pre {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-weight: 700;
 }
 
 .bg-gradient {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 }
 
 .shadow-soft {

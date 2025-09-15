@@ -1,6 +1,6 @@
 # QorkMe Design System
 
-## Bauhaus-Inspired Industrial Functional Design
+## Sophisticated Sandstone & Earth Tone Aesthetic
 
 ### Table of Contents
 
@@ -8,352 +8,578 @@
 2. [Color Palette](#color-palette)
 3. [Typography](#typography)
 4. [Spacing & Grid](#spacing--grid)
-5. [Components](#components)
-6. [Animations](#animations)
-7. [Design Patterns](#design-patterns)
+5. [Theme System](#theme-system)
+6. [Components](#components)
+7. [Animations](#animations)
+8. [Design Patterns](#design-patterns)
 
 ---
 
 ## Design Philosophy
 
-QorkMe's design system is built on Bauhaus principles, emphasizing:
+QorkMe's design system embraces sophisticated minimalist principles, emphasizing:
 
-- **Form Follows Function**: Every design element serves a purpose
-- **Geometric Simplicity**: Basic shapes (circles, squares, triangles) as fundamental elements
-- **Industrial Aesthetics**: Bold, clean lines with functional beauty
-- **Minimalism**: Reduction to essential elements only
-- **Unity of Art & Technology**: Seamless integration of aesthetic and functional elements
+- **Refined & Functional**: Every element serves a purpose with elegant clarity
+- **Sandstone Color Harmony**: Warm earth tones that feel natural and sophisticated
+- **Enhanced Card Architecture**: Elevated content with stronger borders and accent highlights
+- **Seamless Theming**: Intelligent light/dark mode with deep earth tone transitions
+- **Bold Typography Excellence**: ZT Bros Oskon serif fonts with uppercase styling and strong character
+- **Sophisticated Interactions**: Enhanced hover effects and refined animations that elevate usability
 
 ## Color Palette
 
-### Primary Colors
+### Sandstone & Earth Tones
 
 ```css
---bauhaus-red: #dc143c; /* Crimson - Secondary actions, alerts */
---bauhaus-blue: #0048ba; /* Cobalt Blue - Primary actions, links */
---bauhaus-yellow: #ffd700; /* Gold - Accents, highlights */
+/* Primary Colors */
+--sandstone-bg: #f5e6d3;      /* Warm sandstone background */
+--sand-surface: #faf7f2;      /* Light sand surface */
+--desert-sand: #8b7355;       /* Desert sand brown primary */
+--earth-brown: #3e2723;       /* Rich earth brown secondary */
+--medium-earth: #5d4037;      /* Medium earth brown accent */
+
+/* Hover States */
+--desert-sand-hover: #6d5a44; /* Desert sand hover */
+--earth-brown-hover: #2e1a17; /* Earth brown hover */
+--medium-earth-hover: #4e342e; /* Medium earth hover */
+
+/* Surface Colors */
+--surface-elevated: #ffffff;   /* Elevated card backgrounds */
+--sandy-border: #d4b896;      /* Sandy border color */
+--border-hover: #c4a57d;      /* Border hover state */
 ```
 
-### Neutral Colors
+### Dark Theme Colors
 
 ```css
---bauhaus-black: #0a0a0a; /* Near black - Primary text, borders */
---bauhaus-white: #fafafa; /* Off white - Backgrounds */
---bauhaus-gray: #71797e; /* Slate gray - Secondary text, disabled states */
+/* Dark Theme Overrides */
+--dark-earth: #1a1410;        /* Dark earth background */
+--dark-surface: #2e2520;      /* Dark brown surface */
+--dark-elevated: #3e342e;     /* Dark elevated surface */
+--sandy-tan: #d4b896;         /* Sandy tan primary */
+--light-sandstone: #f5e6d3;   /* Light sandstone secondary */
+--medium-sand: #c4a57d;       /* Medium sand accent */
+--dark-border: #4e3f36;       /* Dark theme borders */
+--dark-border-hover: #5d4a3f; /* Dark border hover */
 ```
 
 ### Semantic Usage
 
-- **Primary Actions**: Bauhaus Blue
-- **Destructive/Alert**: Bauhaus Red
-- **Success/Accent**: Bauhaus Yellow
-- **Text**: Bauhaus Black on White, White on Black (dark mode)
-- **Borders**: Always Bauhaus Black, 3-4px width
+- **Primary Actions**: Desert Sand Brown variants with stronger presence
+- **Secondary Actions**: Rich Earth Brown for sophisticated contrast
+- **Accent Elements**: Medium Earth Brown for highlights and features
+- **Success States**: Earthy Green (#7cb342) maintaining earth tone consistency
+- **Warning States**: Burnt Orange (#f57c00) complementing the warm palette
+- **Text Hierarchy**: Deep Brown (light) / Light Sandstone (dark)
+- **Backgrounds**: Warm Sandstone (light) / Deep Earth (dark)
+- **Cards**: Enhanced with stronger borders and earth tone accent highlights
 
 ## Typography
 
-### Font Families
+### ZT Bros Oskon Font System
 
 ```css
---font-display: 'Bebas Neue', sans-serif; /* Headlines, buttons */
---font-body: 'Inter', sans-serif; /* Body text, forms */
+/* Primary Fonts */
+--font-display: 'ZT Bros Oskon', 'Playfair Display', Georgia, serif;   /* Headlines, hero text */
+--font-body: 'ZT Bros Oskon', 'Crimson Text', Georgia, serif;           /* Body text, paragraphs */
+--font-mono: 'JetBrains Mono', 'Courier New', monospace;                /* Code, technical content */
+
+/* Fallback Fonts (Google Fonts) */
+--font-fallback: 'Playfair Display', 'Crimson Text', Georgia, serif;
 ```
 
-### Type Scale (Major Third - 1.25 ratio)
+### Responsive Type Scale (CSS Clamp)
 
+```css
+/* Fluid Typography */
+--text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);     /* 12-14px */
+--text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);       /* 14-16px */
+--text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);       /* 16-18px */
+--text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);      /* 18-20px */
+--text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);       /* 20-24px */
+--text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);            /* 24-32px */
+--text-3xl: clamp(2rem, 1.7rem + 1.5vw, 2.75rem);         /* 32-44px */
+--text-4xl: clamp(2.75rem, 2.3rem + 2.25vw, 4rem);        /* 44-64px */
 ```
-Display: 8rem  (128px) - Hero titles
-H1:      4rem  (64px)  - Page titles
-H2:      2.5rem (40px) - Section headers
-H3:      1.5rem (24px) - Subsections
-Body:    1rem  (16px)  - Standard text
-Small:   0.875rem (14px) - Captions
-```
 
-### Typography Rules
+### Typography Hierarchy
 
-- Display font: ALWAYS UPPERCASE, increased letter-spacing
-- Body font: Sentence case, normal spacing
-- Line height: 1.6 for body, 1.2 for headlines
-- Font weights: 400 (regular), 500 (medium), 600 (semibold), 700 (bold)
+- **Display (ZT Bros Oskon)**: Hero headlines with uppercase styling and bold weight
+- **Headings (ZT Bros Oskon)**: Page titles and section headers with strong serif character
+- **Body (ZT Bros Oskon)**: Paragraphs, UI text, forms with refined serif readability
+- **Code (JetBrains Mono)**: Technical content, URLs, code snippets
+- **Text Transform**: Uppercase for headings and buttons for modern impact
+- **Line Heights**: 1.7 for body text, 1.1 for headings for tighter spacing
+- **Font Weights**: 400 (regular), 500 (medium), 600 (semibold), 700 (bold)
 
 ## Spacing & Grid
 
-### Grid Unit
+### 8px Grid System
 
-Base unit: `8px` - All spacing should be multiples of 8px
+Base unit: `8px` - All spacing follows 8px increments for visual consistency
 
 ### Spacing Scale
 
 ```css
---space-xs: 8px; /* 1 unit */
---space-sm: 16px; /* 2 units */
---space-md: 24px; /* 3 units */
---space-lg: 32px; /* 4 units */
---space-xl: 48px; /* 6 units */
---space-2xl: 64px; /* 8 units */
+--space-1: 0.25rem;  /* 4px  - Tight spacing */
+--space-2: 0.5rem;   /* 8px  - Base unit */
+--space-3: 0.75rem;  /* 12px - Small spacing */
+--space-4: 1rem;     /* 16px - Standard spacing */
+--space-6: 1.5rem;   /* 24px - Medium spacing */
+--space-8: 2rem;     /* 32px - Large spacing */
+--space-12: 3rem;    /* 48px - Extra large */
+--space-16: 4rem;    /* 64px - Section spacing */
+--space-20: 5rem;    /* 80px - Page spacing */
 ```
 
-### Container Widths
+### Container System
 
-- Mobile: 100% - 32px padding
-- Tablet: 768px max
-- Desktop: 1200px max
-- Content: 800px max (reading width)
+```css
+/* Responsive Container Widths */
+--container-sm: 640px;   /* Small devices */
+--container-md: 768px;   /* Tablets */
+--container-lg: 1024px;  /* Laptops */
+--container-xl: 1280px;  /* Desktops */
+--container-2xl: 1536px; /* Large screens */
+
+/* Content Constraints */
+--content-width: 65ch;   /* Optimal reading width */
+--sidebar-width: 280px;  /* Navigation sidebars */
+```
+
+## Theme System
+
+### CSS Custom Properties Architecture
+
+```css
+:root {
+  /* Light Theme (Default) */
+  --bg-primary: var(--sandstone-bg);
+  --bg-secondary: var(--sand-surface);
+  --text-primary: var(--earth-brown);
+  --text-secondary: var(--medium-earth);
+  --accent-primary: var(--desert-sand);
+  --accent-secondary: var(--medium-earth);
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Overrides */
+  --bg-primary: var(--dark-earth);
+  --bg-secondary: var(--dark-surface);
+  --text-primary: var(--light-sandstone);
+  --text-secondary: var(--sandy-tan);
+  --accent-primary: var(--sandy-tan);
+  --accent-secondary: var(--medium-sand);
+}
+```
+
+### Theme Transitions
+
+```css
+* {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+}
+```
 
 ## Components
 
-### 1. Button Component
+### 1. Card Component
+
+**File**: `components/cards/Card.tsx`
+
+**Variants**:
+
+- `standard`: Basic card with subtle shadow
+- `elevated`: Enhanced shadow for emphasis
+- `interactive`: Hover effects and cursor pointer
+
+**Features**:
+
+- Soft border-radius (8px)
+- Box shadow: subtle depth without harsh borders
+- Theme-aware background colors
+- Smooth hover transitions
+- Responsive padding
+
+### 2. Button Component
 
 **File**: `components/ui/Button.tsx`
 
 **Variants**:
 
-- `primary`: Blue background, white text
-- `secondary`: Red background, white text
-- `accent`: Yellow background, black text
-- `outline`: Transparent with border
+- `primary`: Desert sand brown background, light text
+- `secondary`: Rich earth brown background, light text
+- `outline`: Transparent with earth brown border
+- `ghost`: No background, enhanced hover effects
 
 **Sizes**:
 
-- `sm`: 32px height, 14px text
-- `md`: 40px height, 16px text
-- `lg`: 48px height, 18px text
+- `sm`: 36px height, compact padding
+- `md`: 44px height, standard padding
+- `lg`: 52px height, generous padding
 
 **Design Rules**:
 
-- 3px solid border (bauhaus-border class)
-- Uppercase text with display font
-- Hover: scale(1.05)
-- Active: scale(0.95)
-- Disabled: 50% opacity
+- Rounded corners (4px) for refined aesthetic
+- Stronger borders with earth tone accents
+- ZT Bros Oskon font, semibold weight with uppercase styling
+- Hover: enhanced scale and pronounced color shifts
+- Focus: 2px outline with earth brown theme color
+- Disabled: reduced opacity and cursor, muted earth tones
 
-### 2. Input Component
+### 3. Input Component
 
 **File**: `components/ui/Input.tsx`
 
 **Features**:
 
-- 3px solid black border
-- 4px focus ring (blue, 30% opacity)
-- Error state: red border
-- Placeholder: gray color
-- Padding: 16px horizontal, 12px vertical
+- Enhanced border (2px) with sandstone-themed colors
+- Refined corners (4px) for sophisticated feel
+- Focus state: 2px earth brown outline with sandstone background
+- Error state: deep red border with earth tone integration
+- Success state: earthy green border maintaining palette consistency
+- Generous padding (16px horizontal, 12px vertical)
+- Placeholder text with earth tone contrast optimization
 
-### 3. Geometric Decorations
+### 4. FeatureCard Component
 
-**File**: `components/bauhaus/GeometricDecor.tsx`
+**File**: `components/cards/FeatureCard.tsx`
 
-**Elements**:
+**Features**:
 
-- Floating circles (red, blue)
-- Rotating squares (45° rotation)
-- Triangles (CSS borders technique)
-- Opacity: 10-20% for background elements
+- Icon integration with Lucide React icons
+- Structured content layout (icon, title, description)
+- Hover effects with subtle lift animation
+- Theme-aware styling
+- Responsive design for mobile/desktop
 
-**Animations**:
+### 5. ThemeToggle Component
 
-- `animate-float`: 4s ease-in-out infinite vertical movement
-- `animate-rotate-slow`: 20s linear infinite rotation
+**File**: `components/ThemeToggle.tsx`
 
-### 4. URL Shortener Form
+**Features**:
+
+- Smooth icon transitions (Sun/Moon)
+- Theme persistence in localStorage
+- System preference detection
+- Accessible button with proper ARIA labels
+- Consistent styling with button variants
+
+### 6. URL Shortener Form
 
 **File**: `components/UrlShortener.tsx`
 
 **Structure**:
 
-- Large primary input field
-- Optional custom alias section (collapsible)
-- Single primary action button
-- Icon integration (Lucide icons)
+- Clean card-based layout
+- Large, accessible input field
+- Optional custom alias section
+- Primary action button with loading states
+- Icon integration with consistent sizing
+- Form validation feedback
 
-### 5. Short URL Display
+### 7. Short URL Display
 
 **File**: `components/ShortUrlDisplay.tsx`
 
 **Features**:
 
-- Copy to clipboard functionality
-- QR code generation
-- Analytics preview
-- Bauhaus-styled cards with borders
+- Card-based result presentation
+- One-click copy functionality with toast feedback
+- QR code generation in modal/expandable section
+- Analytics preview with clean data visualization
+- Share buttons for social platforms
+- Responsive layout for all devices
 
 ## Animations
 
-### Defined Animations
+### Micro-Interactions
 
 ```css
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+/* Enhanced Hover Effects */
+.card-hover {
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
 }
 
-@keyframes rotate-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(62, 39, 35, 0.15);
+  border-color: var(--color-border-hover);
+}
+
+/* Button Interactions */
+.button-press {
+  transition: transform 150ms ease;
+}
+
+.button-press:active {
+  transform: scale(0.98);
+}
+
+/* Theme Transitions */
+.theme-transition {
+  transition: background-color 250ms ease, color 250ms ease;
+}
+```
+
+### Loading States
+
+```css
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(135, 169, 107, 0.1),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
 }
 ```
 
 ### Animation Guidelines
 
-- Use sparingly for emphasis
-- Duration: 200ms for micro-interactions, 4s+ for ambient animations
-- Easing: ease-in-out for natural movement
-- Performance: Use transform and opacity only
+- **Duration**: 150ms for micro-interactions, 250ms for theme changes, 1.5s for loading
+- **Easing**: `ease` for natural movement, `ease-in-out` for reversible animations
+- **Performance**: Prioritize transform and opacity for GPU acceleration
+- **Accessibility**: Respect `prefers-reduced-motion` user preferences
+- **Purpose**: Enhance usability, provide feedback, maintain user engagement
 
 ## Design Patterns
 
 ### 1. Card Pattern
 
 ```css
-.bauhaus-card {
-  border: 4px solid var(--bauhaus-black);
-  background: var(--bauhaus-white);
-  padding: 24px;
+.modern-card {
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 2px 8px var(--color-shadow);
+  padding: 2rem;
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+}
+
+.modern-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px var(--color-shadow-hover);
+  border-color: var(--color-border-hover);
 }
 ```
 
-### 2. Geometric Logo Pattern
+### 2. Content Hierarchy
 
-Combine three shapes to create brand identity:
-
-- Circle (red)
-- Square rotated 45° (blue)
-- Triangle (yellow)
+- **Hero Sections**: Large typography, generous spacing, centered content
+- **Feature Sections**: Card-based layout with icons and descriptive text
+- **Form Areas**: Clean inputs with proper labeling and validation states
+- **Navigation**: Minimal, icon-supported, theme-aware
 
 ### 3. Form Patterns
 
-- Labels: Display font, uppercase, small size
-- Inputs: Full width, substantial padding
-- Buttons: Full width on mobile, auto width on desktop
-- Validation: Red border for errors, green for success
+- **Labels**: ZT Grafton medium, adequate contrast
+- **Inputs**: Rounded corners, comfortable padding, clear focus states
+- **Buttons**: Contextual colors, appropriate sizing, loading states
+- **Validation**: Inline feedback with color and text cues
+- **Layout**: Logical flow, responsive stacking
 
-### 4. Layout Patterns
+### 4. Interactive States
 
-- **Hero Section**: Centered content, geometric decorations
-- **Grid Layout**: 3-column on desktop, 1-column on mobile
-- **Feature Cards**: Equal height, geometric shape icons
-- **Footer**: Minimal, centered, display font
+- **Hover**: Subtle lift (2px), shadow enhancement, color shifts
+- **Focus**: 2px outline in theme color, enhanced visibility
+- **Active**: Gentle scale down (0.98), immediate feedback
+- **Disabled**: Reduced opacity (0.6), cursor not-allowed, muted colors
+- **Loading**: Shimmer effects, skeleton states, progress indicators
 
-### 5. Interactive States
+### 5. Toast Notifications
 
-- **Hover**: Scale transform or color opacity change
-- **Focus**: 4px ring with 30% opacity
-- **Active**: Scale down (0.95)
-- **Disabled**: 50% opacity, cursor not-allowed
-
-### 6. Toast Notifications
-
-```javascript
-style: {
-  background: 'var(--bauhaus-white)',
-  color: 'var(--bauhaus-black)',
-  border: '3px solid var(--bauhaus-black)',
-  fontFamily: 'var(--font-display)',
-  textTransform: 'uppercase',
+```css
+.toast-notification {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  box-shadow: 0 4px 12px var(--color-shadow);
 }
 ```
 
+### 6. Layout Patterns
+
+- **Hero Section**: Centered content with feature cards below
+- **Grid Layouts**: CSS Grid with auto-fit columns, responsive breakpoints
+- **Navigation**: Clean header with theme toggle and minimal links
+- **Footer**: Simple, informative, matching header styling
+- **Responsive Design**: Mobile-first approach with progressive enhancement
+
 ## Responsive Design
 
-### Breakpoints
+### Breakpoints System
 
 ```css
+/* Tailwind-based breakpoints */
 sm: 640px   /* Mobile landscape */
-md: 768px   /* Tablet */
-lg: 1024px  /* Desktop */
-xl: 1280px  /* Large desktop */
+md: 768px   /* Tablets */
+lg: 1024px  /* Laptops */
+xl: 1280px  /* Desktops */
+2xl: 1536px /* Large screens */
 ```
 
-### Mobile-First Approach
+### Mobile-First Strategy
 
-- Stack elements vertically on mobile
-- Increase spacing on larger screens
-- Show/hide decorative elements based on screen size
-- Adjust font sizes proportionally
+- **Layout**: Single column on mobile, progressive multi-column on larger screens
+- **Typography**: Fluid scaling with CSS clamp for optimal readability
+- **Spacing**: Tighter spacing on mobile, more generous on desktop
+- **Cards**: Full-width on mobile, grid-based on larger screens
+- **Navigation**: Collapsible/drawer on mobile, horizontal on desktop
+- **Interactive Elements**: Touch-friendly sizing (minimum 44px) on mobile
 
 ## Accessibility
 
-### Color Contrast
+### WCAG 2.1 AA Compliance
 
-- All text meets WCAG AA standards
-- Primary colors tested for sufficient contrast
-- Focus indicators clearly visible
+- **Color Contrast**: All text combinations exceed 4.5:1 ratio
+- **Focus Management**: Clear, consistent focus indicators (2px outline)
+- **Color Independence**: Information not conveyed by color alone
+- **Theme Support**: High contrast options in dark mode
 
 ### Keyboard Navigation
 
-- All interactive elements keyboard accessible
-- Clear focus states
-- Logical tab order
-- Skip links where appropriate
+- **Tab Order**: Logical navigation flow through interactive elements
+- **Focus Trapping**: Modal dialogs properly contain focus
+- **Skip Links**: Available for screen reader users
+- **Keyboard Shortcuts**: Standard browser shortcuts supported
 
-### Screen Readers
+### Screen Reader Support
 
-- Semantic HTML structure
-- ARIA labels for icons
-- Descriptive button text
-- Form labels properly associated
+- **Semantic HTML**: Proper heading hierarchy, landmark elements
+- **ARIA Labels**: Descriptive labels for icons and complex interactions
+- **Live Regions**: Dynamic content updates announced
+- **Form Labels**: Explicit association between labels and inputs
+- **Alternative Text**: Meaningful descriptions for images and icons
+
+### Motion and Animation
+
+- **Reduced Motion**: Respects `prefers-reduced-motion` user preference
+- **Animation Controls**: Option to disable non-essential animations
+- **Performance**: Smooth animations that don't cause vestibular disorders
 
 ## Implementation Notes
 
 ### CSS Architecture
 
-- Utility-first with Tailwind CSS v4
-- Custom properties for theme values
-- Component-specific styles in component files
-- Global styles in `app/globals.css`
+- **Utility-First**: Tailwind CSS v4 with custom design tokens
+- **Custom Properties**: CSS variables for all colors, spacing, and typography
+- **Component Scope**: Styled-components or CSS modules for complex components
+- **Global Styles**: Essential base styles and theme variables in `app/globals.css`
+- **Design Tokens**: Centralized system for consistent values across the application
 
-### Performance Considerations
+### Performance Optimization
 
-- Optimize font loading (display: swap)
-- Minimize animation on low-end devices
-- Use CSS transforms for animations
-- Lazy load heavy components
+- **Font Loading**: `font-display: swap` for ZT Bros Oskon with serif fallbacks
+- **Animation Performance**: GPU-accelerated properties (transform, opacity)
+- **Bundle Optimization**: Tree-shaking unused styles and components
+- **Lazy Loading**: Code splitting for non-critical components
+- **Reduced Motion**: Conditional animations based on user preferences
+- **Enhanced Shadows**: Optimized shadow rendering with earth tone colors
 
-### Dark Mode Support
+### Theme Implementation
 
 ```css
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--bauhaus-black);
-    --foreground: var(--bauhaus-white);
-  }
+/* Theme Provider with CSS Custom Properties */
+:root {
+  color-scheme: light;
+  --color-background: #f5e6d3; /* Warm sandstone */
+  --color-surface: #faf7f2; /* Light sand */
+  --color-primary: #8b7355; /* Desert sand brown */
+  --color-text-primary: #2e1a17; /* Deep brown */
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #1a1410; /* Dark earth */
+  --color-surface: #2e2520; /* Dark brown surface */
+  --color-primary: #d4b896; /* Sandy tan */
+  --color-text-primary: #f5e6d3; /* Light sandstone */
+}
+
+/* Enhanced transitions */
+* {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
 }
 ```
+
+### Development Workflow
+
+- **Design Tokens**: Centralized token system for design consistency
+- **Component Library**: Reusable components with consistent styling
+- **TypeScript**: Type-safe component props and theme values
+- **Testing**: Visual regression testing for design system components
+- **Documentation**: Living style guide with interactive examples
 
 ---
 
 ## Component Usage Examples
 
-### Button
+### Card Components
 
 ```tsx
+// Basic Card
+<Card variant="standard">
+  <p>Card content here</p>
+</Card>
+
+// Interactive Feature Card
+<FeatureCard
+  icon={<LinkIcon />}
+  title="Smart URL Shortening"
+  description="Generate memorable short codes with intelligent patterns"
+/>
+```
+
+### Button Variants
+
+```tsx
+// Primary Action
 <Button variant="primary" size="lg">
   Shorten URL
 </Button>
+
+// Secondary Action
+<Button variant="outline" size="md">
+  Copy Link
+</Button>
 ```
 
-### Input
+### Form Elements
 
 ```tsx
-<Input type="url" placeholder="Enter URL..." error={hasError} />
+// URL Input with Validation
+<Input
+  type="url"
+  placeholder="Enter your long URL..."
+  error={validationError}
+  success={isValid}
+/>
+
+// Theme Toggle
+<ThemeToggle />
 ```
 
-### Geometric Decoration
+### Layout Components
 
 ```tsx
-<GeometricDecor className="opacity-20" />
+// Page Container
+<div className="container mx-auto px-4 py-8">
+  <Card variant="elevated">
+    {/* Main content */}
+  </Card>
+</div>
 ```
 
 ---
 
-This design system ensures consistency across the QorkMe application while maintaining the bold, functional aesthetic of Bauhaus design principles.
+This modern design system ensures visual consistency and excellent user experience across the QorkMe application while maintaining clean, professional aesthetics that scale beautifully across all devices and themes.

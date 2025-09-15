@@ -13,21 +13,22 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          'btn font-body font-medium rounded-[var(--radius-md)] transition-all duration-200',
-          'hover:transform hover:scale-[1.02] active:scale-[0.98]',
-          'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100',
+          'btn font-display font-semibold rounded-[var(--radius-sm)] transition-all duration-300',
+          'hover:transform hover:scale-[1.05] active:scale-[0.95]',
+          'disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100',
           'focus-visible:outline-2 focus-visible:outline-offset-2',
+          'uppercase tracking-wider',
           {
             // Variants
-            'bg-primary text-text-inverse hover:bg-primary-hover shadow-soft hover:shadow-medium':
+            'bg-secondary text-text-inverse hover:bg-secondary-hover shadow-medium hover:shadow-large border-2 border-secondary':
               variant === 'primary',
-            'bg-secondary text-text-inverse hover:bg-secondary-hover shadow-soft hover:shadow-medium':
+            'bg-accent text-text-inverse hover:bg-accent-hover shadow-medium hover:shadow-large border-2 border-accent':
               variant === 'secondary',
-            'bg-accent text-text-inverse hover:bg-accent-hover shadow-soft hover:shadow-medium':
+            'bg-primary text-text-inverse hover:bg-primary-hover shadow-medium hover:shadow-large border-2 border-primary':
               variant === 'accent',
-            'bg-transparent border-2 border-border hover:border-primary hover:bg-surface text-text-primary':
+            'bg-transparent border-2 border-accent hover:border-secondary hover:bg-accent/10 text-accent hover:text-secondary':
               variant === 'outline',
-            'bg-transparent hover:bg-surface text-text-primary': variant === 'ghost',
+            'bg-transparent hover:bg-primary/10 text-text-primary hover:text-secondary': variant === 'ghost',
             // Sizes
             'px-3 py-1.5 text-sm gap-1.5': size === 'sm',
             'px-5 py-2.5 text-base gap-2': size === 'md',

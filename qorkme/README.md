@@ -1,6 +1,6 @@
 # QorkMe - Modern URL Shortener
 
-A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring a clean card-based design with natural earth tones and intelligent short code generation.
+A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring a sophisticated card-based design with warm sandstone and earth tones, bold serif typography, and intelligent short code generation.
 
 ## Features
 
@@ -15,13 +15,13 @@ A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase
 
 ### Design & User Experience
 
-- **Modern Card-Based Design**: Clean, minimalist SF startup aesthetic with soft shadows and hover effects
-- **Natural Color Palette**: Sage green, warm beige, terracotta, and forest brown earth tones
-- **Responsive Design**: Optimized for mobile, tablet, and desktop
-- **Light/Dark Theme Support**: Seamless theme transitions with system preference detection
-- **ZT Bros Typography**: ZT Gatha for display, ZT Grafton for body text, ZT Mono for code
-- **Interactive Elements**: Smooth animations and hover states for enhanced user experience
-- **Toast Notifications**: Themed feedback system matching the overall design
+- **Sophisticated Card-Based Design**: Modern minimalist aesthetic with refined shadows and interactive hover effects
+- **Sandstone & Earth Tone Palette**: Warm sandstone backgrounds, desert sand brown, rich earth brown accents
+- **Responsive Design**: Optimized for mobile, tablet, and desktop with touch-friendly interactions
+- **Light/Dark Theme Support**: Seamless theme transitions with intelligent system preference detection
+- **ZT Bros Oskon Typography**: Bold serif fonts with uppercase styling for headings and modern character
+- **Enhanced Interactive Elements**: Stronger hover effects, refined animations, and sophisticated micro-interactions
+- **Themed Notifications**: Toast system perfectly integrated with the sandstone aesthetic
 
 ### Technical Excellence
 
@@ -143,9 +143,9 @@ qorkme/
 - **Framework**: Next.js 15.5.3 with App Router
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
-- **Styling**: Tailwind CSS v4 with custom natural design tokens and CSS variables
-- **UI Components**: Card-based components with soft shadows and modern interactions
-- **Theme System**: Dynamic light/dark mode with CSS custom properties
+- **Styling**: Tailwind CSS v4 with custom sandstone design tokens and CSS variables
+- **UI Components**: Card-based components with refined shadows and sophisticated interactions
+- **Theme System**: Dynamic light/dark mode with deep earth tone variants
 - **Icons**: Lucide React v0.544.0
 - **QR Codes**: qrcode v1.5.4 library
 - **Notifications**: React Hot Toast v2.6.0
@@ -181,14 +181,14 @@ Key performance features:
 
 ## Modern Design Philosophy
 
-QorkMe embraces modern minimalist design principles:
+QorkMe embraces sophisticated minimalist design principles:
 
-- **Clean & Functional**: Every element serves a purpose with modern clarity
-- **Natural Color Harmony**: Earthy tones that feel warm and approachable
-- **Card-Based Layout**: Organized content in elevated, interactive cards
-- **Seamless Theming**: Intelligent light/dark mode with smooth transitions
-- **Typography Excellence**: Professional ZT Bros fonts with excellent readability
-- **Subtle Interactions**: Hover effects and animations that enhance usability
+- **Refined & Functional**: Every element serves a purpose with elegant clarity
+- **Sandstone Color Harmony**: Warm earth tones that feel natural and sophisticated
+- **Enhanced Card Layout**: Elevated content cards with stronger borders and accent highlights
+- **Seamless Theming**: Intelligent light/dark mode with deep earth tone transitions
+- **Bold Typography Excellence**: ZT Bros Oskon serif fonts with uppercase styling and strong character
+- **Sophisticated Interactions**: Enhanced hover effects and refined animations that elevate usability
 
 See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete design specifications.
 
@@ -361,7 +361,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **[Vercel & Supabase Setup Guide](docs/VERCEL_SETUP.md)**: Comprehensive deployment setup with CI/CD configuration
 - **[General Deployment Guide](docs/DEPLOYMENT.md)**: Multi-platform deployment instructions and troubleshooting
-- **[Design System Documentation](docs/DESIGN_SYSTEM.md)**: Complete Bauhaus design specifications and component guidelines
+- **[Design System Documentation](docs/DESIGN_SYSTEM.md)**: Complete modern design specifications and component guidelines
 
 ### Getting Help
 

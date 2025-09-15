@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-QorkMe is a fully-implemented, production-ready URL shortener with a Bauhaus-inspired industrial design. Built with enterprise-grade architecture, optimized to handle 200,000+ URLs with memorable, typable short codes and comprehensive analytics.
+QorkMe is a fully-implemented, production-ready URL shortener with a modern card-based design system. Built with enterprise-grade architecture, optimized to handle 200,000+ URLs with memorable, typable short codes and comprehensive analytics.
 
 ## Technology Stack
 
 - **Framework**: Next.js 15.5.3 with App Router
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
-- **Styling**: Tailwind CSS v4 with custom Bauhaus design system
+- **Styling**: Tailwind CSS v4 with modern card-based design system
 - **Deployment**: Vercel with comprehensive GitHub Actions CI/CD pipeline
 - **Domain**: qork.me
 
@@ -21,26 +21,87 @@ QorkMe is a fully-implemented, production-ready URL shortener with a Bauhaus-ins
 2. **Custom Aliases**: Case-insensitive custom short codes with collision prevention
 3. **Analytics**: Click tracking with device, browser, OS, and geographic data
 4. **QR Code Generation**: On-demand QR codes for any shortened URL
-5. **Bauhaus Design**: Industrial functional aesthetic with geometric elements
+5. **Sophisticated Design**: Refined card-based aesthetic with warm sandstone and earth tones
 
-## Project Structure
+## Complete Project Structure
 
 ```
 qorkme/
-├── app/                    # Next.js App Router
-│   ├── api/               # API endpoints
-│   │   └── shorten/       # URL shortening endpoint
-│   ├── [shortCode]/       # Redirect handler
-│   └── result/[id]/       # Success page
-├── components/            # React components
-│   ├── ui/               # Base UI components
-│   └── bauhaus/          # Bauhaus-specific components
-├── lib/                   # Utilities and helpers
-│   ├── shortcode/        # Code generation logic
-│   └── supabase/         # Database clients
-├── docs/                  # Documentation
-├── supabase/             # Database schema
-└── .github/workflows/    # CI/CD pipelines
+├── app/                          # Next.js App Router
+│   ├── [shortCode]/
+│   │   └── route.ts             # Dynamic redirect handler
+│   ├── api/
+│   │   └── shorten/
+│   │       └── route.ts         # URL shortening API endpoint
+│   ├── result/
+│   │   └── [id]/
+│   │       └── page.tsx         # Success/result page
+│   ├── favicon.ico              # Site favicon
+│   ├── globals.css              # Global styles & design tokens
+│   ├── layout.tsx               # Root layout component
+│   ├── not-found.tsx            # 404 page
+│   └── page.tsx                 # Homepage
+├── components/                   # React components
+│   ├── bauhaus/
+│   │   └── GeometricDecor.tsx   # Decorative elements
+│   ├── cards/
+│   │   ├── Card.tsx             # Base card component
+│   │   └── FeatureCard.tsx      # Feature showcase card
+│   ├── ui/
+│   │   ├── Button.tsx           # Button component
+│   │   └── Input.tsx            # Input component
+│   ├── ClientThemeToggle.tsx    # Client-side theme toggle
+│   ├── NavigationHeader.tsx     # Main navigation
+│   ├── ResultNavigationHeader.tsx # Result page nav
+│   ├── ShortUrlDisplay.tsx      # URL display component
+│   ├── ThemeToggle.tsx          # Theme toggle component
+│   └── UrlShortener.tsx         # Main shortener form
+├── docs/                         # Documentation
+│   ├── DEPLOYMENT.md            # Deployment guide
+│   ├── DESIGN_SYSTEM.md         # Design system specs
+│   └── VERCEL_SETUP.md          # Vercel setup guide
+├── lib/                          # Utilities and helpers
+│   ├── shortcode/
+│   │   ├── generator.ts         # Short code generation
+│   │   ├── reserved.ts          # Reserved words list
+│   │   └── validator.ts         # Validation logic
+│   ├── supabase/
+│   │   ├── client.ts            # Client-side Supabase
+│   │   ├── server.ts            # Server-side Supabase
+│   │   └── types.ts             # TypeScript types
+│   ├── theme.tsx                # Theme context provider
+│   └── utils.ts                 # Utility functions
+├── public/                       # Static assets
+│   ├── fonts/                   # ZT Bros Oskon fonts
+│   │   ├── ZTBrosOskon90s-Regular.woff2
+│   │   ├── ZTBrosOskon90s-Italic.woff2
+│   │   ├── ZTBrosOskon90s-Medium.woff2
+│   │   ├── ZTBrosOskon90s-MediumItalic.woff2
+│   │   ├── ZTBrosOskon90s-SemiBold.woff2
+│   │   ├── ZTBrosOskon90s-SemiBoldItalic.woff2
+│   │   ├── ZTBrosOskon90s-Bold.woff2
+│   │   ├── ZTBrosOskon90s-BoldItalic.woff2
+│   │   └── README.md
+│   └── *.svg                    # SVG icons
+├── supabase/                     # Database
+│   ├── schema.sql               # Database schema
+│   └── SETUP_INSTRUCTIONS.md    # Setup guide
+├── .github/                      # GitHub config
+│   └── workflows/               # CI/CD pipelines
+│       ├── ci.yml               # Continuous integration
+│       └── deploy.yml           # Production deployment
+├── CHANGELOG.md                  # Version history
+├── CLAUDE.md                     # AI assistant guide (this file)
+├── README.md                     # Project documentation
+├── eslint.config.mjs            # ESLint configuration
+├── next-env.d.ts                # Next.js TypeScript env
+├── next.config.ts               # Next.js configuration
+├── package.json                 # Dependencies
+├── package-lock.json            # Dependency lock file
+├── postcss.config.mjs           # PostCSS config
+├── tsconfig.json                # TypeScript config
+├── tsconfig.tsbuildinfo         # TypeScript build info
+└── vercel.json                  # Vercel deployment config
 ```
 
 ## Development Commands
@@ -132,13 +193,13 @@ The application deploys automatically to Vercel when pushing to main branch via 
 
 ## Design System
 
-Bauhaus-inspired industrial design with:
+Sophisticated card-based design with sandstone and earth tones:
 
-- Primary colors: Crimson (#DC143C), Cobalt Blue (#0048BA), Gold (#FFD700)
-- Geometric shapes and animated background elements
-- Industrial typography (Bebas Neue for display, Inter for body)
-- 8px grid system with responsive breakpoints
-- Custom Tailwind CSS v4 configuration
+- Primary colors: Desert Sand Brown (#8b7355), Rich Earth Brown (#3e2723), Warm Sandstone (#f5e6d3), Medium Earth Brown (#5d4037)
+- Enhanced card components with stronger borders, refined shadows, and sophisticated hover effects
+- ZT Bros Oskon typography system with bold serif fonts, uppercase styling, and serif fallbacks
+- Light/dark theme support with deep earth tone transitions
+- 8px grid system with responsive breakpoints and enhanced spacing
 - Complete design specifications in `/docs/DESIGN_SYSTEM.md`
 
 ## Common Tasks
@@ -151,9 +212,9 @@ Add to `/lib/shortcode/reserved.ts` and update database
 
 Edit `/lib/shortcode/generator.ts`
 
-### Update Bauhaus styling
+### Update design system styling
 
-Modify `/app/globals.css` and component files
+Modify `/app/globals.css` and component files, update sandstone theme variables
 
 ### Change redirect behavior
 

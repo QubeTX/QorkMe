@@ -5,6 +5,101 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2025-01-15
+
+### 🎨 Complete Design System Overhaul - Sandstone & Earth Tones
+
+#### Added
+
+- **Sandstone & Earth Tone Color Palette**
+  - Light theme: Warm sandstone background (#f5e6d3), light sand surface (#faf7f2)
+  - Primary: Desert sand brown (#8b7355) with hover state (#6d5a44)
+  - Secondary: Rich earth brown (#3e2723) with deeper hover (#2e1a17)
+  - Accent: Medium earth brown (#5d4037) with refined hover (#4e342e)
+  - Deep earth tones for dark theme variants (#1a1410, #2e2520, #3e342e)
+
+- **ZT Bros Oskon 90s Typography System**
+  - Complete font family implementation with all weights (Regular, Medium, SemiBold, Bold)
+  - Italic variants for each weight (Regular, Medium, SemiBold, Bold Italic)
+  - Bold serif typography for both display and body text
+  - Uppercase styling for headings and buttons for modern impact
+  - Fallback to Playfair Display and Crimson Text serif fonts from Google Fonts
+
+- **Enhanced Design Components**
+  - Refined card layouts with stronger borders and earth tone accent highlights
+  - Updated button styling with uppercase text and enhanced hover effects
+  - Enhanced input fields with sandstone-themed focus states and earth tone borders
+  - Modernized navigation header with subtle earth tone gradients
+  - Feature cards with accent color highlights and sophisticated interactions
+
+- **Advanced CSS Architecture**
+  - Comprehensive CSS custom properties for all sandstone and earth tone colors
+  - Enhanced shadow system with warmer, more sophisticated depth
+  - Refined border radius values for modern card aesthetics
+  - Improved transition system with consistent timing for all interactions
+
+#### Changed
+
+- **Complete Visual Identity Transformation**
+  - Replaced previous color scheme with sophisticated sandstone and earth tones
+  - Updated from previous typography to ZT Bros Oskon 90s bold serif system
+  - Enhanced card designs with stronger visual hierarchy and accent treatments
+  - Modernized all component styling to reflect refined aesthetic
+  - Improved contrast ratios and accessibility with earth tone palette
+
+- **Typography Modernization**
+  - Transitioned to ZT Bros Oskon serif fonts throughout the application
+  - Implemented uppercase styling for headings and interactive elements
+  - Enhanced text hierarchy with bold font weights and refined spacing
+  - Improved readability with serif font choice and optimized line heights
+
+- **Component Enhancement**
+  - Strengthened card component borders with earth tone accents
+  - Enhanced button hover effects with more pronounced visual feedback
+  - Refined input field styling with sandstone-themed focus states
+  - Updated navigation with subtle earth tone gradient treatments
+  - Improved feature card design with accent color highlights
+
+- **Theme System Updates**
+  - Enhanced dark theme with deep earth tones and warm color transitions
+  - Improved light theme with warm sandstone backgrounds and natural lighting
+  - Refined CSS custom properties for better color consistency
+  - Enhanced theme transitions with sophisticated color interpolation
+
+#### Technical Improvements
+
+- **Font Implementation**
+  - Added complete ZT Bros Oskon font files to `/public/fonts/` directory
+  - Implemented proper font-display: swap for optimal loading performance
+  - Created comprehensive @font-face declarations for all weights and styles
+  - Established graceful fallback system with serif fonts from Google Fonts
+
+- **CSS Custom Properties Enhancement**
+  - Expanded color variable system for comprehensive theme coverage
+  - Improved semantic color naming for better maintainability
+  - Enhanced shadow and border variables for consistent visual depth
+  - Refined transition variables for smoother interactions
+
+- **Design Token System**
+  - Comprehensive sandstone and earth tone color tokens
+  - Enhanced spacing and typography tokens for better consistency
+  - Improved component-specific design tokens
+  - Better organization of design system variables
+
+#### Breaking Changes
+
+- **Visual Breaking Changes**: Complete design aesthetic overhaul - all UI appearances significantly updated
+- **Typography Changes**: Font family completely changed from previous system to ZT Bros Oskon
+- **Color Scheme Changes**: Entire color palette updated to sandstone and earth tones
+- **Component Styling**: All component appearances updated to match new design system
+
+#### Migration Notes
+
+- All functional features remain identical - only visual design has been updated
+- Existing shortened URLs continue to work without any changes
+- Database schema and backend functionality completely unchanged
+- Frontend design and theming system comprehensively modernized
+
 ## [2.0.6] - 2025-01-15
 
 ### 🔧 Vercel Project Linking & Font Loading Fix

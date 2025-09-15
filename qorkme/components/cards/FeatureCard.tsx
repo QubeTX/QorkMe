@@ -11,15 +11,15 @@ interface FeatureCardProps {
 
 export function FeatureCard({ icon, title, description, className }: FeatureCardProps) {
   return (
-    <Card className={cn('group', className)}>
+    <Card className={cn('group hover:border-secondary/30', className)}>
       <CardContent>
-        <div className="flex flex-col gap-4">
-          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-text-inverse transition-all duration-300">
+        <div className="flex flex-col gap-5">
+          <div className="w-14 h-14 rounded-sm bg-accent/10 border-2 border-accent/20 flex items-center justify-center text-accent group-hover:bg-secondary group-hover:border-secondary group-hover:text-text-inverse transition-all duration-300 shadow-soft group-hover:shadow-medium">
             {icon}
           </div>
           <div>
-            <CardTitle className="mb-2">{title}</CardTitle>
-            <CardDescription>{description}</CardDescription>
+            <CardTitle className="mb-3 text-lg font-semibold text-secondary">{title}</CardTitle>
+            <CardDescription className="leading-relaxed">{description}</CardDescription>
           </div>
         </div>
       </CardContent>
