@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 
-/* ZT Bros Fonts */
+/* Import Google Fonts as primary fonts until ZT Bros fonts are available */
+/* Using Outfit for headers (similar to ZT Gatha), Inter for body (similar to ZT Grafton), and JetBrains Mono for code */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ZT Bros Fonts - Will be used when font files are added to /public/fonts/ */
+/* Uncomment these when ZT Bros font files are available
 @font-face {
   font-family: 'ZT Gatha';
   src:
@@ -60,9 +65,7 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* Fallback to Inter from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+*/
 
 :root {
   /* Light Theme - Earthy Natural Tones */
@@ -160,9 +163,10 @@
   --color-border-hover: var(--color-border-hover);
 
   /* Typography */
-  --font-display: 'ZT Gatha', 'Inter', system-ui, sans-serif;
-  --font-body: 'ZT Grafton', 'Inter', system-ui, sans-serif;
-  --font-mono: 'ZT Mono', 'Courier New', monospace;
+  /* Using Google Fonts until ZT Bros fonts are available */
+  --font-display: 'Outfit', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
 
 /* Base Styles */

@@ -5,6 +5,26 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.6] - 2025-01-15
+
+### 🔧 Vercel Project Linking & Font Loading Fix
+
+#### Added
+
+- **Local Project Configuration**
+  - Linked local repository with Vercel project using `vercel link`
+  - Created `.vercel/project.json` with project and organization IDs
+  - Established connection between local development and Vercel deployment
+  - Enables local Vercel CLI commands for better development workflow
+
+#### Fixed
+
+- **Font Loading on Production**
+  - Created `/public/fonts/` directory for font files
+  - Updated CSS to use Google Fonts (Outfit, Inter, JetBrains Mono) as primary fonts
+  - Prepared infrastructure for ZT Bros fonts when available
+  - Fixed font display issues on live Vercel deployment
+
 ## [2.0.5] - 2025-01-15
 
 ### 🔧 Removed Redundant Deployment Workflow
