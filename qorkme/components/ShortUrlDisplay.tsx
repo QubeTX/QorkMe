@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Copy, QrCode, ExternalLink, CheckCircle, Link2, Calendar, Globe } from 'lucide-react';
 import toast from 'react-hot-toast';
 import QRCode from 'qrcode';
-import { cn } from '@/lib/utils';
 
 interface ShortUrlDisplayProps {
   shortCode: string;
@@ -29,7 +28,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
       setCopied(true);
       toast.success('Copied to clipboard!');
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
+    } catch {
       toast.error('Failed to copy');
     }
   };
@@ -51,7 +50,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
       });
       setQrCodeUrl(url);
       setShowQr(true);
-    } catch (err) {
+    } catch {
       toast.error('Failed to generate QR code');
     }
   };
@@ -124,10 +123,9 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
       {showQr && qrCodeUrl && (
         <Card className="animate-fadeIn">
           <CardContent className="text-center py-8">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-4" />
-            <p className="text-text-secondary">
-              Scan this QR code to visit your shortened URL
-            </p>
+            <p className="text-text-secondary">Scan this QR code to visit your shortened URL</p>
           </CardContent>
         </Card>
       )}

@@ -10,7 +10,14 @@ interface CardProps {
   style?: CSSProperties;
 }
 
-export function Card({ children, className, elevated = false, hoverable = true, onClick, style }: CardProps) {
+export function Card({
+  children,
+  className,
+  elevated = false,
+  hoverable = true,
+  onClick,
+  style,
+}: CardProps) {
   return (
     <div
       className={cn(
@@ -34,11 +41,7 @@ interface CardHeaderProps {
 }
 
 export function CardHeader({ children, className }: CardHeaderProps) {
-  return (
-    <div className={cn('pb-4 border-b border-border', className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn('pb-4 border-b border-border', className)}>{children}</div>;
 }
 
 interface CardTitleProps {
@@ -60,11 +63,7 @@ interface CardDescriptionProps {
 }
 
 export function CardDescription({ children, className }: CardDescriptionProps) {
-  return (
-    <p className={cn('text-sm text-text-secondary mt-1', className)}>
-      {children}
-    </p>
-  );
+  return <p className={cn('text-sm text-text-secondary mt-1', className)}>{children}</p>;
 }
 
 interface CardContentProps {
@@ -73,11 +72,7 @@ interface CardContentProps {
 }
 
 export function CardContent({ children, className }: CardContentProps) {
-  return (
-    <div className={cn('pt-4', className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn('pt-4', className)}>{children}</div>;
 }
 
 interface CardFooterProps {
@@ -87,7 +82,12 @@ interface CardFooterProps {
 
 export function CardFooter({ children, className }: CardFooterProps) {
   return (
-    <div className={cn('pt-4 mt-4 border-t border-border flex items-center justify-between', className)}>
+    <div
+      className={cn(
+        'pt-4 mt-4 border-t border-border flex items-center justify-between',
+        className
+      )}
+    >
       {children}
     </div>
   );

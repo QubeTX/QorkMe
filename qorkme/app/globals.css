@@ -3,8 +3,9 @@
 /* ZT Bros Fonts */
 @font-face {
   font-family: 'ZT Gatha';
-  src: url('/fonts/ZTGatha-Bold.woff2') format('woff2'),
-       url('/fonts/ZTGatha-Bold.woff') format('woff');
+  src:
+    url('/fonts/ZTGatha-Bold.woff2') format('woff2'),
+    url('/fonts/ZTGatha-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -12,8 +13,9 @@
 
 @font-face {
   font-family: 'ZT Gatha';
-  src: url('/fonts/ZTGatha-Medium.woff2') format('woff2'),
-       url('/fonts/ZTGatha-Medium.woff') format('woff');
+  src:
+    url('/fonts/ZTGatha-Medium.woff2') format('woff2'),
+    url('/fonts/ZTGatha-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -21,8 +23,9 @@
 
 @font-face {
   font-family: 'ZT Grafton';
-  src: url('/fonts/ZTGrafton-Regular.woff2') format('woff2'),
-       url('/fonts/ZTGrafton-Regular.woff') format('woff');
+  src:
+    url('/fonts/ZTGrafton-Regular.woff2') format('woff2'),
+    url('/fonts/ZTGrafton-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -30,8 +33,9 @@
 
 @font-face {
   font-family: 'ZT Grafton';
-  src: url('/fonts/ZTGrafton-Medium.woff2') format('woff2'),
-       url('/fonts/ZTGrafton-Medium.woff') format('woff');
+  src:
+    url('/fonts/ZTGrafton-Medium.woff2') format('woff2'),
+    url('/fonts/ZTGrafton-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -39,8 +43,9 @@
 
 @font-face {
   font-family: 'ZT Grafton';
-  src: url('/fonts/ZTGrafton-Semibold.woff2') format('woff2'),
-       url('/fonts/ZTGrafton-Semibold.woff') format('woff');
+  src:
+    url('/fonts/ZTGrafton-Semibold.woff2') format('woff2'),
+    url('/fonts/ZTGrafton-Semibold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -48,8 +53,9 @@
 
 @font-face {
   font-family: 'ZT Mono';
-  src: url('/fonts/ZTMono-Regular.woff2') format('woff2'),
-       url('/fonts/ZTMono-Regular.woff') format('woff');
+  src:
+    url('/fonts/ZTMono-Regular.woff2') format('woff2'),
+    url('/fonts/ZTMono-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -60,33 +66,33 @@
 
 :root {
   /* Light Theme - Earthy Natural Tones */
-  --color-background: #FDFBF7;
-  --color-surface: #FFFFFF;
-  --color-surface-elevated: #FFFFFF;
-  --color-primary: #87A96B;
+  --color-background: #fdfbf7;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-primary: #87a96b;
   --color-primary-hover: #749157;
-  --color-secondary: #C65D00;
-  --color-secondary-hover: #A34E00;
-  --color-accent: #228B22;
-  --color-accent-hover: #1A6B1A;
+  --color-secondary: #c65d00;
+  --color-secondary-hover: #a34e00;
+  --color-accent: #228b22;
+  --color-accent-hover: #1a6b1a;
 
   /* Text Colors */
-  --color-text-primary: #36454F;
-  --color-text-secondary: #5A6B78;
-  --color-text-muted: #8B9CA8;
-  --color-text-inverse: #FDFBF7;
+  --color-text-primary: #36454f;
+  --color-text-secondary: #5a6b78;
+  --color-text-muted: #8b9ca8;
+  --color-text-inverse: #fdfbf7;
 
   /* Neutral Colors */
-  --color-border: #E5E2DC;
-  --color-border-hover: #D4D0C8;
+  --color-border: #e5e2dc;
+  --color-border-hover: #d4d0c8;
   --color-shadow: rgba(54, 69, 79, 0.08);
   --color-shadow-hover: rgba(54, 69, 79, 0.12);
 
   /* Semantic Colors */
-  --color-success: #4CAF50;
-  --color-warning: #FF9800;
-  --color-error: #F44336;
-  --color-info: #2196F3;
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-error: #f44336;
+  --color-info: #2196f3;
 
   /* Grid Unit */
   --grid-unit: 8px;
@@ -104,35 +110,35 @@
   --transition-slow: 350ms ease;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   /* Dark Theme - Deep Natural Tones */
-  --color-background: #1A1F2E;
-  --color-surface: #2A3142;
-  --color-surface-elevated: #353D52;
-  --color-primary: #B8D4B8;
-  --color-primary-hover: #A4C4A4;
-  --color-secondary: #FFB347;
-  --color-secondary-hover: #FFA31A;
-  --color-accent: #6B8E23;
-  --color-accent-hover: #5A7A1D;
+  --color-background: #1a1f2e;
+  --color-surface: #2a3142;
+  --color-surface-elevated: #353d52;
+  --color-primary: #b8d4b8;
+  --color-primary-hover: #a4c4a4;
+  --color-secondary: #ffb347;
+  --color-secondary-hover: #ffa31a;
+  --color-accent: #6b8e23;
+  --color-accent-hover: #5a7a1d;
 
   /* Text Colors */
-  --color-text-primary: #F5F5F0;
-  --color-text-secondary: #D4D4CC;
-  --color-text-muted: #A8A89F;
-  --color-text-inverse: #1A1F2E;
+  --color-text-primary: #f5f5f0;
+  --color-text-secondary: #d4d4cc;
+  --color-text-muted: #a8a89f;
+  --color-text-inverse: #1a1f2e;
 
   /* Neutral Colors */
-  --color-border: #3E4658;
-  --color-border-hover: #4A536B;
+  --color-border: #3e4658;
+  --color-border-hover: #4a536b;
   --color-shadow: rgba(0, 0, 0, 0.3);
   --color-shadow-hover: rgba(0, 0, 0, 0.4);
 
   /* Semantic Colors */
-  --color-success: #66BB6A;
-  --color-warning: #FFA726;
-  --color-error: #EF5350;
-  --color-info: #42A5F5;
+  --color-success: #66bb6a;
+  --color-warning: #ffa726;
+  --color-error: #ef5350;
+  --color-info: #42a5f5;
 }
 
 @theme inline {
@@ -170,7 +176,7 @@ html {
   color-scheme: light;
 }
 
-html[data-theme="dark"] {
+html[data-theme='dark'] {
   color-scheme: dark;
 }
 
@@ -182,11 +188,18 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color var(--transition-base), color var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.2;
@@ -224,7 +237,8 @@ p {
   margin-bottom: 1rem;
 }
 
-code, pre {
+code,
+pre {
   font-family: var(--font-mono);
 }
 
@@ -234,7 +248,9 @@ code, pre {
   border-radius: var(--radius-md);
   padding: calc(var(--grid-unit) * 3);
   box-shadow: 0 4px 6px var(--color-shadow);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .card:hover {
@@ -307,7 +323,8 @@ code, pre {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -316,7 +333,8 @@ code, pre {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {

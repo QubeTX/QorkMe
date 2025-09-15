@@ -35,16 +35,22 @@ export default function Home() {
                 <span className="text-sm font-medium">Clean. Modern. Powerful.</span>
               </div>
               <h1 className="font-display font-bold mb-6 text-gradient">
-                Shorten Links,<br />Amplify Impact
+                Shorten Links,
+                <br />
+                Amplify Impact
               </h1>
               <p className="text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
-                Transform your long URLs into memorable, trackable links with our modern URL shortener.
-                Built for teams that value simplicity and performance.
+                Transform your long URLs into memorable, trackable links with our modern URL
+                shortener. Built for teams that value simplicity and performance.
               </p>
             </div>
 
             {/* URL Shortener Card */}
-            <Card elevated className="max-w-3xl mx-auto mb-24 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+            <Card
+              elevated
+              className="max-w-3xl mx-auto mb-24 animate-fadeIn"
+              style={{ animationDelay: '0.2s' }}
+            >
               <UrlShortener />
             </Card>
 

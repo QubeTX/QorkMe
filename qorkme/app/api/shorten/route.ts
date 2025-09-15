@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       }
     } else {
       // Check if URL already exists (for non-custom aliases)
-      const urlHash = btoa(normalizedUrl).substring(0, 50); // Simple hash for duplicate detection
+      // const urlHash = btoa(normalizedUrl).substring(0, 50); // Simple hash for duplicate detection
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: existing } = await (supabase as any)

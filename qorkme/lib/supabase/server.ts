@@ -23,7 +23,7 @@ export async function createServerClientInstance() {
             cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, options);
             });
-          } catch (error) {
+          } catch {
             // Handle cookie errors in Server Components
           }
         },

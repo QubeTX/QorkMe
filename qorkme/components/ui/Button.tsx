@@ -19,10 +19,14 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           'focus-visible:outline-2 focus-visible:outline-offset-2',
           {
             // Variants
-            'bg-primary text-text-inverse hover:bg-primary-hover shadow-soft hover:shadow-medium': variant === 'primary',
-            'bg-secondary text-text-inverse hover:bg-secondary-hover shadow-soft hover:shadow-medium': variant === 'secondary',
-            'bg-accent text-text-inverse hover:bg-accent-hover shadow-soft hover:shadow-medium': variant === 'accent',
-            'bg-transparent border-2 border-border hover:border-primary hover:bg-surface text-text-primary': variant === 'outline',
+            'bg-primary text-text-inverse hover:bg-primary-hover shadow-soft hover:shadow-medium':
+              variant === 'primary',
+            'bg-secondary text-text-inverse hover:bg-secondary-hover shadow-soft hover:shadow-medium':
+              variant === 'secondary',
+            'bg-accent text-text-inverse hover:bg-accent-hover shadow-soft hover:shadow-medium':
+              variant === 'accent',
+            'bg-transparent border-2 border-border hover:border-primary hover:bg-surface text-text-primary':
+              variant === 'outline',
             'bg-transparent hover:bg-surface text-text-primary': variant === 'ghost',
             // Sizes
             'px-3 py-1.5 text-sm gap-1.5': size === 'sm',

@@ -15,17 +15,13 @@ export function ThemeToggle() {
       <div className="relative w-6 h-6">
         <Sun
           className={`absolute inset-0 transition-all duration-300 text-secondary ${
-            theme === 'light'
-              ? 'opacity-100 rotate-0 scale-100'
-              : 'opacity-0 rotate-90 scale-0'
+            theme === 'light' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'
           }`}
           size={24}
         />
         <Moon
           className={`absolute inset-0 transition-all duration-300 text-accent ${
-            theme === 'dark'
-              ? 'opacity-100 rotate-0 scale-100'
-              : 'opacity-0 -rotate-90 scale-0'
+            theme === 'dark' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'
           }`}
           size={24}
         />

@@ -60,7 +60,7 @@ export function validateUrl(url: string): {
     }
 
     return { valid: true, normalizedUrl };
-  } catch (error) {
+  } catch {
     return { valid: false, error: 'Invalid URL format' };
   }
 }

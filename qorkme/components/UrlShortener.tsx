@@ -96,7 +96,10 @@ export function UrlShortener() {
                 className="pr-12"
                 required
               />
-              <Link2 className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted" size={20} />
+              <Link2
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted"
+                size={20}
+              />
             </div>
           </div>
 
@@ -153,13 +156,7 @@ export function UrlShortener() {
           </div>
 
           {/* Submit Button */}
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            disabled={loading}
-            className="w-full"
-          >
+          <Button type="submit" variant="primary" size="lg" disabled={loading} className="w-full">
             {loading ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-2 border-text-inverse border-t-transparent" />
