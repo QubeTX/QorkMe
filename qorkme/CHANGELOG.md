@@ -5,6 +5,17 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.3] - 2025-01-15
+
+### 🔧 CI/CD Security Scan Fix
+
+#### Fixed
+
+- **TruffleHog Security Scan**
+  - Fixed "BASE and HEAD commits are the same" error in GitHub Actions
+  - Updated workflow to properly handle push events with before/after commits
+  - Security scanning now works correctly for both push and pull request events
+
 ## [2.0.2] - 2025-01-15
 
 ### 🔧 Vercel Root Directory Configuration
