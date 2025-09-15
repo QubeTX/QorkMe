@@ -44,8 +44,8 @@ export default function Home() {
                   <span className="text-secondary">Amplify Impact</span>
                 </h1>
                 <p className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed font-light px-4">
-                  Transform your long URLs into memorable, trackable links with our sophisticated URL
-                  shortener. Built for brands that demand elegance and performance.
+                  Transform your long URLs into memorable, trackable links with our sophisticated
+                  URL shortener. Built for brands that demand elegance and performance.
                 </p>
               </div>
 
@@ -65,7 +65,9 @@ export default function Home() {
           {/* Features Section */}
           <section className="py-24 px-6 bg-surface/50">
             <div className="container mx-auto max-w-7xl">
-              <h2 className="text-center font-display text-3xl font-bold mb-16 text-secondary">Why Choose QorkMe?</h2>
+              <h2 className="text-center font-display text-3xl font-bold mb-16 text-secondary">
+                Why Choose QorkMe?
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                 <FeatureCard
                   icon={<Zap size={24} />}

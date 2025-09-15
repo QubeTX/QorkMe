@@ -82,7 +82,10 @@ export function UrlShortener() {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Main URL Input */}
           <div className="space-y-3">
-            <label htmlFor="url" className="block text-sm font-semibold text-text-secondary uppercase tracking-wide">
+            <label
+              htmlFor="url"
+              className="block text-sm font-semibold text-text-secondary uppercase tracking-wide"
+            >
               Enter your URL
             </label>
             <div className="relative group">
@@ -110,19 +113,28 @@ export function UrlShortener() {
               onClick={() => setShowCustom(!showCustom)}
               className="flex items-center gap-3 text-text-secondary hover:text-accent transition-all duration-300 group p-2 rounded-lg hover:bg-accent/5"
             >
-              <div className={`transition-all duration-300 ${showCustom ? 'rotate-90 text-accent' : 'group-hover:scale-110'}`}>
+              <div
+                className={`transition-all duration-300 ${showCustom ? 'rotate-90 text-accent' : 'group-hover:scale-110'}`}
+              >
                 <Settings2 size={20} />
               </div>
-              <span className="font-semibold text-sm uppercase tracking-wide">Custom Alias (Optional)</span>
+              <span className="font-semibold text-sm uppercase tracking-wide">
+                Custom Alias (Optional)
+              </span>
             </button>
 
             {showCustom && (
               <div className="animate-slideIn space-y-3 p-4 border border-border/50 rounded-lg bg-surface/50">
-                <label htmlFor="alias" className="block text-sm font-semibold text-text-secondary uppercase tracking-wide">
+                <label
+                  htmlFor="alias"
+                  className="block text-sm font-semibold text-text-secondary uppercase tracking-wide"
+                >
                   Choose your custom alias
                 </label>
                 <div className="flex gap-3 items-center">
-                  <span className="text-text-muted font-mono text-sm font-semibold bg-border/20 px-3 py-2 rounded">qork.me/</span>
+                  <span className="text-text-muted font-mono text-sm font-semibold bg-border/20 px-3 py-2 rounded">
+                    qork.me/
+                  </span>
                   <Input
                     id="alias"
                     type="text"

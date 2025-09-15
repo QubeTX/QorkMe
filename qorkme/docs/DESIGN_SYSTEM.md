@@ -338,7 +338,8 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 ```css
 /* Floating Animation for Feature Cards */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
   33% {
@@ -361,11 +362,14 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 
 /* Glow Animation for Accent Elements */
 @keyframes glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px var(--color-primary);
   }
   50% {
-    box-shadow: 0 0 30px var(--color-primary), 0 0 40px var(--color-primary);
+    box-shadow:
+      0 0 30px var(--color-primary),
+      0 0 40px var(--color-primary);
   }
 }
 ```
