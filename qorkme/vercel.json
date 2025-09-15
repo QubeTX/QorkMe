@@ -52,13 +52,5 @@
     "app/api/shorten/route.ts": {
       "maxDuration": 10
     }
-  },
-
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key",
-    "SUPABASE_SERVICE_KEY": "@supabase_service_key",
-    "NEXT_PUBLIC_SITE_URL": "@next_public_site_url",
-    "NEXT_PUBLIC_SHORT_DOMAIN": "@next_public_short_domain"
   }
 }
