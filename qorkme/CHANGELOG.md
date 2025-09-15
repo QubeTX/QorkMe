@@ -5,6 +5,17 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.4] - 2025-01-15
+
+### 🔧 GitHub Actions Deployment Workflow Permissions
+
+#### Fixed
+
+- **Deployment Workflow Permissions**
+  - Added explicit permissions for creating commit comments
+  - Fixed "Resource not accessible by integration" error
+  - Workflow now completes successfully after deployment
+
 ## [2.0.3] - 2025-01-15
 
 ### 🔧 CI/CD Security Scan Fix
