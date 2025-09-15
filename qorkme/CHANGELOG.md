@@ -5,9 +5,113 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-09-15
+
+### 🚀 Major UI Revolution - Sophisticated Dark Mode with Glassmorphism
+
+#### Added
+
+- **Sophisticated Dark Mode Architecture**
+  - Deep midnight blue background (#0f172a) as primary theme
+  - Slate blue surfaces (#1e293b) with elevated variants (#334155)
+  - Bright accent colors: Blue (#60a5fa), Purple (#a855f7), Cyan (#06b6d4)
+  - Complete overhaul from muddy earth tones to high-contrast sophistication
+
+- **Advanced Glassmorphism Effects**
+  - Backdrop-blur effects on all card components with `backdrop-filter: blur(10px)`
+  - Layered shadow system with multiple depth levels
+  - Transparent surface backgrounds with rgba values for depth
+  - Border gradient highlights that appear on hover
+
+- **Enhanced Card Design System**
+  - Glassmorphism cards with sophisticated hover transforms
+  - `translateY(-6px) scale(1.01)` hover effects for premium feel
+  - Shimmer animations with gradient overlays
+  - Enhanced depth with multi-layer box-shadows
+  - Elevated card variants with accent border highlights
+
+- **Premium Interactive Elements**
+  - Button shimmer effects with pseudo-element gradient sweeps
+  - Enhanced hover states with `scale(1.05)` transforms
+  - Gradient backgrounds on all button variants
+  - Sophisticated focus states with enhanced accessibility
+  - Floating animations for feature cards
+
+- **Advanced Background Patterns**
+  - Radial gradient patterns for visual depth without distraction
+  - Multiple gradient overlays in dark mode for sophisticated ambiance
+  - Fixed background attachment for immersive experience
+  - Subtle light mode patterns maintaining elegance
+
+- **Enhanced Layout & Centering**
+  - Proper flexbox implementation for perfect vertical centering
+  - Hero section optimized for viewport centering
+  - Improved responsive spacing and section organization
+  - Better main/section structure for accessibility
+
+#### Changed
+
+- **Complete Dark Mode Revolution**
+  - Transformed from basic earth tones to sophisticated blue/purple/cyan palette
+  - Much better contrast ratios and modern appeal
+  - Professional-grade color relationships and accessibility
+  - Primary focus on dark mode with light mode as secondary
+
+- **Component Architecture Modernization**
+  - All buttons now feature gradient backgrounds and shimmer effects
+  - Card components enhanced with glassmorphism and advanced shadows
+  - Input fields with sophisticated focus states and backdrop effects
+  - Navigation elements with enhanced interactivity
+
+- **Typography & Spacing Refinements**
+  - Better proportions and spacing throughout all components
+  - Enhanced ZT Bros Oskon implementation with improved fallbacks
+  - Uppercase styling with optimized tracking and weights
+  - Improved readability with sophisticated color contrast
+
+- **Animation & Interaction Overhaul**
+  - Replaced basic hover effects with sophisticated transform animations
+  - Added shimmer effects across interactive elements
+  - Enhanced micro-animations with cubic-bezier easing
+  - Floating animations for visual interest and premium feel
+
+#### Technical Improvements
+
+- **Advanced CSS Architecture**
+  - Comprehensive glassmorphism utility classes
+  - Multi-layer shadow system with theme-aware variables
+  - Enhanced animation keyframes for sophisticated effects
+  - GPU-accelerated transforms and backdrop-filter optimization
+
+- **Performance Enhancements**
+  - Optimized backdrop-filter rendering for smooth performance
+  - Efficient shadow layering without performance impact
+  - Streamlined animation system with proper easing
+  - Enhanced responsiveness across all device types
+
+- **Accessibility Improvements**
+  - Much better contrast ratios with new color palette
+  - Enhanced focus states with proper outline management
+  - Improved color independence for information conveyance
+  - Better keyboard navigation and screen reader support
+
+#### Breaking Changes
+
+- **Complete Visual Transformation**: Entire UI aesthetic changed from earth tones to sophisticated dark blues
+- **Interaction Patterns**: All hover and interactive behaviors significantly enhanced
+- **Color Palette**: Complete replacement of color scheme affects all visual elements
+- **Component Styling**: All components updated with glassmorphism and advanced effects
+
+#### Migration Notes
+
+- All functional features remain identical - only visual design dramatically improved
+- Existing shortened URLs continue to work without any changes
+- Database schema and backend functionality completely unchanged
+- Frontend represents a complete aesthetic evolution to premium standards
+
 ## [2.1.0] - 2025-01-15
 
-### 🎨 Complete Design System Overhaul - Sandstone & Earth Tones
+### 🎨 Complete Design System Overhaul - Sandstone & Earth Tones (Deprecated)
 
 #### Added
 

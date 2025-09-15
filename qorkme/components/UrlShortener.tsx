@@ -72,20 +72,20 @@ export function UrlShortener() {
 
   return (
     <>
-      <CardHeader>
-        <CardTitle className="text-2xl">Shorten Your URL</CardTitle>
-        <CardDescription>
+      <CardHeader className="text-center">
+        <CardTitle className="text-2xl md:text-3xl mb-4">Shorten Your URL</CardTitle>
+        <CardDescription className="text-base">
           Paste your long URL below and we&apos;ll create a short, memorable link for you
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-8">
           {/* Main URL Input */}
-          <div className="space-y-2">
-            <label htmlFor="url" className="block text-sm font-medium text-text-secondary">
+          <div className="space-y-3">
+            <label htmlFor="url" className="block text-sm font-semibold text-text-secondary uppercase tracking-wide">
               Enter your URL
             </label>
-            <div className="relative">
+            <div className="relative group">
               <Input
                 id="url"
                 type="url"
@@ -93,36 +93,36 @@ export function UrlShortener() {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 disabled={loading}
-                className="pr-12"
+                className="pr-12 text-base py-4 group-hover:border-accent transition-all duration-300"
                 required
               />
               <Link2
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted group-hover:text-accent transition-colors"
                 size={20}
               />
             </div>
           </div>
 
           {/* Custom Alias Section */}
-          <div className="space-y-4">
+          <div className="space-y-5">
             <button
               type="button"
               onClick={() => setShowCustom(!showCustom)}
-              className="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors group"
+              className="flex items-center gap-3 text-text-secondary hover:text-accent transition-all duration-300 group p-2 rounded-lg hover:bg-accent/5"
             >
-              <div className={`transition-transform duration-200 ${showCustom ? 'rotate-90' : ''}`}>
-                <Settings2 size={18} />
+              <div className={`transition-all duration-300 ${showCustom ? 'rotate-90 text-accent' : 'group-hover:scale-110'}`}>
+                <Settings2 size={20} />
               </div>
-              <span className="font-medium text-sm">Custom Alias (Optional)</span>
+              <span className="font-semibold text-sm uppercase tracking-wide">Custom Alias (Optional)</span>
             </button>
 
             {showCustom && (
-              <div className="animate-slideIn space-y-2">
-                <label htmlFor="alias" className="block text-sm font-medium text-text-secondary">
+              <div className="animate-slideIn space-y-3 p-4 border border-border/50 rounded-lg bg-surface/50">
+                <label htmlFor="alias" className="block text-sm font-semibold text-text-secondary uppercase tracking-wide">
                   Choose your custom alias
                 </label>
-                <div className="flex gap-2 items-center">
-                  <span className="text-text-muted font-mono text-sm">qork.me/</span>
+                <div className="flex gap-3 items-center">
+                  <span className="text-text-muted font-mono text-sm font-semibold bg-border/20 px-3 py-2 rounded">qork.me/</span>
                   <Input
                     id="alias"
                     type="text"
@@ -132,7 +132,7 @@ export function UrlShortener() {
                       setCustomAlias(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))
                     }
                     disabled={loading}
-                    className="flex-1 font-mono"
+                    className="flex-1 font-mono py-3"
                     pattern="[a-z0-9-]+"
                     minLength={3}
                     maxLength={50}
@@ -143,12 +143,13 @@ export function UrlShortener() {
                     size="sm"
                     onClick={checkAliasAvailability}
                     disabled={!customAlias || loading}
+                    className="px-4 py-3"
                   >
                     <Check size={16} />
                     Check
                   </Button>
                 </div>
-                <p className="text-xs text-text-muted">
+                <p className="text-xs text-text-muted font-medium">
                   Use lowercase letters, numbers, and hyphens. 3-50 characters.
                 </p>
               </div>
@@ -156,22 +157,30 @@ export function UrlShortener() {
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" variant="primary" size="lg" disabled={loading} className="w-full">
-            {loading ? (
-              <>
-                <div className="animate-spin rounded-full h-5 w-5 border-2 border-text-inverse border-t-transparent" />
-                <span>Creating your link...</span>
-              </>
-            ) : (
-              <>
-                <Zap size={20} />
-                <span>Shorten URL</span>
-              </>
-            )}
-          </Button>
+          <div className="pt-4">
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              disabled={loading}
+              className="w-full py-4 text-lg font-bold transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+            >
+              {loading ? (
+                <>
+                  <div className="animate-spin rounded-full h-6 w-6 border-2 border-text-inverse border-t-transparent" />
+                  <span>Creating your link...</span>
+                </>
+              ) : (
+                <>
+                  <Zap size={22} className="animate-pulse" />
+                  <span>Shorten URL</span>
+                </>
+              )}
+            </Button>
+          </div>
 
           {/* Info Text */}
-          <p className="text-xs text-center text-text-muted">
+          <p className="text-xs text-center text-text-muted font-medium pt-2">
             By shortening a URL, you agree to our Terms of Service and Privacy Policy
           </p>
         </form>

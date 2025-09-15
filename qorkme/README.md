@@ -1,6 +1,6 @@
-# QorkMe - Modern URL Shortener
+# QorkMe - Premium URL Shortener
 
-A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring a sophisticated card-based design with warm sandstone and earth tones, bold serif typography, and intelligent short code generation.
+A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring advanced glassmorphism design with midnight blue aesthetics, premium interactive effects, and intelligent short code generation.
 
 ## Features
 
@@ -15,13 +15,14 @@ A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase
 
 ### Design & User Experience
 
-- **Sophisticated Card-Based Design**: Modern minimalist aesthetic with refined shadows and interactive hover effects
-- **Sandstone & Earth Tone Palette**: Warm sandstone backgrounds, desert sand brown, rich earth brown accents
-- **Responsive Design**: Optimized for mobile, tablet, and desktop with touch-friendly interactions
-- **Light/Dark Theme Support**: Seamless theme transitions with intelligent system preference detection
-- **ZT Bros Oskon Typography**: Bold serif fonts with uppercase styling for headings and modern character
-- **Enhanced Interactive Elements**: Stronger hover effects, refined animations, and sophisticated micro-interactions
-- **Themed Notifications**: Toast system perfectly integrated with the sandstone aesthetic
+- **Advanced Glassmorphism Design**: Sophisticated backdrop-blur effects with layered shadow systems
+- **Premium Dark Mode**: Deep midnight blue (#0f172a) with bright accents (blue, purple, cyan)
+- **Enhanced Interactivity**: Shimmer effects, hover transforms, and floating animations
+- **Responsive Excellence**: Optimized for all devices with premium touch interactions
+- **Dual Theme Support**: Dark mode primary with sophisticated light mode fallback
+- **ZT Bros Oskon Typography**: Bold serif fonts with uppercase styling and enhanced spacing
+- **Premium Visual Effects**: Scale transforms, gradient overlays, and sophisticated micro-animations
+- **Integrated Notification System**: Glassmorphic toasts matching the overall aesthetic
 
 ### Technical Excellence
 
@@ -143,7 +144,7 @@ qorkme/
 - **Framework**: Next.js 15.5.3 with App Router
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
-- **Styling**: Tailwind CSS v4 with custom sandstone design tokens and CSS variables
+- **Styling**: Tailwind CSS v4 with sophisticated glassmorphism design tokens and advanced CSS variables
 - **UI Components**: Card-based components with refined shadows and sophisticated interactions
 - **Theme System**: Dynamic light/dark mode with deep earth tone variants
 - **Icons**: Lucide React v0.544.0
@@ -179,18 +180,18 @@ Key performance features:
 - Comprehensive indexing strategy for 200,000+ URLs
 - Row-level security for multi-tenant support
 
-## Modern Design Philosophy
+## Premium Design Philosophy
 
-QorkMe embraces sophisticated minimalist design principles:
+QorkMe delivers a sophisticated, premium user experience:
 
-- **Refined & Functional**: Every element serves a purpose with elegant clarity
-- **Sandstone Color Harmony**: Warm earth tones that feel natural and sophisticated
-- **Enhanced Card Layout**: Elevated content cards with stronger borders and accent highlights
-- **Seamless Theming**: Intelligent light/dark mode with deep earth tone transitions
-- **Bold Typography Excellence**: ZT Bros Oskon serif fonts with uppercase styling and strong character
-- **Sophisticated Interactions**: Enhanced hover effects and refined animations that elevate usability
+- **Refined & Sophisticated**: Every element crafted for premium feel and elegant functionality
+- **Advanced Color Architecture**: Deep midnight blues with bright, high-contrast accent colors
+- **Glassmorphism Excellence**: Backdrop-blur effects with layered shadow systems for depth
+- **Dark-First Approach**: Sophisticated dark mode as primary experience with elegant light fallback
+- **Typography Mastery**: ZT Bros Oskon serif fonts with uppercase styling and enhanced character
+- **Premium Interactions**: Shimmer effects, transform animations, and floating elements for engaging UX
 
-See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete design specifications.
+See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete glassmorphism and sophisticated design specifications.
 
 ## Production Configuration
 
@@ -382,4 +383,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Built with passion - Bringing modern design excellence to URL shortening.
+Built with sophistication - Bringing premium glassmorphism and advanced interactive design to URL shortening.

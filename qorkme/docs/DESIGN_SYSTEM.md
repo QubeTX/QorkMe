@@ -1,6 +1,6 @@
 # QorkMe Design System
 
-## Sophisticated Sandstone & Earth Tone Aesthetic
+## Modern Dark Mode with Sophisticated Blues & Glassmorphism
 
 ### Table of Contents
 
@@ -20,59 +20,61 @@
 QorkMe's design system embraces sophisticated minimalist principles, emphasizing:
 
 - **Refined & Functional**: Every element serves a purpose with elegant clarity
-- **Sandstone Color Harmony**: Warm earth tones that feel natural and sophisticated
-- **Enhanced Card Architecture**: Elevated content with stronger borders and accent highlights
-- **Seamless Theming**: Intelligent light/dark mode with deep earth tone transitions
+- **Sophisticated Color Architecture**: Deep midnight blues with bright accent colors
+- **Enhanced Glassmorphism**: Backdrop-blur effects with layered shadow systems
+- **Advanced Dark Mode**: Primary focus on dark theme with sophisticated blue/purple/cyan palette
 - **Bold Typography Excellence**: ZT Bros Oskon serif fonts with uppercase styling and strong character
-- **Sophisticated Interactions**: Enhanced hover effects and refined animations that elevate usability
+- **Premium Interactions**: Shimmer effects, hover transforms, and floating animations
 
 ## Color Palette
 
-### Sandstone & Earth Tones
+### Light Theme - Natural & Warm
 
 ```css
-/* Primary Colors */
---sandstone-bg: #f5e6d3; /* Warm sandstone background */
---sand-surface: #faf7f2; /* Light sand surface */
---desert-sand: #8b7355; /* Desert sand brown primary */
---earth-brown: #3e2723; /* Rich earth brown secondary */
---medium-earth: #5d4037; /* Medium earth brown accent */
+/* Light Theme Base */
+--color-background: linear-gradient(135deg, #f5e6d3 0%, #faf7f2 100%); /* Warm sandstone gradient */
+--color-surface: rgba(250, 247, 242, 0.9); /* Light sand with transparency */
+--color-surface-elevated: rgba(255, 255, 255, 0.95);
+--color-primary: #8b7355; /* Desert sand brown */
+--color-secondary: #3e2723; /* Rich earth brown */
+--color-accent: #5d4037; /* Medium earth brown */
 
-/* Hover States */
---desert-sand-hover: #6d5a44; /* Desert sand hover */
---earth-brown-hover: #2e1a17; /* Earth brown hover */
---medium-earth-hover: #4e342e; /* Medium earth hover */
-
-/* Surface Colors */
---surface-elevated: #ffffff; /* Elevated card backgrounds */
---sandy-border: #d4b896; /* Sandy border color */
---border-hover: #c4a57d; /* Border hover state */
+/* Text Colors */
+--color-text-primary: #2e1a17; /* Deep brown */
+--color-text-secondary: #5d4037; /* Medium brown */
+--color-text-muted: #8b7355; /* Light brown */
 ```
 
-### Dark Theme Colors
+### Dark Theme - Sophisticated Blues (Primary Focus)
 
 ```css
-/* Dark Theme Overrides */
---dark-earth: #1a1410; /* Dark earth background */
---dark-surface: #2e2520; /* Dark brown surface */
---dark-elevated: #3e342e; /* Dark elevated surface */
---sandy-tan: #d4b896; /* Sandy tan primary */
---light-sandstone: #f5e6d3; /* Light sandstone secondary */
---medium-sand: #c4a57d; /* Medium sand accent */
---dark-border: #4e3f36; /* Dark theme borders */
---dark-border-hover: #5d4a3f; /* Dark border hover */
+/* Dark Theme - Modern Sophistication */
+--color-background: #0f172a; /* Deep midnight blue */
+--color-surface: #1e293b; /* Slate blue surface */
+--color-surface-elevated: #334155; /* Elevated slate */
+--color-primary: #60a5fa; /* Bright blue */
+--color-secondary: #a855f7; /* Rich purple */
+--color-accent: #06b6d4; /* Cyan accent */
+
+/* Text Colors */
+--color-text-primary: #f1f5f9; /* Almost white */
+--color-text-secondary: #cbd5e1; /* Light gray */
+--color-text-muted: #64748b; /* Muted gray */
+
+/* Enhanced Borders & Shadows */
+--color-border: #475569; /* Gray border */
+--color-shadow: rgba(0, 0, 0, 0.5);
+--color-shadow-hover: rgba(0, 0, 0, 0.7);
 ```
 
-### Semantic Usage
+### Design Philosophy & Usage
 
-- **Primary Actions**: Desert Sand Brown variants with stronger presence
-- **Secondary Actions**: Rich Earth Brown for sophisticated contrast
-- **Accent Elements**: Medium Earth Brown for highlights and features
-- **Success States**: Earthy Green (#7cb342) maintaining earth tone consistency
-- **Warning States**: Burnt Orange (#f57c00) complementing the warm palette
-- **Text Hierarchy**: Deep Brown (light) / Light Sandstone (dark)
-- **Backgrounds**: Warm Sandstone (light) / Deep Earth (dark)
-- **Cards**: Enhanced with stronger borders and earth tone accent highlights
+- **Primary Theme**: Dark mode as the primary experience with sophisticated midnight blue background
+- **Accent Strategy**: Bright blue (#60a5fa), rich purple (#a855f7), and cyan (#06b6d4) for interactive elements
+- **Card Design**: Glassmorphism with backdrop-blur effects and layered shadows
+- **Interactive Elements**: Enhanced hover states with transforms, shimmer effects, and color transitions
+- **Light Mode**: Natural sandstone/earth tones as secondary experience
+- **Contrast**: Much improved from previous muddy browns to sophisticated high-contrast blues
 
 ## Typography
 
@@ -186,63 +188,58 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 
 ## Components
 
-### 1. Card Component
+### 1. Enhanced Card Component
 
 **File**: `components/cards/Card.tsx`
 
 **Variants**:
 
-- `standard`: Basic card with subtle shadow
-- `elevated`: Enhanced shadow for emphasis
-- `interactive`: Hover effects and cursor pointer
+- `standard`: Glassmorphism card with backdrop-blur and subtle shadows
+- `elevated`: Premium card with stronger borders, enhanced shadows, and accent highlights
+- `interactive`: Enhanced hover states with transforms and shimmer effects
 
-**Features**:
+**Advanced Features**:
 
-- Soft border-radius (8px)
-- Box shadow: subtle depth without harsh borders
-- Theme-aware background colors
-- Smooth hover transitions
-- Responsive padding
+- **Glassmorphism Effects**: `backdrop-filter: blur(10px)` with transparency
+- **Layered Shadow System**: Multiple shadow layers for depth
+- **Hover Transforms**: `translateY(-6px) scale(1.01)` on hover
+- **Shimmer Animations**: Gradient overlays with shimmer effects
+- **Border Gradients**: Top border with gradient highlights
+- **Responsive Design**: Touch-friendly on mobile with enhanced interactions
 
-### 2. Button Component
+### 2. Enhanced Button Component
 
 **File**: `components/ui/Button.tsx`
 
 **Variants**:
 
-- `primary`: Desert sand brown background, light text
-- `secondary`: Rich earth brown background, light text
-- `outline`: Transparent with earth brown border
-- `ghost`: No background, enhanced hover effects
+- `primary`: Gradient from secondary to secondary-hover with shimmer effect
+- `secondary`: Gradient from accent to accent-hover with enhanced shadows
+- `accent`: Gradient from primary to primary-hover with sophisticated styling
+- `outline`: Transparent with themed borders and glassmorphism hover
+- `ghost`: Minimal with sophisticated hover gradients
 
-**Sizes**:
+**Advanced Features**:
 
-- `sm`: 36px height, compact padding
-- `md`: 44px height, standard padding
-- `lg`: 52px height, generous padding
+- **Shimmer Effects**: `before:` pseudo-element with gradient sweep animation
+- **Enhanced Transforms**: `hover:scale-[1.05]` and `active:scale-[0.95]`
+- **Gradient Backgrounds**: Multiple gradient variants for each button type
+- **Uppercase Typography**: ZT Bros Oskon with tracking and weight adjustments
+- **Shadow Enhancements**: `shadow-xl` to `shadow-2xl` on hover
+- **Transition Sophistication**: 300ms duration with advanced easing
 
-**Design Rules**:
-
-- Rounded corners (4px) for refined aesthetic
-- Stronger borders with earth tone accents
-- ZT Bros Oskon font, semibold weight with uppercase styling
-- Hover: enhanced scale and pronounced color shifts
-- Focus: 2px outline with earth brown theme color
-- Disabled: reduced opacity and cursor, muted earth tones
-
-### 3. Input Component
+### 3. Enhanced Input Component
 
 **File**: `components/ui/Input.tsx`
 
-**Features**:
+**Advanced Features**:
 
-- Enhanced border (2px) with sandstone-themed colors
-- Refined corners (4px) for sophisticated feel
-- Focus state: 2px earth brown outline with sandstone background
-- Error state: deep red border with earth tone integration
-- Success state: earthy green border maintaining palette consistency
-- Generous padding (16px horizontal, 12px vertical)
-- Placeholder text with earth tone contrast optimization
+- **Glassmorphism Base**: Surface background with backdrop-blur effects
+- **Dynamic Borders**: 2px borders with sophisticated color transitions
+- **Focus Enhancement**: Box-shadow with themed color and background change
+- **Theme Integration**: Seamless integration with both light and dark modes
+- **Typography Consistency**: ZT Bros Oskon font family throughout
+- **Accessibility**: Enhanced focus-visible states and proper contrast ratios
 
 ### 4. FeatureCard Component
 
@@ -294,90 +291,133 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 - Share buttons for social platforms
 - Responsive layout for all devices
 
-## Animations
+## Advanced Animations & Effects
 
-### Micro-Interactions
+### Sophisticated Micro-Interactions
 
 ```css
-/* Enhanced Hover Effects */
-.card-hover {
-  transition:
-    transform 250ms ease,
-    box-shadow 250ms ease,
-    border-color 250ms ease;
+/* Enhanced Card Hover with Glassmorphism */
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow:
+    0 20px 25px -5px var(--color-shadow-hover),
+    0 10px 10px -5px var(--color-shadow);
+  border-color: var(--color-primary);
+  background: var(--color-surface-elevated);
 }
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(62, 39, 35, 0.15);
-  border-color: var(--color-border-hover);
+/* Button Shimmer Effects */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
 }
 
-/* Button Interactions */
-.button-press {
-  transition: transform 150ms ease;
+.btn:hover::before {
+  transform: translateX(0);
 }
 
-.button-press:active {
-  transform: scale(0.98);
+/* Advanced Button Interactions */
+.btn:hover {
+  transform: scale(1.05);
 }
 
-/* Theme Transitions */
-.theme-transition {
-  transition:
-    background-color 250ms ease,
-    color 250ms ease;
+.btn:active {
+  transform: scale(0.95);
 }
 ```
 
-### Loading States
+### Advanced Animation Keyframes
 
 ```css
-/* Shimmer Effect */
+/* Floating Animation for Feature Cards */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-4px) rotate(-1deg);
+  }
+}
+
+/* Enhanced Shimmer Effect */
 @keyframes shimmer {
   0% {
-    background-position: -200px 0;
+    transform: translateX(-100%);
   }
   100% {
-    background-position: calc(200px + 100%) 0;
+    transform: translateX(100%);
   }
 }
 
-.loading-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(135, 169, 107, 0.1), transparent);
-  animation: shimmer 1.5s infinite;
+/* Glow Animation for Accent Elements */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--color-primary);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--color-primary), 0 0 40px var(--color-primary);
+  }
 }
 ```
 
-### Animation Guidelines
+### Enhanced Animation Guidelines
 
-- **Duration**: 150ms for micro-interactions, 250ms for theme changes, 1.5s for loading
-- **Easing**: `ease` for natural movement, `ease-in-out` for reversible animations
-- **Performance**: Prioritize transform and opacity for GPU acceleration
-- **Accessibility**: Respect `prefers-reduced-motion` user preferences
-- **Purpose**: Enhance usability, provide feedback, maintain user engagement
+- **Duration**: 150ms for micro-interactions, 300ms for complex transforms, 700ms for shimmer effects
+- **Easing**: `cubic-bezier(0.4, 0, 0.2, 1)` for sophisticated movement patterns
+- **Performance**: GPU-accelerated transforms and backdrop-filter effects
+- **Layered Effects**: Multiple shadow layers and gradient overlays for depth
+- **Accessibility**: Full `prefers-reduced-motion` support with graceful degradation
+- **Purpose**: Create premium feel with sophisticated visual feedback
 
-## Design Patterns
+## Advanced Design Patterns
 
-### 1. Card Pattern
+### 1. Glassmorphism Card Pattern
 
 ```css
-.modern-card {
+.card {
   background: var(--color-surface);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
-  box-shadow: 0 2px 8px var(--color-shadow);
-  padding: 2rem;
-  transition:
-    transform 250ms ease,
-    box-shadow 250ms ease,
-    border-color 250ms ease;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 4px 6px -1px var(--color-shadow),
+    0 2px 4px -1px var(--color-shadow);
+  position: relative;
+  overflow: hidden;
 }
 
-.modern-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px var(--color-shadow-hover);
-  border-color: var(--color-border-hover);
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow:
+    0 20px 25px -5px var(--color-shadow-hover),
+    0 10px 10px -5px var(--color-shadow);
+  border-color: var(--color-primary);
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 ```
 
@@ -489,39 +529,43 @@ xl: 1280px  /* Desktops */
 
 ### Performance Optimization
 
-- **Font Loading**: `font-display: swap` for ZT Bros Oskon with serif fallbacks
-- **Animation Performance**: GPU-accelerated properties (transform, opacity)
-- **Bundle Optimization**: Tree-shaking unused styles and components
-- **Lazy Loading**: Code splitting for non-critical components
-- **Reduced Motion**: Conditional animations based on user preferences
-- **Enhanced Shadows**: Optimized shadow rendering with earth tone colors
+- **Font Loading**: `font-display: swap` for ZT Bros Oskon with comprehensive fallback system
+- **Advanced Animation Performance**: GPU-accelerated backdrop-filter, transform, and opacity
+- **Glassmorphism Optimization**: Efficient backdrop-blur rendering with minimal performance impact
+- **Bundle Optimization**: Tree-shaking unused styles and sophisticated effect components
+- **Lazy Loading**: Code splitting for animation-heavy and interactive components
+- **Reduced Motion**: Graceful degradation for all shimmer, float, and transform animations
+- **Shadow Layering**: Multi-layer shadow system optimized for both themes
 
-### Theme Implementation
+### Advanced Theme Implementation
 
 ```css
-/* Theme Provider with CSS Custom Properties */
+/* Light Theme - Natural & Warm */
 :root {
   color-scheme: light;
-  --color-background: #f5e6d3; /* Warm sandstone */
-  --color-surface: #faf7f2; /* Light sand */
-  --color-primary: #8b7355; /* Desert sand brown */
-  --color-text-primary: #2e1a17; /* Deep brown */
+  --color-background: linear-gradient(135deg, #f5e6d3 0%, #faf7f2 100%);
+  --color-surface: rgba(250, 247, 242, 0.9);
+  --color-primary: #8b7355;
+  --color-text-primary: #2e1a17;
 }
 
+/* Dark Theme - Sophisticated Blues (Primary Focus) */
 [data-theme='dark'] {
   color-scheme: dark;
-  --color-background: #1a1410; /* Dark earth */
-  --color-surface: #2e2520; /* Dark brown surface */
-  --color-primary: #d4b896; /* Sandy tan */
-  --color-text-primary: #f5e6d3; /* Light sandstone */
+  --color-background: #0f172a; /* Deep midnight blue */
+  --color-surface: #1e293b; /* Slate blue surface */
+  --color-primary: #60a5fa; /* Bright blue */
+  --color-secondary: #a855f7; /* Rich purple */
+  --color-accent: #06b6d4; /* Cyan accent */
+  --color-text-primary: #f1f5f9;
 }
 
-/* Enhanced transitions */
-* {
-  transition:
-    background-color 250ms ease,
-    color 250ms ease,
-    border-color 250ms ease;
+/* Enhanced Background Patterns */
+[data-theme='dark'] body::before {
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(96, 165, 250, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.03) 0%, transparent 50%);
 }
 ```
 
@@ -593,4 +637,17 @@ xl: 1280px  /* Desktops */
 
 ---
 
-This modern design system ensures visual consistency and excellent user experience across the QorkMe application while maintaining clean, professional aesthetics that scale beautifully across all devices and themes.
+## Summary
+
+This sophisticated design system represents a major evolution from basic card layouts to premium glassmorphism effects. The dark mode-first approach with sophisticated blue/purple/cyan palette creates a modern, high-end aesthetic that rivals premium SaaS applications.
+
+### Key Achievements:
+
+- **Glassmorphism Excellence**: Backdrop-blur effects with layered shadows
+- **Advanced Animations**: Shimmer effects, floating animations, and sophisticated hover states
+- **Dark Mode Sophistication**: Midnight blue (#0f172a) to bright accent colors (#60a5fa, #a855f7, #06b6d4)
+- **Enhanced Interactivity**: Scale transforms, gradient overlays, and premium visual feedback
+- **Typography Excellence**: ZT Bros Oskon with uppercase styling and enhanced spacing
+- **Performance Optimized**: GPU-accelerated effects with graceful degradation
+
+This design system ensures QorkMe delivers a premium, sophisticated user experience that stands out in the URL shortener market.
