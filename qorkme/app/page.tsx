@@ -32,7 +32,9 @@ export default function Home() {
             <div className="text-center mb-16 animate-fadeIn">
               <div className="inline-flex items-center gap-3 px-6 py-3 rounded-sm bg-secondary/10 border border-secondary/20 mb-8">
                 <Sparkles size={18} className="text-secondary" />
-                <span className="text-sm font-display font-semibold tracking-wider text-secondary">Premium URL Management</span>
+                <span className="text-sm font-display font-semibold tracking-wider text-secondary">
+                  Premium URL Management
+                </span>
               </div>
               <h1 className="font-display font-bold mb-8 text-gradient leading-none">
                 Shorten Links
@@ -96,19 +98,27 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 p-12">
                   <div className="text-center">
                     <div className="text-4xl font-display font-bold text-secondary mb-3">200K+</div>
-                    <p className="text-sm font-medium text-text-muted uppercase tracking-wider">URLs Shortened</p>
+                    <p className="text-sm font-medium text-text-muted uppercase tracking-wider">
+                      URLs Shortened
+                    </p>
                   </div>
                   <div className="text-center">
                     <div className="text-4xl font-display font-bold text-accent mb-3">99.9%</div>
-                    <p className="text-sm font-medium text-text-muted uppercase tracking-wider">Uptime SLA</p>
+                    <p className="text-sm font-medium text-text-muted uppercase tracking-wider">
+                      Uptime SLA
+                    </p>
                   </div>
                   <div className="text-center">
                     <div className="text-4xl font-display font-bold text-primary mb-3">50ms</div>
-                    <p className="text-sm font-medium text-text-muted uppercase tracking-wider">Response Time</p>
+                    <p className="text-sm font-medium text-text-muted uppercase tracking-wider">
+                      Response Time
+                    </p>
                   </div>
                   <div className="text-center">
                     <div className="text-4xl font-display font-bold text-secondary mb-3">15+</div>
-                    <p className="text-sm font-medium text-text-muted uppercase tracking-wider">Global Regions</p>
+                    <p className="text-sm font-medium text-text-muted uppercase tracking-wider">
+                      Global Regions
+                    </p>
                   </div>
                 </div>
               </Card>
@@ -145,7 +155,9 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <span className="font-display text-2xl font-bold text-secondary">QORKME</span>
                 <span className="text-accent text-2xl">•</span>
-                <span className="text-sm font-medium text-text-muted uppercase tracking-wider">Premium URL Management</span>
+                <span className="text-sm font-medium text-text-muted uppercase tracking-wider">
+                  Premium URL Management
+                </span>
               </div>
               <p className="text-sm text-text-muted font-medium tracking-wide">
                 Crafted with ZT Bros Oskon Typography • San Francisco, CA

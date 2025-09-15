@@ -32,11 +32,11 @@ QorkMe's design system embraces sophisticated minimalist principles, emphasizing
 
 ```css
 /* Primary Colors */
---sandstone-bg: #f5e6d3;      /* Warm sandstone background */
---sand-surface: #faf7f2;      /* Light sand surface */
---desert-sand: #8b7355;       /* Desert sand brown primary */
---earth-brown: #3e2723;       /* Rich earth brown secondary */
---medium-earth: #5d4037;      /* Medium earth brown accent */
+--sandstone-bg: #f5e6d3; /* Warm sandstone background */
+--sand-surface: #faf7f2; /* Light sand surface */
+--desert-sand: #8b7355; /* Desert sand brown primary */
+--earth-brown: #3e2723; /* Rich earth brown secondary */
+--medium-earth: #5d4037; /* Medium earth brown accent */
 
 /* Hover States */
 --desert-sand-hover: #6d5a44; /* Desert sand hover */
@@ -44,22 +44,22 @@ QorkMe's design system embraces sophisticated minimalist principles, emphasizing
 --medium-earth-hover: #4e342e; /* Medium earth hover */
 
 /* Surface Colors */
---surface-elevated: #ffffff;   /* Elevated card backgrounds */
---sandy-border: #d4b896;      /* Sandy border color */
---border-hover: #c4a57d;      /* Border hover state */
+--surface-elevated: #ffffff; /* Elevated card backgrounds */
+--sandy-border: #d4b896; /* Sandy border color */
+--border-hover: #c4a57d; /* Border hover state */
 ```
 
 ### Dark Theme Colors
 
 ```css
 /* Dark Theme Overrides */
---dark-earth: #1a1410;        /* Dark earth background */
---dark-surface: #2e2520;      /* Dark brown surface */
---dark-elevated: #3e342e;     /* Dark elevated surface */
---sandy-tan: #d4b896;         /* Sandy tan primary */
---light-sandstone: #f5e6d3;   /* Light sandstone secondary */
---medium-sand: #c4a57d;       /* Medium sand accent */
---dark-border: #4e3f36;       /* Dark theme borders */
+--dark-earth: #1a1410; /* Dark earth background */
+--dark-surface: #2e2520; /* Dark brown surface */
+--dark-elevated: #3e342e; /* Dark elevated surface */
+--sandy-tan: #d4b896; /* Sandy tan primary */
+--light-sandstone: #f5e6d3; /* Light sandstone secondary */
+--medium-sand: #c4a57d; /* Medium sand accent */
+--dark-border: #4e3f36; /* Dark theme borders */
 --dark-border-hover: #5d4a3f; /* Dark border hover */
 ```
 
@@ -80,9 +80,9 @@ QorkMe's design system embraces sophisticated minimalist principles, emphasizing
 
 ```css
 /* Primary Fonts */
---font-display: 'ZT Bros Oskon', 'Playfair Display', Georgia, serif;   /* Headlines, hero text */
---font-body: 'ZT Bros Oskon', 'Crimson Text', Georgia, serif;           /* Body text, paragraphs */
---font-mono: 'JetBrains Mono', 'Courier New', monospace;                /* Code, technical content */
+--font-display: 'ZT Bros Oskon', 'Playfair Display', Georgia, serif; /* Headlines, hero text */
+--font-body: 'ZT Bros Oskon', 'Crimson Text', Georgia, serif; /* Body text, paragraphs */
+--font-mono: 'JetBrains Mono', 'Courier New', monospace; /* Code, technical content */
 
 /* Fallback Fonts (Google Fonts) */
 --font-fallback: 'Playfair Display', 'Crimson Text', Georgia, serif;
@@ -92,14 +92,14 @@ QorkMe's design system embraces sophisticated minimalist principles, emphasizing
 
 ```css
 /* Fluid Typography */
---text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);     /* 12-14px */
---text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);       /* 14-16px */
---text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);       /* 16-18px */
---text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);      /* 18-20px */
---text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);       /* 20-24px */
---text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);            /* 24-32px */
---text-3xl: clamp(2rem, 1.7rem + 1.5vw, 2.75rem);         /* 32-44px */
---text-4xl: clamp(2.75rem, 2.3rem + 2.25vw, 4rem);        /* 44-64px */
+--text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem); /* 12-14px */
+--text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem); /* 14-16px */
+--text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem); /* 16-18px */
+--text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem); /* 18-20px */
+--text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem); /* 20-24px */
+--text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem); /* 24-32px */
+--text-3xl: clamp(2rem, 1.7rem + 1.5vw, 2.75rem); /* 32-44px */
+--text-4xl: clamp(2.75rem, 2.3rem + 2.25vw, 4rem); /* 44-64px */
 ```
 
 ### Typography Hierarchy
@@ -121,30 +121,30 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 ### Spacing Scale
 
 ```css
---space-1: 0.25rem;  /* 4px  - Tight spacing */
---space-2: 0.5rem;   /* 8px  - Base unit */
---space-3: 0.75rem;  /* 12px - Small spacing */
---space-4: 1rem;     /* 16px - Standard spacing */
---space-6: 1.5rem;   /* 24px - Medium spacing */
---space-8: 2rem;     /* 32px - Large spacing */
---space-12: 3rem;    /* 48px - Extra large */
---space-16: 4rem;    /* 64px - Section spacing */
---space-20: 5rem;    /* 80px - Page spacing */
+--space-1: 0.25rem; /* 4px  - Tight spacing */
+--space-2: 0.5rem; /* 8px  - Base unit */
+--space-3: 0.75rem; /* 12px - Small spacing */
+--space-4: 1rem; /* 16px - Standard spacing */
+--space-6: 1.5rem; /* 24px - Medium spacing */
+--space-8: 2rem; /* 32px - Large spacing */
+--space-12: 3rem; /* 48px - Extra large */
+--space-16: 4rem; /* 64px - Section spacing */
+--space-20: 5rem; /* 80px - Page spacing */
 ```
 
 ### Container System
 
 ```css
 /* Responsive Container Widths */
---container-sm: 640px;   /* Small devices */
---container-md: 768px;   /* Tablets */
---container-lg: 1024px;  /* Laptops */
---container-xl: 1280px;  /* Desktops */
+--container-sm: 640px; /* Small devices */
+--container-md: 768px; /* Tablets */
+--container-lg: 1024px; /* Laptops */
+--container-xl: 1280px; /* Desktops */
 --container-2xl: 1536px; /* Large screens */
 
 /* Content Constraints */
---content-width: 65ch;   /* Optimal reading width */
---sidebar-width: 280px;  /* Navigation sidebars */
+--content-width: 65ch; /* Optimal reading width */
+--sidebar-width: 280px; /* Navigation sidebars */
 ```
 
 ## Theme System
@@ -162,7 +162,7 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
   --accent-secondary: var(--medium-earth);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   /* Dark Theme Overrides */
   --bg-primary: var(--dark-earth);
   --bg-secondary: var(--dark-surface);
@@ -177,7 +177,10 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 
 ```css
 * {
-  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease;
 }
 ```
 
@@ -298,7 +301,10 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 ```css
 /* Enhanced Hover Effects */
 .card-hover {
-  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    border-color 250ms ease;
 }
 
 .card-hover:hover {
@@ -318,7 +324,9 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 
 /* Theme Transitions */
 .theme-transition {
-  transition: background-color 250ms ease, color 250ms ease;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
 }
 ```
 
@@ -327,17 +335,16 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
 ```css
 /* Shimmer Effect */
 @keyframes shimmer {
-  0% { background-position: -200px 0; }
-  100% { background-position: calc(200px + 100%) 0; }
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
 }
 
 .loading-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(135, 169, 107, 0.1),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(135, 169, 107, 0.1), transparent);
   animation: shimmer 1.5s infinite;
 }
 ```
@@ -361,7 +368,10 @@ Base unit: `8px` - All spacing follows 8px increments for visual consistency
   border: 1px solid var(--color-border);
   box-shadow: 0 2px 8px var(--color-shadow);
   padding: 2rem;
-  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    border-color 250ms ease;
 }
 
 .modern-card:hover {
@@ -498,7 +508,7 @@ xl: 1280px  /* Desktops */
   --color-text-primary: #2e1a17; /* Deep brown */
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   color-scheme: dark;
   --color-background: #1a1410; /* Dark earth */
   --color-surface: #2e2520; /* Dark brown surface */
@@ -508,7 +518,10 @@ xl: 1280px  /* Desktops */
 
 /* Enhanced transitions */
 * {
-  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease;
 }
 ```
 
@@ -574,9 +587,7 @@ xl: 1280px  /* Desktops */
 ```tsx
 // Page Container
 <div className="container mx-auto px-4 py-8">
-  <Card variant="elevated">
-    {/* Main content */}
-  </Card>
+  <Card variant="elevated">{/* Main content */}</Card>
 </div>
 ```
 

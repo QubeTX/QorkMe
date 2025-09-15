@@ -28,7 +28,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               variant === 'accent',
             'bg-transparent border-2 border-accent hover:border-secondary hover:bg-accent/10 text-accent hover:text-secondary':
               variant === 'outline',
-            'bg-transparent hover:bg-primary/10 text-text-primary hover:text-secondary': variant === 'ghost',
+            'bg-transparent hover:bg-primary/10 text-text-primary hover:text-secondary':
+              variant === 'ghost',
             // Sizes
             'px-3 py-1.5 text-sm gap-1.5': size === 'sm',
             'px-5 py-2.5 text-base gap-2': size === 'md',
