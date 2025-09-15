@@ -1,51 +1,162 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ZT Bros Fonts */
+@font-face {
+  font-family: 'ZT Gatha';
+  src: url('/fonts/ZTGatha-Bold.woff2') format('woff2'),
+       url('/fonts/ZTGatha-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ZT Gatha';
+  src: url('/fonts/ZTGatha-Medium.woff2') format('woff2'),
+       url('/fonts/ZTGatha-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ZT Grafton';
+  src: url('/fonts/ZTGrafton-Regular.woff2') format('woff2'),
+       url('/fonts/ZTGrafton-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ZT Grafton';
+  src: url('/fonts/ZTGrafton-Medium.woff2') format('woff2'),
+       url('/fonts/ZTGrafton-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ZT Grafton';
+  src: url('/fonts/ZTGrafton-Semibold.woff2') format('woff2'),
+       url('/fonts/ZTGrafton-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ZT Mono';
+  src: url('/fonts/ZTMono-Regular.woff2') format('woff2'),
+       url('/fonts/ZTMono-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback to Inter from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Bauhaus Color Palette */
-  --bauhaus-red: #dc143c;
-  --bauhaus-blue: #0048ba;
-  --bauhaus-yellow: #ffd700;
-  --bauhaus-black: #0a0a0a;
-  --bauhaus-white: #fafafa;
-  --bauhaus-gray: #71797e;
+  /* Light Theme - Earthy Natural Tones */
+  --color-background: #FDFBF7;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-primary: #87A96B;
+  --color-primary-hover: #749157;
+  --color-secondary: #C65D00;
+  --color-secondary-hover: #A34E00;
+  --color-accent: #228B22;
+  --color-accent-hover: #1A6B1A;
+
+  /* Text Colors */
+  --color-text-primary: #36454F;
+  --color-text-secondary: #5A6B78;
+  --color-text-muted: #8B9CA8;
+  --color-text-inverse: #FDFBF7;
+
+  /* Neutral Colors */
+  --color-border: #E5E2DC;
+  --color-border-hover: #D4D0C8;
+  --color-shadow: rgba(54, 69, 79, 0.08);
+  --color-shadow-hover: rgba(54, 69, 79, 0.12);
 
   /* Semantic Colors */
-  --background: var(--bauhaus-white);
-  --foreground: var(--bauhaus-black);
-  --primary: var(--bauhaus-blue);
-  --secondary: var(--bauhaus-red);
-  --accent: var(--bauhaus-yellow);
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-error: #F44336;
+  --color-info: #2196F3;
 
   /* Grid Unit */
   --grid-unit: 8px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme - Deep Natural Tones */
+  --color-background: #1A1F2E;
+  --color-surface: #2A3142;
+  --color-surface-elevated: #353D52;
+  --color-primary: #B8D4B8;
+  --color-primary-hover: #A4C4A4;
+  --color-secondary: #FFB347;
+  --color-secondary-hover: #FFA31A;
+  --color-accent: #6B8E23;
+  --color-accent-hover: #5A7A1D;
+
+  /* Text Colors */
+  --color-text-primary: #F5F5F0;
+  --color-text-secondary: #D4D4CC;
+  --color-text-muted: #A8A89F;
+  --color-text-inverse: #1A1F2E;
+
+  /* Neutral Colors */
+  --color-border: #3E4658;
+  --color-border-hover: #4A536B;
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  --color-shadow-hover: rgba(0, 0, 0, 0.4);
+
+  /* Semantic Colors */
+  --color-success: #66BB6A;
+  --color-warning: #FFA726;
+  --color-error: #EF5350;
+  --color-info: #42A5F5;
 }
 
 @theme inline {
-  /* Custom Bauhaus Colors */
-  --color-bauhaus-red: #dc143c;
-  --color-bauhaus-blue: #0048ba;
-  --color-bauhaus-yellow: #ffd700;
-  --color-bauhaus-black: #0a0a0a;
-  --color-bauhaus-white: #fafafa;
-  --color-bauhaus-gray: #71797e;
-
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
+  /* Custom Colors for Tailwind */
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-elevated: var(--color-surface-elevated);
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-hover: var(--color-secondary-hover);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-inverse: var(--color-text-inverse);
+  --color-border: var(--color-border);
+  --color-border-hover: var(--color-border-hover);
 
   /* Typography */
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body: 'Inter', sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--bauhaus-black);
-    --foreground: var(--bauhaus-white);
-  }
+  --font-display: 'ZT Gatha', 'Inter', system-ui, sans-serif;
+  --font-body: 'ZT Grafton', 'Inter', system-ui, sans-serif;
+  --font-mono: 'ZT Mono', 'Courier New', monospace;
 }
 
 /* Base Styles */
@@ -55,57 +166,238 @@
   box-sizing: border-box;
 }
 
+html {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-text-primary);
   font-family: var(--font-body);
+  font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-/* Bauhaus-inspired Utility Classes */
-.bauhaus-grid {
-  display: grid;
-  gap: var(--grid-unit);
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
 }
 
-.bauhaus-shape-circle {
-  border-radius: 50%;
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: -0.02em;
 }
 
-.bauhaus-shape-square {
-  aspect-ratio: 1;
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.01em;
 }
 
-.bauhaus-border {
-  border: 3px solid currentColor;
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+}
+
+h5 {
+  font-size: 1.125rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* Card Styles */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: calc(var(--grid-unit) * 3);
+  box-shadow: 0 4px 6px var(--color-shadow);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px var(--color-shadow-hover);
+}
+
+.card-elevated {
+  background: var(--color-surface-elevated);
+  box-shadow: 0 8px 16px var(--color-shadow);
+}
+
+/* Button Base Styles */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  outline: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Input Base Styles */
+.input {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(135, 169, 107, 0.1);
 }
 
 /* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
 @keyframes float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-10px);
   }
 }
 
-@keyframes rotate-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.5s ease forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease infinite;
 }
 
 .animate-float {
-  animation: float 4s ease-in-out infinite;
+  animation: float 3s ease-in-out infinite;
 }
 
-.animate-rotate-slow {
-  animation: rotate-slow 20s linear infinite;
+/* Utility Classes */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 calc(var(--grid-unit) * 2);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 6px var(--color-shadow);
+}
+
+.shadow-medium {
+  box-shadow: 0 8px 16px var(--color-shadow);
+}
+
+.shadow-large {
+  box-shadow: 0 16px 32px var(--color-shadow);
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}
+
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
 }

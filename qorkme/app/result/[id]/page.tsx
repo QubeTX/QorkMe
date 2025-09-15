@@ -1,9 +1,10 @@
 import { ShortUrlDisplay } from '@/components/ShortUrlDisplay';
-import { GeometricDecor } from '@/components/bauhaus/GeometricDecor';
+import { ResultNavigationHeader } from '@/components/ResultNavigationHeader';
+import { Card, CardContent } from '@/components/cards/Card';
 import { createServerClientInstance } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { Link2, BarChart3, Shield } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
 
 interface ResultPageProps {
@@ -34,48 +35,22 @@ export default async function ResultPage({ params, searchParams }: ResultPagePro
         position="top-center"
         toastOptions={{
           style: {
-            background: 'var(--bauhaus-white)',
-            color: 'var(--bauhaus-black)',
-            border: '3px solid var(--bauhaus-black)',
-            fontFamily: 'var(--font-display)',
-            textTransform: 'uppercase',
+            background: 'var(--color-surface)',
+            color: 'var(--color-text-primary)',
+            border: '2px solid var(--color-border)',
+            borderRadius: 'var(--radius-md)',
+            fontFamily: 'var(--font-body)',
           },
         }}
       />
 
-      <div className="relative min-h-screen bg-bauhaus-white overflow-hidden">
-        {/* Geometric Background Decorations */}
-        <GeometricDecor />
+      <div className="min-h-screen bg-background transition-colors duration-300">
+        {/* Navigation Header */}
+        <ResultNavigationHeader />
 
         {/* Main Content */}
-        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-8">
-          <main className="w-full max-w-4xl mx-auto space-y-12">
-            {/* Header */}
-            <div className="text-center space-y-4">
-              {/* Back Link */}
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-bauhaus-gray hover:text-bauhaus-black transition-colors mb-8"
-              >
-                <ArrowLeft size={20} />
-                <span className="font-display uppercase">Create Another</span>
-              </Link>
-
-              {/* Geometric Logo */}
-              <div className="flex justify-center items-center gap-4 mb-8">
-                <div className="w-12 h-12 bg-bauhaus-red rounded-full animate-float" />
-                <div className="w-12 h-12 bg-bauhaus-blue rotate-45 animate-rotate-slow" />
-                <div
-                  className="w-0 h-0 border-l-[24px] border-l-transparent border-r-[24px] border-r-transparent border-b-[42px] border-b-bauhaus-yellow animate-float"
-                  style={{ animationDelay: '1s' }}
-                />
-              </div>
-
-              <h1 className="font-display text-5xl md:text-6xl uppercase tracking-wider">
-                QORK.ME
-              </h1>
-            </div>
-
+        <section className="pt-32 pb-16 px-6">
+          <div className="container mx-auto max-w-4xl">
             {/* Result Display */}
             <ShortUrlDisplay
               shortCode={url.short_code}
@@ -84,31 +59,89 @@ export default async function ResultPage({ params, searchParams }: ResultPagePro
               createdAt={url.created_at}
             />
 
-            {/* Stats Preview */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="border-4 border-bauhaus-black p-4 text-center">
-                <div className="font-display text-3xl text-bauhaus-blue">
-                  {url.click_count || 0}
-                </div>
-                <p className="font-display uppercase text-sm text-bauhaus-gray">Total Clicks</p>
-              </div>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <BarChart3 className="text-primary" size={20} />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-display font-bold text-text-primary">
+                        {url.click_count || 0}
+                      </p>
+                      <p className="text-sm text-text-muted">Total Clicks</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-              <div className="border-4 border-bauhaus-black p-4 text-center">
-                <div className="font-display text-3xl text-bauhaus-red">
-                  {url.custom_alias ? 'Custom' : 'Auto'}
-                </div>
-                <p className="font-display uppercase text-sm text-bauhaus-gray">Alias Type</p>
-              </div>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+                      <Link2 className="text-secondary" size={20} />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-display font-bold text-text-primary">
+                        {url.custom_alias ? 'Custom' : 'Auto'}
+                      </p>
+                      <p className="text-sm text-text-muted">Alias Type</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-              <div className="border-4 border-bauhaus-black p-4 text-center">
-                <div className="font-display text-3xl text-bauhaus-yellow">
-                  {url.is_active ? 'Active' : 'Inactive'}
-                </div>
-                <p className="font-display uppercase text-sm text-bauhaus-gray">Status</p>
-              </div>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                      <Shield className="text-accent" size={20} />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-display font-bold text-text-primary">
+                        {url.is_active ? 'Active' : 'Inactive'}
+                      </p>
+                      <p className="text-sm text-text-muted">Status</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </main>
-        </div>
+
+            {/* CTA Section */}
+            <div className="text-center mt-16">
+              <h3 className="font-display text-2xl font-bold mb-4 text-text-primary">
+                Need more features?
+              </h3>
+              <p className="text-text-secondary mb-6">
+                Track analytics, manage multiple links, and more with our dashboard
+              </p>
+              <Link href="/">
+                <button className="btn bg-primary text-text-inverse hover:bg-primary-hover px-6 py-2.5 rounded-[var(--radius-md)] font-medium shadow-medium hover:shadow-large transition-all duration-200">
+                  Shorten Another URL
+                </button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="border-t border-border py-8 mt-16">
+          <div className="container mx-auto px-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <span className="font-display text-lg font-medium text-text-primary">QorkMe</span>
+                <span className="text-text-muted">•</span>
+                <span className="text-sm text-text-muted">Modern URL Shortener</span>
+              </div>
+              <p className="text-sm text-text-muted">
+                Built with ZT Bros Typography • Designed in San Francisco
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     </>
   );

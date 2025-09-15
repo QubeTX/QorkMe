@@ -1,6 +1,6 @@
-# QorkMe - Bauhaus-Inspired URL Shortener
+# QorkMe - Modern URL Shortener
 
-A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring a distinctive Bauhaus-inspired design system and intelligent short code generation.
+A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring a clean card-based design with natural earth tones and intelligent short code generation.
 
 ## Features
 
@@ -15,12 +15,13 @@ A modern, scalable URL shortener built with Next.js 15, TypeScript, and Supabase
 
 ### Design & User Experience
 
-- **Bauhaus Design Philosophy**: Bold, geometric, function-first aesthetic
+- **Modern Card-Based Design**: Clean, minimalist SF startup aesthetic with soft shadows and hover effects
+- **Natural Color Palette**: Sage green, warm beige, terracotta, and forest brown earth tones
 - **Responsive Design**: Optimized for mobile, tablet, and desktop
-- **Industrial Color Palette**: Crimson red, cobalt blue, and gold accents
-- **Custom Typography**: Bebas Neue for headlines, Inter for body text
-- **Geometric Decorations**: Animated background elements with circles, squares, and triangles
-- **Toast Notifications**: Styled feedback for user actions
+- **Light/Dark Theme Support**: Seamless theme transitions with system preference detection
+- **ZT Bros Typography**: ZT Gatha for display, ZT Grafton for body text, ZT Mono for code
+- **Interactive Elements**: Smooth animations and hover states for enhanced user experience
+- **Toast Notifications**: Themed feedback system matching the overall design
 
 ### Technical Excellence
 
@@ -110,10 +111,12 @@ qorkme/
 │   └── not-found.tsx    # 404 page
 ├── components/           # React components
 │   ├── ui/              # Base UI components
-│   │   ├── Button.tsx   # Bauhaus-styled button
+│   │   ├── Button.tsx   # Modern styled button
 │   │   └── Input.tsx    # Form input component
-│   ├── bauhaus/         # Design system components
-│   │   └── GeometricDecor.tsx
+│   ├── cards/           # Card-based components
+│   │   ├── Card.tsx     # Base card component
+│   │   └── FeatureCard.tsx # Feature display cards
+│   ├── ThemeToggle.tsx  # Light/dark theme toggle
 │   ├── UrlShortener.tsx # Main shortener form
 │   └── ShortUrlDisplay.tsx # Results display
 ├── lib/                  # Utility libraries
@@ -122,6 +125,7 @@ qorkme/
 │   │   ├── validator.ts # Validation logic
 │   │   └── reserved.ts  # Reserved words list
 │   ├── supabase/        # Database client
+│   ├── theme.tsx        # Theme context provider
 │   └── utils.ts         # Shared utilities
 ├── supabase/            # Database schema
 │   └── schema.sql       # Complete database setup
@@ -139,8 +143,9 @@ qorkme/
 - **Framework**: Next.js 15.5.3 with App Router
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
-- **Styling**: Tailwind CSS v4 with custom Bauhaus design tokens
-- **UI Components**: Custom Bauhaus-inspired components with geometric elements
+- **Styling**: Tailwind CSS v4 with custom natural design tokens and CSS variables
+- **UI Components**: Card-based components with soft shadows and modern interactions
+- **Theme System**: Dynamic light/dark mode with CSS custom properties
 - **Icons**: Lucide React v0.544.0
 - **QR Codes**: qrcode v1.5.4 library
 - **Notifications**: React Hot Toast v2.6.0
@@ -174,16 +179,16 @@ Key performance features:
 - Comprehensive indexing strategy for 200,000+ URLs
 - Row-level security for multi-tenant support
 
-## Bauhaus Design Philosophy
+## Modern Design Philosophy
 
-QorkMe embodies Bauhaus principles:
+QorkMe embraces modern minimalist design principles:
 
-- **Form Follows Function**: Every element serves a purpose
-- **Geometric Simplicity**: Circles, squares, and triangles as primary shapes
-- **Bold Typography**: Strong, readable fonts with clear hierarchy
-- **Industrial Color Palette**: Red, blue, yellow with black and white
-- **Minimal Aesthetics**: Clean lines and purposeful spacing
-- **Unity of Art & Technology**: Beautiful yet functional interface
+- **Clean & Functional**: Every element serves a purpose with modern clarity
+- **Natural Color Harmony**: Earthy tones that feel warm and approachable
+- **Card-Based Layout**: Organized content in elevated, interactive cards
+- **Seamless Theming**: Intelligent light/dark mode with smooth transitions
+- **Typography Excellence**: Professional ZT Bros fonts with excellent readability
+- **Subtle Interactions**: Hover effects and animations that enhance usability
 
 See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete design specifications.
 
@@ -331,7 +336,8 @@ Track comprehensive metrics:
 ### Development Guidelines
 
 - Follow TypeScript strict mode
-- Maintain Bauhaus design principles
+- Maintain modern design consistency and card-based layouts
+- Respect theme system and use CSS custom properties
 - Write comprehensive tests
 - Update documentation for new features
 - Use semantic commit messages
@@ -376,4 +382,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Built with passion - Bringing Bauhaus design principles to modern web applications.
+Built with passion - Bringing modern design excellence to URL shortening.

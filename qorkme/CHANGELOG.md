@@ -5,6 +5,114 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-01-15
+
+### 🎨 Major Design System Overhaul
+
+#### Added
+- **Modern Card-Based Design System**
+  - Complete transition from Bauhaus industrial to clean SF startup aesthetic
+  - Card components with soft shadows and hover effects for enhanced interactivity
+  - Modern minimalist layout with improved visual hierarchy
+  - Interactive hover states and smooth animations throughout the interface
+
+- **Natural Color Palette**
+  - Sage green (#87A96B) as primary color replacing crimson red
+  - Warm beige (#FDFBF7) background for light theme
+  - Terracotta orange (#C65D00) as secondary accent color
+  - Forest brown (#36454F) for primary text
+  - Deep natural tones for dark theme variants
+
+- **ZT Bros Typography System**
+  - ZT Gatha font family for display headers with bold weights
+  - ZT Grafton font family for body text in regular, medium, and semibold
+  - ZT Mono font family for code and monospace elements
+  - Fallback to Inter from Google Fonts for better font loading
+  - Improved typography hierarchy with responsive clamp sizing
+
+- **Dynamic Theme System**
+  - Light/dark theme support with seamless transitions
+  - System preference detection on initial load
+  - Theme persistence in localStorage across sessions
+  - CSS custom properties for consistent theming throughout app
+  - Smooth 250ms transitions between theme changes
+
+- **Enhanced Component Library**
+  - `Card` component with elevated and standard variants
+  - `FeatureCard` component for showcasing application features
+  - `ThemeToggle` component with smooth icon transitions
+  - Updated `Button` and `Input` components with new design language
+  - `NavigationHeader` with theme toggle integration
+
+- **Advanced CSS Architecture**
+  - CSS custom properties for all colors, spacing, and design tokens
+  - Consistent 8px grid system for spacing and layout
+  - Responsive design utilities with mobile-first approach
+  - Custom scrollbar styling matching the theme
+  - Focus-visible styles for improved accessibility
+
+#### Changed
+- **Complete Visual Identity Transformation**
+  - Replaced Bauhaus geometric decorations with clean card layouts
+  - Updated color scheme from industrial (red/blue/yellow) to natural earth tones
+  - Modernized typography from Bebas Neue/Inter to ZT Bros font family
+  - Simplified visual elements focusing on content and usability
+
+- **Homepage Redesign**
+  - Card-based layout replacing geometric background elements
+  - Featured sections in elevated cards with proper content hierarchy
+  - Improved mobile responsiveness with better touch targets
+  - Enhanced call-to-action placement and visual prominence
+
+- **Component Architecture**
+  - Modularized card components for better reusability
+  - Theme-aware components using CSS custom properties
+  - Improved component composition with consistent design patterns
+  - Better separation of concerns between layout and styling
+
+- **User Experience Improvements**
+  - Smoother animations and micro-interactions
+  - Better visual feedback for user actions
+  - Improved contrast ratios for better accessibility
+  - Enhanced mobile experience with touch-friendly interactions
+
+#### Technical Updates
+- **CSS Custom Properties Integration**
+  - Comprehensive variable system for colors, typography, and spacing
+  - Theme-specific variable overrides for dark mode
+  - Consistent naming convention for design tokens
+  - Better maintainability and design system scalability
+
+- **Theme Context Provider**
+  - React context for theme state management
+  - TypeScript-safe theme switching functionality
+  - Performance optimized with mounted state handling
+  - Integration with localStorage and system preferences
+
+- **Component Modernization**
+  - Updated all components to use new design system
+  - Improved TypeScript interfaces for component props
+  - Better component composition and flexibility
+  - Enhanced accessibility with proper ARIA attributes
+
+#### Documentation Updates
+- Updated README.md to reflect new design philosophy and system
+- Revised design system documentation for modern aesthetic
+- Updated component examples and usage guidelines
+- Refreshed project descriptions and feature highlights
+
+#### Breaking Changes
+- **Visual Breaking Changes**: Complete design system overhaul means existing UI appearances will change significantly
+- **Component API Changes**: Some component props may have changed to accommodate new design system
+- **CSS Class Changes**: Custom CSS classes may need updates to work with new design tokens
+- **Font Dependencies**: New ZT Bros fonts required for optimal display (graceful fallback to Inter included)
+
+#### Migration Notes
+- No functional API changes - all URL shortening functionality remains identical
+- Existing shortened URLs continue to work without any changes
+- Database schema and backend functionality unchanged
+- Only frontend design and theming system has been updated
+
 ## [1.0.0] - 2025-01-14
 
 ### 🎉 Initial Release

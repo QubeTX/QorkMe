@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'accent' | 'outline';
+  variant?: 'primary' | 'secondary' | 'accent' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -13,19 +13,21 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          'bauhaus-border font-display uppercase tracking-wider transition-all duration-200',
-          'hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed',
+          'btn font-body font-medium rounded-[var(--radius-md)] transition-all duration-200',
+          'hover:transform hover:scale-[1.02] active:scale-[0.98]',
+          'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100',
+          'focus-visible:outline-2 focus-visible:outline-offset-2',
           {
             // Variants
-            'bg-bauhaus-blue text-bauhaus-white hover:bg-opacity-90': variant === 'primary',
-            'bg-bauhaus-red text-bauhaus-white hover:bg-opacity-90': variant === 'secondary',
-            'bg-bauhaus-yellow text-bauhaus-black hover:bg-opacity-90': variant === 'accent',
-            'bg-transparent text-current hover:bg-bauhaus-black hover:text-bauhaus-white':
-              variant === 'outline',
+            'bg-primary text-text-inverse hover:bg-primary-hover shadow-soft hover:shadow-medium': variant === 'primary',
+            'bg-secondary text-text-inverse hover:bg-secondary-hover shadow-soft hover:shadow-medium': variant === 'secondary',
+            'bg-accent text-text-inverse hover:bg-accent-hover shadow-soft hover:shadow-medium': variant === 'accent',
+            'bg-transparent border-2 border-border hover:border-primary hover:bg-surface text-text-primary': variant === 'outline',
+            'bg-transparent hover:bg-surface text-text-primary': variant === 'ghost',
             // Sizes
-            'px-4 py-2 text-sm': size === 'sm',
-            'px-6 py-3 text-base': size === 'md',
-            'px-8 py-4 text-lg': size === 'lg',
+            'px-3 py-1.5 text-sm gap-1.5': size === 'sm',
+            'px-5 py-2.5 text-base gap-2': size === 'md',
+            'px-6 py-3 text-lg gap-2.5': size === 'lg',
           },
           className
         )}
