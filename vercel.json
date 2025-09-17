@@ -1,3 +1,53 @@
 {
-  "rootDirectory": "qorkme"
+  "framework": "nextjs",
+  "installCommand": "cd qorkme && npm install",
+  "buildCommand": "cd qorkme && npm run build",
+  "devCommand": "cd qorkme && npm run dev",
+  "outputDirectory": "qorkme/.next",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "qorkme/app/[shortCode]/route.ts": {
+      "maxDuration": 10
+    },
+    "qorkme/app/api/shorten/route.ts": {
+      "maxDuration": 10
+    }
+  }
 }

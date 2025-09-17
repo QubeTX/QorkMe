@@ -134,10 +134,11 @@ qorkme/
 │   ├── VERCEL_SETUP.md  # Comprehensive Vercel & Supabase guide
 │   ├── DEPLOYMENT.md    # General deployment instructions
 │   └── DESIGN_SYSTEM.md # Complete design specifications
-├── vercel.json          # Vercel configuration with security headers
 ├── .prettierrc          # Code formatting configuration
 └── package.json         # Dependencies and scripts
 ```
+
+> Deployment configuration lives in the repository root [`../vercel.json`](../vercel.json), which orchestrates installs and builds for this sub-application on Vercel.
 
 ### Tech Stack
 
@@ -195,7 +196,7 @@ See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete glassmorphism an
 
 ## Production Configuration
 
-### Vercel Configuration (`vercel.json`)
+### Vercel Configuration (root `../vercel.json`)
 
 - **Security Headers**: Content Security Policy, XSS protection, frame options
 - **Function Timeouts**: Optimized for URL shortening and redirects
