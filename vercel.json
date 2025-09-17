@@ -43,10 +43,10 @@
     }
   ],
   "functions": {
-    "qorkme/app/[shortCode]/route.ts": {
+    "app/[shortCode]/route.ts": {
       "maxDuration": 10
     },
-    "qorkme/app/api/shorten/route.ts": {
+    "app/api/shorten/route.ts": {
       "maxDuration": 10
     }
   }
