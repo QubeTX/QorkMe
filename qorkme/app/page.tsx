@@ -55,8 +55,9 @@ export default function Home() {
                       Precision-crafted links for brands that refuse ordinary
                     </h1>
                     <p className="text-base md:text-lg lg:text-xl text-text-secondary max-w-2xl">
-                      QorkMe wraps powerful analytics, enterprise security, and human-friendly codes into a warm, earthy
-                      experience that feels as considered as your brand. Shorten, share, and measure without sacrificing style.
+                      QorkMe wraps powerful analytics, enterprise security, and human-friendly codes
+                      into a warm, earthy experience that feels as considered as your brand.
+                      Shorten, share, and measure without sacrificing style.
                     </p>
                   </div>
 
@@ -80,11 +81,13 @@ export default function Home() {
                       className="shadow-soft border bg-surface"
                       style={{
                         borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-                        backgroundColor: 'color-mix(in srgb, var(--color-surface) 90%, transparent)',
+                        backgroundColor:
+                          'color-mix(in srgb, var(--color-surface) 90%, transparent)',
                       }}
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center"
+                        <div
+                          className="w-12 h-12 rounded-full flex items-center justify-center"
                           style={{
                             background: 'color-mix(in srgb, var(--color-accent) 18%, transparent)',
                           }}
@@ -92,8 +95,12 @@ export default function Home() {
                           <BarChart3 size={22} className="text-accent" />
                         </div>
                         <div>
-                          <p className="text-2xl font-display font-semibold text-secondary">200K+</p>
-                          <p className="text-sm text-text-muted uppercase tracking-[0.3em]">Active Links</p>
+                          <p className="text-2xl font-display font-semibold text-secondary">
+                            200K+
+                          </p>
+                          <p className="text-sm text-text-muted uppercase tracking-[0.3em]">
+                            Active Links
+                          </p>
                         </div>
                       </div>
                     </Card>
@@ -102,20 +109,27 @@ export default function Home() {
                       className="shadow-soft border bg-surface"
                       style={{
                         borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-                        backgroundColor: 'color-mix(in srgb, var(--color-surface) 90%, transparent)',
+                        backgroundColor:
+                          'color-mix(in srgb, var(--color-surface) 90%, transparent)',
                       }}
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center"
+                        <div
+                          className="w-12 h-12 rounded-full flex items-center justify-center"
                           style={{
-                            background: 'color-mix(in srgb, var(--color-secondary) 18%, transparent)',
+                            background:
+                              'color-mix(in srgb, var(--color-secondary) 18%, transparent)',
                           }}
                         >
                           <Shield size={22} className="text-secondary" />
                         </div>
                         <div>
-                          <p className="text-2xl font-display font-semibold text-secondary">99.9%</p>
-                          <p className="text-sm text-text-muted uppercase tracking-[0.3em]">Uptime SLA</p>
+                          <p className="text-2xl font-display font-semibold text-secondary">
+                            99.9%
+                          </p>
+                          <p className="text-sm text-text-muted uppercase tracking-[0.3em]">
+                            Uptime SLA
+                          </p>
                         </div>
                       </div>
                     </Card>
@@ -125,9 +139,15 @@ export default function Home() {
                 <div className="relative" id="shorten">
                   <div
                     className="absolute -top-12 -right-12 h-44 w-44 rounded-full blur-3xl opacity-60"
-                    style={{ background: 'color-mix(in srgb, var(--color-accent) 35%, transparent)' }}
+                    style={{
+                      background: 'color-mix(in srgb, var(--color-accent) 35%, transparent)',
+                    }}
                   />
-                  <Card elevated className="relative animate-fadeIn" style={{ animationDelay: '0.15s' }}>
+                  <Card
+                    elevated
+                    className="relative animate-fadeIn"
+                    style={{ animationDelay: '0.15s' }}
+                  >
                     <UrlShortener />
                   </Card>
                 </div>
@@ -143,8 +163,9 @@ export default function Home() {
                     Why discerning teams choose QorkMe
                   </h2>
                   <p className="text-base md:text-lg text-text-secondary max-w-2xl mx-auto">
-                    Every touchpoint is thoughtfully spaced, responsive, and consistent. Cards anchor each experience with a
-                    tactile warmth that carries across light and dark themes alike.
+                    Every touchpoint is thoughtfully spaced, responsive, and consistent. Cards
+                    anchor each experience with a tactile warmth that carries across light and dark
+                    themes alike.
                   </p>
                 </div>
               </Card>
@@ -201,7 +222,9 @@ export default function Home() {
                       <span className={`text-3xl font-display font-semibold ${stat.accentClass}`}>
                         {stat.value}
                       </span>
-                      <p className="text-xs uppercase tracking-[0.35em] text-text-muted">{stat.label}</p>
+                      <p className="text-xs uppercase tracking-[0.35em] text-text-muted">
+                        {stat.label}
+                      </p>
                     </div>
                   </Card>
                 ))}
@@ -217,8 +240,9 @@ export default function Home() {
                     Ready to elevate every link?
                   </h2>
                   <p className="text-base md:text-lg text-text-secondary max-w-3xl mx-auto">
-                    From campaign launches to enterprise migrations, QorkMe keeps your audience journeys considered, cohesive,
-                    and measurable. Switch the theme, resize the browser—every detail adapts with grace.
+                    From campaign launches to enterprise migrations, QorkMe keeps your audience
+                    journeys considered, cohesive, and measurable. Switch the theme, resize the
+                    browser—every detail adapts with grace.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link href="#shorten" className="inline-flex">

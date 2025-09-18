@@ -77,7 +77,8 @@ export function UrlShortener() {
           Launch a new short link
         </CardTitle>
         <CardDescription className="text-base text-text-secondary">
-          Paste the destination and tailor an optional alias. Our warm card surfaces keep every step grounded and legible.
+          Paste the destination and tailor an optional alias. Our warm card surfaces keep every step
+          grounded and legible.
         </CardDescription>
       </CardHeader>
       <CardContent>

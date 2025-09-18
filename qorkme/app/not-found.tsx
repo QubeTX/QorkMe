@@ -27,7 +27,9 @@ export default function NotFound() {
             <div className="flex flex-col items-center gap-4">
               <div
                 className="w-20 h-20 rounded-full flex items-center justify-center"
-                style={{ background: 'color-mix(in srgb, var(--color-secondary) 18%, transparent)' }}
+                style={{
+                  background: 'color-mix(in srgb, var(--color-secondary) 18%, transparent)',
+                }}
               >
                 <Compass size={36} className="text-secondary" />
               </div>
@@ -37,8 +39,8 @@ export default function NotFound() {
               We couldn&apos;t locate that link
             </h1>
             <p className="text-base md:text-lg text-text-secondary max-w-2xl mx-auto">
-              The short URL you&apos;re searching for may have expired, been removed, or never existed. Let&apos;s guide you back to
-              the QorkMe studio to craft something new.
+              The short URL you&apos;re searching for may have expired, been removed, or never
+              existed. Let&apos;s guide you back to the QorkMe studio to craft something new.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/" className="inline-flex">
