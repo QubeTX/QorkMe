@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/cards/Card';
 import { Copy, QrCode, ExternalLink, CheckCircle, Link2, Calendar, Globe } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -58,15 +59,16 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
   return (
     <div className="w-full space-y-6">
       {/* Success Message */}
-      <div className="flex items-center gap-3 text-secondary animate-fadeIn">
-        <div
-          className="w-12 h-12 rounded-full flex items-center justify-center"
-          style={{ background: 'color-mix(in srgb, var(--color-secondary) 18%, transparent)' }}
-        >
-          <CheckCircle size={24} className="text-secondary" />
+      <div
+        className="flex items-start gap-4 rounded-[var(--radius-xl)] border border-[color:var(--color-primary)]/25 bg-[color:var(--color-primary)]/10 px-5 py-4 text-[color:var(--color-primary)] animate-fadeIn"
+        role="status"
+        aria-live="polite"
+      >
+        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--color-primary)]/20">
+          <CheckCircle size={22} aria-hidden="true" />
         </div>
-        <div>
-          <h2 className="font-display text-2xl font-bold text-secondary tracking-[0.25em] uppercase">
+        <div className="space-y-1">
+          <h2 className="font-display text-xl font-semibold text-[color:var(--color-text-primary)]">
             Link ready to share
           </h2>
           <p className="text-sm text-text-secondary">Copy, preview, or download a QR code below.</p>
@@ -78,46 +80,37 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
         elevated
         hoverable={false}
         className="animate-fadeIn"
-        style={{
-          animationDelay: '0.1s',
-          borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-        }}
+        style={{ animationDelay: '0.1s' }}
       >
         <CardHeader>
-          <CardTitle className="tracking-[0.2em] uppercase text-secondary">
-            Your short link
-          </CardTitle>
-          <CardDescription className="text-text-secondary">
-            Share this beautiful, trackable link with your audience in seconds.
+          <CardTitle>Your short link</CardTitle>
+          <CardDescription>
+            Share this branded redirect with your audience in seconds.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <input
+          <div className="space-y-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Input
                 type="text"
                 value={fullShortUrl}
                 readOnly
-                className="flex-1 px-4 py-3 rounded-[var(--radius-md)] font-mono text-lg select-all border-2 focus:outline-none transition-colors"
-                style={{
-                  backgroundColor:
-                    'color-mix(in srgb, var(--color-surface-elevated) 100%, transparent)',
-                  borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
-                }}
+                aria-label="Shortened URL"
+                className="flex-1 font-mono text-lg"
               />
               <Button
                 variant={copied ? 'accent' : 'primary'}
                 onClick={copyToClipboard}
-                className="min-w-[100px]"
+                className="min-w-[120px] justify-center"
               >
                 {copied ? (
                   <>
-                    <CheckCircle size={18} />
+                    <CheckCircle size={18} aria-hidden="true" />
                     Copied!
                   </>
                 ) : (
                   <>
-                    <Copy size={18} />
+                    <Copy size={18} aria-hidden="true" />
                     Copy
                   </>
                 )}
@@ -125,15 +118,20 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Button variant="outline" size="sm" onClick={generateQrCode}>
-                <QrCode size={18} />
+                <QrCode size={18} aria-hidden="true" />
                 {showQr ? 'Hide' : 'Show'} QR Code
               </Button>
-              <a href={fullShortUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                href={fullShortUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex"
+              >
                 <Button variant="outline" size="sm">
-                  <ExternalLink size={18} />
-                  Visit Link
+                  <ExternalLink size={18} aria-hidden="true" />
+                  Visit link
                 </Button>
               </a>
             </div>
@@ -143,14 +141,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
 
       {/* QR Code Display */}
       {showQr && qrCodeUrl && (
-        <Card
-          hoverable={false}
-          className="animate-fadeIn"
-          style={{
-            borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
-            backgroundColor: 'color-mix(in srgb, var(--color-surface) 92%, transparent)',
-          }}
-        >
+        <Card hoverable={false} className="animate-fadeIn">
           <CardContent className="text-center py-8 space-y-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-4" />
@@ -160,33 +151,17 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
       )}
 
       {/* Original URL Info */}
-      <Card
-        hoverable={false}
-        className="animate-fadeIn"
-        style={{
-          animationDelay: '0.2s',
-          borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
-          backgroundColor: 'color-mix(in srgb, var(--color-surface) 92%, transparent)',
-        }}
-      >
+      <Card hoverable={false} className="animate-fadeIn" style={{ animationDelay: '0.2s' }}>
         <CardHeader className="space-y-2">
-          <CardTitle className="text-lg tracking-[0.2em] uppercase text-secondary">
-            Link details
-          </CardTitle>
+          <CardTitle className="text-xl">Link details</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <Link2 className="text-text-muted mt-1" size={18} />
+              <Link2 className="mt-1 text-text-muted" size={18} aria-hidden="true" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-text-secondary mb-1">Original URL</p>
-                <p
-                  className="text-sm break-all p-3 rounded-[var(--radius-sm)] font-mono text-text-muted"
-                  style={{
-                    backgroundColor:
-                      'color-mix(in srgb, var(--color-surface-elevated) 96%, transparent)',
-                  }}
-                >
+                <p className="mb-1 text-sm font-medium text-text-secondary">Original URL</p>
+                <p className="break-all rounded-[var(--radius-md)] bg-[color:var(--color-surface-elevated)] px-3 py-2 font-mono text-sm text-text-muted">
                   {longUrl}
                 </p>
               </div>
@@ -194,9 +169,9 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
 
             {domain && (
               <div className="flex items-center gap-3">
-                <Globe className="text-text-muted" size={18} />
+                <Globe className="text-text-muted" size={18} aria-hidden="true" />
                 <div>
-                  <p className="text-sm font-medium text-text-secondary mb-1">Domain</p>
+                  <p className="mb-1 text-sm font-medium text-text-secondary">Domain</p>
                   <p className="text-sm text-text-muted">{domain}</p>
                 </div>
               </div>
@@ -204,9 +179,9 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
 
             {createdAt && (
               <div className="flex items-center gap-3">
-                <Calendar className="text-text-muted" size={18} />
+                <Calendar className="text-text-muted" size={18} aria-hidden="true" />
                 <div>
-                  <p className="text-sm font-medium text-text-secondary mb-1">Created</p>
+                  <p className="mb-1 text-sm font-medium text-text-secondary">Created</p>
                   <p className="text-sm text-text-muted">
                     {new Date(createdAt).toLocaleDateString('en-US', {
                       year: 'numeric',

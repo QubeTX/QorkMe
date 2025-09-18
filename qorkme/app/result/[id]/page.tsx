@@ -1,12 +1,14 @@
 import { ShortUrlDisplay } from '@/components/ShortUrlDisplay';
 import { ResultNavigationHeader } from '@/components/ResultNavigationHeader';
 import { Card, CardContent } from '@/components/cards/Card';
+import { MetricCard } from '@/components/cards/MetricCard';
 import { Button } from '@/components/ui/Button';
 import { createServerClientInstance } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Link2, BarChart3, Shield } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
+import { SiteFooter } from '@/components/SiteFooter';
 
 interface ResultPageProps {
   params: Promise<{ id: string }>;
@@ -30,6 +32,27 @@ export default async function ResultPage({ params }: ResultPageProps) {
     notFound();
   }
 
+  const detailCards = [
+    {
+      title: 'Total clicks',
+      value: url.click_count || 0,
+      icon: <BarChart3 size={20} aria-hidden="true" />,
+      accent: 'accent' as const,
+    },
+    {
+      title: 'Alias type',
+      value: url.custom_alias ? 'Custom' : 'Auto',
+      icon: <Link2 size={20} aria-hidden="true" />,
+      accent: 'secondary' as const,
+    },
+    {
+      title: 'Status',
+      value: url.is_active ? 'Active' : 'Inactive',
+      icon: <Shield size={20} aria-hidden="true" />,
+      accent: 'primary' as const,
+    },
+  ];
+
   return (
     <>
       <Toaster
@@ -38,17 +61,18 @@ export default async function ResultPage({ params }: ResultPageProps) {
           style: {
             background: 'var(--color-surface)',
             color: 'var(--color-text-primary)',
-            border: '2px solid var(--color-border)',
+            border: '1px solid var(--color-border)',
             borderRadius: 'var(--radius-md)',
             fontFamily: 'var(--font-body)',
+            boxShadow: '0 12px 30px -18px rgba(15, 23, 42, 0.35)',
           },
         }}
       />
 
-      <div className="min-h-screen bg-background transition-colors duration-300">
+      <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <ResultNavigationHeader />
 
-        <section className="pt-36 pb-24 px-6">
+        <main className="flex flex-1 flex-col px-6 pb-24 pt-32 md:pt-36">
           <div className="container mx-auto max-w-5xl space-y-14">
             <ShortUrlDisplay
               shortCode={url.short_code}
@@ -57,106 +81,39 @@ export default async function ResultPage({ params }: ResultPageProps) {
               createdAt={url.created_at}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: 'Total clicks',
-                  value: url.click_count || 0,
-                  icon: <BarChart3 size={20} className="text-accent" />,
-                  tint: 'var(--color-accent)',
-                },
-                {
-                  title: 'Alias type',
-                  value: url.custom_alias ? 'Custom' : 'Auto',
-                  icon: <Link2 size={20} className="text-secondary" />,
-                  tint: 'var(--color-secondary)',
-                },
-                {
-                  title: 'Status',
-                  value: url.is_active ? 'Active' : 'Inactive',
-                  icon: <Shield size={20} className="text-primary" />,
-                  tint: 'var(--color-primary)',
-                },
-              ].map((stat) => (
-                <Card
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {detailCards.map((stat) => (
+                <MetricCard
                   key={stat.title}
-                  hoverable={false}
-                  className="shadow-soft border"
-                  style={{
-                    borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-                    backgroundColor: 'color-mix(in srgb, var(--color-surface) 92%, transparent)',
-                  }}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4">
-                      <div
-                        className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center"
-                        style={{ background: `color-mix(in srgb, ${stat.tint} 18%, transparent)` }}
-                      >
-                        {stat.icon}
-                      </div>
-                      <div>
-                        <p className="text-2xl font-display font-semibold text-secondary">
-                          {stat.value}
-                        </p>
-                        <p className="text-xs uppercase tracking-[0.35em] text-text-muted">
-                          {stat.title}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  icon={stat.icon}
+                  value={stat.value}
+                  label={stat.title}
+                  accent={stat.accent}
+                />
               ))}
             </div>
 
-            <Card
-              hoverable={false}
-              className="text-center"
-              style={{
-                borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-                backgroundColor: 'color-mix(in srgb, var(--color-surface) 90%, transparent)',
-              }}
-            >
+            <Card hoverable={false} className="text-center">
               <CardContent className="space-y-6 py-10">
-                <h3 className="font-display text-2xl md:text-3xl text-secondary">
+                <h3 className="font-display text-2xl md:text-3xl text-text-primary">
                   Need deeper analytics?
                 </h3>
-                <p className="text-text-secondary max-w-2xl mx-auto">
+                <p className="mx-auto max-w-2xl text-text-secondary">
                   Unlock campaign tagging, multi-user collaboration, and full clickstream history
-                  inside the QorkMe dashboard. The same warm design extends across desktop, tablet,
-                  and mobile.
+                  inside the QorkMe dashboard. The same calm interface extends across desktop,
+                  tablet, and mobile.
                 </p>
                 <Link href="/">
-                  <Button size="lg" className="px-8">
+                  <Button size="lg" className="justify-center px-8">
                     Shorten another URL
                   </Button>
                 </Link>
               </CardContent>
             </Card>
           </div>
-        </section>
+        </main>
 
-        <footer
-          className="border-t py-10"
-          style={{ borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)' }}
-        >
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex flex-col md:flex-row md:items-center gap-3 text-center md:text-left">
-                <span className="font-display text-lg font-semibold text-secondary tracking-[0.3em] uppercase">
-                  QORKME
-                </span>
-                <span className="hidden md:inline text-text-muted">•</span>
-                <span className="text-xs font-medium text-text-muted tracking-[0.35em] uppercase">
-                  Precision link studio
-                </span>
-              </div>
-              <p className="text-xs md:text-sm text-text-muted tracking-[0.25em] text-center md:text-right">
-                Designed in San Francisco • Powered by Supabase & Vercel
-              </p>
-            </div>
-          </div>
-        </footer>
+        <SiteFooter subtitle="Precision link studio" />
       </div>
     </>
   );
