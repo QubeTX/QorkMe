@@ -58,24 +58,26 @@ export default async function ResultPage({ params }: ResultPageProps) {
             />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[{
-                title: 'Total clicks',
-                value: url.click_count || 0,
-                icon: <BarChart3 size={20} className="text-accent" />,
-                tint: 'var(--color-accent)',
-              },
-              {
-                title: 'Alias type',
-                value: url.custom_alias ? 'Custom' : 'Auto',
-                icon: <Link2 size={20} className="text-secondary" />,
-                tint: 'var(--color-secondary)',
-              },
-              {
-                title: 'Status',
-                value: url.is_active ? 'Active' : 'Inactive',
-                icon: <Shield size={20} className="text-primary" />,
-                tint: 'var(--color-primary)',
-              }].map((stat) => (
+              {[
+                {
+                  title: 'Total clicks',
+                  value: url.click_count || 0,
+                  icon: <BarChart3 size={20} className="text-accent" />,
+                  tint: 'var(--color-accent)',
+                },
+                {
+                  title: 'Alias type',
+                  value: url.custom_alias ? 'Custom' : 'Auto',
+                  icon: <Link2 size={20} className="text-secondary" />,
+                  tint: 'var(--color-secondary)',
+                },
+                {
+                  title: 'Status',
+                  value: url.is_active ? 'Active' : 'Inactive',
+                  icon: <Shield size={20} className="text-primary" />,
+                  tint: 'var(--color-primary)',
+                },
+              ].map((stat) => (
                 <Card
                   key={stat.title}
                   hoverable={false}
@@ -97,7 +99,9 @@ export default async function ResultPage({ params }: ResultPageProps) {
                         <p className="text-2xl font-display font-semibold text-secondary">
                           {stat.value}
                         </p>
-                        <p className="text-xs uppercase tracking-[0.35em] text-text-muted">{stat.title}</p>
+                        <p className="text-xs uppercase tracking-[0.35em] text-text-muted">
+                          {stat.title}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -118,8 +122,9 @@ export default async function ResultPage({ params }: ResultPageProps) {
                   Need deeper analytics?
                 </h3>
                 <p className="text-text-secondary max-w-2xl mx-auto">
-                  Unlock campaign tagging, multi-user collaboration, and full clickstream history inside the QorkMe dashboard.
-                  The same warm design extends across desktop, tablet, and mobile.
+                  Unlock campaign tagging, multi-user collaboration, and full clickstream history
+                  inside the QorkMe dashboard. The same warm design extends across desktop, tablet,
+                  and mobile.
                 </p>
                 <Link href="/">
                   <Button size="lg" className="px-8">

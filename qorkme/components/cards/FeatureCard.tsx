@@ -40,9 +40,7 @@ export function FeatureCard({ icon, title, description, className }: FeatureCard
             </span>
           </div>
           <div className="space-y-3">
-            <CardTitle className="text-xl font-bold text-secondary">
-              {title}
-            </CardTitle>
+            <CardTitle className="text-xl font-bold text-secondary">{title}</CardTitle>
             <CardDescription className="leading-relaxed text-base font-medium">
               {description}
             </CardDescription>

@@ -84,7 +84,9 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
         }}
       >
         <CardHeader>
-          <CardTitle className="tracking-[0.2em] uppercase text-secondary">Your short link</CardTitle>
+          <CardTitle className="tracking-[0.2em] uppercase text-secondary">
+            Your short link
+          </CardTitle>
           <CardDescription className="text-text-secondary">
             Share this beautiful, trackable link with your audience in seconds.
           </CardDescription>
@@ -98,7 +100,8 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
                 readOnly
                 className="flex-1 px-4 py-3 rounded-[var(--radius-md)] font-mono text-lg select-all border-2 focus:outline-none transition-colors"
                 style={{
-                  backgroundColor: 'color-mix(in srgb, var(--color-surface-elevated) 100%, transparent)',
+                  backgroundColor:
+                    'color-mix(in srgb, var(--color-surface-elevated) 100%, transparent)',
                   borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
                 }}
               />
@@ -167,7 +170,9 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
         }}
       >
         <CardHeader className="space-y-2">
-          <CardTitle className="text-lg tracking-[0.2em] uppercase text-secondary">Link details</CardTitle>
+          <CardTitle className="text-lg tracking-[0.2em] uppercase text-secondary">
+            Link details
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -178,7 +183,8 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
                 <p
                   className="text-sm break-all p-3 rounded-[var(--radius-sm)] font-mono text-text-muted"
                   style={{
-                    backgroundColor: 'color-mix(in srgb, var(--color-surface-elevated) 96%, transparent)',
+                    backgroundColor:
+                      'color-mix(in srgb, var(--color-surface-elevated) 96%, transparent)',
                   }}
                 >
                   {longUrl}
