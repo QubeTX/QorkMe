@@ -6,36 +6,29 @@ import { Link2, ArrowLeft } from 'lucide-react';
 
 export function ResultNavigationHeader() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className="container mx-auto px-6 md:px-8 py-5">
-        <div
-          className="flex items-center justify-between rounded-[var(--radius-xl)] border bg-surface backdrop-blur-2xl shadow-soft px-5 md:px-8 py-4"
-          style={{
-            borderColor: 'color-mix(in srgb, var(--color-border) 75%, transparent)',
-            backgroundColor: 'color-mix(in srgb, var(--color-surface) 88%, transparent)',
-          }}
-        >
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-[var(--radius-lg)] bg-gradient-to-br from-secondary to-accent flex items-center justify-center shadow-medium group-hover:shadow-large group-hover:scale-105 transition-transform duration-300 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Link2 className="text-text-inverse relative z-10" size={20} />
+    <nav className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl">
+      <div className="container py-5">
+        <div className="flex items-center justify-between rounded-[var(--radius-xl)] border border-border bg-[color:var(--color-surface)]/85 px-5 md:px-6 py-3.5 shadow-soft transition-colors">
+          <Link href="/" className="flex items-center gap-3 text-[color:var(--color-text-primary)]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--color-primary)]/12 text-[color:var(--color-primary)]">
+              <Link2 size={20} aria-hidden="true" />
             </div>
-            <div className="flex flex-col">
-              <span className="font-display text-2xl font-bold text-secondary tracking-[0.3em] uppercase leading-none">
-                QORKME
+            <div className="flex flex-col gap-0.5">
+              <span className="font-display text-xl font-semibold uppercase tracking-[0.14em]">
+                QorkMe
               </span>
-              <span className="text-xs font-semibold tracking-[0.35em] text-text-muted uppercase">
+              <span className="text-sm font-medium text-[color:var(--color-text-muted)]">
                 Result overview
               </span>
             </div>
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="flex items-center gap-2 text-text-secondary hover:text-secondary transition-colors font-medium tracking-[0.25em] uppercase"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-[color:var(--color-text-secondary)] transition-colors hover:text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)]/10"
             >
-              <ArrowLeft size={18} />
-              Create another
+              <ArrowLeft size={18} aria-hidden="true" />
+              <span>Create another</span>
             </Link>
             <ClientThemeToggle />
           </div>

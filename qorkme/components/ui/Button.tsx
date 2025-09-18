@@ -13,29 +13,25 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          'btn font-display font-semibold rounded-[var(--radius-lg)] transition-all duration-300',
-          'hover:transform hover:scale-[1.05] active:scale-[0.95]',
-          'disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100',
-          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
-          'uppercase tracking-wider relative overflow-hidden',
-          'before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent',
-          'before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-700',
+          'btn relative overflow-hidden font-semibold tracking-tight transition-colors duration-200',
+          'disabled:opacity-60 disabled:cursor-not-allowed',
+          'focus-visible:outline-none',
           {
             // Variants
-            'bg-gradient-to-r from-secondary to-secondary-hover text-text-inverse shadow-xl hover:shadow-2xl border-2 border-secondary hover:from-secondary-hover hover:to-secondary':
+            'bg-[color:var(--color-primary)] text-[color:var(--color-text-inverse)] border border-[color:var(--color-primary)] shadow-soft hover:bg-[color:var(--color-primary-hover)] hover:border-[color:var(--color-primary-hover)]':
               variant === 'primary',
-            'bg-gradient-to-r from-accent to-accent-hover text-text-inverse shadow-xl hover:shadow-2xl border-2 border-accent hover:from-accent-hover hover:to-accent':
+            'bg-[color:var(--color-secondary)] text-[color:var(--color-text-inverse)] border border-[color:var(--color-secondary)] shadow-soft hover:bg-[color:var(--color-secondary-hover)] hover:border-[color:var(--color-secondary-hover)]':
               variant === 'secondary',
-            'bg-gradient-to-r from-primary to-primary-hover text-text-inverse shadow-xl hover:shadow-2xl border-2 border-primary hover:from-primary-hover hover:to-primary':
+            'bg-[color:var(--color-accent)] text-[color:var(--color-text-inverse)] border border-[color:var(--color-accent)] shadow-soft hover:bg-[color:var(--color-accent-hover)] hover:border-[color:var(--color-accent-hover)]':
               variant === 'accent',
-            'bg-transparent border-2 border-accent hover:border-secondary hover:bg-gradient-to-r hover:from-accent/10 hover:to-secondary/10 text-accent hover:text-secondary backdrop-blur-sm':
+            'bg-transparent text-[color:var(--color-text-secondary)] border border-[color:var(--color-border-strong)] hover:text-[color:var(--color-primary)] hover:border-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)]/10':
               variant === 'outline',
-            'bg-transparent hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 text-text-primary hover:text-secondary backdrop-blur-sm':
+            'bg-transparent text-[color:var(--color-text-secondary)] hover:bg-[color:var(--color-surface-muted)]/55 border border-transparent':
               variant === 'ghost',
             // Sizes
-            'px-4 py-2 text-sm gap-2': size === 'sm',
-            'px-6 py-3 text-base gap-2.5': size === 'md',
-            'px-8 py-4 text-lg gap-3': size === 'lg',
+            'min-h-[42px] px-4 text-sm gap-2': size === 'sm',
+            'min-h-[46px] px-5 text-sm gap-2.5': size === 'md',
+            'min-h-[52px] px-6 text-base gap-3': size === 'lg',
           },
           className
         )}

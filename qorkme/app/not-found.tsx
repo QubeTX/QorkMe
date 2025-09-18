@@ -9,45 +9,32 @@ export default function NotFound() {
     <div className="relative min-h-screen bg-background text-text-primary">
       <NavigationHeader />
 
-      <div className="relative flex flex-col items-center justify-center min-h-screen px-6 py-24">
-        <div
-          className="absolute inset-x-0 top-24 mx-auto h-64 max-w-5xl rounded-full blur-3xl opacity-50"
-          style={{ background: 'color-mix(in srgb, var(--color-accent) 22%, transparent)' }}
-        />
+      <div className="relative flex min-h-screen flex-col items-center justify-center px-6 py-24">
+        <div className="absolute inset-x-0 top-32 mx-auto h-60 max-w-4xl rounded-full bg-[color:var(--color-primary)]/12 blur-3xl" />
 
-        <Card
-          hoverable={false}
-          className="relative max-w-3xl w-full text-center"
-          style={{
-            borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-            backgroundColor: 'color-mix(in srgb, var(--color-surface) 92%, transparent)',
-          }}
-        >
+        <Card hoverable={false} className="relative w-full max-w-3xl text-center">
           <CardContent className="space-y-8 py-14">
             <div className="flex flex-col items-center gap-4">
-              <div
-                className="w-20 h-20 rounded-full flex items-center justify-center"
-                style={{
-                  background: 'color-mix(in srgb, var(--color-secondary) 18%, transparent)',
-                }}
-              >
-                <Compass size={36} className="text-secondary" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[color:var(--color-primary)]/12 text-[color:var(--color-primary)]">
+                <Compass size={28} aria-hidden="true" />
               </div>
-              <span className="text-xs uppercase tracking-[0.5em] text-text-muted">404</span>
+              <span className="text-sm font-semibold text-text-muted">Error 404</span>
             </div>
-            <h1 className="font-display text-4xl md:text-5xl text-secondary leading-tight">
-              We couldn&apos;t locate that link
+            <h1 className="font-display text-4xl md:text-5xl font-semibold text-text-primary leading-tight">
+              We couldn&apos;t find that link
             </h1>
-            <p className="text-base md:text-lg text-text-secondary max-w-2xl mx-auto">
+            <p className="mx-auto max-w-2xl text-base md:text-lg text-text-secondary">
               The short URL you&apos;re searching for may have expired, been removed, or never
               existed. Let&apos;s guide you back to the QorkMe studio to craft something new.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col justify-center gap-3 sm:flex-row">
               <Link href="/" className="inline-flex">
-                <Button size="lg">Return home</Button>
+                <Button size="lg" className="w-full sm:w-auto">
+                  Return home
+                </Button>
               </Link>
               <Link href="/docs" className="inline-flex">
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   View documentation
                 </Button>
               </Link>

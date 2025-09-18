@@ -9,21 +9,23 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="relative p-2 rounded-full bg-surface border-2 border-border hover:border-border-hover transition-all duration-200 group"
+      type="button"
+      aria-pressed={theme === 'dark'}
+      className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface shadow-soft transition-all duration-200 hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-surface)]"
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
     >
-      <div className="relative w-6 h-6">
+      <div className="relative h-6 w-6">
         <Sun
-          className={`absolute inset-0 transition-all duration-300 text-secondary ${
+          className={`absolute inset-0 transition-all duration-300 text-[color:var(--color-secondary)] ${
             theme === 'light' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'
           }`}
-          size={24}
+          size={22}
         />
         <Moon
-          className={`absolute inset-0 transition-all duration-300 text-accent ${
+          className={`absolute inset-0 transition-all duration-300 text-[color:var(--color-accent)] ${
             theme === 'dark' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'
           }`}
-          size={24}
+          size={22}
         />
       </div>
     </button>
