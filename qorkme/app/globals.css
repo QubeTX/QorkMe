@@ -71,82 +71,87 @@
 :root {
   /* Light Theme - Sandstone & Earth Tones */
   --color-background: linear-gradient(
-    135deg,
-    #f5e6d3 0%,
-    #faf7f2 100%
+    140deg,
+    #f4ebdd 0%,
+    #fbf6ef 45%,
+    #fdf9f3 100%
   ); /* Warm sandstone gradient */
-  --color-surface: rgba(250, 247, 242, 0.9); /* Light sand with transparency */
-  --color-surface-elevated: rgba(255, 255, 255, 0.95);
-  --color-primary: #8b7355; /* Desert sand brown */
-  --color-primary-hover: #6d5a44;
-  --color-secondary: #3e2723; /* Rich earth brown */
-  --color-secondary-hover: #2e1a17;
-  --color-accent: #5d4037; /* Medium earth brown */
-  --color-accent-hover: #4e342e;
+  --color-surface: rgba(253, 249, 243, 0.92); /* Light sand with softness */
+  --color-surface-elevated: rgba(255, 252, 247, 0.98);
+  --color-surface-muted: rgba(245, 234, 219, 0.65);
+  --color-primary: #8b7152; /* Desert sand brown */
+  --color-primary-hover: #6f5940;
+  --color-secondary: #4a2f27; /* Rich earth brown */
+  --color-secondary-hover: #3a231d;
+  --color-accent: #b86b43; /* Burnt sienna */
+  --color-accent-hover: #a15936;
 
   /* Text Colors */
-  --color-text-primary: #2e1a17; /* Deep brown */
-  --color-text-secondary: #5d4037; /* Medium brown */
-  --color-text-muted: #8b7355; /* Light brown */
-  --color-text-inverse: #faf7f2;
+  --color-text-primary: #321d18; /* Deep coffee brown */
+  --color-text-secondary: #5b3a2f; /* Mid-tone brown */
+  --color-text-muted: #8f715b; /* Muted clay */
+  --color-text-inverse: #fdf9f3;
 
   /* Neutral Colors */
-  --color-border: #d4b896; /* Sandy border */
-  --color-border-hover: #c4a57d;
-  --color-shadow: rgba(62, 39, 35, 0.08);
-  --color-shadow-hover: rgba(62, 39, 35, 0.15);
+  --color-border: #d8bfa5; /* Sandy border */
+  --color-border-hover: #cba986;
+  --color-ring: rgba(139, 113, 82, 0.25);
+  --color-shadow: rgba(74, 47, 39, 0.08);
+  --color-shadow-hover: rgba(74, 47, 39, 0.18);
 
   /* Semantic Colors */
-  --color-success: #7cb342; /* Earthy green */
-  --color-warning: #f57c00; /* Burnt orange */
-  --color-error: #c62828; /* Deep red */
-  --color-info: #5d4037; /* Earth brown for info */
+  --color-success: #7f9c4c; /* Moss green */
+  --color-warning: #e38b3c; /* Toasted orange */
+  --color-error: #b6493c; /* Warm terracotta */
+  --color-info: #8b7152; /* Earth brown for info */
 
   /* Grid Unit */
   --grid-unit: 8px;
 
   /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 20px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
   --radius-full: 9999px;
 
   /* Transitions */
   --transition-fast: 150ms ease;
-  --transition-base: 250ms ease;
-  --transition-slow: 350ms ease;
+  --transition-base: 260ms ease;
+  --transition-slow: 420ms ease;
 }
 
 [data-theme='dark'] {
-  /* Dark Theme - Sophisticated Blues & Grays */
-  --color-background: #0f172a; /* Deep midnight blue */
-  --color-surface: #1e293b; /* Slate blue surface */
-  --color-surface-elevated: #334155; /* Elevated slate */
-  --color-primary: #60a5fa; /* Bright blue */
-  --color-primary-hover: #3b82f6;
-  --color-secondary: #a855f7; /* Rich purple */
-  --color-secondary-hover: #9333ea;
-  --color-accent: #06b6d4; /* Cyan accent */
-  --color-accent-hover: #0891b2;
+  /* Dark Theme - Warm Hearth Palette */
+  --color-background: linear-gradient(145deg, #1b1410 0%, #0f0b08 65%, #070504 100%);
+  --color-surface: rgba(33, 24, 20, 0.94);
+  --color-surface-elevated: rgba(44, 31, 26, 0.98);
+  --color-surface-muted: rgba(51, 35, 30, 0.75);
+  --color-primary: #d6ab6a; /* Golden umber */
+  --color-primary-hover: #c2904d;
+  --color-secondary: #b37b51; /* Burnt clay */
+  --color-secondary-hover: #9a6641;
+  --color-accent: #e07d43; /* Copper ember */
+  --color-accent-hover: #c66835;
 
   /* Text Colors */
-  --color-text-primary: #f1f5f9; /* Almost white */
-  --color-text-secondary: #cbd5e1; /* Light gray */
-  --color-text-muted: #64748b; /* Muted gray */
-  --color-text-inverse: #0f172a;
+  --color-text-primary: #f8f1e8;
+  --color-text-secondary: #d7c0ab;
+  --color-text-muted: #9f836f;
+  --color-text-inverse: #120c0a;
 
   /* Neutral Colors */
-  --color-border: #475569; /* Gray border */
-  --color-border-hover: #64748b;
-  --color-shadow: rgba(0, 0, 0, 0.5);
-  --color-shadow-hover: rgba(0, 0, 0, 0.7);
+  --color-border: #6c4f3d;
+  --color-border-hover: #8b664d;
+  --color-ring: rgba(214, 171, 106, 0.35);
+  --color-shadow: rgba(0, 0, 0, 0.55);
+  --color-shadow-hover: rgba(0, 0, 0, 0.75);
 
   /* Semantic Colors */
-  --color-success: #10b981; /* Emerald green */
-  --color-warning: #f59e0b; /* Amber orange */
-  --color-error: #ef4444; /* Red */
-  --color-info: #06b6d4; /* Cyan info */
+  --color-success: #5f8a3a;
+  --color-warning: #d9893c;
+  --color-error: #c65a4c;
+  --color-info: #d6ab6a;
 }
 
 @theme inline {
@@ -154,6 +159,7 @@
   --color-background: var(--color-background);
   --color-surface: var(--color-surface);
   --color-surface-elevated: var(--color-surface-elevated);
+  --color-surface-muted: var(--color-surface-muted);
   --color-primary: var(--color-primary);
   --color-primary-hover: var(--color-primary-hover);
   --color-secondary: var(--color-secondary);
@@ -166,6 +172,7 @@
   --color-text-inverse: var(--color-text-inverse);
   --color-border: var(--color-border);
   --color-border-hover: var(--color-border-hover);
+  --color-ring: var(--color-ring);
 
   /* Typography - ZT Bros Oskon with serif fallbacks */
   --font-display: 'ZT Bros Oskon', 'Playfair Display', Georgia, serif;
@@ -216,15 +223,16 @@ body {
   width: 100%;
   height: 100%;
   background-image:
-    radial-gradient(circle at 25% 25%, rgba(139, 115, 85, 0.03) 0%, transparent 25%),
-    radial-gradient(circle at 75% 75%, rgba(93, 64, 55, 0.03) 0%, transparent 25%);
+    radial-gradient(circle at 18% 32%, rgba(139, 113, 82, 0.08) 0%, transparent 48%),
+    radial-gradient(circle at 82% 68%, rgba(184, 107, 67, 0.07) 0%, transparent 52%),
+    radial-gradient(circle at 50% 10%, rgba(231, 204, 174, 0.08) 0%, transparent 55%);
   pointer-events: none;
   z-index: -1;
 }
 
 /* Dark mode enhanced pattern */
 [data-theme='dark'] body {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(150deg, #1a130f 0%, #120c0a 55%, #090604 100%);
 }
 
 [data-theme='dark'] body::before {
@@ -235,9 +243,9 @@ body {
   width: 100%;
   height: 100%;
   background-image:
-    radial-gradient(circle at 20% 80%, rgba(96, 165, 250, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.03) 0%, transparent 50%);
+    radial-gradient(circle at 25% 75%, rgba(214, 171, 106, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 78% 25%, rgba(224, 125, 67, 0.1) 0%, transparent 52%),
+    radial-gradient(circle at 42% 38%, rgba(114, 82, 64, 0.15) 0%, transparent 58%);
   pointer-events: none;
   z-index: -1;
 }
@@ -303,19 +311,22 @@ pre {
 
 /* Card Styles */
 .card {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: calc(var(--grid-unit) * 5);
+  background: linear-gradient(160deg, var(--color-surface-elevated), var(--color-surface));
+  border-radius: var(--radius-xl);
+  padding: calc(var(--grid-unit) * 5.5);
   border: 1px solid var(--color-border);
-  backdrop-filter: blur(10px);
+  outline: 1px solid rgba(255, 255, 255, 0.02);
+  outline-offset: -1px;
+  backdrop-filter: blur(14px);
   box-shadow:
-    0 4px 6px -1px var(--color-shadow),
-    0 2px 4px -1px var(--color-shadow);
+    0 16px 35px -20px var(--color-shadow),
+    0 12px 26px -18px var(--color-shadow);
   transition:
     transform var(--transition-base),
     box-shadow var(--transition-base),
     border-color var(--transition-base),
-    background-color var(--transition-base);
+    background-color var(--transition-base),
+    outline-color var(--transition-base);
   position: relative;
   overflow: hidden;
 }
@@ -326,40 +337,36 @@ pre {
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-  opacity: 0;
-  transition: opacity var(--transition-base);
+  height: 100%;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.45), transparent 55%);
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 .card:hover {
-  transform: translateY(-6px) scale(1.01);
+  transform: translateY(-8px) scale(1.01);
   box-shadow:
-    0 20px 25px -5px var(--color-shadow-hover),
-    0 10px 10px -5px var(--color-shadow);
+    0 30px 45px -22px var(--color-shadow-hover),
+    0 18px 30px -18px var(--color-shadow);
   border-color: var(--color-primary);
-  background: var(--color-surface-elevated);
-}
-
-.card:hover::before {
-  opacity: 1;
+  outline-color: var(--color-ring);
 }
 
 .card-elevated {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  border: 2px solid var(--color-primary);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+  border: 1.5px solid var(--color-primary);
   box-shadow:
-    0 25px 50px -12px var(--color-shadow),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 32px 52px -24px var(--color-shadow),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 [data-theme='dark'] .card-elevated {
-  background: rgba(15, 23, 42, 0.8);
-  border: 2px solid var(--color-accent);
+  background: linear-gradient(170deg, rgba(51, 35, 30, 0.9), rgba(27, 20, 17, 0.85));
+  border: 1.5px solid var(--color-accent);
   box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.8),
-    0 0 20px rgba(96, 165, 250, 0.1);
+    0 32px 52px -20px rgba(0, 0, 0, 0.85),
+    0 0 22px rgba(214, 171, 106, 0.2);
 }
 
 /* Button Base Styles */
@@ -416,7 +423,7 @@ pre {
 .input:focus {
   border-color: var(--color-secondary);
   outline: none;
-  box-shadow: 0 0 0 4px rgba(62, 39, 35, 0.08);
+  box-shadow: 0 0 0 4px var(--color-ring);
   background: var(--color-background);
 }
 

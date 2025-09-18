@@ -52,7 +52,11 @@ jobs:
 
   preview-deploy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: >-
+      ${{ github.event_name == 'pull_request' &&
+          secrets.VERCEL_TOKEN != '' &&
+          secrets.VERCEL_ORG_ID != '' &&
+          secrets.VERCEL_PROJECT_ID != '' }}
 
     steps:
       - name: Checkout code
@@ -96,6 +100,18 @@ jobs:
               repo: context.repo.repo,
               body: `🚀 Preview deployment ready!\n\n🔗 Preview URL: ${deploymentUrl}\n\n_This preview will be automatically deleted when the PR is merged or closed._`
             });
+
+  preview-deploy-skipped:
+    if: >-
+      ${{ github.event_name == 'pull_request' &&
+          (secrets.VERCEL_TOKEN == '' ||
+           secrets.VERCEL_ORG_ID == '' ||
+           secrets.VERCEL_PROJECT_ID == '') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log skipped preview deployment
+        run: |
+          echo "Preview deployment skipped: Vercel secrets are not configured."
 
   security-scan:
     runs-on: ubuntu-latest

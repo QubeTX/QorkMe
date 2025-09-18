@@ -100,9 +100,10 @@ qorkme/
 ├── package-lock.json            # Dependency lock file
 ├── postcss.config.mjs           # PostCSS config
 ├── tsconfig.json                # TypeScript config
-├── tsconfig.tsbuildinfo         # TypeScript build info
-└── vercel.json                  # Vercel deployment config
+└── tsconfig.tsbuildinfo         # TypeScript build info
 ```
+
+> Deployment configuration lives in the repository root [`../vercel.json`](../vercel.json), which runs installs and builds from this `qorkme` subdirectory during Vercel deployments.
 
 ## Development Commands
 
@@ -170,14 +171,14 @@ The application deploys automatically to Vercel when pushing to main branch via 
 - Vercel Edge deployment for fast global redirects
 - Optimized bundle splitting with Next.js 15
 - Lazy loading for analytics components
-- Security headers configured in vercel.json
+- Security headers configured in root-level [`vercel.json`](../vercel.json)
 - Function timeouts optimized for URL operations
 
 ## Security Measures
 
 - Input validation and sanitization
 - SQL injection prevention via parameterized queries and Supabase RLS
-- XSS protection headers configured in vercel.json
+- XSS protection headers configured in root-level [`vercel.json`](../vercel.json)
 - Security scanning with Trufflehog in CI pipeline
 - Hashed IP addresses for privacy in analytics
 - Dependency auditing with npm audit in CI
