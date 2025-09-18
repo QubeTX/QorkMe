@@ -2,17 +2,42 @@ import { UrlShortener } from '@/components/UrlShortener';
 import { NavigationHeader } from '@/components/NavigationHeader';
 import { FeatureCard } from '@/components/cards/FeatureCard';
 import { Card } from '@/components/cards/Card';
+import { MetricCard } from '@/components/cards/MetricCard';
 import { Button } from '@/components/ui/Button';
 import { Toaster } from 'react-hot-toast';
-import { ArrowUpRight, BarChart3, Globe, Link2, Shield, Sparkles, Zap } from 'lucide-react';
+import {
+  ArrowUpRight,
+  BarChart3,
+  Globe,
+  Link2,
+  Shield,
+  Sparkles,
+  Zap,
+} from 'lucide-react';
 import Link from 'next/link';
+import { SiteFooter } from '@/components/SiteFooter';
 
 export default function Home() {
   const stats = [
-    { value: '200K+', label: 'URLs curated', accentClass: 'text-accent' },
-    { value: '15+', label: 'Global regions', accentClass: 'text-secondary' },
-    { value: '50ms', label: 'Average redirect', accentClass: 'text-primary' },
-    { value: '24/7', label: 'Monitoring', accentClass: 'text-secondary' },
+    { value: '200K+', label: 'URLs curated', accent: 'primary' as const },
+    { value: '15+', label: 'Global regions', accent: 'accent' as const },
+    { value: '50ms', label: 'Average redirect', accent: 'secondary' as const },
+    { value: '24/7', label: 'Monitoring', accent: 'primary' as const },
+  ];
+
+  const heroHighlights = [
+    {
+      title: 'Active links',
+      value: '200K+',
+      icon: <BarChart3 size={20} aria-hidden="true" />,
+      accent: 'primary' as const,
+    },
+    {
+      title: 'Uptime',
+      value: '99.9%',
+      icon: <Shield size={20} aria-hidden="true" />,
+      accent: 'secondary' as const,
+    },
   ];
 
   return (
@@ -23,232 +48,156 @@ export default function Home() {
           style: {
             background: 'var(--color-surface)',
             color: 'var(--color-text-primary)',
-            border: '2px solid var(--color-border)',
+            border: '1px solid var(--color-border)',
             borderRadius: 'var(--radius-md)',
             fontFamily: 'var(--font-body)',
+            boxShadow: '0 12px 30px -18px rgba(15, 23, 42, 0.35)',
           },
         }}
       />
 
-      <div className="min-h-screen bg-background transition-colors duration-300 flex flex-col">
+      <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <NavigationHeader />
 
-        <main className="flex-1 flex flex-col pt-32 md:pt-36">
+        <main className="flex flex-1 flex-col pt-28 md:pt-32">
           <section className="relative px-6 pb-24">
-            <div className="container mx-auto max-w-7xl">
-              <div className="grid gap-12 xl:grid-cols-[1.05fr_0.95fr] items-start">
-                <div className="space-y-10 animate-fadeIn" style={{ animationDelay: '0.05s' }}>
-                  <div
-                    className="inline-flex items-center gap-3 px-6 py-3 rounded-full border bg-surface text-secondary shadow-soft backdrop-blur-sm"
-                    style={{
-                      borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
-                      backgroundColor: 'color-mix(in srgb, var(--color-surface) 85%, transparent)',
-                    }}
-                  >
-                    <Sparkles size={18} className="text-accent animate-pulse" />
-                    <span className="text-xs md:text-sm font-display font-semibold tracking-[0.4em] uppercase">
-                      Premium url studio
-                    </span>
-                  </div>
-                  <div className="space-y-6">
-                    <h1 className="font-display text-4xl md:text-5xl xl:text-6xl leading-tight">
-                      Precision-crafted links for brands that refuse ordinary
-                    </h1>
-                    <p className="text-base md:text-lg lg:text-xl text-text-secondary max-w-2xl">
-                      QorkMe wraps powerful analytics, enterprise security, and human-friendly codes
-                      into a warm, earthy experience that feels as considered as your brand.
-                      Shorten, share, and measure without sacrificing style.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Link href="#shorten" className="inline-flex">
-                      <Button size="lg" className="w-full sm:w-auto">
-                        Start shortening
-                        <ArrowUpRight size={20} />
-                      </Button>
-                    </Link>
-                    <Link href="/docs" className="inline-flex">
-                      <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                        Explore docs
-                      </Button>
-                    </Link>
-                  </div>
-
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <Card
-                      hoverable={false}
-                      className="shadow-soft border bg-surface"
-                      style={{
-                        borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-                        backgroundColor:
-                          'color-mix(in srgb, var(--color-surface) 90%, transparent)',
-                      }}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div
-                          className="w-12 h-12 rounded-full flex items-center justify-center"
-                          style={{
-                            background: 'color-mix(in srgb, var(--color-accent) 18%, transparent)',
-                          }}
-                        >
-                          <BarChart3 size={22} className="text-accent" />
-                        </div>
-                        <div>
-                          <p className="text-2xl font-display font-semibold text-secondary">
-                            200K+
-                          </p>
-                          <p className="text-sm text-text-muted uppercase tracking-[0.3em]">
-                            Active Links
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
-                    <Card
-                      hoverable={false}
-                      className="shadow-soft border bg-surface"
-                      style={{
-                        borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-                        backgroundColor:
-                          'color-mix(in srgb, var(--color-surface) 90%, transparent)',
-                      }}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div
-                          className="w-12 h-12 rounded-full flex items-center justify-center"
-                          style={{
-                            background:
-                              'color-mix(in srgb, var(--color-secondary) 18%, transparent)',
-                          }}
-                        >
-                          <Shield size={22} className="text-secondary" />
-                        </div>
-                        <div>
-                          <p className="text-2xl font-display font-semibold text-secondary">
-                            99.9%
-                          </p>
-                          <p className="text-sm text-text-muted uppercase tracking-[0.3em]">
-                            Uptime SLA
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
-                  </div>
+            <div className="container grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="space-y-10">
+                <span className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-primary)]/10 px-4 py-2 text-sm font-semibold text-[color:var(--color-primary)]">
+                  <Sparkles size={18} aria-hidden="true" />
+                  Premium link studio
+                </span>
+                <div className="space-y-6">
+                  <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight">
+                    Precision short links for teams that move quickly
+                  </h1>
+                  <p className="max-w-2xl text-lg text-text-secondary">
+                    QorkMe pairs intentional spacing, friendly forms, and consistent cards with the
+                    analytics and controls growing brands expect. Toggle themes, resize the window, and
+                    every surface adapts gracefully.
+                  </p>
                 </div>
 
-                <div className="relative" id="shorten">
-                  <div
-                    className="absolute -top-12 -right-12 h-44 w-44 rounded-full blur-3xl opacity-60"
-                    style={{
-                      background: 'color-mix(in srgb, var(--color-accent) 35%, transparent)',
-                    }}
-                  />
-                  <Card
-                    elevated
-                    className="relative animate-fadeIn"
-                    style={{ animationDelay: '0.15s' }}
-                  >
-                    <UrlShortener />
-                  </Card>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Link href="#shorten" className="inline-flex">
+                    <Button size="lg" className="w-full sm:w-auto">
+                      Start shortening
+                      <ArrowUpRight size={20} aria-hidden="true" />
+                    </Button>
+                  </Link>
+                  <Link href="/docs" className="inline-flex">
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                      Explore docs
+                    </Button>
+                  </Link>
                 </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {heroHighlights.map((highlight) => (
+                    <MetricCard
+                      key={highlight.title}
+                      icon={highlight.icon}
+                      value={highlight.value}
+                      label={highlight.title}
+                      accent={highlight.accent}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative" id="shorten">
+                <div
+                  className="absolute inset-0 -translate-y-6 -translate-x-4 rounded-[var(--radius-xl)] bg-[color:var(--color-primary)]/15 blur-3xl"
+                  aria-hidden="true"
+                />
+                <Card elevated className="relative">
+                  <UrlShortener />
+                </Card>
               </div>
             </div>
           </section>
 
           <section className="px-6 pb-24">
-            <div className="container mx-auto max-w-7xl space-y-12">
-              <Card hoverable={false} className="text-center mx-auto max-w-4xl">
+            <div className="container space-y-12">
+              <Card hoverable={false} className="mx-auto max-w-4xl text-center">
                 <div className="space-y-4">
-                  <h2 className="font-display text-3xl md:text-4xl text-secondary">
+                  <h2 className="font-display text-3xl md:text-4xl text-text-primary">
                     Why discerning teams choose QorkMe
                   </h2>
-                  <p className="text-base md:text-lg text-text-secondary max-w-2xl mx-auto">
-                    Every touchpoint is thoughtfully spaced, responsive, and consistent. Cards
-                    anchor each experience with a tactile warmth that carries across light and dark
-                    themes alike.
+                  <p className="mx-auto max-w-2xl text-base md:text-lg text-text-secondary">
+                    Shared components, measured spacing, and accessible interactions carry across the
+                    entire experience. Cards, buttons, and inputs are reused everywhere so the interface
+                    feels familiar from the homepage to analytics.
                   </p>
                 </div>
               </Card>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                 <FeatureCard
-                  icon={<Zap size={24} />}
-                  title="Lightning Fast"
+                  icon={<Zap size={24} aria-hidden="true" />}
+                  title="Lightning fast"
                   description="Edge deployments and adaptive caching deliver millisecond redirects no matter where your audience clicks."
                 />
                 <FeatureCard
-                  icon={<Shield size={24} />}
-                  title="Enterprise Secure"
+                  icon={<Shield size={24} aria-hidden="true" />}
+                  title="Enterprise secure"
                   description="Layered safeguards, from rate limiting to malicious URL scrubbing, protect every branded touchpoint."
                 />
                 <FeatureCard
-                  icon={<BarChart3 size={24} />}
-                  title="Rich Analytics"
-                  description="Understand engagement with geographic, device, and referral insights presented in elegant detail."
+                  icon={<BarChart3 size={24} aria-hidden="true" />}
+                  title="Rich analytics"
+                  description="Understand engagement with geographic, device, and referral insights presented in a clear, compact dashboard."
                 />
                 <FeatureCard
-                  icon={<Globe size={24} />}
-                  title="Global Reach"
-                  description="Multi-region infrastructure keeps experiences cohesive, stable, and lightning quick across the globe."
+                  icon={<Globe size={24} aria-hidden="true" />}
+                  title="Global reach"
+                  description="Multi-region infrastructure keeps experiences cohesive, stable, and quick across the globe."
                 />
                 <FeatureCard
-                  icon={<Link2 size={24} />}
-                  title="Custom Aliases"
+                  icon={<Link2 size={24} aria-hidden="true" />}
+                  title="Custom aliases"
                   description="Craft pronounceable, on-brand short codes with precise validation and collision prevention."
                 />
                 <FeatureCard
-                  icon={<Sparkles size={24} />}
-                  title="Guided Creation"
-                  description="A refined flow guides teams from paste to share with subtle animations and accessible microcopy."
+                  icon={<Sparkles size={24} aria-hidden="true" />}
+                  title="Guided creation"
+                  description="A refined flow guides teams from paste to share with subtle animations, helper text, and keyboard-friendly controls."
                 />
               </div>
             </div>
           </section>
 
           <section className="px-6 pb-24">
-            <div className="container mx-auto max-w-7xl">
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-                {stats.map((stat) => (
-                  <Card
-                    key={stat.label}
-                    hoverable={false}
-                    className="text-center"
-                    style={{
-                      borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-                      backgroundColor: 'color-mix(in srgb, var(--color-surface) 92%, transparent)',
-                    }}
-                  >
-                    <div className="space-y-3">
-                      <span className={`text-3xl font-display font-semibold ${stat.accentClass}`}>
-                        {stat.value}
-                      </span>
-                      <p className="text-xs uppercase tracking-[0.35em] text-text-muted">
-                        {stat.label}
-                      </p>
-                    </div>
-                  </Card>
-                ))}
-              </div>
+            <div className="container grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {stats.map((stat) => (
+                <MetricCard
+                  key={stat.label}
+                  value={stat.value}
+                  label={stat.label}
+                  accent={stat.accent}
+                  layout="vertical"
+                />
+              ))}
             </div>
           </section>
 
           <section className="px-6 pb-28">
-            <div className="container mx-auto max-w-5xl">
+            <div className="container max-w-4xl">
               <Card hoverable={false} className="text-center">
                 <div className="space-y-6">
-                  <h2 className="font-display text-3xl md:text-4xl text-secondary">
+                  <h2 className="font-display text-3xl md:text-4xl text-text-primary">
                     Ready to elevate every link?
                   </h2>
-                  <p className="text-base md:text-lg text-text-secondary max-w-3xl mx-auto">
-                    From campaign launches to enterprise migrations, QorkMe keeps your audience
-                    journeys considered, cohesive, and measurable. Switch the theme, resize the
-                    browser—every detail adapts with grace.
+                  <p className="mx-auto max-w-3xl text-base md:text-lg text-text-secondary">
+                    From campaign launches to enterprise migrations, QorkMe keeps your audience journeys
+                    considered, cohesive, and measurable. Switch the theme, resize the browser—every
+                    detail stays balanced.
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <div className="flex flex-col justify-center gap-3 sm:flex-row">
                     <Link href="#shorten" className="inline-flex">
                       <Button size="lg" className="w-full sm:w-auto">
                         Create a short link
-                        <ArrowUpRight size={20} />
+                        <ArrowUpRight size={20} aria-hidden="true" />
                       </Button>
                     </Link>
                     <Link href="/docs" className="inline-flex">
@@ -263,27 +212,7 @@ export default function Home() {
           </section>
         </main>
 
-        <footer
-          className="border-t py-12"
-          style={{ borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)' }}
-        >
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex flex-col md:flex-row md:items-center gap-3 text-center md:text-left">
-                <span className="font-display text-2xl font-bold tracking-[0.35em] text-secondary uppercase">
-                  QORKME
-                </span>
-                <span className="hidden md:inline text-text-muted">•</span>
-                <span className="text-sm font-medium text-text-muted uppercase tracking-[0.35em]">
-                  Crafted for memorable journeys
-                </span>
-              </div>
-              <p className="text-sm text-text-muted font-medium tracking-[0.25em] text-center md:text-right">
-                Thoughtfully designed in San Francisco • Powered by Supabase & Vercel
-              </p>
-            </div>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </>
   );

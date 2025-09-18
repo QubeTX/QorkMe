@@ -22,8 +22,8 @@ export function Card({
     <div
       className={cn(
         'card',
-        elevated ? 'card-elevated' : '',
-        hoverable && 'hover:transform hover:-translate-y-1',
+        elevated && 'card-elevated',
+        hoverable && 'transition-transform hover:-translate-y-1 hover:shadow-medium',
         onClick && 'cursor-pointer',
         className
       )}
@@ -41,7 +41,11 @@ interface CardHeaderProps {
 }
 
 export function CardHeader({ children, className }: CardHeaderProps) {
-  return <div className={cn('pb-4 border-b border-border', className)}>{children}</div>;
+  return (
+    <div className={cn('pb-6 mb-2 border-b border-border flex flex-col gap-2', className)}>
+      {children}
+    </div>
+  );
 }
 
 interface CardTitleProps {
@@ -51,7 +55,7 @@ interface CardTitleProps {
 
 export function CardTitle({ children, className }: CardTitleProps) {
   return (
-    <h3 className={cn('text-xl font-display font-bold text-text-primary', className)}>
+    <h3 className={cn('text-2xl font-display font-semibold text-text-primary', className)}>
       {children}
     </h3>
   );
@@ -63,7 +67,7 @@ interface CardDescriptionProps {
 }
 
 export function CardDescription({ children, className }: CardDescriptionProps) {
-  return <p className={cn('text-sm text-text-secondary mt-1', className)}>{children}</p>;
+  return <p className={cn('text-base text-text-muted', className)}>{children}</p>;
 }
 
 interface CardContentProps {
@@ -72,7 +76,7 @@ interface CardContentProps {
 }
 
 export function CardContent({ children, className }: CardContentProps) {
-  return <div className={cn('pt-4', className)}>{children}</div>;
+  return <div className={cn('pt-6', className)}>{children}</div>;
 }
 
 interface CardFooterProps {
@@ -84,7 +88,7 @@ export function CardFooter({ children, className }: CardFooterProps) {
   return (
     <div
       className={cn(
-        'pt-4 mt-4 border-t border-border flex items-center justify-between',
+        'pt-6 mt-6 border-t border-border flex items-center justify-between gap-4',
         className
       )}
     >

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/cards/Card';
-import { Link2, Zap, Settings2, Check } from 'lucide-react';
+import { Link2, Zap, Settings2, Check, ChevronDown } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
@@ -14,6 +14,9 @@ export function UrlShortener() {
   const [showCustom, setShowCustom] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const urlHelpId = 'url-help-text';
+  const aliasSectionId = 'custom-alias-section';
+  const aliasHelpId = 'alias-help-text';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,26 +75,21 @@ export function UrlShortener() {
 
   return (
     <>
-      <CardHeader className="space-y-3 text-left md:text-center">
-        <CardTitle className="text-2xl md:text-3xl tracking-[0.2em] uppercase">
-          Launch a new short link
-        </CardTitle>
+      <CardHeader className="space-y-3 text-left">
+        <CardTitle className="text-2xl md:text-3xl">Create a short link</CardTitle>
         <CardDescription className="text-base text-text-secondary">
-          Paste the destination and tailor an optional alias. Our warm card surfaces keep every step
-          grounded and legible.
+          Paste a destination URL and optionally layer on a custom alias. Every field is spaced for
+          clarity and ready for keyboard or touch input.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-10">
+      <CardContent className="pt-0">
+        <form onSubmit={handleSubmit} className="space-y-8">
           {/* Main URL Input */}
-          <div className="space-y-3">
-            <label
-              htmlFor="url"
-              className="block text-xs font-semibold text-text-muted uppercase tracking-[0.4em]"
-            >
-              Enter your URL
+          <div className="space-y-2">
+            <label htmlFor="url" className="block text-sm font-semibold text-text-secondary">
+              Destination URL
             </label>
-            <div className="relative group">
+            <div className="relative">
               <Input
                 id="url"
                 type="url"
@@ -99,54 +97,49 @@ export function UrlShortener() {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 disabled={loading}
-                className="pr-12 text-base py-4 group-hover:border-accent transition-all duration-300"
+                className="pr-12 text-base"
+                aria-describedby={urlHelpId}
                 required
               />
-              <Link2
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted group-hover:text-accent transition-colors"
-                size={20}
-              />
+              <Link2 className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted" size={20} aria-hidden="true" />
             </div>
+            <p id={urlHelpId} className="text-xs text-text-muted">
+              We support http(s) URLs and trackable query strings.
+            </p>
           </div>
 
           {/* Custom Alias Section */}
-          <div className="space-y-5">
+          <div className="space-y-4">
             <button
               type="button"
               onClick={() => setShowCustom(!showCustom)}
-              className="flex items-center gap-3 text-text-secondary hover:text-accent transition-all duration-300 group p-3 rounded-[var(--radius-md)]"
-              style={{
-                backgroundColor: showCustom
-                  ? 'color-mix(in srgb, var(--color-surface-muted) 65%, transparent)'
-                  : 'color-mix(in srgb, var(--color-surface) 88%, transparent)',
-              }}
+              aria-expanded={showCustom}
+              aria-controls={aliasSectionId}
+              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] border border-border bg-[color:var(--color-surface-elevated)]/65 px-4 py-3 text-left transition-colors hover:border-border-strong"
             >
-              <div
-                className={`transition-all duration-300 ${showCustom ? 'rotate-90 text-accent' : 'group-hover:scale-110'}`}
-              >
-                <Settings2 size={20} />
-              </div>
-              <span className="font-semibold text-sm uppercase tracking-wide">
-                Custom Alias (Optional)
+              <span className="flex items-center gap-3 text-sm font-semibold text-text-primary">
+                <Settings2 size={20} aria-hidden="true" />
+                Add a custom alias (optional)
               </span>
+              <ChevronDown
+                size={18}
+                aria-hidden="true"
+                className={`transition-transform duration-200 ${showCustom ? 'rotate-180' : ''}`}
+              />
             </button>
 
             {showCustom && (
               <div
-                className="animate-slideIn space-y-3 p-5 border rounded-[var(--radius-lg)]"
-                style={{
-                  borderColor: 'color-mix(in srgb, var(--color-border) 65%, transparent)',
-                  backgroundColor: 'color-mix(in srgb, var(--color-surface) 90%, transparent)',
-                }}
+                id={aliasSectionId}
+                role="region"
+                aria-label="Custom alias options"
+                className="animate-slideIn space-y-3 rounded-[var(--radius-lg)] border border-border bg-[color:var(--color-surface)] p-5 shadow-soft"
               >
-                <label
-                  htmlFor="alias"
-                  className="block text-xs font-semibold text-text-muted uppercase tracking-[0.4em]"
-                >
-                  Choose your custom alias
+                <label htmlFor="alias" className="block text-sm font-semibold text-text-secondary">
+                  Custom alias
                 </label>
-                <div className="flex gap-3 items-center">
-                  <span className="text-text-muted font-mono text-sm font-semibold bg-border/20 px-3 py-2 rounded">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <span className="inline-flex items-center rounded-[var(--radius-md)] bg-[color:var(--color-surface-elevated)] px-3 py-2 font-mono text-sm text-text-muted">
                     qork.me/
                   </span>
                   <Input
@@ -158,10 +151,11 @@ export function UrlShortener() {
                       setCustomAlias(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))
                     }
                     disabled={loading}
-                    className="flex-1 font-mono py-3"
+                    className="flex-1 font-mono"
                     pattern="[a-z0-9-]+"
                     minLength={3}
                     maxLength={50}
+                    aria-describedby={aliasHelpId}
                   />
                   <Button
                     type="button"
@@ -169,13 +163,13 @@ export function UrlShortener() {
                     size="sm"
                     onClick={checkAliasAvailability}
                     disabled={!customAlias || loading}
-                    className="px-4 py-3"
+                    className="whitespace-nowrap"
                   >
-                    <Check size={16} />
+                    <Check size={16} aria-hidden="true" />
                     Check
                   </Button>
                 </div>
-                <p className="text-xs text-text-muted font-medium">
+                <p id={aliasHelpId} className="text-xs text-text-muted">
                   Use lowercase letters, numbers, and hyphens. 3-50 characters.
                 </p>
               </div>
@@ -189,16 +183,16 @@ export function UrlShortener() {
               variant="primary"
               size="lg"
               disabled={loading}
-              className="w-full py-4 text-lg font-bold transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+              className="w-full justify-center"
             >
               {loading ? (
                 <>
-                  <div className="animate-spin rounded-full h-6 w-6 border-2 border-text-inverse border-t-transparent" />
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-[color:var(--color-text-inverse)] border-t-transparent" />
                   <span>Creating your link...</span>
                 </>
               ) : (
                 <>
-                  <Zap size={22} className="animate-pulse" />
+                  <Zap size={20} className="text-[color:var(--color-text-inverse)]" aria-hidden="true" />
                   <span>Shorten URL</span>
                 </>
               )}
@@ -206,8 +200,8 @@ export function UrlShortener() {
           </div>
 
           {/* Info Text */}
-          <p className="text-xs text-center text-text-muted font-medium pt-2">
-            By shortening a URL, you agree to our Terms of Service and Privacy Policy
+          <p className="pt-2 text-center text-xs text-text-muted">
+            By shortening a URL, you agree to our Terms of Service and Privacy Policy.
           </p>
         </form>
       </CardContent>

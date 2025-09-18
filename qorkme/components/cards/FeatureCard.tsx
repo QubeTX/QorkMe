@@ -14,37 +14,17 @@ export function FeatureCard({ icon, title, description, className }: FeatureCard
     <Card
       hoverable={false}
       className={cn(
-        'group relative overflow-hidden border bg-surface shadow-soft transition-transform duration-500 hover:-translate-y-1',
+        'group h-full border border-border bg-surface transition-transform duration-300 hover:-translate-y-1 hover:border-border-strong',
         className
       )}
-      style={{
-        borderColor: 'color-mix(in srgb, var(--color-border) 70%, transparent)',
-        backgroundColor: 'color-mix(in srgb, var(--color-surface) 92%, transparent)',
-      }}
     >
-      <CardContent className="relative">
-        <div
-          className="absolute inset-x-0 -top-20 h-40 opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-500"
-          style={{ background: 'color-mix(in srgb, var(--color-accent) 25%, transparent)' }}
-        />
-        <div className="flex flex-col gap-6 relative">
-          <div
-            className="w-16 h-16 rounded-[var(--radius-md)] border flex items-center justify-center transition-all duration-500"
-            style={{
-              borderColor: 'color-mix(in srgb, var(--color-border) 60%, transparent)',
-              background: 'color-mix(in srgb, var(--color-surface-muted) 60%, transparent)',
-            }}
-          >
-            <span className="text-accent group-hover:animate-float group-hover:text-secondary transition-colors duration-500">
-              {icon}
-            </span>
-          </div>
-          <div className="space-y-3">
-            <CardTitle className="text-xl font-bold text-secondary">{title}</CardTitle>
-            <CardDescription className="leading-relaxed text-base font-medium">
-              {description}
-            </CardDescription>
-          </div>
+      <CardContent className="relative flex h-full flex-col gap-6">
+        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/12 text-primary transition-transform duration-300 group-hover:scale-105">
+          {icon}
+        </span>
+        <div className="space-y-3">
+          <CardTitle className="text-xl font-semibold text-text-primary">{title}</CardTitle>
+          <CardDescription className="text-base leading-relaxed">{description}</CardDescription>
         </div>
       </CardContent>
     </Card>
