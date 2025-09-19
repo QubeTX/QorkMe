@@ -57,14 +57,14 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
   };
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-8">
       {/* Success Message */}
       <div
-        className="flex items-start gap-4 rounded-[var(--radius-xl)] border border-[color:var(--color-primary)]/25 bg-[color:var(--color-primary)]/10 px-5 py-4 text-[color:var(--color-primary)] animate-fadeIn"
+        className="flex items-start gap-5 rounded-[var(--radius-xl)] border border-[color:var(--color-primary)]/25 bg-[color:var(--color-primary)]/10 px-6 py-5 text-[color:var(--color-primary)] animate-fadeIn"
         role="status"
         aria-live="polite"
       >
-        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--color-primary)]/20">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[color:var(--color-primary)]/20">
           <CheckCircle size={22} aria-hidden="true" />
         </div>
         <div className="space-y-1">
@@ -87,8 +87,8 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
           <CardDescription>Share this branded redirect with your audience in seconds.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-5">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="space-y-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Input
                 type="text"
                 value={fullShortUrl}
@@ -112,7 +112,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <Button variant="outline" size="sm" onClick={generateQrCode}>
                 <QrCode size={18} aria-hidden="true" />
                 {showQr ? 'Hide' : 'Show'} QR Code
@@ -134,9 +134,9 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
           hoverable={false}
           className="animate-fadeIn"
         >
-          <CardContent className="text-center py-8 space-y-4">
+          <CardContent className="space-y-6 py-10 text-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-4" />
+            <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-5" />
             <p className="text-text-secondary">Scan this QR code to visit your shortened URL</p>
           </CardContent>
         </Card>
@@ -144,23 +144,23 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
 
       {/* Original URL Info */}
       <Card hoverable={false} className="animate-fadeIn" style={{ animationDelay: '0.2s' }}>
-        <CardHeader className="space-y-2">
+        <CardHeader className="space-y-3">
           <CardTitle className="text-xl">Link details</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
+          <div className="space-y-5">
+            <div className="flex items-start gap-4">
               <Link2 className="mt-1 text-text-muted" size={18} aria-hidden="true" />
               <div className="flex-1">
                 <p className="mb-1 text-sm font-medium text-text-secondary">Original URL</p>
-                <p className="break-all rounded-[var(--radius-md)] bg-[color:var(--color-surface-elevated)] px-3 py-2 font-mono text-sm text-text-muted">
+                <p className="break-all rounded-[var(--radius-md)] bg-[color:var(--color-surface-elevated)] px-4 py-2.5 font-mono text-sm text-text-muted">
                   {longUrl}
                 </p>
               </div>
             </div>
 
             {domain && (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <Globe className="text-text-muted" size={18} aria-hidden="true" />
                 <div>
                   <p className="mb-1 text-sm font-medium text-text-secondary">Domain</p>
@@ -170,7 +170,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
             )}
 
             {createdAt && (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <Calendar className="text-text-muted" size={18} aria-hidden="true" />
                 <div>
                   <p className="mb-1 text-sm font-medium text-text-secondary">Created</p>

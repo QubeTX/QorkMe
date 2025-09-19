@@ -59,26 +59,26 @@ export default function Home() {
       <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <NavigationHeader />
 
-        <main className="flex flex-1 flex-col pt-28 md:pt-32">
-          <section className="relative px-6 pb-24">
-            <div className="container grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-              <div className="space-y-10">
-                <span className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-primary)]/10 px-4 py-2 text-sm font-semibold text-[color:var(--color-primary)]">
+        <main className="flex flex-1 flex-col space-y-24 px-6 pb-32 pt-28 md:space-y-28 md:pt-32 lg:space-y-32">
+          <section className="relative">
+            <div className="container grid gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+              <div className="space-y-12">
+                <span className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-primary)]/10 px-5 py-2.5 text-sm font-semibold text-[color:var(--color-primary)]">
                   <Sparkles size={18} aria-hidden="true" />
                   Premium link studio
                 </span>
-                <div className="space-y-6">
+                <div className="space-y-8">
                   <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight">
                     Precision short links for teams that move quickly
                   </h1>
-                  <p className="max-w-2xl text-lg text-text-secondary">
+                  <p className="max-w-2xl text-lg leading-relaxed text-text-secondary">
                     QorkMe pairs intentional spacing, friendly forms, and consistent cards with the
                     analytics and controls growing brands expect. Toggle themes, resize the window, and
                     every surface adapts gracefully.
                   </p>
                 </div>
 
-                <div className="flex flex-col gap-3 sm:flex-row">
+                <div className="flex flex-col gap-4 sm:flex-row">
                   <Link href="#shorten" className="inline-flex">
                     <Button size="lg" className="w-full sm:w-auto">
                       Start shortening
@@ -92,7 +92,7 @@ export default function Home() {
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
                   {heroHighlights.map((highlight) => (
                     <MetricCard
                       key={highlight.title}
@@ -117,10 +117,10 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="px-6 pb-24">
-            <div className="container space-y-12">
+          <section>
+            <div className="container space-y-14">
               <Card hoverable={false} className="mx-auto max-w-4xl text-center">
-                <div className="space-y-4">
+                <div className="space-y-5">
                   <h2 className="font-display text-3xl md:text-4xl text-text-primary">
                     Why discerning teams choose QorkMe
                   </h2>
@@ -132,7 +132,7 @@ export default function Home() {
                 </div>
               </Card>
 
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
                 <FeatureCard
                   icon={<Zap size={24} aria-hidden="true" />}
                   title="Lightning fast"
@@ -167,8 +167,8 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="px-6 pb-24">
-            <div className="container grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <section>
+            <div className="container grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 xl:grid-cols-4">
               {stats.map((stat) => (
                 <MetricCard
                   key={stat.label}
@@ -181,10 +181,10 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="px-6 pb-28">
+          <section>
             <div className="container max-w-4xl">
               <Card hoverable={false} className="text-center">
-                <div className="space-y-6">
+                <div className="space-y-8">
                   <h2 className="font-display text-3xl md:text-4xl text-text-primary">
                     Ready to elevate every link?
                   </h2>
@@ -193,15 +193,15 @@ export default function Home() {
                     considered, cohesive, and measurable. Switch the theme, resize the browser—every
                     detail stays balanced.
                   </p>
-                  <div className="flex flex-col justify-center gap-3 sm:flex-row">
+                  <div className="flex flex-col justify-center gap-4 sm:flex-row">
                     <Link href="#shorten" className="inline-flex">
-                      <Button size="lg" className="w-full sm:w-auto">
+                      <Button size="lg" className="w-full px-8 sm:w-auto">
                         Create a short link
                         <ArrowUpRight size={20} aria-hidden="true" />
                       </Button>
                     </Link>
                     <Link href="/docs" className="inline-flex">
-                      <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                      <Button variant="outline" size="lg" className="w-full px-8 sm:w-auto">
                         View documentation
                       </Button>
                     </Link>

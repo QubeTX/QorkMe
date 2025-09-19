@@ -271,7 +271,7 @@ pre {
 .card {
   background: var(--color-surface);
   border-radius: var(--radius-xl);
-  padding: clamp(1.5rem, 1.5vw + 1.25rem, 2.5rem);
+  padding: clamp(1.75rem, 1.6vw + 1.5rem, 3rem);
   border: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
   box-shadow: 0 18px 35px -25px var(--color-shadow);
   transition:
@@ -354,7 +354,7 @@ pre {
 }
 
 .container {
-  width: min(1120px, calc(100% - 2.5rem));
+  width: min(1120px, calc(100% - 3rem));
   margin-inline: auto;
 }
 
