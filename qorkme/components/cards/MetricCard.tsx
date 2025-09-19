@@ -42,13 +42,15 @@ export function MetricCard({
   valueClassName,
 }: MetricCardProps) {
   const alignment =
-    layout === 'vertical' ? 'flex-col items-center text-center gap-4' : 'flex-row items-center gap-4';
+    layout === 'vertical'
+      ? 'flex-col items-center text-center gap-5'
+      : 'flex-row items-center gap-5';
 
   return (
     <Card
       hoverable={false}
       className={cn(
-        'px-6 py-5',
+        'px-8 py-6',
         layout === 'vertical' && 'text-center',
         layout === 'vertical' ? 'h-full' : undefined,
         className
