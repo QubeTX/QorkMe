@@ -7,8 +7,8 @@ import { Link2, ArrowLeft } from 'lucide-react';
 export function ResultNavigationHeader() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl">
-      <div className="container py-5">
-        <div className="flex items-center justify-between rounded-[var(--radius-xl)] border border-border bg-[color:var(--color-surface)]/85 px-5 md:px-6 py-3.5 shadow-soft transition-colors">
+      <div className="container px-4 sm:px-6 pb-5 pt-[calc(var(--safe-area-top)+1.25rem)]">
+        <div className="flex items-center justify-between rounded-[var(--radius-xl)] border border-border bg-[color:var(--color-surface)]/90 px-5 md:px-6 py-3.5 shadow-soft transition-colors">
           <Link href="/" className="flex items-center gap-3 text-[color:var(--color-text-primary)]">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--color-primary)]/12 text-[color:var(--color-primary)]">
               <Link2 size={20} aria-hidden="true" />

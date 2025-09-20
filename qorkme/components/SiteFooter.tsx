@@ -5,17 +5,22 @@ interface SiteFooterProps {
   className?: string;
 }
 
-export function SiteFooter({ subtitle = 'Thoughtful short links for modern teams', className }: SiteFooterProps) {
+export function SiteFooter({
+  subtitle = 'Thoughtful short links for modern teams',
+  className,
+}: SiteFooterProps) {
   return (
-    <footer className={cn('border-t border-border py-10', className)}>
-      <div className="container flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <footer className={cn('border-t border-border py-16', className)}>
+      <div className="container flex flex-col gap-6 px-4 sm:px-6 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-1">
           <span className="font-display text-xl font-semibold text-text-primary uppercase tracking-[0.12em]">
             QorkMe
           </span>
           <span className="text-sm text-text-muted">{subtitle}</span>
         </div>
-        <p className="text-sm text-text-muted">Designed in San Francisco • Powered by Supabase &amp; Vercel</p>
+        <p className="text-sm text-text-muted">
+          Designed in San Francisco • Powered by Supabase &amp; Vercel
+        </p>
       </div>
     </footer>
   );

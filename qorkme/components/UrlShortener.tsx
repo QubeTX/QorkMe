@@ -75,7 +75,7 @@ export function UrlShortener() {
 
   return (
     <>
-      <CardHeader className="space-y-3 text-left">
+      <CardHeader className="space-y-5 text-left">
         <CardTitle className="text-2xl md:text-3xl">Create a short link</CardTitle>
         <CardDescription className="text-base text-text-secondary">
           Paste a destination URL and optionally layer on a custom alias. Every field is spaced for
@@ -83,9 +83,9 @@ export function UrlShortener() {
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-0">
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-12">
           {/* Main URL Input */}
-          <div className="space-y-2">
+          <div className="space-y-4">
             <label htmlFor="url" className="block text-sm font-semibold text-text-secondary">
               Destination URL
             </label>
@@ -101,7 +101,11 @@ export function UrlShortener() {
                 aria-describedby={urlHelpId}
                 required
               />
-              <Link2 className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted" size={20} aria-hidden="true" />
+              <Link2
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted"
+                size={20}
+                aria-hidden="true"
+              />
             </div>
             <p id={urlHelpId} className="text-xs text-text-muted">
               We support http(s) URLs and trackable query strings.
@@ -109,13 +113,13 @@ export function UrlShortener() {
           </div>
 
           {/* Custom Alias Section */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <button
               type="button"
               onClick={() => setShowCustom(!showCustom)}
               aria-expanded={showCustom}
               aria-controls={aliasSectionId}
-              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] border border-border bg-[color:var(--color-surface-elevated)]/65 px-4 py-3 text-left transition-colors hover:border-border-strong"
+              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] border border-border bg-[color:var(--color-surface-elevated)]/65 px-5 py-3.5 text-left transition-colors hover:border-border-strong"
             >
               <span className="flex items-center gap-3 text-sm font-semibold text-text-primary">
                 <Settings2 size={20} aria-hidden="true" />
@@ -133,13 +137,13 @@ export function UrlShortener() {
                 id={aliasSectionId}
                 role="region"
                 aria-label="Custom alias options"
-                className="animate-slideIn space-y-3 rounded-[var(--radius-lg)] border border-border bg-[color:var(--color-surface)] p-5 shadow-soft"
+                className="animate-slideIn space-y-5 rounded-[var(--radius-lg)] border border-border bg-[color:var(--color-surface)] p-6 shadow-soft"
               >
                 <label htmlFor="alias" className="block text-sm font-semibold text-text-secondary">
                   Custom alias
                 </label>
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <span className="inline-flex items-center rounded-[var(--radius-md)] bg-[color:var(--color-surface-elevated)] px-3 py-2 font-mono text-sm text-text-muted">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
+                  <span className="inline-flex items-center rounded-[var(--radius-md)] bg-[color:var(--color-surface-elevated)] px-4 py-2.5 font-mono text-sm text-text-muted">
                     qork.me/
                   </span>
                   <Input
@@ -177,7 +181,7 @@ export function UrlShortener() {
           </div>
 
           {/* Submit Button */}
-          <div className="pt-2">
+          <div className="pt-4">
             <Button
               type="submit"
               variant="primary"
@@ -192,7 +196,11 @@ export function UrlShortener() {
                 </>
               ) : (
                 <>
-                  <Zap size={20} className="text-[color:var(--color-text-inverse)]" aria-hidden="true" />
+                  <Zap
+                    size={20}
+                    className="text-[color:var(--color-text-inverse)]"
+                    aria-hidden="true"
+                  />
                   <span>Shorten URL</span>
                 </>
               )}
@@ -200,7 +208,7 @@ export function UrlShortener() {
           </div>
 
           {/* Info Text */}
-          <p className="pt-2 text-center text-xs text-text-muted">
+          <p className="pt-4 text-center text-xs text-text-muted">
             By shortening a URL, you agree to our Terms of Service and Privacy Policy.
           </p>
         </form>

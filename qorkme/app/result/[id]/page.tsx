@@ -72,8 +72,8 @@ export default async function ResultPage({ params }: ResultPageProps) {
       <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <ResultNavigationHeader />
 
-        <main className="flex flex-1 flex-col px-6 pb-24 pt-32 md:pt-36">
-          <div className="container mx-auto max-w-5xl space-y-14">
+        <main className="flex flex-1 flex-col space-y-24 px-4 pb-32 pt-[var(--nav-offset-mobile)] sm:px-6 md:space-y-28 md:pt-[var(--nav-offset-desktop)]">
+          <div className="container mx-auto max-w-5xl space-y-16 px-4 sm:px-6 sm:space-y-20 md:space-y-24">
             <ShortUrlDisplay
               shortCode={url.short_code}
               longUrl={url.long_url}
@@ -81,7 +81,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
               createdAt={url.created_at}
             />
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
               {detailCards.map((stat) => (
                 <MetricCard
                   key={stat.title}
@@ -94,7 +94,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
             </div>
 
             <Card hoverable={false} className="text-center">
-              <CardContent className="space-y-6 py-10">
+              <CardContent className="space-y-10 py-14">
                 <h3 className="font-display text-2xl md:text-3xl text-text-primary">
                   Need deeper analytics?
                 </h3>
