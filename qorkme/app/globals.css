@@ -64,7 +64,7 @@
   font-display: swap;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
   --color-background: #faf9f5;
@@ -106,8 +106,9 @@
   --radius-xl: 28px;
   --radius-full: 9999px;
 
-  --font-display: 'Plus Jakarta Sans', 'ZT Bros Oskon', 'Inter', 'Segoe UI', sans-serif;
-  --font-body: 'Inter', 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+  --font-display: 'ZT Bros Oskon', 'Inter', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-ui: 'Inter', 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', 'Courier New', monospace;
 
   --transition-fast: 140ms ease;
@@ -169,6 +170,7 @@
   --color-info: var(--color-info);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+  --font-ui: var(--font-ui);
   --font-mono: var(--font-mono);
 }
 
@@ -235,6 +237,7 @@ h5,
 h6 {
   font-family: var(--font-display);
   font-weight: 600;
+  letter-spacing: 0.008em;
   line-height: 1.15;
   color: var(--color-text-primary);
 }
@@ -416,6 +419,18 @@ pre {
 
 .shadow-large {
   box-shadow: 0 28px 60px -30px var(--color-shadow);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-ui {
+  font-family: var(--font-ui);
 }
 
 @keyframes fadeIn {
