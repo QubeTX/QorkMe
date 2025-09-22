@@ -49,11 +49,7 @@ export function MetricCard({
   return (
     <Card
       hoverable={false}
-      className={cn(
-        'h-full',
-        layout === 'vertical' && 'text-center',
-        className
-      )}
+      className={cn('h-full', layout === 'vertical' && 'text-center', className)}
     >
       <div className={cn('flex', alignment)}>
         {icon ? (

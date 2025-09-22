@@ -42,12 +42,7 @@ interface CardHeaderProps {
 
 export function CardHeader({ children, className }: CardHeaderProps) {
   return (
-    <div
-      className={cn(
-        'flex flex-col gap-2 border-b border-border/60 pb-5',
-        className
-      )}
-    >
+    <div className={cn('flex flex-col gap-2 border-b border-border/60 pb-5', className)}>
       {children}
     </div>
   );

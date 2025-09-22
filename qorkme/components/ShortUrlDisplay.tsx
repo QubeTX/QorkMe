@@ -76,7 +76,12 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
       </div>
 
       {/* Short URL Display Card */}
-      <Card elevated hoverable={false} className="animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+      <Card
+        elevated
+        hoverable={false}
+        className="animate-fadeIn"
+        style={{ animationDelay: '0.1s' }}
+      >
         <CardHeader>
           <CardTitle>Your short link</CardTitle>
           <CardDescription>

@@ -65,8 +65,8 @@ export default function Home() {
                       Precision short links for teams that move quickly
                     </h1>
                     <p className="max-w-2xl text-lg leading-relaxed text-text-secondary">
-                      QorkMe pairs deliberate spacing, friendly forms, and consistent cards with
-                      the analytics and controls growing brands expect. Toggle themes, resize the
+                      QorkMe pairs deliberate spacing, friendly forms, and consistent cards with the
+                      analytics and controls growing brands expect. Toggle themes, resize the
                       window, and every surface adapts gracefully.
                     </p>
                   </div>
