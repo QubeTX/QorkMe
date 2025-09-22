@@ -7,10 +7,10 @@ type MetricAccent = 'primary' | 'secondary' | 'accent' | 'neutral';
 type MetricLayout = 'horizontal' | 'vertical';
 
 const accentClasses: Record<MetricAccent, string> = {
-  primary: 'text-[color:var(--color-primary)] bg-[color:var(--color-primary)]/12',
-  secondary: 'text-[color:var(--color-secondary)] bg-[color:var(--color-secondary)]/12',
-  accent: 'text-[color:var(--color-accent)] bg-[color:var(--color-accent)]/12',
-  neutral: 'text-[color:var(--color-text-secondary)] bg-[color:var(--color-surface-muted)]/55',
+  primary: 'text-[color:var(--color-primary)] bg-[color:var(--color-primary)]/14',
+  secondary: 'text-[color:var(--color-secondary)] bg-[color:var(--color-secondary)]/10',
+  accent: 'text-[color:var(--color-accent)] bg-[color:var(--color-accent)]/18',
+  neutral: 'text-[color:var(--color-text-secondary)] bg-[color:var(--color-surface-muted)]/60',
 };
 
 const accentValueClasses: Record<MetricAccent, string> = {
@@ -50,9 +50,8 @@ export function MetricCard({
     <Card
       hoverable={false}
       className={cn(
-        'px-8 py-6',
+        'h-full',
         layout === 'vertical' && 'text-center',
-        layout === 'vertical' ? 'h-full' : undefined,
         className
       )}
     >

@@ -75,15 +75,15 @@ export function UrlShortener() {
 
   return (
     <>
-      <CardHeader className="space-y-4 text-left">
+      <CardHeader className="gap-4 text-left">
         <CardTitle className="text-2xl md:text-3xl">Create a short link</CardTitle>
         <CardDescription className="text-base text-text-secondary">
           Paste a destination URL and optionally layer on a custom alias. Every field is spaced for
           clarity and ready for keyboard or touch input.
         </CardDescription>
       </CardHeader>
-      <CardContent className="pt-0">
-        <form onSubmit={handleSubmit} className="space-y-10">
+      <CardContent className="gap-0 pt-0">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           {/* Main URL Input */}
           <div className="space-y-3">
             <label htmlFor="url" className="block text-sm font-semibold text-text-secondary">
@@ -119,7 +119,7 @@ export function UrlShortener() {
               onClick={() => setShowCustom(!showCustom)}
               aria-expanded={showCustom}
               aria-controls={aliasSectionId}
-              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] border border-border bg-[color:var(--color-surface-elevated)]/65 px-5 py-3.5 text-left transition-colors hover:border-border-strong"
+              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] border border-border/60 bg-[color:var(--color-surface-elevated)] px-5 py-3.5 text-left transition-colors hover:border-[color:var(--color-primary)]/70"
             >
               <span className="flex items-center gap-3 text-sm font-semibold text-text-primary">
                 <Settings2 size={20} aria-hidden="true" />
@@ -137,7 +137,7 @@ export function UrlShortener() {
                 id={aliasSectionId}
                 role="region"
                 aria-label="Custom alias options"
-                className="animate-slideIn space-y-4 rounded-[var(--radius-lg)] border border-border bg-[color:var(--color-surface)] p-6 shadow-soft"
+                className="animate-slideIn space-y-4 rounded-[var(--radius-lg)] border border-border/55 bg-[color:var(--color-surface)] p-6 shadow-soft"
               >
                 <label htmlFor="alias" className="block text-sm font-semibold text-text-secondary">
                   Custom alias

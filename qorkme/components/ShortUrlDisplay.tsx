@@ -45,8 +45,8 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
         width: 300,
         margin: 2,
         color: {
-          dark: '#36454F',
-          light: '#FDFBF7',
+          dark: '#262623',
+          light: '#faf9f5',
         },
       });
       setQrCodeUrl(url);
@@ -60,7 +60,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
     <div className="w-full space-y-8">
       {/* Success Message */}
       <div
-        className="flex items-start gap-5 rounded-[var(--radius-xl)] border border-[color:var(--color-primary)]/25 bg-[color:var(--color-primary)]/10 px-6 py-5 text-[color:var(--color-primary)] animate-fadeIn"
+        className="flex items-start gap-4 rounded-[var(--radius-xl)] border border-[color:var(--color-primary)]/30 bg-[color:var(--color-primary)]/12 px-6 py-5 text-[color:var(--color-primary)] animate-fadeIn"
         role="status"
         aria-live="polite"
       >
@@ -76,12 +76,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
       </div>
 
       {/* Short URL Display Card */}
-      <Card
-        elevated
-        hoverable={false}
-        className="animate-fadeIn"
-        style={{ animationDelay: '0.1s' }}
-      >
+      <Card elevated hoverable={false} className="animate-fadeIn" style={{ animationDelay: '0.1s' }}>
         <CardHeader>
           <CardTitle>Your short link</CardTitle>
           <CardDescription>
@@ -89,7 +84,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
+          <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Input
                 type="text"
@@ -142,7 +137,7 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
       {/* QR Code Display */}
       {showQr && qrCodeUrl && (
         <Card hoverable={false} className="animate-fadeIn">
-          <CardContent className="space-y-6 py-10 text-center">
+          <CardContent className="gap-6 py-10 text-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={qrCodeUrl} alt="QR Code" className="mx-auto mb-5" />
             <p className="text-text-secondary">Scan this QR code to visit your shortened URL</p>
@@ -152,11 +147,11 @@ export function ShortUrlDisplay({ shortCode, longUrl, domain, createdAt }: Short
 
       {/* Original URL Info */}
       <Card hoverable={false} className="animate-fadeIn" style={{ animationDelay: '0.2s' }}>
-        <CardHeader className="space-y-3">
+        <CardHeader className="gap-3">
           <CardTitle className="text-xl">Link details</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-5">
+          <div className="flex flex-col gap-5">
             <div className="flex items-start gap-4">
               <Link2 className="mt-1 text-text-muted" size={18} aria-hidden="true" />
               <div className="flex-1">

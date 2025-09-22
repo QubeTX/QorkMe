@@ -43,7 +43,7 @@ export default function Home() {
             border: '1px solid var(--color-border)',
             borderRadius: 'var(--radius-md)',
             fontFamily: 'var(--font-body)',
-            boxShadow: '0 12px 30px -18px rgba(15, 23, 42, 0.35)',
+            boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
           },
         }}
       />
@@ -51,74 +51,76 @@ export default function Home() {
       <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <NavigationHeader />
 
-        <main className="flex flex-1 flex-col space-y-24 px-6 pb-32 pt-28 md:space-y-28 md:pt-32 lg:space-y-32">
-          <section className="relative">
-            <div className="container grid gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-              <div className="space-y-12">
-                <span className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-primary)]/10 px-5 py-2.5 text-sm font-semibold text-[color:var(--color-primary)]">
-                  <Sparkles size={18} aria-hidden="true" />
-                  Premium link studio
-                </span>
-                <div className="space-y-8">
-                  <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight">
-                    Precision short links for teams that move quickly
-                  </h1>
-                  <p className="max-w-2xl text-lg leading-relaxed text-text-secondary">
-                    QorkMe pairs intentional spacing, friendly forms, and consistent cards with the
-                    analytics and controls growing brands expect. Toggle themes, resize the window,
-                    and every surface adapts gracefully.
-                  </p>
+        <main className="flex flex-1 flex-col">
+          <section className="page-section pt-[calc(var(--section-spacing)+4rem)] md:pt-[calc(var(--section-spacing)+5rem)] lg:pt-[calc(var(--section-spacing)+6rem)]">
+            <div className="container">
+              <div className="grid gap-y-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-x-16">
+                <div className="flex flex-col gap-12">
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border/60 bg-[color:var(--color-background-accent)]/65 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-secondary)]">
+                    <Sparkles size={18} aria-hidden="true" />
+                    Modern link studio
+                  </span>
+                  <div className="flex flex-col gap-6">
+                    <h1 className="font-display text-[clamp(2.75rem,5vw+1.25rem,4.5rem)] font-semibold leading-[1.08] text-text-primary">
+                      Precision short links for teams that move quickly
+                    </h1>
+                    <p className="max-w-2xl text-lg leading-relaxed text-text-secondary">
+                      QorkMe pairs deliberate spacing, friendly forms, and consistent cards with
+                      the analytics and controls growing brands expect. Toggle themes, resize the
+                      window, and every surface adapts gracefully.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-4 sm:flex-row">
+                    <Link href="#shorten" className="inline-flex">
+                      <Button size="lg" className="w-full sm:w-auto">
+                        Start shortening
+                        <ArrowUpRight size={20} aria-hidden="true" />
+                      </Button>
+                    </Link>
+                    <Link href="/docs" className="inline-flex">
+                      <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                        Explore docs
+                      </Button>
+                    </Link>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    {heroHighlights.map((highlight) => (
+                      <MetricCard
+                        key={highlight.title}
+                        icon={highlight.icon}
+                        value={highlight.value}
+                        label={highlight.title}
+                        accent={highlight.accent}
+                      />
+                    ))}
+                  </div>
                 </div>
 
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <Link href="#shorten" className="inline-flex">
-                    <Button size="lg" className="w-full sm:w-auto">
-                      Start shortening
-                      <ArrowUpRight size={20} aria-hidden="true" />
-                    </Button>
-                  </Link>
-                  <Link href="/docs" className="inline-flex">
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                      Explore docs
-                    </Button>
-                  </Link>
+                <div className="relative" id="shorten">
+                  <div
+                    className="absolute inset-0 rounded-[var(--radius-xl)] bg-[color:var(--color-primary)]/12 blur-2xl"
+                    aria-hidden="true"
+                  />
+                  <Card elevated className="relative mx-auto w-full max-w-xl">
+                    <UrlShortener />
+                  </Card>
                 </div>
-
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
-                  {heroHighlights.map((highlight) => (
-                    <MetricCard
-                      key={highlight.title}
-                      icon={highlight.icon}
-                      value={highlight.value}
-                      label={highlight.title}
-                      accent={highlight.accent}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative" id="shorten">
-                <div
-                  className="absolute inset-0 -translate-y-6 -translate-x-4 rounded-[var(--radius-xl)] bg-[color:var(--color-primary)]/15 blur-3xl"
-                  aria-hidden="true"
-                />
-                <Card elevated className="relative">
-                  <UrlShortener />
-                </Card>
               </div>
             </div>
           </section>
 
-          <section>
-            <div className="container space-y-14">
+          <section className="page-section">
+            <div className="container flex flex-col gap-16">
               <Card hoverable={false} className="mx-auto max-w-4xl text-center">
-                <div className="space-y-5">
+                <div className="flex flex-col gap-5">
                   <h2 className="font-display text-3xl md:text-4xl text-text-primary">
                     Why discerning teams choose QorkMe
                   </h2>
                   <p className="mx-auto max-w-2xl text-base md:text-lg text-text-secondary">
                     Shared components, measured spacing, and accessible interactions carry across
-                    the entire experience. Cards, buttons, and inputs are reused everywhere so the
+                    the entire experience. Cards, buttons, and inputs stay consistent so the
                     interface feels familiar from the homepage to analytics.
                   </p>
                 </div>
@@ -159,24 +161,26 @@ export default function Home() {
             </div>
           </section>
 
-          <section>
-            <div className="container grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 xl:grid-cols-4">
-              {stats.map((stat) => (
-                <MetricCard
-                  key={stat.label}
-                  value={stat.value}
-                  label={stat.label}
-                  accent={stat.accent}
-                  layout="vertical"
-                />
-              ))}
+          <section className="page-section">
+            <div className="container">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+                {stats.map((stat) => (
+                  <MetricCard
+                    key={stat.label}
+                    value={stat.value}
+                    label={stat.label}
+                    accent={stat.accent}
+                    layout="vertical"
+                  />
+                ))}
+              </div>
             </div>
           </section>
 
-          <section>
+          <section className="page-section">
             <div className="container max-w-4xl">
               <Card hoverable={false} className="text-center">
-                <div className="space-y-8">
+                <div className="flex flex-col gap-6">
                   <h2 className="font-display text-3xl md:text-4xl text-text-primary">
                     Ready to elevate every link?
                   </h2>

@@ -21,9 +21,9 @@ export function Card({
   return (
     <div
       className={cn(
-        'card',
+        'card flex flex-col gap-6',
         elevated && 'card-elevated',
-        hoverable && 'transition-transform hover:-translate-y-1 hover:shadow-medium',
+        hoverable && 'transition-transform hover:-translate-y-[6px] hover:shadow-medium',
         onClick && 'cursor-pointer',
         className
       )}
@@ -42,7 +42,12 @@ interface CardHeaderProps {
 
 export function CardHeader({ children, className }: CardHeaderProps) {
   return (
-    <div className={cn('pb-6 mb-2 border-b border-border flex flex-col gap-2', className)}>
+    <div
+      className={cn(
+        'flex flex-col gap-2 border-b border-border/60 pb-5',
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -76,7 +81,7 @@ interface CardContentProps {
 }
 
 export function CardContent({ children, className }: CardContentProps) {
-  return <div className={cn('pt-6', className)}>{children}</div>;
+  return <div className={cn('flex flex-col gap-5 pt-6', className)}>{children}</div>;
 }
 
 interface CardFooterProps {
@@ -88,7 +93,7 @@ export function CardFooter({ children, className }: CardFooterProps) {
   return (
     <div
       className={cn(
-        'pt-6 mt-6 border-t border-border flex items-center justify-between gap-4',
+        'mt-6 flex items-center justify-between gap-4 border-t border-border/60 pt-6',
         className
       )}
     >

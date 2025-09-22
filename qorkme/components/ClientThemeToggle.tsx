@@ -7,7 +7,7 @@ export const ClientThemeToggle = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="w-10 h-10 rounded-full bg-surface border-2 border-border animate-pulse" />
+      <div className="h-10 w-10 animate-pulse rounded-full border-2 border-border/60 bg-[color:var(--color-surface)]" />
     ),
   }
 );

@@ -64,7 +64,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
             border: '1px solid var(--color-border)',
             borderRadius: 'var(--radius-md)',
             fontFamily: 'var(--font-body)',
-            boxShadow: '0 12px 30px -18px rgba(15, 23, 42, 0.35)',
+            boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
           },
         }}
       />
@@ -72,45 +72,47 @@ export default async function ResultPage({ params }: ResultPageProps) {
       <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <ResultNavigationHeader />
 
-        <main className="flex flex-1 flex-col space-y-20 px-6 pb-32 pt-32 md:space-y-24 md:pt-36">
-          <div className="container mx-auto max-w-5xl space-y-16">
-            <ShortUrlDisplay
-              shortCode={url.short_code}
-              longUrl={url.long_url}
-              domain={new URL(url.long_url).hostname}
-              createdAt={url.created_at}
-            />
+        <main className="flex flex-1 flex-col">
+          <section className="page-section pt-[calc(var(--section-spacing)+4rem)] md:pt-[calc(var(--section-spacing)+5rem)]">
+            <div className="container mx-auto max-w-5xl flex flex-col gap-16">
+              <ShortUrlDisplay
+                shortCode={url.short_code}
+                longUrl={url.long_url}
+                domain={new URL(url.long_url).hostname}
+                createdAt={url.created_at}
+              />
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-              {detailCards.map((stat) => (
-                <MetricCard
-                  key={stat.title}
-                  icon={stat.icon}
-                  value={stat.value}
-                  label={stat.title}
-                  accent={stat.accent}
-                />
-              ))}
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+                {detailCards.map((stat) => (
+                  <MetricCard
+                    key={stat.title}
+                    icon={stat.icon}
+                    value={stat.value}
+                    label={stat.title}
+                    accent={stat.accent}
+                  />
+                ))}
+              </div>
+
+              <Card hoverable={false} className="text-center">
+                <CardContent className="gap-6 py-12">
+                  <h3 className="font-display text-2xl md:text-3xl text-text-primary">
+                    Need deeper analytics?
+                  </h3>
+                  <p className="mx-auto max-w-2xl text-text-secondary">
+                    Unlock campaign tagging, multi-user collaboration, and full clickstream history
+                    inside the QorkMe dashboard. The same calm interface extends across desktop,
+                    tablet, and mobile.
+                  </p>
+                  <Link href="/">
+                    <Button size="lg" className="justify-center px-8">
+                      Shorten another URL
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             </div>
-
-            <Card hoverable={false} className="text-center">
-              <CardContent className="space-y-8 py-12">
-                <h3 className="font-display text-2xl md:text-3xl text-text-primary">
-                  Need deeper analytics?
-                </h3>
-                <p className="mx-auto max-w-2xl text-text-secondary">
-                  Unlock campaign tagging, multi-user collaboration, and full clickstream history
-                  inside the QorkMe dashboard. The same calm interface extends across desktop,
-                  tablet, and mobile.
-                </p>
-                <Link href="/">
-                  <Button size="lg" className="justify-center px-8">
-                    Shorten another URL
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          </div>
+          </section>
         </main>
 
         <SiteFooter subtitle="Precision link studio" />

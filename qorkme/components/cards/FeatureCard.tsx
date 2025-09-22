@@ -14,12 +14,12 @@ export function FeatureCard({ icon, title, description, className }: FeatureCard
     <Card
       hoverable={false}
       className={cn(
-        'group h-full border border-border bg-surface transition-transform duration-300 hover:-translate-y-1 hover:border-border-strong',
+        'group h-full border border-border/55 bg-[color:var(--color-surface)] transition-transform duration-300 hover:-translate-y-1 hover:border-border-strong',
         className
       )}
     >
       <CardContent className="relative flex h-full flex-col gap-6">
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/12 text-primary transition-transform duration-300 group-hover:scale-105">
+        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[color:var(--color-primary)]/12 text-[color:var(--color-primary)] transition-transform duration-300 group-hover:scale-105">
           {icon}
         </span>
         <div className="space-y-3">
