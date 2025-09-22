@@ -1,5 +1,10 @@
 # Changelog
 
+## 2025-09-22 01:05
+- Removed all customer-facing analytics, documentation, and login affordances from the QorkMe UI so result pages now show only the short link card and a friendly follow-up CTA.
+- Refreshed homepage messaging to emphasize a human, analytics-free experience while keeping the shortening flow unchanged.
+- Tuned metadata and navigation copy to align with the simplified experience.
+
 ## 2025-09-22
 - Reviewed `~/.codex/AGENTS.md`, project README, and CI workflow to collect current QorkMe context.
 - Captured a detailed workspace brief in `CODEX_PROJECT.md`, including setup guidance and file tree.

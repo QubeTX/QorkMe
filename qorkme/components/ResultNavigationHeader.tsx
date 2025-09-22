@@ -18,7 +18,7 @@ export function ResultNavigationHeader() {
                 QorkMe
               </span>
               <span className="font-body text-sm font-medium text-[color:var(--color-text-muted)]">
-                Result overview
+                Share-ready link
               </span>
             </div>
           </Link>
@@ -28,7 +28,7 @@ export function ResultNavigationHeader() {
               className="inline-flex items-center gap-2 rounded-full border border-border/55 bg-[color:var(--color-background-accent)]/75 px-5 py-2 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--color-secondary)] transition-colors hover:border-[color:var(--color-primary)]/60 hover:text-[color:var(--color-primary)]"
             >
               <ArrowLeft size={18} aria-hidden="true" />
-              <span>New link</span>
+              <span>Start another link</span>
             </Link>
             <ClientThemeToggle />
           </div>

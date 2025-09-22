@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/lib/theme';
 
 export const metadata: Metadata = {
   title: 'QorkMe - Modern URL Shortener',
-  description: 'A clean, modern URL shortener with analytics and custom aliases',
+  description: 'A clean, modern URL shortener with friendly sharing and custom aliases',
 };
 
 export default function RootLayout({

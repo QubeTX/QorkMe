@@ -17,7 +17,7 @@ export function NavigationHeader() {
                 QorkMe
               </span>
               <span className="font-body text-sm font-medium text-[color:var(--color-text-muted)]">
-                Modern link studio
+                Friendly link studio
               </span>
             </div>
           </div>

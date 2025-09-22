@@ -35,11 +35,6 @@ export default function NotFound() {
                       Return home
                     </Button>
                   </Link>
-                  <Link href="/docs" className="inline-flex">
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                      View documentation
-                    </Button>
-                  </Link>
                 </div>
               </CardContent>
             </Card>

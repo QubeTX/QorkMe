@@ -5,7 +5,7 @@ import { Card } from '@/components/cards/Card';
 import { MetricCard } from '@/components/cards/MetricCard';
 import { Button } from '@/components/ui/Button';
 import { Toaster } from 'react-hot-toast';
-import { ArrowUpRight, BarChart3, Globe, Link2, Shield, Sparkles, Zap } from 'lucide-react';
+import { ArrowUpRight, BarChart3, Globe, Link2, Shield, Smile, Sparkles, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { SiteFooter } from '@/components/SiteFooter';
 
@@ -58,16 +58,15 @@ export default function Home() {
                 <div className="flex flex-col gap-12">
                   <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border/60 bg-[color:var(--color-background-accent)]/65 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-secondary)]">
                     <Sparkles size={18} aria-hidden="true" />
-                    Modern link studio
+                    Friendly link studio
                   </span>
                   <div className="flex flex-col gap-6">
                     <h1 className="font-display text-[clamp(2.75rem,5vw+1.25rem,4.5rem)] font-semibold leading-[1.08] text-text-primary">
                       Precision short links for teams that move quickly
                     </h1>
                     <p className="max-w-2xl text-lg leading-relaxed text-text-secondary">
-                      QorkMe pairs deliberate spacing, friendly forms, and consistent cards with the
-                      analytics and controls growing brands expect. Toggle themes, resize the
-                      window, and every surface adapts gracefully.
+                      QorkMe keeps link sharing warm and welcoming—no dashboards, no detours. Paste
+                      a URL, pick a vibe, and ship it with confidence in seconds.
                     </p>
                   </div>
 
@@ -76,11 +75,6 @@ export default function Home() {
                       <Button size="lg" className="w-full sm:w-auto">
                         Start shortening
                         <ArrowUpRight size={20} aria-hidden="true" />
-                      </Button>
-                    </Link>
-                    <Link href="/docs" className="inline-flex">
-                      <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                        Explore docs
                       </Button>
                     </Link>
                   </div>
@@ -121,7 +115,7 @@ export default function Home() {
                   <p className="mx-auto max-w-2xl text-base md:text-lg text-text-secondary">
                     Shared components, measured spacing, and accessible interactions carry across
                     the entire experience. Cards, buttons, and inputs stay consistent so the
-                    interface feels familiar from the homepage to analytics.
+                    interface stays calm from the homepage to the final copy click.
                   </p>
                 </div>
               </Card>
@@ -134,13 +128,13 @@ export default function Home() {
                 />
                 <FeatureCard
                   icon={<Shield size={24} aria-hidden="true" />}
-                  title="Enterprise secure"
-                  description="Layered safeguards, from rate limiting to malicious URL scrubbing, protect every branded touchpoint."
+                  title="Safe by default"
+                  description="Layered safeguards, from rate limiting to malicious URL scrubbing, keep every redirect clean and trustworthy."
                 />
                 <FeatureCard
-                  icon={<BarChart3 size={24} aria-hidden="true" />}
-                  title="Rich analytics"
-                  description="Understand engagement with geographic, device, and referral insights presented in a clear, compact dashboard."
+                  icon={<Smile size={24} aria-hidden="true" />}
+                  title="Human centered"
+                  description="No logins or dashboards—just a friendly flow that helps people share ideas without losing momentum."
                 />
                 <FeatureCard
                   icon={<Globe size={24} aria-hidden="true" />}
@@ -185,20 +179,15 @@ export default function Home() {
                     Ready to elevate every link?
                   </h2>
                   <p className="mx-auto max-w-3xl text-base md:text-lg text-text-secondary">
-                    From campaign launches to enterprise migrations, QorkMe keeps your audience
-                    journeys considered, cohesive, and measurable. Switch the theme, resize the
-                    browser—every detail stays balanced.
+                    From college fundraisers to product drops, QorkMe keeps every handoff relaxed
+                    and reliable. Switch the theme, resize the browser—every detail stays balanced
+                    and reassuring.
                   </p>
                   <div className="flex flex-col justify-center gap-4 sm:flex-row">
                     <Link href="#shorten" className="inline-flex">
                       <Button size="lg" className="w-full px-8 sm:w-auto">
                         Create a short link
                         <ArrowUpRight size={20} aria-hidden="true" />
-                      </Button>
-                    </Link>
-                    <Link href="/docs" className="inline-flex">
-                      <Button variant="outline" size="lg" className="w-full px-8 sm:w-auto">
-                        View documentation
                       </Button>
                     </Link>
                   </div>

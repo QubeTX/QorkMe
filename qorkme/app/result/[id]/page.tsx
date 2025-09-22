@@ -1,12 +1,9 @@
 import { ShortUrlDisplay } from '@/components/ShortUrlDisplay';
 import { ResultNavigationHeader } from '@/components/ResultNavigationHeader';
-import { Card, CardContent } from '@/components/cards/Card';
-import { MetricCard } from '@/components/cards/MetricCard';
-import { Button } from '@/components/ui/Button';
 import { createServerClientInstance } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Link2, BarChart3, Shield } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
 import { Toaster } from 'react-hot-toast';
 import { SiteFooter } from '@/components/SiteFooter';
 
@@ -32,27 +29,6 @@ export default async function ResultPage({ params }: ResultPageProps) {
     notFound();
   }
 
-  const detailCards = [
-    {
-      title: 'Total clicks',
-      value: url.click_count || 0,
-      icon: <BarChart3 size={20} aria-hidden="true" />,
-      accent: 'accent' as const,
-    },
-    {
-      title: 'Alias type',
-      value: url.custom_alias ? 'Custom' : 'Auto',
-      icon: <Link2 size={20} aria-hidden="true" />,
-      accent: 'secondary' as const,
-    },
-    {
-      title: 'Status',
-      value: url.is_active ? 'Active' : 'Inactive',
-      icon: <Shield size={20} aria-hidden="true" />,
-      accent: 'primary' as const,
-    },
-  ];
-
   return (
     <>
       <Toaster
@@ -74,48 +50,26 @@ export default async function ResultPage({ params }: ResultPageProps) {
 
         <main className="flex flex-1 flex-col">
           <section className="page-section pt-[calc(var(--section-spacing)+4rem)] md:pt-[calc(var(--section-spacing)+5rem)]">
-            <div className="container mx-auto max-w-5xl flex flex-col gap-16">
-              <ShortUrlDisplay
-                shortCode={url.short_code}
-                longUrl={url.long_url}
-                domain={new URL(url.long_url).hostname}
-                createdAt={url.created_at}
-              />
+            <div className="container mx-auto max-w-3xl flex flex-col gap-16">
+              <ShortUrlDisplay shortCode={url.short_code} />
 
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                {detailCards.map((stat) => (
-                  <MetricCard
-                    key={stat.title}
-                    icon={stat.icon}
-                    value={stat.value}
-                    label={stat.title}
-                    accent={stat.accent}
-                  />
-                ))}
+              <div className="flex flex-col items-center gap-4 text-center">
+                <h3 className="font-display text-2xl text-text-primary">Link shared. Mission accomplished.</h3>
+                <p className="max-w-xl text-base text-text-secondary">
+                  Keep the momentum rolling—when another idea pops up, QorkMe is here to give it a
+                  clean, confident link.
+                </p>
+                <Link href="/" className="inline-flex">
+                  <Button size="lg" className="justify-center px-8">
+                    Make another short link
+                  </Button>
+                </Link>
               </div>
-
-              <Card hoverable={false} className="text-center">
-                <CardContent className="gap-6 py-12">
-                  <h3 className="font-display text-2xl md:text-3xl text-text-primary">
-                    Need deeper analytics?
-                  </h3>
-                  <p className="mx-auto max-w-2xl text-text-secondary">
-                    Unlock campaign tagging, multi-user collaboration, and full clickstream history
-                    inside the QorkMe dashboard. The same calm interface extends across desktop,
-                    tablet, and mobile.
-                  </p>
-                  <Link href="/">
-                    <Button size="lg" className="justify-center px-8">
-                      Shorten another URL
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
             </div>
           </section>
         </main>
 
-        <SiteFooter subtitle="Precision link studio" />
+        <SiteFooter subtitle="Links that feel friendly and intentional" />
       </div>
     </>
   );

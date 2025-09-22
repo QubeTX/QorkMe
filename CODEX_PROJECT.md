@@ -6,10 +6,10 @@
 - Quality gate: lint, type-check, Prettier check, and full `next build` (CI matrix on Node 18 & 20 executes same steps).
 
 ## Project Overview
-QorkMe delivers branded short links, QR codes, analytics, and a premium UI suitable for production deployments. The app lives entirely inside the `qorkme/` directory and leans on Supabase PostgreSQL for data storage plus serverless API routes for URL shortening and redirect tracking. GitHub Actions pipelines handle linting, type checking, formatting verification, production builds, security audits, and optional Vercel preview deployments.
+QorkMe delivers branded short links, QR codes, server-side analytics logging, and a premium UI suitable for production deployments. The app lives entirely inside the `qorkme/` directory and leans on Supabase PostgreSQL for data storage plus serverless API routes for URL shortening and redirect tracking. GitHub Actions pipelines handle linting, type checking, formatting verification, production builds, security audits, and optional Vercel preview deployments.
 
 ## Goals & Current Status
-- ✅ Core URL shortening with custom aliases, QR export, and analytics logging.
+- ✅ Core URL shortening with custom aliases, QR export, and analytics logging (data is captured but no analytics dashboard is exposed to end users).
 - ✅ Responsive, theme-aware front end using Tailwind CSS v4 tokens and bespoke glassmorphism.
 - ✅ Supabase schema + setup guides checked into `supabase/`.
 - ✅ Vitest suite protects the shortcode engine, `/api/shorten` route handlers, Supabase client factories, and the `UrlShortener` UI; pursue deeper integration coverage next (redirect analytics, Supabase RPCs, visual regressions).
