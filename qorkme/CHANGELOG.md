@@ -5,6 +5,19 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2025-09-22
+
+### Added
+
+- Vitest-powered `npm test` suite spanning the shortcode engine, `/api/shorten` route handlers, Supabase client factories, and the `UrlShortener` UI flow.
+- GitHub Actions `npm test` step to fail CI when unit tests break.
+
+### Changed
+
+- Adjusted PostCSS configuration to maintain compatibility with Vitest's module pipeline.
+- Refreshed developer documentation to call out the expanded testing workflow and local Vitest usage.
+- Declared Prettier as a dev dependency so the formatting checks run consistently across local and CI environments.
+
 ## [3.0.0] - 2025-09-15
 
 ### 🚀 Major UI Revolution - Sophisticated Dark Mode with Glassmorphism

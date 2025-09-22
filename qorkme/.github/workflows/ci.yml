@@ -33,6 +33,9 @@ jobs:
       - name: Type check
         run: npx tsc --noEmit
 
+      - name: Run unit tests
+        run: npm test
+
       - name: Check formatting
         run: npx prettier --check .
 

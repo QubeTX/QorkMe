@@ -88,9 +88,15 @@ npm run build        # Build for production
 npm run start        # Start production server
 npm run lint         # Run ESLint
 npm run type-check   # TypeScript type checking
+npm test             # Run Vitest unit tests
+npm run test:watch   # Watch mode for Vitest
 npm run format       # Format code with Prettier
 npm run format:check # Check code formatting
 ```
+
+### Testing
+
+Run `npm test` to execute the Vitest suite. Coverage currently includes the short code engine, `/api/shorten` route handlers (POST/GET), Supabase client factories, and the interactive `UrlShortener` form; expand with integration tests as the platform grows.
 
 ## Architecture
 
