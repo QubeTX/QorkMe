@@ -10,6 +10,14 @@
 6. Click **Run** (or press F5 / Cmd+Enter)
 7. You should see "Success. No rows returned"
 
+## GitHub Authentication for Admin Console
+
+1. In the Supabase dashboard, open **Authentication → Providers**.
+2. Enable **GitHub** and supply the OAuth client ID/secret from https://github.com/settings/developers.
+3. Set the **Redirect URL** to `https://<your-project-ref>.supabase.co/auth/v1/callback` (add `http://localhost:3000/auth/v1/callback` for local testing if desired).
+4. Save changes, then ensure your `.env.local` defines `NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB=REALEMMETTS` (or update with a different GitHub username if you change the admin).
+5. Confirm `SUPABASE_SERVICE_KEY` is present so server-side admin operations (analytics + purge) can execute.
+
 ## Complete SQL Schema
 
 **Option 1: Use the Schema File (Recommended)**

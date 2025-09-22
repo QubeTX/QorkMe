@@ -5,6 +5,19 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.3] - 2025-09-22
+
+### Added
+
+- Private `/admin` console gated by Supabase GitHub authentication for the configured username (`NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB`).
+- Aggregate metrics cards showing total links, active redirects, click totals, latest activity timestamp, and a Supabase health check.
+- Danger-zone purge action that removes all rows from `urls` and `clicks` via an authenticated API route.
+
+### Changed
+
+- Footer now links to the admin console for quick access once authenticated.
+- Documentation updated with GitHub provider setup steps and the new environment variable.
+
 ## [3.0.2] - 2025-09-22
 
 ### Changed

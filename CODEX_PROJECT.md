@@ -9,7 +9,7 @@
 QorkMe delivers branded short links, QR codes, server-side analytics logging, and a premium UI suitable for production deployments. The app lives entirely inside the `qorkme/` directory and leans on Supabase PostgreSQL for data storage plus serverless API routes for URL shortening and redirect tracking. GitHub Actions pipelines handle linting, type checking, formatting verification, production builds, security audits, and optional Vercel preview deployments.
 
 ## Goals & Current Status
-- ✅ Core URL shortening with custom aliases, QR export, and analytics logging (data is captured but no analytics dashboard is exposed to end users).
+- ✅ Core URL shortening with custom aliases, QR export, and analytics logging (data is captured but no analytics dashboard is exposed to end users; admin console reveals aggregate metrics for the authorized GitHub admin only).
 - ✅ Responsive, theme-aware front end using Tailwind CSS v4 tokens and bespoke glassmorphism.
 - ✅ Supabase schema + setup guides checked into `supabase/`.
 - ✅ Vitest suite protects the shortcode engine, `/api/shorten` route handlers, Supabase client factories, and the `UrlShortener` UI; pursue deeper integration coverage next (redirect analytics, Supabase RPCs, visual regressions).
@@ -19,6 +19,7 @@ QorkMe delivers branded short links, QR codes, server-side analytics logging, an
 - Node.js ≥ 18.17 (CI covers 18.x and 20.x).
 - npm (package-lock committed).
 - Supabase project with URL, anon key, and service role key.
+- Supabase GitHub OAuth configured for the admin console (`NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB`, default `REALEMMETTS`).
 - Optional: Vercel CLI + secrets for preview deployments.
 
 ## Local Setup Snapshot
@@ -73,6 +74,7 @@ QorkMe/
 │   ├── components/
 │   │   ├── ui/{Button.tsx, Input.tsx}
 │   │   ├── cards/{Card.tsx, FeatureCard.tsx, MetricCard.tsx}
+│   │   ├── admin/{AdminSignInButton.tsx, AdminSignOutButton.tsx, ClearDatabaseButton.tsx}
 │   │   ├── bauhaus/GeometricDecor.tsx
 │   │   └── *root components (UrlShortener, ThemeToggle, etc.)*
 │   ├── docs/{DESIGN_SYSTEM.md, DEPLOYMENT.md, VERCEL_SETUP.md}

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 interface SiteFooterProps {
@@ -23,9 +24,15 @@ export function SiteFooter({
           </span>
           <span className="text-sm text-text-muted">{subtitle}</span>
         </div>
-        <p className="text-sm text-text-muted">
-          Designed in San Francisco • Powered by Supabase &amp; Vercel
-        </p>
+        <div className="flex flex-col items-start gap-2 text-sm text-text-muted sm:flex-row sm:items-center sm:gap-5">
+          <p>Designed in San Francisco • Powered by Supabase &amp; Vercel</p>
+          <Link
+            href="/admin"
+            className="font-semibold uppercase tracking-[0.12em] text-[color:var(--color-secondary)] transition-colors hover:text-[color:var(--color-primary)]"
+          >
+            Admin
+          </Link>
+        </div>
       </div>
     </footer>
   );

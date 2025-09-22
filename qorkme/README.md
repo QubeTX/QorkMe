@@ -65,6 +65,7 @@ A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and S
    SUPABASE_SERVICE_KEY=your_supabase_service_key
    NEXT_PUBLIC_SITE_URL=http://localhost:3000
    NEXT_PUBLIC_SHORT_DOMAIN=localhost:3000
+   NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB=REALEMMETTS
    ```
 
 4. **Set up the database**
@@ -97,6 +98,13 @@ npm run format:check # Check code formatting
 ### Testing
 
 Run `npm test` to execute the Vitest suite. Coverage currently includes the short code engine, `/api/shorten` route handlers (POST/GET), Supabase client factories, and the interactive `UrlShortener` form; expand with integration tests as the platform grows.
+
+## Admin Console
+
+- Visit `/admin` (linked from the footer) for a private control room summarizing Supabase metrics.
+- Supabase GitHub authentication restricts access to the username defined in `NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB` (defaults to `REALEMMETTS`).
+- The dashboard displays total URL counts, active redirects, aggregate click totals, latest activity timestamps, and a basic health check query.
+- A gated danger-zone action purges stored `urls` and `clicks` data without modifying database structure.
 
 ## Architecture
 
