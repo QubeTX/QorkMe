@@ -43,4 +43,3 @@ export function AdminSignInButton({ redirectTo = '/admin' }: AdminSignInButtonPr
     </Button>
   );
 }
-

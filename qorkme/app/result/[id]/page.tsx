@@ -54,7 +54,9 @@ export default async function ResultPage({ params }: ResultPageProps) {
               <ShortUrlDisplay shortCode={url.short_code} />
 
               <div className="flex flex-col items-center gap-4 text-center">
-                <h3 className="font-display text-2xl text-text-primary">Link shared. Mission accomplished.</h3>
+                <h3 className="font-display text-2xl text-text-primary">
+                  Link shared. Mission accomplished.
+                </h3>
                 <p className="max-w-xl text-base text-text-secondary">
                   Keep the momentum rolling—when another idea pops up, QorkMe is here to give it a
                   clean, confident link.

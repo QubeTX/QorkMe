@@ -117,7 +117,9 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
             <div className="flex flex-col items-center gap-4 rounded-[var(--radius-lg)] border border-border/60 bg-[color:var(--color-background-accent)]/40 p-6 text-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={qrCodeUrl} alt="QR Code" className="h-36 w-36" />
-              <p className="text-xs text-text-muted">Scan or download to share offline moments just as fast.</p>
+              <p className="text-xs text-text-muted">
+                Scan or download to share offline moments just as fast.
+              </p>
             </div>
           )}
         </div>

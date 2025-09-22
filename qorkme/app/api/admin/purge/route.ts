@@ -14,7 +14,11 @@ export async function POST() {
     return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
   }
 
-  const githubUsername = (user.user_metadata?.user_name || user.user_metadata?.preferred_username || '').toLowerCase();
+  const githubUsername = (
+    user.user_metadata?.user_name ||
+    user.user_metadata?.preferred_username ||
+    ''
+  ).toLowerCase();
 
   if (githubUsername !== ADMIN_GITHUB_USERNAME.toLowerCase()) {
     return NextResponse.json({ success: false, message: 'Forbidden' }, { status: 403 });
@@ -43,4 +47,3 @@ export async function POST() {
     return NextResponse.json({ success: false, message }, { status: 500 });
   }
 }
-

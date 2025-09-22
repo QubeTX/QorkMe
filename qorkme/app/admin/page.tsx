@@ -31,7 +31,11 @@ export default async function AdminPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const githubUsername = (user?.user_metadata?.user_name || user?.user_metadata?.preferred_username || '').toLowerCase();
+  const githubUsername = (
+    user?.user_metadata?.user_name ||
+    user?.user_metadata?.preferred_username ||
+    ''
+  ).toLowerCase();
   const isAuthorized = Boolean(user) && githubUsername === ADMIN_GITHUB_USERNAME.toLowerCase();
 
   let metrics: {
@@ -48,21 +52,23 @@ export default async function AdminPage() {
   if (isAuthorized) {
     const adminClient = await createAdminClient();
 
-    const [urlCountResponse, activeUrlResponse, clickCountResponse, latestUrlResponse] = await Promise.all([
-      adminClient.from('urls').select('id', { count: 'exact', head: true }),
-      adminClient.from('urls').select('id', { count: 'exact', head: true }).eq('is_active', true),
-      adminClient.from('clicks').select('id', { count: 'exact', head: true }),
-      adminClient
-        .from('urls')
-        .select('created_at')
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle(),
-    ]);
+    const [urlCountResponse, activeUrlResponse, clickCountResponse, latestUrlResponse] =
+      await Promise.all([
+        adminClient.from('urls').select('id', { count: 'exact', head: true }),
+        adminClient.from('urls').select('id', { count: 'exact', head: true }).eq('is_active', true),
+        adminClient.from('clicks').select('id', { count: 'exact', head: true }),
+        adminClient
+          .from('urls')
+          .select('created_at')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+      ]);
 
     const { error: healthError } = await adminClient.from('urls').select('id', { head: true });
 
-    const latestCreatedAt = (latestUrlResponse.data as { created_at: string } | null)?.created_at ?? null;
+    const latestCreatedAt =
+      (latestUrlResponse.data as { created_at: string } | null)?.created_at ?? null;
 
     metrics = {
       totalUrls: urlCountResponse.count ?? 0,
@@ -107,9 +113,13 @@ export default async function AdminPage() {
                 <span className="font-ui text-xs font-semibold uppercase tracking-[0.26em] text-[color:var(--color-secondary)]">
                   Admin Console
                 </span>
-                <h1 className="font-display text-4xl font-semibold">Workspace analytics & maintenance</h1>
+                <h1 className="font-display text-4xl font-semibold">
+                  Workspace analytics & maintenance
+                </h1>
                 <p className="max-w-2xl text-text-secondary">
-                  Restricted access. Sign in with GitHub as <span className="font-mono">{ADMIN_GITHUB_USERNAME_DISPLAY}</span> to review aggregate Supabase metrics and manage stored URLs.
+                  Restricted access. Sign in with GitHub as{' '}
+                  <span className="font-mono">{ADMIN_GITHUB_USERNAME_DISPLAY}</span> to review
+                  aggregate Supabase metrics and manage stored URLs.
                 </p>
               </div>
 
@@ -117,7 +127,9 @@ export default async function AdminPage() {
                 <Card className="max-w-xl">
                   <CardHeader>
                     <CardTitle>Authentication required</CardTitle>
-                    <CardDescription>Start a GitHub login to prove you&apos;re the designated admin.</CardDescription>
+                    <CardDescription>
+                      Start a GitHub login to prove you&apos;re the designated admin.
+                    </CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-col gap-4">
                     <AdminSignInButton />
@@ -130,7 +142,9 @@ export default async function AdminPage() {
                   <CardHeader>
                     <CardTitle>Access denied</CardTitle>
                     <CardDescription>
-                      Signed in GitHub account does not match <span className="font-mono">{ADMIN_GITHUB_USERNAME_DISPLAY}</span>. Please switch accounts.
+                      Signed in GitHub account does not match{' '}
+                      <span className="font-mono">{ADMIN_GITHUB_USERNAME_DISPLAY}</span>. Please
+                      switch accounts.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-col gap-4">
@@ -148,10 +162,16 @@ export default async function AdminPage() {
                           <CardTitle>Total short links</CardTitle>
                           <CardDescription>Includes auto and custom aliases.</CardDescription>
                         </div>
-                        <BarChart3 size={22} className="text-[color:var(--color-secondary)]" aria-hidden="true" />
+                        <BarChart3
+                          size={22}
+                          className="text-[color:var(--color-secondary)]"
+                          aria-hidden="true"
+                        />
                       </CardHeader>
                       <CardContent>
-                        <p className="text-3xl font-semibold">{metrics.totalUrls.toLocaleString()}</p>
+                        <p className="text-3xl font-semibold">
+                          {metrics.totalUrls.toLocaleString()}
+                        </p>
                       </CardContent>
                     </Card>
 
@@ -161,10 +181,16 @@ export default async function AdminPage() {
                           <CardTitle>Active redirects</CardTitle>
                           <CardDescription>Currently available short links.</CardDescription>
                         </div>
-                        <Activity size={22} className="text-[color:var(--color-secondary)]" aria-hidden="true" />
+                        <Activity
+                          size={22}
+                          className="text-[color:var(--color-secondary)]"
+                          aria-hidden="true"
+                        />
                       </CardHeader>
                       <CardContent>
-                        <p className="text-3xl font-semibold">{metrics.activeUrls.toLocaleString()}</p>
+                        <p className="text-3xl font-semibold">
+                          {metrics.activeUrls.toLocaleString()}
+                        </p>
                       </CardContent>
                     </Card>
 
@@ -174,10 +200,16 @@ export default async function AdminPage() {
                           <CardTitle>Total recorded clicks</CardTitle>
                           <CardDescription>Aggregated across every short link.</CardDescription>
                         </div>
-                        <RefreshCcw size={22} className="text-[color:var(--color-secondary)]" aria-hidden="true" />
+                        <RefreshCcw
+                          size={22}
+                          className="text-[color:var(--color-secondary)]"
+                          aria-hidden="true"
+                        />
                       </CardHeader>
                       <CardContent>
-                        <p className="text-3xl font-semibold">{metrics.totalClicks.toLocaleString()}</p>
+                        <p className="text-3xl font-semibold">
+                          {metrics.totalClicks.toLocaleString()}
+                        </p>
                       </CardContent>
                     </Card>
 
@@ -187,7 +219,11 @@ export default async function AdminPage() {
                           <CardTitle>Database health</CardTitle>
                           <CardDescription>{metrics.databaseHealth.detail}</CardDescription>
                         </div>
-                        <Shield size={22} className="text-[color:var(--color-secondary)]" aria-hidden="true" />
+                        <Shield
+                          size={22}
+                          className="text-[color:var(--color-secondary)]"
+                          aria-hidden="true"
+                        />
                       </CardHeader>
                       <CardContent>
                         <p className="text-lg font-semibold">{metrics.databaseHealth.status}</p>
@@ -200,7 +236,11 @@ export default async function AdminPage() {
                           <CardTitle>Most recent URL</CardTitle>
                           <CardDescription>Timestamp of the latest entry.</CardDescription>
                         </div>
-                        <Database size={22} className="text-[color:var(--color-secondary)]" aria-hidden="true" />
+                        <Database
+                          size={22}
+                          className="text-[color:var(--color-secondary)]"
+                          aria-hidden="true"
+                        />
                       </CardHeader>
                       <CardContent>
                         <p className="text-lg font-semibold">{formatDate(metrics.lastCreatedAt)}</p>
@@ -212,12 +252,14 @@ export default async function AdminPage() {
                     <CardHeader>
                       <CardTitle>Danger zone</CardTitle>
                       <CardDescription>
-                        Permanently remove every stored URL along with associated click analytics. Supabase tables remain intact.
+                        Permanently remove every stored URL along with associated click analytics.
+                        Supabase tables remain intact.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                       <p className="text-sm text-text-secondary">
-                        Only use this when you need a clean slate. The action cannot be undone and cascades to related click records.
+                        Only use this when you need a clean slate. The action cannot be undone and
+                        cascades to related click records.
                       </p>
                       <ClearDatabaseButton />
                     </CardContent>
