@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adjusted PostCSS configuration to maintain compatibility with Vitest's module pipeline.
 - Refreshed developer documentation to call out the expanded testing workflow and local Vitest usage.
 - Declared Prettier as a dev dependency so the formatting checks run consistently across local and CI environments.
+- Pinned `esbuild` to a patched release via npm overrides to resolve security advisories without forcing breaking Vitest upgrades.
 
 ## [3.0.0] - 2025-09-15
 
