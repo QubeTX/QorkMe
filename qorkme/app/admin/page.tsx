@@ -10,6 +10,7 @@ import { AdminSignOutButton } from '@/components/admin/AdminSignOutButton';
 import { ClearDatabaseButton } from '@/components/admin/ClearDatabaseButton';
 import { Toaster } from 'react-hot-toast';
 import { Activity, Database, RefreshCcw, Shield, BarChart3 } from 'lucide-react';
+import type { User } from '@supabase/supabase-js';
 
 function formatDate(value: string | null) {
   if (!value) {
@@ -31,12 +32,8 @@ export default async function AdminPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const githubUsername = (
-    user?.user_metadata?.user_name ||
-    user?.user_metadata?.preferred_username ||
-    ''
-  ).toLowerCase();
-  const isAuthorized = Boolean(user) && githubUsername === ADMIN_GITHUB_USERNAME.toLowerCase();
+  const resolvedGithubUsername = extractGithubUsername(user);
+  const isAuthorized = Boolean(user) && resolvedGithubUsername === ADMIN_GITHUB_USERNAME;
 
   let metrics: {
     totalUrls: number;
@@ -142,9 +139,11 @@ export default async function AdminPage() {
                   <CardHeader>
                     <CardTitle>Access denied</CardTitle>
                     <CardDescription>
-                      Signed in GitHub account does not match{' '}
+                      Signed in as{' '}
+                      <span className="font-mono">{resolvedGithubUsername ?? 'unknown'}</span>,
+                      which does not match{' '}
                       <span className="font-mono">{ADMIN_GITHUB_USERNAME_DISPLAY}</span>. Please
-                      switch accounts.
+                      switch accounts in Supabase.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-col gap-4">
@@ -278,4 +277,37 @@ export default async function AdminPage() {
       </div>
     </>
   );
+}
+
+function extractGithubUsername(user: User | null): string | null {
+  if (!user) {
+    return null;
+  }
+
+  const metadata = user.user_metadata ?? {};
+  const candidates: Array<unknown> = [
+    metadata.user_name,
+    metadata.preferred_username,
+    metadata.nickname,
+    metadata.name,
+    metadata.full_name,
+  ];
+
+  const identities = Array.isArray(user.identities) ? user.identities : [];
+  for (const identity of identities) {
+    const data = identity?.identity_data ?? {};
+    candidates.push(
+      data?.user_name,
+      data?.preferred_username,
+      data?.nickname,
+      data?.name,
+      data?.full_name
+    );
+  }
+
+  const candidate = candidates.find(
+    (value): value is string => typeof value === 'string' && value.trim().length > 0
+  );
+
+  return candidate ? candidate.toLowerCase() : null;
 }
