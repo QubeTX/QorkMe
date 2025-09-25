@@ -5,6 +5,13 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.4] - 2025-09-22
+
+### Changed
+
+- Redesigned both navigation headers with a broader glassmorphism frame, gradient accents, and expanded internal padding for clearer breathing room.
+- Grouped the header action controls within pill-shaped containers to prevent the Live badge and theme toggle from crowding the navbar edges.
+
 ## [3.0.3] - 2025-09-22
 
 ### Added

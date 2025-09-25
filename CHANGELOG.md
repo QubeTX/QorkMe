@@ -1,6 +1,9 @@
 # Changelog
 
--## 2025-09-22 02:15
+## 2025-09-22 03:10
+- Refined the workspace navigation styling to mirror the refreshed application header, calling out the new gradient framing and widened action spacing.
+
+## 2025-09-22 02:15
 - Added `TODO-2025-09-22.md` at repository root capturing Supabase deployment tasks for later completion today.
 
 ## 2025-09-22 02:05
