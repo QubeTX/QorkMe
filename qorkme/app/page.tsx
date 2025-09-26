@@ -52,7 +52,10 @@ export default function Home() {
         <NavigationHeader />
 
         <main className="flex flex-1 flex-col">
-          <section className="page-section pt-[calc(var(--section-spacing)+4rem)] md:pt-[calc(var(--section-spacing)+5rem)] lg:pt-[calc(var(--section-spacing)+6rem)]">
+          <section
+            id="hero"
+            className="page-section pt-[calc(var(--section-spacing)+4rem)] md:pt-[calc(var(--section-spacing)+5rem)] lg:pt-[calc(var(--section-spacing)+6rem)]"
+          >
             <div className="container">
               <div className="grid gap-y-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-x-16">
                 <div className="flex flex-col gap-12">
@@ -105,7 +108,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="page-section">
+          <section id="features" className="page-section">
             <div className="container flex flex-col gap-16">
               <Card hoverable={false} className="mx-auto max-w-4xl text-center">
                 <div className="flex flex-col gap-5">
@@ -155,7 +158,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="page-section">
+          <section id="insights" className="page-section">
             <div className="container">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
                 {stats.map((stat) => (
@@ -171,7 +174,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="page-section">
+          <section id="cta" className="page-section">
             <div className="container max-w-4xl">
               <Card hoverable={false} className="text-center">
                 <div className="flex flex-col gap-6">

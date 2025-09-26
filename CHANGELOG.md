@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-09-25 17:35
+- Rebuilt the QorkMe navigation shell with layered gradients, compact nav links, and refreshed status badge styling to replace the previous pill bar.
+
 ## 2025-09-22 03:10
 - Refined the workspace navigation styling to mirror the refreshed application header, calling out the new gradient framing and widened action spacing.
 
