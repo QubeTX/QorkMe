@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-09-27 03:19
+- Rebuilt the QorkMe navbar with a standard glassmorphism top bar, unified desktop/mobile layouts, and simplified status/action treatments for consistency across pages.
+
 ## 2025-09-25 17:35
 - Rebuilt the QorkMe navigation shell with layered gradients, compact nav links, and refreshed status badge styling to replace the previous pill bar.
 

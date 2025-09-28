@@ -5,6 +5,13 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.6] - 2025-09-27
+
+### Changed
+
+- Replaced the bespoke gradient navigation with a standard glassmorphism bar that unifies padding, typography, and call-to-action styling across desktop and mobile views.
+- Introduced a shared `SiteHeader` component powering both marketing and result headers with a consistent menu, status pill, and theme toggle experience.
+
 ## [3.0.5] - 2025-09-25
 
 ### Changed
