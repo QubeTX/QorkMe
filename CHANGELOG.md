@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-09-27 05:30
+- Nudged the marketing navbar's internal padding wider so the bordered frame stretches further on desktop and mobile while keeping the glassmorphism shell responsive.
+
+## 2025-09-27 04:45
+- Softened the marketing navbar badge styling to remove the pill treatment and pulled the call-to-action button to keep the header minimal while preserving comfortable spacing.
+
 ## 2025-09-27 03:19
 - Rebuilt the QorkMe navbar with a standard glassmorphism top bar, unified desktop/mobile layouts, and simplified status/action treatments for consistency across pages.
 
