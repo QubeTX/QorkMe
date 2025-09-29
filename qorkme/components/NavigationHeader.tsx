@@ -1,4 +1,4 @@
-import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { SiteHeader } from '@/components/SiteHeader';
 
 const navItems = [
@@ -15,11 +15,6 @@ export function NavigationHeader() {
       status={{
         label: 'Beta invites open',
         icon: <Sparkles size={16} aria-hidden />,
-      }}
-      action={{
-        label: 'Start shortening',
-        href: '#shorten',
-        icon: <ArrowUpRight size={18} aria-hidden />,
       }}
       brandTagline="Friendly link studio"
     />

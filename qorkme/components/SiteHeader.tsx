@@ -76,7 +76,7 @@ export function SiteHeader({
     <nav className="fixed inset-x-0 top-0 z-50">
       <div className="container py-4">
         <div className="rounded-[24px] border border-border/50 bg-[color:var(--color-surface)]/92 backdrop-blur-lg shadow-[0_18px_50px_-30px_rgba(31,31,29,0.65)]">
-          <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between px-5 sm:px-8 lg:px-12">
             <Link
               href="/"
               className="flex items-center gap-3 text-[color:var(--color-text-primary)]"
@@ -125,7 +125,7 @@ export function SiteHeader({
                 )}
 
                 {status && (
-                  <span className="inline-flex items-center gap-2 rounded-full border border-border/55 bg-[color:var(--color-background-accent)]/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.26em] text-[color:var(--color-secondary)]">
+                  <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.26em] text-[color:var(--color-secondary)]">
                     {status.icon}
                     {status.label}
                   </span>
@@ -146,7 +146,7 @@ export function SiteHeader({
             <div
               id={menuId}
               className={clsx(
-                'md:hidden px-4 pb-4 transition-[opacity,transform] duration-200 ease-out',
+                'md:hidden px-5 pb-4 transition-[opacity,transform] duration-200 ease-out',
                 isMenuOpen
                   ? 'pointer-events-auto opacity-100'
                   : 'pointer-events-none opacity-0 -translate-y-1'
@@ -168,7 +168,7 @@ export function SiteHeader({
 
                 {status && (
                   <div className="mt-4">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-border/55 bg-[color:var(--color-background-accent)]/85 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.26em] text-[color:var(--color-secondary)]">
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.26em] text-[color:var(--color-secondary)]">
                       {status.icon}
                       {status.label}
                     </span>

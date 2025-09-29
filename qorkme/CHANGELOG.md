@@ -5,6 +5,18 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.8] - 2025-09-27
+
+### Changed
+
+- Widened the SiteHeader's horizontal padding steps so the bordered glass frame breathes more on every breakpoint without breaking responsive alignment.
+
+## [3.0.7] - 2025-09-27
+
+### Changed
+
+- Simplified the navigation status treatment to a text-only callout and removed the marketing header action button to reduce visual weight while keeping spacing comfortable.
+
 ## [3.0.6] - 2025-09-27
 
 ### Changed
