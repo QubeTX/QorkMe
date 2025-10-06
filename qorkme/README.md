@@ -23,6 +23,9 @@ A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and S
 - **ZT Bros Oskon Typography**: Bold serif fonts with uppercase styling and enhanced spacing
 - **Premium Visual Effects**: Scale transforms, gradient overlays, and sophisticated micro-animations
 - **Integrated Notification System**: Glassmorphic toasts matching the overall aesthetic
+- **Minimal Navigation Header**: Marketing view drops the beta badge by default while keeping optional taglines for result-specific branding
+- **Share-ready Hero Callout**: Homepage hero badge now spotlights the share-ready link studio message to complement the streamlined header
+- **Tagline-free Branding**: Navigation header now presents the QorkMe wordmark on its own across marketing and result contexts for a cleaner masthead
 
 ### Technical Excellence
 

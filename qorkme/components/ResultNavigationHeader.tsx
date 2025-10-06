@@ -22,7 +22,6 @@ export function ResultNavigationHeader() {
         icon: <ArrowLeft size={18} aria-hidden />,
         variant: 'outline',
       }}
-      brandTagline="Share-ready link"
     />
   );
 }

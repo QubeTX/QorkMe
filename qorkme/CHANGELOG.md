@@ -5,6 +5,24 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.12] - 2025-09-27
+
+### Changed
+
+- Removed the navigation tagline output so the SiteHeader now renders only the QorkMe wordmark across marketing and result views.
+
+## [3.0.11] - 2025-09-27
+
+### Changed
+
+- Reworded the homepage hero badge to spotlight share-ready copy so the marketing header area no longer surfaces the retired "Friendly link studio" tagline.
+
+## [3.0.10] - 2025-09-27
+
+### Changed
+
+- Hid the marketing navigation badge and default tagline so the homepage header stays minimal while still letting result pages opt into contextual branding copy.
+
 ## [3.0.9] - 2025-09-27
 
 ### Changed

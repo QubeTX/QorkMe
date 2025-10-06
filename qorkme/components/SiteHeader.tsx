@@ -29,7 +29,6 @@ export interface SiteHeaderProps {
   navItems?: NavItem[];
   status?: HeaderStatus;
   action?: HeaderAction;
-  brandTagline?: string;
 }
 
 const actionStyles: Record<HeaderActionVariant, string> = {
@@ -39,12 +38,7 @@ const actionStyles: Record<HeaderActionVariant, string> = {
     'border border-[color:var(--color-border-strong)] text-[color:var(--color-text-secondary)] bg-transparent hover:text-[color:var(--color-primary)] hover:border-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)]/10',
 };
 
-export function SiteHeader({
-  navItems = [],
-  status,
-  action,
-  brandTagline = 'Friendly link studio',
-}: SiteHeaderProps) {
+export function SiteHeader({ navItems = [], status, action }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuId = useId();
   const hasNavigation = navItems.length > 0;
@@ -87,9 +81,6 @@ export function SiteHeader({
               <span className="flex flex-col leading-tight">
                 <span className="font-ui text-[0.7rem] font-semibold uppercase tracking-[0.38em] text-[color:var(--color-secondary)]">
                   QorkMe
-                </span>
-                <span className="font-body text-sm text-[color:var(--color-text-secondary)]">
-                  {brandTagline}
                 </span>
               </span>
             </Link>

@@ -1,4 +1,3 @@
-import { Sparkles } from 'lucide-react';
 import { SiteHeader } from '@/components/SiteHeader';
 
 const navItems = [
@@ -9,14 +8,5 @@ const navItems = [
 ];
 
 export function NavigationHeader() {
-  return (
-    <SiteHeader
-      navItems={navItems}
-      status={{
-        label: 'Beta invites open',
-        icon: <Sparkles size={16} aria-hidden />,
-      }}
-      brandTagline="Friendly link studio"
-    />
-  );
+  return <SiteHeader navItems={navItems} />;
 }

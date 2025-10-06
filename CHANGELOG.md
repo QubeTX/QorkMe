@@ -1,5 +1,14 @@
 # Changelog
 
+## 2025-09-27 08:40
+- Removed the navigation tagline entirely so the QorkMe wordmark stands alone in every header context without fallback copy.
+
+## 2025-09-27 08:10
+- Removed the marketing navigation badge and default tagline so the homepage header now focuses on the core links while keeping branded taglines opt-in for other contexts.
+
+## 2025-09-27 07:15
+- Replaced the homepage hero's "Friendly link studio" badge with share-ready messaging to keep the header section aligned with the new minimal navigation shell.
+
 ## 2025-09-27 06:40
 - Optimized the CI bundle size check to reuse the existing Next.js build artifacts so the workflow no longer performs a redundant rebuild when reporting `.next/` size.
 
