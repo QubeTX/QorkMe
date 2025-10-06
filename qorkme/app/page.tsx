@@ -61,7 +61,7 @@ export default function Home() {
                 <div className="flex flex-col gap-12">
                   <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border/60 bg-[color:var(--color-background-accent)]/65 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-secondary)]">
                     <Sparkles size={18} aria-hidden="true" />
-                    Friendly link studio
+                    Share-ready link studio
                   </span>
                   <div className="flex flex-col gap-6">
                     <h1 className="font-display text-[clamp(2.75rem,5vw+1.25rem,4.5rem)] font-semibold leading-[1.08] text-text-primary">
