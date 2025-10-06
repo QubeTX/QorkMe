@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-09-27 06:40
+- Optimized the CI bundle size check to reuse the existing Next.js build artifacts so the workflow no longer performs a redundant rebuild when reporting `.next/` size.
+
 ## 2025-09-27 05:30
 - Nudged the marketing navbar's internal padding wider so the bordered frame stretches further on desktop and mobile while keeping the glassmorphism shell responsive.
 

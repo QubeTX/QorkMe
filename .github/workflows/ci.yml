@@ -42,6 +42,7 @@ jobs:
         run: npx prettier --check .
 
       - name: Build application
+        id: build
         run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co' }}
@@ -50,8 +51,8 @@ jobs:
           NEXT_PUBLIC_SHORT_DOMAIN: qork.me
 
       - name: Check bundle size
+        if: ${{ always() && steps.build.outcome == 'success' }}
         run: |
-          npm run build
           echo "Build size report:"
           du -sh .next/
 
