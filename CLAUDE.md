@@ -22,20 +22,20 @@ The project uses a monorepo structure with the main application in the `qorkme/`
 
 ```
 QorkMe/
-├── qorkme/                    # Main Next.js application
-│   ├── app/                   # Next.js 15 App Router
-│   ├── components/            # React components
-│   ├── lib/                   # Utilities and database clients
-│   ├── tests/                 # Vitest test suites
-│   ├── docs/                  # Documentation
-│   ├── supabase/              # Database schema and setup
-│   └── public/fonts/          # ZT Bros Oskon font files (woff2)
-├── ZT Bros Oskon 90s/         # Source font files (OTF/TTF/WEB)
-├── vercel.json                # Root deployment config (points to qorkme/)
-├── .github/workflows/         # CI/CD automation
-├── AGENTS.md                  # Agent-specific guidelines
-├── CODEX_PROJECT.md           # Detailed project brief
-└── CLAUDE.md                  # This file
+|-- qorkme/                    # Main Next.js application
+|   |-- app/                   # Next.js 15 App Router
+|   |-- components/            # React components
+|   |-- lib/                   # Utilities and database clients
+|   |-- tests/                 # Vitest test suites
+|   |-- docs/                  # Documentation
+|   |-- supabase/              # Database schema and setup
+|   \-- public/fonts/          # ZT Bros Oskon font files (woff2)
+|-- ZT Bros Oskon 90s/         # Source font files (OTF/TTF/WEB)
+|-- vercel.json                # Root deployment config (points to qorkme/)
+|-- .github/workflows/         # CI/CD automation
+|-- AGENTS.md                  # Agent-specific guidelines
+|-- CODEX_PROJECT.md           # Detailed project brief
+\-- CLAUDE.md                  # This file
 ```
 
 **Important**: All development commands must be run from the `qorkme/` directory, not the repository root.
@@ -147,7 +147,7 @@ GitHub Actions workflows in `.github/workflows/`:
 
 ### Required GitHub Secrets
 
-Configure in repository Settings → Secrets and variables → Actions:
+Configure in repository Settings -> Secrets and variables -> Actions:
 
 - `VERCEL_TOKEN`: Vercel account token
 - `VERCEL_ORG_ID`: From `.vercel/project.json`
@@ -161,9 +161,9 @@ QorkMe now leans into an earthy modern aesthetic that pairs warm parchment neutr
 
 - **Color palette**: Soft sand surfaces (`#f6f1e8`, `#f2e7d6`) contrasted with terracotta primary (`#c4724f`) and sage accent (`#5f7d58`).
 - **Typography**: Only `ZT Bros Oskon` for display moments and Inter Light (300) for body, UI, and numeric content; if Inter must headline a section, use the `.font-inter-heavy` helper (weight 900). No other families are allowed.
-- **Surfaces & depth**: Rounded cards (`12px–28px` radii) with diffused warm shadows; blur is subtle and used sparingly.
+- **Surfaces & depth**: Rounded cards (`12px-28px` radii) with diffused warm shadows; blur is subtle and used sparingly.
 - **Theme**: Light theme focused, dark mode swaps to espresso tones via the same tokens. Tokens live in `qorkme/app/globals.css`.
-- **Interaction**: Calm transitions (140–420ms), faint gradient overlays, and focus rings using the primary terracotta.
+- **Interaction**: Calm transitions (140-420ms), faint gradient overlays, and focus rings using the primary terracotta.
 - **Spacing**: 8px grid with responsive clamps for sections, stacks, and grids.
 
 Complete specification: `qorkme/docs/DESIGN_SYSTEM.md`

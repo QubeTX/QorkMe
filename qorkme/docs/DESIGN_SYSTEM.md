@@ -1,12 +1,12 @@
 # QorkMe Design System
 
 ## Vision & Principles
-QorkMe should feel grounded, calm, and trustworthy—like a contemporary studio that works with natural materials. Every screen leans on warm parchment neutrals, terracotta accents, and sage greens while typography combines the character of ZT Bros Oskon with the clarity of Inter. The key principles are:
-- **Earthy Modern** – Pair organic colors with refined layouts and generous whitespace.
-- **Purposeful Contrast** – Use terracotta for the primary path, sage for support, and ink-like neutrals for structure.
-- **Quiet Confidence** – Motion and depth stay subtle; blur and shadow are soft and never gimmicky.
-- **Clarity First** – Establish a single hierarchy per view, keep copy concise, and reserve emphasis for actions.
-- **Consistency over Components** – Favor simple markup, but apply the same palette, type scale, spacing, and states everywhere.
+QorkMe should feel grounded, calm, and trustworthy-like a contemporary studio that works with natural materials. Every screen leans on warm parchment neutrals, terracotta accents, and sage greens while typography combines the character of ZT Bros Oskon with the clarity of Inter. The key principles are:
+- **Earthy Modern** - Pair organic colors with refined layouts and generous whitespace.
+- **Purposeful Contrast** - Use terracotta for the primary path, sage for support, and ink-like neutrals for structure.
+- **Quiet Confidence** - Motion and depth stay subtle; blur and shadow are soft and never gimmicky.
+- **Clarity First** - Establish a single hierarchy per view, keep copy concise, and reserve emphasis for actions.
+- **Consistency over Components** - Favor simple markup, but apply the same palette, type scale, spacing, and states everywhere.
 
 ## Foundations
 ### Color System
@@ -43,7 +43,7 @@ Only two font families are permitted across the application.
 - Display / Hero: `clamp(2.75rem, 4vw + 1rem, 4.5rem)`
 - H2: `clamp(2.25rem, 3vw + 1rem, 3.5rem)`
 - H3: `clamp(1.75rem, 2vw + 1rem, 2.5rem)`
-- H4–H6: Fixed 1.5rem, 1.25rem, 1.125rem
+- H4-H6: Fixed 1.5rem, 1.25rem, 1.125rem
 - Body: `1rem` base with `line-height: 1.6`
 - Small text / captions: 0.875rem with 1.4 line-height
 
@@ -89,7 +89,7 @@ All buttons use the `.btn` class foundation defined in `globals.css`.
 - Inline badges should stay lowercase, use `.font-body-strong` (Inter 500) or `--weight-ui-strong` when icons are present, and apply `--radius-full`.
 
 ## Interaction Patterns
-- Motion: rely on the predefined keyframes (`fadeIn`, `slideIn`, `float`, etc.) sparingly. Duration stays within 240–600ms and respects `prefers-reduced-motion`.
+- Motion: rely on the predefined keyframes (`fadeIn`, `slideIn`, `float`, etc.) sparingly. Duration stays within 240-600ms and respects `prefers-reduced-motion`.
 - Focus: always show a visible outline using `var(--color-primary)` or `var(--color-ring)`; never remove `outline` without providing an accessible alternative.
 - Hover: lighten backgrounds using `color-mix` with `--color-surface-elevated`; avoid scaling more than 1.02 to maintain calmness.
 - Selection: uses the warm terracotta highlight (`color-mix(in srgb, var(--color-primary) 35%, transparent)`).
@@ -102,7 +102,7 @@ All buttons use the `.btn` class foundation defined in `globals.css`.
 
 ## Asset & Font Guidance
 - Only bundle `ZT Bros Oskon` (webfont variants already in `public/fonts/`) and Inter from Google Fonts. Remove any dependencies on JetBrains Mono, Playfair, or other families.
-- When exporting imagery or illustrations, bias toward textured neutrals and subtle organic shapes—avoid heavy neon or saturated gradients.
+- When exporting imagery or illustrations, bias toward textured neutrals and subtle organic shapes-avoid heavy neon or saturated gradients.
 
 ## Implementation Notes
 - Global tokens live in `qorkme/app/globals.css`; Tailwind utilities inherit these values via `@theme inline`.
