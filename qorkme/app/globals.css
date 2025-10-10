@@ -111,10 +111,11 @@
   --font-ui: 'Inter', sans-serif;
   --font-mono: 'Inter', sans-serif;
 
-  --weight-body-regular: 300;
+  --weight-body-regular: 400;
   --weight-body-strong: 500;
   --weight-ui-strong: 600;
   --weight-display-strong: 600;
+  --weight-ui-button: 900;
   --weight-inter-heavy: 900;
 
   --transition-fast: 140ms ease;

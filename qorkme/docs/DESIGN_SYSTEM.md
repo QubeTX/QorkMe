@@ -42,8 +42,17 @@ All colors are defined as CSS custom properties in `qorkme/app/globals.css`. Use
 Only two font families are permitted across the application.
 
 - `--font-display`: `ZT Bros Oskon` for hero titles, headings, and prominent buttons. Default to weight 600; if ZT is unavailable for a heading, swap to `.font-inter-heavy` (Inter 900) to preserve contrast.
-- `--font-body`: `Inter` Light (weight 300) for paragraphs, input text, supporting labels, and UI chrome. Elevate emphasis with `.font-body-strong` (weight 500) instead of switching families.
+- `--font-body`: `Inter` Regular (weight 400) for paragraphs, input text, supporting labels, and UI chrome. Elevate emphasis with `.font-body-strong` (weight 500) instead of switching families.
 - `--font-ui`/`--font-mono`: Alias to Inter so UI chrome and numeric strings inherit the same palette. Enable `font-variant-numeric: tabular-nums` when aligning numbers.
+
+**Weight tokens** (implemented in `globals.css`):
+
+- `--weight-body-regular: 400` - Default body text
+- `--weight-body-strong: 500` - Emphasized body text, labels
+- `--weight-ui-strong: 600` - Strong UI elements
+- `--weight-ui-button: 900` - All button text (Inter Black for maximum contrast)
+- `--weight-display-strong: 600` - Display font weight
+- `--weight-inter-heavy: 900` - Heavy Inter fallback for headings
 
 **Type scale** (implemented with responsive `clamp()` utilities in `globals.css`):
 
@@ -54,7 +63,7 @@ Only two font families are permitted across the application.
 - Body: `1rem` base with `line-height: 1.6`
 - Small text / captions: 0.875rem with 1.4 line-height
 
-Headings stay in ZT Bros Oskon with tight tracking (`letter-spacing: 0.008em`) and weight 600. Never set headings in all caps; reserve uppercase for subdued pill labels or quiet metadata, and only use Inter via `.font-inter-heavy` when ZT is not technically possible.
+Headings stay in ZT Bros Oskon with tight tracking (`letter-spacing: 0.008em`) and weight 600. Body text uses Inter Regular (400) for comfortable readability. Never set headings in all caps; reserve uppercase for subdued pill labels or quiet metadata, and only use Inter via `.font-inter-heavy` when ZT is not technically possible.
 
 ### Layout & Spacing
 
@@ -76,6 +85,7 @@ Headings stay in ZT Bros Oskon with tight tracking (`letter-spacing: 0.008em`) a
 
 All buttons use the `.btn` class foundation defined in `globals.css`.
 
+- **Typography**: All buttons use Inter Black (weight 900) via `--weight-ui-button` for maximum contrast and legibility
 - **Primary**: background `var(--color-primary)`, text `var(--color-text-inverse)`. Hover keeps the same hue with a subtle highlight overlay. Focus shows a 2px outline using `var(--color-ring)`.
 - **Secondary (outline)**: transparent background with border `var(--color-border)`. On hover the background becomes `color-mix(in srgb, var(--color-surface-elevated) 70%, transparent)` and the border upgrades to `--color-border-strong`.
 - **Ghost**: No border, compact padding, text in `var(--color-secondary)`. Hover adds a light surface tint via `color-mix`.
@@ -84,7 +94,8 @@ All buttons use the `.btn` class foundation defined in `globals.css`.
 ### Inputs & Form Controls
 
 - Use the `.input` class for text inputs, textareas, and select triggers. Default border: `color-mix(in srgb, var(--color-border) 80%, transparent)`. Hover uses `--color-border-strong`; focus adds a 4px glow using `color-mix` with `--color-primary`.
-- Labels sit at 0.9rem Inter, `font-weight: 500`, and use `--color-text-secondary`.
+- Input text uses Inter Regular (weight 400) for comfortable data entry
+- Labels sit at 0.9rem Inter, `font-weight: 500` (`--weight-body-strong`), and use `--color-text-secondary`.
 - Helper or validation text relies on `--color-text-muted` or the relevant status color.
 
 ### Cards & Surfaces
@@ -115,7 +126,7 @@ All buttons use the `.btn` class foundation defined in `globals.css`.
 
 - Maintain a minimum 4.5:1 contrast ratio for essential text. The provided tokens meet this requirement in both themes when used as directed.
 - Keep paragraphs to 65ch max (`--content-width`) for readability.
-- Headlines favor sentence case. Keep long-form body copy in Inter Light (300) for softness, while ZT Bros Oskon handles hero statements and primary headings.
+- Headlines favor sentence case. Body copy uses Inter Regular (400) for comfortable reading with improved legibility, while ZT Bros Oskon handles hero statements and primary headings.
 - Iconography should stick to the existing outline style with 1.5px strokes matching `var(--color-secondary)`.
 
 ## Asset & Font Guidance

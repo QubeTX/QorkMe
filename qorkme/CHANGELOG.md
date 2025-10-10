@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Set Inter Light (300) as the default body weight, added an Inter heavy utility for fallback headings, and updated documentation to reflect the stricter typography guidance.
+- Set Inter Regular (400) as the default body weight for improved readability, added Inter Black (900) for buttons via `--weight-ui-button` CSS variable, added an Inter heavy utility for fallback headings, and updated documentation to reflect the refined typography guidance.
 
 ## [3.0.15] - 2025-10-10
 

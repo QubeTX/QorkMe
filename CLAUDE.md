@@ -12,7 +12,7 @@ QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, an
 - **Language**: TypeScript 5 (strict mode)
 - **Database**: Supabase (PostgreSQL) with real-time capabilities
 - **Styling**: Tailwind CSS v4 with an earthy modern token palette defined in `qorkme/docs/DESIGN_SYSTEM.md`
-- **Typography**: ZT Bros Oskon 90s for display and Inter Light (300) for body/UI text, with Inter 900 reserved for rare title fallbacks
+- **Typography**: ZT Bros Oskon 90s for display and Inter Regular (400) for body/UI text, with Inter Black (900) for buttons and rare title fallbacks
 - **Deployment**: Vercel with automated GitHub Actions CI/CD
 - **Testing**: Vitest with Testing Library
 
@@ -160,7 +160,7 @@ Configure in repository Settings -> Secrets and variables -> Actions:
 QorkMe now leans into an earthy modern aesthetic that pairs warm parchment neutrals with terracotta and sage accents:
 
 - **Color palette**: Soft sand surfaces (`#f6f1e8`, `#f2e7d6`) contrasted with terracotta primary (`#c4724f`) and sage accent (`#5f7d58`).
-- **Typography**: Only `ZT Bros Oskon` for display moments and Inter Light (300) for body, UI, and numeric content; if Inter must headline a section, use the `.font-inter-heavy` helper (weight 900). No other families are allowed.
+- **Typography**: Only `ZT Bros Oskon` for display moments and Inter Regular (400) for body, UI, and numeric content; buttons use Inter Black (900) for maximum contrast via `--weight-ui-button`; if Inter must headline a section, use the `.font-inter-heavy` helper (weight 900). No other families are allowed.
 - **Surfaces & depth**: Rounded cards (`12px-28px` radii) with diffused warm shadows; blur is subtle and used sparingly.
 - **Theme**: Light theme focused, dark mode swaps to espresso tones via the same tokens. Tokens live in `qorkme/app/globals.css`.
 - **Interaction**: Calm transitions (140-420ms), faint gradient overlays, and focus rings using the primary terracotta.

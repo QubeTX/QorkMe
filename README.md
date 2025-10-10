@@ -43,7 +43,7 @@ QorkMe/
 - **Language**: TypeScript 5 for full type safety
 - **Database**: Supabase (PostgreSQL) with real-time capabilities
 - **Styling**: Tailwind CSS v4 with an earthy modern token palette
-- **Typography**: ZT Bros Oskon for display work and Inter Light for body/UI text
+- **Typography**: ZT Bros Oskon for display work and Inter Regular (400) for body/UI text, with Inter Black (900) for buttons
 - **Deployment**: Vercel with automatic CI/CD integration
 
 ## Design System
@@ -51,7 +51,7 @@ QorkMe/
 QorkMe features an earthy modern design system with:
 
 - **Warm Neutral Palette**: Parchment backgrounds with terracotta and sage accents
-- **ZT Bros Display + Inter Body**: ZT Bros Oskon for headings, Inter Light (300) for long-form copy, and Inter Heavy (900) only when ZT is unavailable
+- **ZT Bros Display + Inter Body**: ZT Bros Oskon for headings, Inter Regular (400) for comfortable body copy, Inter Black (900) for buttons, and Inter Heavy (900) only when ZT is unavailable
 - **Card Architecture**: Elevated surfaces, soft organic shadows, and calm hover states
 - **Responsive Design**: Mobile-first layouts tuned for comfortable reading
 - **Accessibility**: WCAG 2.1 AA compliant with visible focus indicators and high contrast

@@ -17,7 +17,7 @@ A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and S
 
 - **Earthy Modern Surfaces**: Warm parchment backgrounds with terracotta primaries and sage accent colors
 - **Calm Depth**: Soft organic shadows and restrained blur deliver depth without heavy effects
-- **Accessible Typography**: ZT Bros Oskon for headings paired with Inter Light (300) for long-form content
+- **Accessible Typography**: ZT Bros Oskon for headings paired with Inter Regular (400) for improved readability
 - **Gentle Interactions**: Subtle motion, gradient overlays, and responsive feedback tuned for focus
 - **Responsive Excellence**: Mobile-first layouts optimized for quick scanning and comfortable reading
 - **Dual Theme Support**: Espresso-toned dark mode and parchment light mode share the same token palette
@@ -200,7 +200,7 @@ QorkMe delivers a relaxed yet polished experience:
 
 - **Grounded Color Story**: Parchment backgrounds, terracotta primaries, and sage accents create warmth
 - **Soft Depth**: Layered shadows and minimal blur provide dimension without distraction
-- **Typography Balance**: ZT Bros Oskon leads hero moments while Inter Light (300) keeps body copy airy
+- **Typography Balance**: ZT Bros Oskon leads hero moments while Inter Regular (400) provides comfortable body copy; buttons use Inter Black (900) for maximum contrast
 - **Dark and Light Harmony**: Espresso dark mode shares the same palette tokens as the light theme
 - **Measured Motion**: Calm transitions and focus rings favor clarity over spectacle
 

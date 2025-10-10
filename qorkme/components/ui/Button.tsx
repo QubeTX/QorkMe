@@ -13,7 +13,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          'btn font-ui relative overflow-hidden font-bold tracking-[0.02em] transition-colors duration-200',
+          'btn font-ui relative overflow-hidden tracking-[0.02em] transition-colors duration-200',
+          '[font-weight:var(--weight-ui-button)]',
           'disabled:opacity-60 disabled:cursor-not-allowed',
           'focus-visible:outline-none',
           {

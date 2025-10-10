@@ -20,7 +20,8 @@ This directory contains the ZT Bros Oskon 90s font family files in WOFF2 format.
 QorkMe's earthy modern design system uses:
 
 - **Display/Headings**: ZT Bros Oskon 90s (weight 600 default)
-- **Body/UI Text**: Inter Light (300) from Google Fonts
+- **Body/UI Text**: Inter Regular (400) from Google Fonts
+- **Button Text**: Inter Black (900) for maximum contrast
 - **Fallback Headlines**: Inter Heavy (900) when ZT Bros Oskon cannot be used
 
 See `app/globals.css` for font-face declarations and `docs/DESIGN_SYSTEM.md` for complete typography specifications.
