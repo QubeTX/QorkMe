@@ -1,12 +1,12 @@
 # QorkMe Design System
 
 ## Vision & Principles
-QorkMe should feel grounded, calm, and trustworthy-like a contemporary studio that works with natural materials. Every screen leans on warm parchment neutrals, terracotta accents, and sage greens while typography combines the character of ZT Bros Oskon with the clarity of Inter. The key principles are:
-- **Earthy Modern** - Pair organic colors with refined layouts and generous whitespace.
-- **Purposeful Contrast** - Use terracotta for the primary path, sage for support, and ink-like neutrals for structure.
-- **Quiet Confidence** - Motion and depth stay subtle; blur and shadow are soft and never gimmicky.
-- **Clarity First** - Establish a single hierarchy per view, keep copy concise, and reserve emphasis for actions.
-- **Consistency over Components** - Favor simple markup, but apply the same palette, type scale, spacing, and states everywhere.
+QorkMe should feel grounded, calm, and trustworthy, like a contemporary studio that works with natural materials. Every screen leans on warm parchment neutrals, terracotta accents, and sage greens while typography combines the character of ZT Bros Oskon with the clarity of Inter. The key principles are:
+- **Earthy Modern:** Pair organic colors with refined layouts and generous whitespace.
+- **Purposeful Contrast:** Use terracotta for the primary path, sage for support, and ink-like neutrals for structure.
+- **Quiet Confidence:** Motion and depth stay subtle; blur and shadow are soft and never gimmicky.
+- **Clarity First:** Establish a single hierarchy per view, keep copy concise, and reserve emphasis for actions.
+- **Consistency over Components:** Favor simple markup, but apply the same palette, type scale, spacing, and states everywhere.
 
 ## Foundations
 ### Color System
