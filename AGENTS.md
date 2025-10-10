@@ -13,7 +13,7 @@ Run all commands inside `qorkme/`:
 - `npm run build` — Produce the production bundle used in CI/CD.
 
 ## Coding Style & Naming Conventions
-Use TypeScript, React 19, and Tailwind with Prettier enforcing 2-space indenting and single quotes. Components remain PascalCase (`UrlShortener.tsx`), hooks/utilities stay camelCase, and route directories stay lowercase. Import shared modules with the `@/` alias. Preserve glassmorphism tokens documented in `qorkme/docs/DESIGN_SYSTEM.md`.
+Use TypeScript, React 19, and Tailwind with Prettier enforcing 2-space indenting and single quotes. Components remain PascalCase (`UrlShortener.tsx`), hooks/utilities stay camelCase, and route directories stay lowercase. Import shared modules with the `@/` alias. Follow the earthy modern system in `qorkme/docs/DESIGN_SYSTEM.md`—only `ZT Bros Oskon` (display) and `Inter` (body/UI) are allowed fonts.
 
 ## Testing Guidelines
 Place Vitest files in `qorkme/tests/` mirroring the source path (`lib/shortcode/generator.test.ts`). Reuse `qorkme/tests/setup.ts`, cover shortcode generation, API routes, Supabase clients, and UI forms with DOM assertions. Run `npm test` before opening a PR.

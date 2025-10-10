@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10 12:15
+- Shifted the design system to an earthy modern palette, limited typography to ZT Bros Oskon and Inter, and refreshed `AGENTS.md`, `CLAUDE.md`, and `qorkme/docs/DESIGN_SYSTEM.md` to match.
+
 ## 2025-10-10 11:30
 - Removed the homepage hero badge so the main content area starts directly with the heading for cleaner visual flow.
 

@@ -64,36 +64,36 @@
   font-display: swap;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
 :root {
-  --color-background: #faf9f5;
-  --color-background-accent: #f0ede6;
+  --color-background: #f6f1e8;
+  --color-background-accent: #ece3d2;
   --color-surface: #ffffff;
-  --color-surface-elevated: #f5efe7;
-  --color-surface-muted: #ebe4da;
-  --color-primary: #d97757;
-  --color-primary-hover: #c86949;
-  --color-secondary: #262623;
-  --color-secondary-hover: #1e1e1c;
-  --color-accent: #4f6f52;
-  --color-accent-hover: #435f46;
+  --color-surface-elevated: #f2e7d6;
+  --color-surface-muted: #e5dac5;
+  --color-primary: #c4724f;
+  --color-primary-hover: #b46444;
+  --color-secondary: #2f2a26;
+  --color-secondary-hover: #26211f;
+  --color-accent: #5f7d58;
+  --color-accent-hover: #4f6a49;
 
-  --color-text-primary: #262623;
-  --color-text-secondary: #403f3a;
-  --color-text-muted: #68665f;
-  --color-text-inverse: #faf9f5;
+  --color-text-primary: #2f2a26;
+  --color-text-secondary: #49413a;
+  --color-text-muted: #6b6159;
+  --color-text-inverse: #f6f1e8;
 
-  --color-border: rgba(94, 90, 83, 0.16);
-  --color-border-strong: rgba(56, 54, 50, 0.3);
-  --color-ring: rgba(217, 119, 87, 0.35);
-  --color-shadow: rgba(38, 38, 35, 0.08);
-  --color-shadow-hover: rgba(38, 38, 35, 0.16);
+  --color-border: rgba(108, 96, 81, 0.18);
+  --color-border-strong: rgba(79, 69, 58, 0.32);
+  --color-ring: rgba(196, 114, 79, 0.32);
+  --color-shadow: rgba(40, 32, 26, 0.08);
+  --color-shadow-hover: rgba(40, 32, 26, 0.16);
 
-  --color-success: #3d7f6c;
-  --color-warning: #de9955;
-  --color-error: #c2483b;
-  --color-info: #4f6f52;
+  --color-success: #4f7c5a;
+  --color-warning: #d08a3b;
+  --color-error: #c04d3c;
+  --color-info: #5f7d58;
 
   --container-max: 1200px;
   --container-padding: clamp(1.25rem, 6vw, 3.5rem);
@@ -106,10 +106,10 @@
   --radius-xl: 28px;
   --radius-full: 9999px;
 
-  --font-display: 'ZT Bros Oskon', 'Inter', 'Segoe UI', sans-serif;
-  --font-body: 'Inter', 'Segoe UI', sans-serif;
-  --font-ui: 'Inter', 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'SFMono-Regular', 'Courier New', monospace;
+  --font-display: 'ZT Bros Oskon', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'Inter', sans-serif;
 
   --transition-fast: 140ms ease;
   --transition-base: 240ms ease;
@@ -117,33 +117,33 @@
 }
 
 [data-theme='dark'] {
-  --color-background: linear-gradient(180deg, #262623 0%, #1f1f1d 70%, #1a1a18 100%);
-  --color-background-accent: #343431;
-  --color-surface: rgba(43, 42, 40, 0.94);
-  --color-surface-elevated: rgba(58, 56, 53, 0.94);
-  --color-surface-muted: rgba(72, 70, 66, 0.7);
-  --color-primary: #f08f6c;
-  --color-primary-hover: #d97757;
-  --color-secondary: #f7f4ee;
-  --color-secondary-hover: #e8e3db;
-  --color-accent: #8ab68f;
-  --color-accent-hover: #6c9871;
+  --color-background: linear-gradient(180deg, #1f1c18 0%, #171410 100%);
+  --color-background-accent: #26221e;
+  --color-surface: rgba(33, 29, 26, 0.94);
+  --color-surface-elevated: rgba(46, 40, 36, 0.92);
+  --color-surface-muted: rgba(64, 56, 50, 0.65);
+  --color-primary: #e08b61;
+  --color-primary-hover: #c4724f;
+  --color-secondary: #f4ede2;
+  --color-secondary-hover: #e4d9c8;
+  --color-accent: #84a782;
+  --color-accent-hover: #6e8d6a;
 
-  --color-text-primary: #f7f4ee;
-  --color-text-secondary: #ded8cf;
-  --color-text-muted: rgba(241, 236, 226, 0.7);
-  --color-text-inverse: #1f1f1d;
+  --color-text-primary: #f4ede2;
+  --color-text-secondary: #d9cfc0;
+  --color-text-muted: rgba(236, 229, 217, 0.72);
+  --color-text-inverse: #201c18;
 
-  --color-border: rgba(231, 223, 212, 0.16);
-  --color-border-strong: rgba(248, 244, 236, 0.32);
-  --color-ring: rgba(240, 143, 108, 0.4);
+  --color-border: rgba(226, 216, 201, 0.14);
+  --color-border-strong: rgba(241, 232, 220, 0.3);
+  --color-ring: rgba(224, 139, 97, 0.4);
   --color-shadow: rgba(0, 0, 0, 0.45);
   --color-shadow-hover: rgba(0, 0, 0, 0.6);
 
-  --color-success: #7ac7a9;
-  --color-warning: #f0b27a;
-  --color-error: #f28f82;
-  --color-info: #8ab68f;
+  --color-success: #88c09a;
+  --color-warning: #e0a165;
+  --color-error: #e17462;
+  --color-info: #84a782;
 }
 
 @theme inline {

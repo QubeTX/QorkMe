@@ -4,15 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. The application features a sophisticated glassmorphism design, intelligent short code generation, and comprehensive analytics tracking. Licensed under Apache License 2.0.
+QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. The interface follows an earthy-modern aesthetic that pairs warm parchment neutrals, terracotta accents, and sage highlights with intelligent short code generation and comprehensive analytics tracking. Licensed under Apache License 2.0.
 
 ## Technology Stack
 
 - **Framework**: Next.js 15.5.3 with App Router and React 19
 - **Language**: TypeScript 5 (strict mode)
 - **Database**: Supabase (PostgreSQL) with real-time capabilities
-- **Styling**: Tailwind CSS v4 with custom glassmorphism design tokens
-- **Typography**: ZT Bros Oskon 90s font family (custom serif fonts)
+- **Styling**: Tailwind CSS v4 with an earthy modern token palette defined in `qorkme/docs/DESIGN_SYSTEM.md`
+- **Typography**: ZT Bros Oskon 90s for display and Inter for body/UI text
 - **Deployment**: Vercel with automated GitHub Actions CI/CD
 - **Testing**: Vitest with Testing Library
 
@@ -157,16 +157,16 @@ Configure in repository Settings → Secrets and variables → Actions:
 
 ## Design System
 
-QorkMe features a sophisticated glassmorphism design with midnight blue aesthetics:
+QorkMe now leans into an earthy modern aesthetic that pairs warm parchment neutrals with terracotta and sage accents:
 
-- **Color palette**: Deep midnight blue (#0f172a), bright accents (blue, purple, cyan)
-- **Typography**: ZT Bros Oskon serif fonts with uppercase styling
-- **Effects**: Backdrop blur, layered shadows, shimmer animations, scale transforms
-- **Theme**: Dark mode primary, elegant light mode fallback
-- **Components**: Card-based architecture with refined borders and hover states
-- **Grid**: 8px spacing system with responsive breakpoints
+- **Color palette**: Soft sand surfaces (`#f6f1e8`, `#f2e7d6`) contrasted with terracotta primary (`#c4724f`) and sage accent (`#5f7d58`).
+- **Typography**: Only `ZT Bros Oskon` for display moments and `Inter` for body, UI, and numeric content. No other families are allowed.
+- **Surfaces & depth**: Rounded cards (`12px–28px` radii) with diffused warm shadows; blur is subtle and used sparingly.
+- **Theme**: Light theme focused, dark mode swaps to espresso tones via the same tokens. Tokens live in `qorkme/app/globals.css`.
+- **Interaction**: Calm transitions (140–420ms), faint gradient overlays, and focus rings using the primary terracotta.
+- **Spacing**: 8px grid with responsive clamps for sections, stacks, and grids.
 
-Complete specifications: `qorkme/docs/DESIGN_SYSTEM.md`
+Complete specification: `qorkme/docs/DESIGN_SYSTEM.md`
 
 ## Deployment Configuration
 
@@ -266,7 +266,7 @@ Create route handler in `qorkme/app/api/` following Next.js App Router conventio
 ## Documentation
 
 - **Setup guide**: `qorkme/README.md` - Complete installation and configuration
-- **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - Glassmorphism specifications
+- **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - Earthy modern palette, typography, and component tokens
 - **Vercel deployment**: `qorkme/docs/VERCEL_SETUP.md` - CI/CD configuration
 - **General deployment**: `qorkme/docs/DEPLOYMENT.md` - Multi-platform options
 - **Database setup**: `qorkme/supabase/SETUP_INSTRUCTIONS.md` - Supabase configuration

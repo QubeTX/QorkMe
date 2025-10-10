@@ -1,657 +1,111 @@
 # QorkMe Design System
 
-## Modern Dark Mode with Sophisticated Blues & Glassmorphism
-
-### Table of Contents
-
-1. [Design Philosophy](#design-philosophy)
-2. [Color Palette](#color-palette)
-3. [Typography](#typography)
-4. [Spacing & Grid](#spacing--grid)
-5. [Theme System](#theme-system)
-6. [Components](#components)
-7. [Animations](#animations)
-8. [Design Patterns](#design-patterns)
-
----
-
-## Design Philosophy
-
-QorkMe's design system embraces sophisticated minimalist principles, emphasizing:
-
-- **Refined & Functional**: Every element serves a purpose with elegant clarity
-- **Sophisticated Color Architecture**: Deep midnight blues with bright accent colors
-- **Enhanced Glassmorphism**: Backdrop-blur effects with layered shadow systems
-- **Advanced Dark Mode**: Primary focus on dark theme with sophisticated blue/purple/cyan palette
-- **Bold Typography Excellence**: ZT Bros Oskon serif fonts with uppercase styling and strong character
-- **Premium Interactions**: Shimmer effects, hover transforms, and floating animations
-
-## Color Palette
-
-### Light Theme - Natural & Warm
-
-```css
-/* Light Theme Base */
---color-background: linear-gradient(135deg, #f5e6d3 0%, #faf7f2 100%); /* Warm sandstone gradient */
---color-surface: rgba(250, 247, 242, 0.9); /* Light sand with transparency */
---color-surface-elevated: rgba(255, 255, 255, 0.95);
---color-primary: #8b7355; /* Desert sand brown */
---color-secondary: #3e2723; /* Rich earth brown */
---color-accent: #5d4037; /* Medium earth brown */
-
-/* Text Colors */
---color-text-primary: #2e1a17; /* Deep brown */
---color-text-secondary: #5d4037; /* Medium brown */
---color-text-muted: #8b7355; /* Light brown */
-```
-
-### Dark Theme - Sophisticated Blues (Primary Focus)
-
-```css
-/* Dark Theme - Modern Sophistication */
---color-background: #0f172a; /* Deep midnight blue */
---color-surface: #1e293b; /* Slate blue surface */
---color-surface-elevated: #334155; /* Elevated slate */
---color-primary: #60a5fa; /* Bright blue */
---color-secondary: #a855f7; /* Rich purple */
---color-accent: #06b6d4; /* Cyan accent */
-
-/* Text Colors */
---color-text-primary: #f1f5f9; /* Almost white */
---color-text-secondary: #cbd5e1; /* Light gray */
---color-text-muted: #64748b; /* Muted gray */
-
-/* Enhanced Borders & Shadows */
---color-border: #475569; /* Gray border */
---color-shadow: rgba(0, 0, 0, 0.5);
---color-shadow-hover: rgba(0, 0, 0, 0.7);
-```
-
-### Design Philosophy & Usage
-
-- **Primary Theme**: Dark mode as the primary experience with sophisticated midnight blue background
-- **Accent Strategy**: Bright blue (#60a5fa), rich purple (#a855f7), and cyan (#06b6d4) for interactive elements
-- **Card Design**: Glassmorphism with backdrop-blur effects and layered shadows
-- **Interactive Elements**: Enhanced hover states with transforms, shimmer effects, and color transitions
-- **Light Mode**: Natural sandstone/earth tones as secondary experience
-- **Contrast**: Much improved from previous muddy browns to sophisticated high-contrast blues
-
-## Typography
-
-### ZT Bros Oskon Font System
-
-```css
-/* Primary Fonts */
---font-display: 'ZT Bros Oskon', 'Playfair Display', Georgia, serif; /* Headlines, hero text */
---font-body: 'ZT Bros Oskon', 'Crimson Text', Georgia, serif; /* Body text, paragraphs */
---font-mono: 'JetBrains Mono', 'Courier New', monospace; /* Code, technical content */
-
-/* Fallback Fonts (Google Fonts) */
---font-fallback: 'Playfair Display', 'Crimson Text', Georgia, serif;
-```
-
-### Responsive Type Scale (CSS Clamp)
-
-```css
-/* Fluid Typography */
---text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem); /* 12-14px */
---text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem); /* 14-16px */
---text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem); /* 16-18px */
---text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem); /* 18-20px */
---text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem); /* 20-24px */
---text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem); /* 24-32px */
---text-3xl: clamp(2rem, 1.7rem + 1.5vw, 2.75rem); /* 32-44px */
---text-4xl: clamp(2.75rem, 2.3rem + 2.25vw, 4rem); /* 44-64px */
-```
-
-### Typography Hierarchy
-
-- **Display (ZT Bros Oskon)**: Hero headlines with uppercase styling and bold weight
-- **Headings (ZT Bros Oskon)**: Page titles and section headers with strong serif character
-- **Body (ZT Bros Oskon)**: Paragraphs, UI text, forms with refined serif readability
-- **Code (JetBrains Mono)**: Technical content, URLs, code snippets
-- **Text Transform**: Uppercase for headings and buttons for modern impact
-- **Line Heights**: 1.7 for body text, 1.1 for headings for tighter spacing
-- **Font Weights**: 400 (regular), 500 (medium), 600 (semibold), 700 (bold)
-
-## Spacing & Grid
-
-### 8px Grid System
-
-Base unit: `8px` - All spacing follows 8px increments for visual consistency
-
-### Spacing Scale
-
-```css
---space-1: 0.25rem; /* 4px  - Tight spacing */
---space-2: 0.5rem; /* 8px  - Base unit */
---space-3: 0.75rem; /* 12px - Small spacing */
---space-4: 1rem; /* 16px - Standard spacing */
---space-6: 1.5rem; /* 24px - Medium spacing */
---space-8: 2rem; /* 32px - Large spacing */
---space-12: 3rem; /* 48px - Extra large */
---space-16: 4rem; /* 64px - Section spacing */
---space-20: 5rem; /* 80px - Page spacing */
-```
-
-### Container System
-
-```css
-/* Responsive Container Widths */
---container-sm: 640px; /* Small devices */
---container-md: 768px; /* Tablets */
---container-lg: 1024px; /* Laptops */
---container-xl: 1280px; /* Desktops */
---container-2xl: 1536px; /* Large screens */
-
-/* Content Constraints */
---content-width: 65ch; /* Optimal reading width */
---sidebar-width: 280px; /* Navigation sidebars */
-```
-
-## Theme System
-
-### CSS Custom Properties Architecture
-
-```css
-:root {
-  /* Light Theme (Default) */
-  --bg-primary: var(--sandstone-bg);
-  --bg-secondary: var(--sand-surface);
-  --text-primary: var(--earth-brown);
-  --text-secondary: var(--medium-earth);
-  --accent-primary: var(--desert-sand);
-  --accent-secondary: var(--medium-earth);
-}
-
-[data-theme='dark'] {
-  /* Dark Theme Overrides */
-  --bg-primary: var(--dark-earth);
-  --bg-secondary: var(--dark-surface);
-  --text-primary: var(--light-sandstone);
-  --text-secondary: var(--sandy-tan);
-  --accent-primary: var(--sandy-tan);
-  --accent-secondary: var(--medium-sand);
-}
-```
-
-### Theme Transitions
-
-```css
-* {
-  transition:
-    background-color 250ms ease,
-    color 250ms ease,
-    border-color 250ms ease;
-}
-```
-
-## Components
-
-### 1. Enhanced Card Component
-
-**File**: `components/cards/Card.tsx`
-
-**Variants**:
-
-- `standard`: Glassmorphism card with backdrop-blur and subtle shadows
-- `elevated`: Premium card with stronger borders, enhanced shadows, and accent highlights
-- `interactive`: Enhanced hover states with transforms and shimmer effects
-
-**Advanced Features**:
-
-- **Glassmorphism Effects**: `backdrop-filter: blur(10px)` with transparency
-- **Layered Shadow System**: Multiple shadow layers for depth
-- **Hover Transforms**: `translateY(-6px) scale(1.01)` on hover
-- **Shimmer Animations**: Gradient overlays with shimmer effects
-- **Border Gradients**: Top border with gradient highlights
-- **Responsive Design**: Touch-friendly on mobile with enhanced interactions
-
-### 2. Enhanced Button Component
-
-**File**: `components/ui/Button.tsx`
-
-**Variants**:
-
-- `primary`: Gradient from secondary to secondary-hover with shimmer effect
-- `secondary`: Gradient from accent to accent-hover with enhanced shadows
-- `accent`: Gradient from primary to primary-hover with sophisticated styling
-- `outline`: Transparent with themed borders and glassmorphism hover
-- `ghost`: Minimal with sophisticated hover gradients
-
-**Advanced Features**:
-
-- **Shimmer Effects**: `before:` pseudo-element with gradient sweep animation
-- **Enhanced Transforms**: `hover:scale-[1.05]` and `active:scale-[0.95]`
-- **Gradient Backgrounds**: Multiple gradient variants for each button type
-- **Uppercase Typography**: ZT Bros Oskon with tracking and weight adjustments
-- **Shadow Enhancements**: `shadow-xl` to `shadow-2xl` on hover
-- **Transition Sophistication**: 300ms duration with advanced easing
-
-### 3. Enhanced Input Component
-
-**File**: `components/ui/Input.tsx`
-
-**Advanced Features**:
-
-- **Glassmorphism Base**: Surface background with backdrop-blur effects
-- **Dynamic Borders**: 2px borders with sophisticated color transitions
-- **Focus Enhancement**: Box-shadow with themed color and background change
-- **Theme Integration**: Seamless integration with both light and dark modes
-- **Typography Consistency**: ZT Bros Oskon font family throughout
-- **Accessibility**: Enhanced focus-visible states and proper contrast ratios
-
-### 4. FeatureCard Component
-
-**File**: `components/cards/FeatureCard.tsx`
-
-**Features**:
-
-- Icon integration with Lucide React icons
-- Structured content layout (icon, title, description)
-- Hover effects with subtle lift animation
-- Theme-aware styling
-- Responsive design for mobile/desktop
-
-### 5. ThemeToggle Component
-
-**File**: `components/ThemeToggle.tsx`
-
-**Features**:
-
-- Smooth icon transitions (Sun/Moon)
-- Theme persistence in localStorage
-- System preference detection
-- Accessible button with proper ARIA labels
-- Consistent styling with button variants
-
-### 6. URL Shortener Form
-
-**File**: `components/UrlShortener.tsx`
-
-**Structure**:
-
-- Clean card-based layout
-- Large, accessible input field
-- Optional custom alias section
-- Primary action button with loading states
-- Icon integration with consistent sizing
-- Form validation feedback
-
-### 7. Short URL Display
-
-**File**: `components/ShortUrlDisplay.tsx`
-
-**Features**:
-
-- Card-based result presentation
-- One-click copy functionality with toast feedback
-- QR code generation in modal/expandable section
-- Analytics preview with clean data visualization
-- Share buttons for social platforms
-- Responsive layout for all devices
-
-## Advanced Animations & Effects
-
-### Sophisticated Micro-Interactions
-
-```css
-/* Enhanced Card Hover with Glassmorphism */
-.card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow:
-    0 20px 25px -5px var(--color-shadow-hover),
-    0 10px 10px -5px var(--color-shadow);
-  border-color: var(--color-primary);
-  background: var(--color-surface-elevated);
-}
-
-/* Button Shimmer Effects */
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
-  transform: translateX(-100%);
-  transition: transform var(--transition-base);
-}
-
-.btn:hover::before {
-  transform: translateX(0);
-}
-
-/* Advanced Button Interactions */
-.btn:hover {
-  transform: scale(1.05);
-}
-
-.btn:active {
-  transform: scale(0.95);
-}
-```
-
-### Advanced Animation Keyframes
-
-```css
-/* Floating Animation for Feature Cards */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-8px) rotate(1deg);
-  }
-  66% {
-    transform: translateY(-4px) rotate(-1deg);
-  }
-}
-
-/* Enhanced Shimmer Effect */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-/* Glow Animation for Accent Elements */
-@keyframes glow {
-  0%,
-  100% {
-    box-shadow: 0 0 20px var(--color-primary);
-  }
-  50% {
-    box-shadow:
-      0 0 30px var(--color-primary),
-      0 0 40px var(--color-primary);
-  }
-}
-```
-
-### Enhanced Animation Guidelines
-
-- **Duration**: 150ms for micro-interactions, 300ms for complex transforms, 700ms for shimmer effects
-- **Easing**: `cubic-bezier(0.4, 0, 0.2, 1)` for sophisticated movement patterns
-- **Performance**: GPU-accelerated transforms and backdrop-filter effects
-- **Layered Effects**: Multiple shadow layers and gradient overlays for depth
-- **Accessibility**: Full `prefers-reduced-motion` support with graceful degradation
-- **Purpose**: Create premium feel with sophisticated visual feedback
-
-## Advanced Design Patterns
-
-### 1. Glassmorphism Card Pattern
-
-```css
-.card {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 4px 6px -1px var(--color-shadow),
-    0 2px 4px -1px var(--color-shadow);
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow:
-    0 20px 25px -5px var(--color-shadow-hover),
-    0 10px 10px -5px var(--color-shadow);
-  border-color: var(--color-primary);
-}
-
-.card:hover::before {
-  opacity: 1;
-}
-```
-
-### 2. Content Hierarchy
-
-- **Hero Sections**: Large typography, generous spacing, centered content
-- **Feature Sections**: Card-based layout with icons and descriptive text
-- **Form Areas**: Clean inputs with proper labeling and validation states
-- **Navigation**: Minimal, icon-supported, theme-aware
-
-### 3. Form Patterns
-
-- **Labels**: ZT Grafton medium, adequate contrast
-- **Inputs**: Rounded corners, comfortable padding, clear focus states
-- **Buttons**: Contextual colors, appropriate sizing, loading states
-- **Validation**: Inline feedback with color and text cues
-- **Layout**: Logical flow, responsive stacking
-
-### 4. Interactive States
-
-- **Hover**: Subtle lift (2px), shadow enhancement, color shifts
-- **Focus**: 2px outline in theme color, enhanced visibility
-- **Active**: Gentle scale down (0.98), immediate feedback
-- **Disabled**: Reduced opacity (0.6), cursor not-allowed, muted colors
-- **Loading**: Shimmer effects, skeleton states, progress indicators
-
-### 5. Toast Notifications
-
-```css
-.toast-notification {
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-  border: 2px solid var(--color-primary);
-  border-radius: 8px;
-  font-family: var(--font-body);
-  box-shadow: 0 4px 12px var(--color-shadow);
-}
-```
-
-### 6. Layout Patterns
-
-- **Hero Section**: Centered content with feature cards below
-- **Grid Layouts**: CSS Grid with auto-fit columns, responsive breakpoints
-- **Navigation**: Clean header with theme toggle and minimal links
-- **Footer**: Simple, informative, matching header styling
-- **Responsive Design**: Mobile-first approach with progressive enhancement
-
-## Responsive Design
-
-### Breakpoints System
-
-```css
-/* Tailwind-based breakpoints */
-sm: 640px   /* Mobile landscape */
-md: 768px   /* Tablets */
-lg: 1024px  /* Laptops */
-xl: 1280px  /* Desktops */
-2xl: 1536px /* Large screens */
-```
-
-### Mobile-First Strategy
-
-- **Layout**: Single column on mobile, progressive multi-column on larger screens
-- **Typography**: Fluid scaling with CSS clamp for optimal readability
-- **Spacing**: Tighter spacing on mobile, more generous on desktop
-- **Cards**: Full-width on mobile, grid-based on larger screens
-- **Navigation**: Collapsible/drawer on mobile, horizontal on desktop
-- **Interactive Elements**: Touch-friendly sizing (minimum 44px) on mobile
-
-## Accessibility
-
-### WCAG 2.1 AA Compliance
-
-- **Color Contrast**: All text combinations exceed 4.5:1 ratio
-- **Focus Management**: Clear, consistent focus indicators (2px outline)
-- **Color Independence**: Information not conveyed by color alone
-- **Theme Support**: High contrast options in dark mode
-
-### Keyboard Navigation
-
-- **Tab Order**: Logical navigation flow through interactive elements
-- **Focus Trapping**: Modal dialogs properly contain focus
-- **Skip Links**: Available for screen reader users
-- **Keyboard Shortcuts**: Standard browser shortcuts supported
-
-### Screen Reader Support
-
-- **Semantic HTML**: Proper heading hierarchy, landmark elements
-- **ARIA Labels**: Descriptive labels for icons and complex interactions
-- **Live Regions**: Dynamic content updates announced
-- **Form Labels**: Explicit association between labels and inputs
-- **Alternative Text**: Meaningful descriptions for images and icons
-
-### Motion and Animation
-
-- **Reduced Motion**: Respects `prefers-reduced-motion` user preference
-- **Animation Controls**: Option to disable non-essential animations
-- **Performance**: Smooth animations that don't cause vestibular disorders
+## Vision & Principles
+QorkMe should feel grounded, calm, and trustworthy—like a contemporary studio that works with natural materials. Every screen leans on warm parchment neutrals, terracotta accents, and sage greens while typography combines the character of ZT Bros Oskon with the clarity of Inter. The key principles are:
+- **Earthy Modern** – Pair organic colors with refined layouts and generous whitespace.
+- **Purposeful Contrast** – Use terracotta for the primary path, sage for support, and ink-like neutrals for structure.
+- **Quiet Confidence** – Motion and depth stay subtle; blur and shadow are soft and never gimmicky.
+- **Clarity First** – Establish a single hierarchy per view, keep copy concise, and reserve emphasis for actions.
+- **Consistency over Components** – Favor simple markup, but apply the same palette, type scale, spacing, and states everywhere.
+
+## Foundations
+### Color System
+All colors are defined as CSS custom properties in `qorkme/app/globals.css`. Use the tokens below instead of hard-coded hex values.
+
+| Token | Hex / Value | Usage |
+| --- | --- | --- |
+| `--color-background` | `#f6f1e8` | Page background for light theme.
+| `--color-background-accent` | `#ece3d2` | Section dividers, subtle stripes, light gradients.
+| `--color-surface` | `#ffffff` | Primary cards, modals, panels.
+| `--color-surface-elevated` | `#f2e7d6` | Hovered cards, sticky headers, floating elements.
+| `--color-surface-muted` | `#e5dac5` | Muted badges, table stripes, subtle borders.
+| `--color-primary` | `#c4724f` | Primary CTA backgrounds, focus outlines, key icons.
+| `--color-accent` | `#5f7d58` | Secondary actions, highlights, charts.
+| `--color-secondary` | `#2f2a26` | Primary text and icon color on light surfaces.
+| `--color-text-secondary` | `#49413a` | Body copy, form labels.
+| `--color-text-muted` | `#6b6159` | Captions, helper text.
+| `--color-border` | `rgba(108, 96, 81, 0.18)` | Divider strokes, card borders.
+| `--color-border-strong` | `rgba(79, 69, 58, 0.32)` | Input hover states, table grid lines.
+| `--color-success` | `#4f7c5a` | Success alerts, confirmation icons.
+| `--color-warning` | `#d08a3b` | Warnings, pending states.
+| `--color-error` | `#c04d3c` | Destructive actions, validation errors.
+| `--color-info` | `#5f7d58` | Informational banners and badges.
+
+**Dark theme tokens** (activated with `html[data-theme='dark']`) mirror the same relationships. Use `--color-*` variables so the correct value is applied automatically.
+
+### Typography
+Only two font families are permitted across the application.
+- `--font-display`: `ZT Bros Oskon` for hero titles, headings, and prominent buttons. Use weights 500–700.
+- `--font-body`: `Inter` for paragraphs, input text, supporting labels, and UI chrome. Use weights 400–700.
+- `--font-ui`/`--font-mono`: Alias to Inter to honor the "only ZT Bros Oskon or Inter" requirement. Use the tabular-numeric OpenType feature (`font-variant-numeric: tabular-nums`) when aligning numbers.
+
+**Type scale** (implemented with responsive `clamp()` utilities in `globals.css`):
+- Display / Hero: `clamp(2.75rem, 4vw + 1rem, 4.5rem)`
+- H2: `clamp(2.25rem, 3vw + 1rem, 3.5rem)`
+- H3: `clamp(1.75rem, 2vw + 1rem, 2.5rem)`
+- H4–H6: Fixed 1.5rem, 1.25rem, 1.125rem
+- Body: `1rem` base with `line-height: 1.6`
+- Small text / captions: 0.875rem with 1.4 line-height
+
+Headings use tight tracking (`letter-spacing: 0.008em`) and never all caps. Reserve uppercase for subdued pill labels or quiet metadata.
+
+### Layout & Spacing
+- Base unit: `8px`. Stick to multiples via CSS custom properties (`--space-*`) defined in Tailwind theme utilities.
+- Section rhythm: `--section-spacing` controls top/bottom padding (`clamp(4.5rem, 8vw, 7.5rem)`).
+- Cards and containers use `--card-padding` and `--container-padding` to keep breathing room consistent from mobile through desktop.
+- Layouts prefer vertical stacks with gaps of `clamp(2.75rem, 4vw, 4.5rem)` and grids with `clamp(2rem, 3.5vw, 3rem)` spacing.
+
+### Elevation & Effects
+- Shadows: use `var(--color-shadow)` tiers (`shadow-soft`, `shadow-medium`, `shadow-large`). They remain warm and diffused for light theme and more concentrated for dark theme.
+- Glass layers: pair `var(--color-surface)` with subtle blur only when necessary; keep opacity above 0.9 to avoid muddy contrast.
+- Gradients: limit to hero headings or section backdrops using `linear-gradient(135deg, var(--color-primary), var(--color-accent))` or the radial blends baked into `body::before`.
+- Radius scale: `--radius-sm` (12px) through `--radius-xl` (28px) with `--radius-full` for pills.
+
+## UI Elements
+### Buttons
+All buttons use the `.btn` class foundation defined in `globals.css`.
+- **Primary**: background `var(--color-primary)`, text `var(--color-text-inverse)`. Hover keeps the same hue with a subtle highlight overlay. Focus shows a 2px outline using `var(--color-ring)`.
+- **Secondary (outline)**: transparent background with border `var(--color-border)`. On hover the background becomes `color-mix(in srgb, var(--color-surface-elevated) 70%, transparent)` and the border upgrades to `--color-border-strong`.
+- **Ghost**: No border, compact padding, text in `var(--color-secondary)`. Hover adds a light surface tint via `color-mix`.
+- Disabled state reduces opacity to 0.45 and removes interactive shadows.
+
+### Inputs & Form Controls
+- Use the `.input` class for text inputs, textareas, and select triggers. Default border: `color-mix(in srgb, var(--color-border) 80%, transparent)`. Hover uses `--color-border-strong`; focus adds a 4px glow using `color-mix` with `--color-primary`.
+- Labels sit at 0.9rem Inter, `font-weight: 500`, and use `--color-text-secondary`.
+- Helper or validation text relies on `--color-text-muted` or the relevant status color.
+
+### Cards & Surfaces
+- Base card: `.card` with `--color-surface`, `--radius-xl`, and the soft shadow. Elevate with `.card-elevated`, which layers an extra stroke and deeper shadow.
+- Padding always uses `--card-padding`. Add `gap` values of `1.5rem` between internal sections.
+- In dark mode, cards automatically update via token overrides; avoid hard-coded backgrounds.
+
+### Navigation & Page Chrome
+- Header background blends `var(--color-surface)` with a translucent backdrop blur. Links inherit `var(--color-text-primary)` and switch to `var(--color-primary)` on hover.
+- Footer uses `var(--color-background-accent)` with muted text.
+- Section dividers: `1px` border using `color-mix(in srgb, var(--color-border) 70%, transparent)` with 32px top padding.
+
+### Feedback & Messaging
+- Success, warning, error, and info banners use the dedicated status tokens for icon and accent backgrounds while keeping text on neutral surfaces for legibility.
+- Inline badges should stay lowercase, use Inter 600, and apply `--radius-full`.
+
+## Interaction Patterns
+- Motion: rely on the predefined keyframes (`fadeIn`, `slideIn`, `float`, etc.) sparingly. Duration stays within 240–600ms and respects `prefers-reduced-motion`.
+- Focus: always show a visible outline using `var(--color-primary)` or `var(--color-ring)`; never remove `outline` without providing an accessible alternative.
+- Hover: lighten backgrounds using `color-mix` with `--color-surface-elevated`; avoid scaling more than 1.02 to maintain calmness.
+- Selection: uses the warm terracotta highlight (`color-mix(in srgb, var(--color-primary) 35%, transparent)`).
+
+## Accessibility & Content
+- Maintain a minimum 4.5:1 contrast ratio for essential text. The provided tokens meet this requirement in both themes when used as directed.
+- Keep paragraphs to 65ch max (`--content-width`) for readability.
+- Headlines favor sentence case. Use Inter for long-form body copy to maximize readability, reserving ZT Bros Oskon for short statements or key calls to action.
+- Iconography should stick to the existing outline style with 1.5px strokes matching `var(--color-secondary)`.
+
+## Asset & Font Guidance
+- Only bundle `ZT Bros Oskon` (webfont variants already in `public/fonts/`) and Inter from Google Fonts. Remove any dependencies on JetBrains Mono, Playfair, or other families.
+- When exporting imagery or illustrations, bias toward textured neutrals and subtle organic shapes—avoid heavy neon or saturated gradients.
 
 ## Implementation Notes
-
-### CSS Architecture
-
-- **Utility-First**: Tailwind CSS v4 with custom design tokens
-- **Custom Properties**: CSS variables for all colors, spacing, and typography
-- **Component Scope**: Styled-components or CSS modules for complex components
-- **Global Styles**: Essential base styles and theme variables in `app/globals.css`
-- **Design Tokens**: Centralized system for consistent values across the application
-
-### Performance Optimization
-
-- **Font Loading**: `font-display: swap` for ZT Bros Oskon with comprehensive fallback system
-- **Advanced Animation Performance**: GPU-accelerated backdrop-filter, transform, and opacity
-- **Glassmorphism Optimization**: Efficient backdrop-blur rendering with minimal performance impact
-- **Bundle Optimization**: Tree-shaking unused styles and sophisticated effect components
-- **Lazy Loading**: Code splitting for animation-heavy and interactive components
-- **Reduced Motion**: Graceful degradation for all shimmer, float, and transform animations
-- **Shadow Layering**: Multi-layer shadow system optimized for both themes
-
-### Advanced Theme Implementation
-
-```css
-/* Light Theme - Natural & Warm */
-:root {
-  color-scheme: light;
-  --color-background: linear-gradient(135deg, #f5e6d3 0%, #faf7f2 100%);
-  --color-surface: rgba(250, 247, 242, 0.9);
-  --color-primary: #8b7355;
-  --color-text-primary: #2e1a17;
-}
-
-/* Dark Theme - Sophisticated Blues (Primary Focus) */
-[data-theme='dark'] {
-  color-scheme: dark;
-  --color-background: #0f172a; /* Deep midnight blue */
-  --color-surface: #1e293b; /* Slate blue surface */
-  --color-primary: #60a5fa; /* Bright blue */
-  --color-secondary: #a855f7; /* Rich purple */
-  --color-accent: #06b6d4; /* Cyan accent */
-  --color-text-primary: #f1f5f9;
-}
-
-/* Enhanced Background Patterns */
-[data-theme='dark'] body::before {
-  background-image:
-    radial-gradient(circle at 20% 80%, rgba(96, 165, 250, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.03) 0%, transparent 50%);
-}
-```
-
-### Development Workflow
-
-- **Design Tokens**: Centralized token system for design consistency
-- **Component Library**: Reusable components with consistent styling
-- **TypeScript**: Type-safe component props and theme values
-- **Testing**: Visual regression testing for design system components
-- **Documentation**: Living style guide with interactive examples
-
----
-
-## Component Usage Examples
-
-### Card Components
-
-```tsx
-// Basic Card
-<Card variant="standard">
-  <p>Card content here</p>
-</Card>
-
-// Interactive Feature Card
-<FeatureCard
-  icon={<LinkIcon />}
-  title="Smart URL Shortening"
-  description="Generate memorable short codes with intelligent patterns"
-/>
-```
-
-### Button Variants
-
-```tsx
-// Primary Action
-<Button variant="primary" size="lg">
-  Shorten URL
-</Button>
-
-// Secondary Action
-<Button variant="outline" size="md">
-  Copy Link
-</Button>
-```
-
-### Form Elements
-
-```tsx
-// URL Input with Validation
-<Input
-  type="url"
-  placeholder="Enter your long URL..."
-  error={validationError}
-  success={isValid}
-/>
-
-// Theme Toggle
-<ThemeToggle />
-```
-
-### Layout Components
-
-```tsx
-// Page Container
-<div className="container mx-auto px-4 py-8">
-  <Card variant="elevated">{/* Main content */}</Card>
-</div>
-```
-
----
-
-## Summary
-
-This sophisticated design system represents a major evolution from basic card layouts to premium glassmorphism effects. The dark mode-first approach with sophisticated blue/purple/cyan palette creates a modern, high-end aesthetic that rivals premium SaaS applications.
-
-### Key Achievements:
-
-- **Glassmorphism Excellence**: Backdrop-blur effects with layered shadows
-- **Advanced Animations**: Shimmer effects, floating animations, and sophisticated hover states
-- **Dark Mode Sophistication**: Midnight blue (#0f172a) to bright accent colors (#60a5fa, #a855f7, #06b6d4)
-- **Enhanced Interactivity**: Scale transforms, gradient overlays, and premium visual feedback
-- **Typography Excellence**: ZT Bros Oskon with uppercase styling and enhanced spacing
-- **Performance Optimized**: GPU-accelerated effects with graceful degradation
-
-This design system ensures QorkMe delivers a premium, sophisticated user experience that stands out in the URL shortener market.
+- Global tokens live in `qorkme/app/globals.css`; Tailwind utilities inherit these values via `@theme inline`.
+- Dark mode is toggled by setting `data-theme="dark"` on `<html>`, which automatically swaps the warm neutrals for deep espresso tones while maintaining accent colors.
+- Utility classes `.font-display`, `.font-body`, `.btn`, `.card`, `.input`, `.shadow-*`, and `.animate-*` already align with this system. Extend them only if the new styles still reference the existing tokens.
+- Before shipping UI changes, scan for hard-coded hex values or font stacks and replace them with the sanctioned tokens to keep the experience cohesive.
