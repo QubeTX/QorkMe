@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10 08:48
+- Restored padding and vertical rhythm for the UrlShortener custom alias dropdown so the toggle and fields align with the design system spacing.
+
 All notable changes to the QorkMe URL Shortener project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

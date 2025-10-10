@@ -119,9 +119,9 @@ export function UrlShortener() {
               onClick={() => setShowCustom(!showCustom)}
               aria-expanded={showCustom}
               aria-controls={aliasSectionId}
-              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] border border-border/60 bg-[color:var(--color-surface-elevated)] px-5 py-3.5 text-left transition-colors hover:border-[color:var(--color-primary)]/70"
+              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-lg)] border border-border/55 bg-[color:var(--color-surface-elevated)]/90 px-6 py-4 text-left shadow-soft transition-all duration-200 hover:-translate-y-[1px] hover:border-[color:var(--color-primary)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-surface)]"
             >
-              <span className="flex items-center gap-3 text-sm font-semibold text-text-primary">
+              <span className="flex items-center gap-3 text-base font-semibold text-text-primary">
                 <Settings2 size={20} aria-hidden="true" />
                 Add a custom alias (optional)
               </span>
@@ -137,13 +137,13 @@ export function UrlShortener() {
                 id={aliasSectionId}
                 role="region"
                 aria-label="Custom alias options"
-                className="animate-slideIn space-y-4 rounded-[var(--radius-lg)] border border-border/55 bg-[color:var(--color-surface)] p-6 shadow-soft"
+                className="animate-slideIn space-y-5 rounded-[var(--radius-xl)] border border-border/55 bg-[color:var(--color-surface)]/95 p-6 shadow-[0_18px_48px_-28px_rgba(47,42,38,0.38)] focus-within:border-[color:var(--color-primary)]/65 focus-within:shadow-[0_0_0_4px_color-mix(in srgb, var(--color-primary) 30%, transparent)]"
               >
                 <label htmlFor="alias" className="block text-sm font-semibold text-text-secondary">
                   Custom alias
                 </label>
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <span className="inline-flex items-center rounded-[var(--radius-md)] bg-[color:var(--color-surface-elevated)] px-4 py-2.5 font-mono text-sm text-text-muted">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                  <span className="inline-flex h-12 items-center rounded-[var(--radius-lg)] bg-[color:var(--color-surface-elevated)] px-5 font-mono text-sm text-text-muted">
                     qork.me/
                   </span>
                   <Input
@@ -155,7 +155,7 @@ export function UrlShortener() {
                       setCustomAlias(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))
                     }
                     disabled={loading}
-                    className="flex-1 font-mono"
+                    className="flex-1 h-12 font-mono"
                     pattern="[a-z0-9-]+"
                     minLength={3}
                     maxLength={50}
@@ -164,10 +164,10 @@ export function UrlShortener() {
                   <Button
                     type="button"
                     variant="outline"
-                    size="sm"
+                    size="md"
                     onClick={checkAliasAvailability}
                     disabled={!customAlias || loading}
-                    className="whitespace-nowrap"
+                    className="h-12 whitespace-nowrap px-5"
                   >
                     <Check size={16} aria-hidden="true" />
                     Check

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10 08:48
+- Restored padding and vertical rhythm for the UrlShortener custom alias dropdown so the toggle and fields align with the design system spacing.
+
 ## 2025-10-10
 - Simplified the SiteHeader Link2 icon and ThemeToggle button by removing background containers, borders, rounded corners, and shadows for a cleaner navbar appearance.
 
