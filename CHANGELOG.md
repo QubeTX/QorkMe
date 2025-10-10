@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2025-10-10
+- Simplified the SiteHeader Link2 icon and ThemeToggle button by removing background containers, borders, rounded corners, and shadows for a cleaner navbar appearance.
+
+## 2025-10-10
 - Increased the SiteHeader horizontal padding to prevent icon backgrounds from appearing cramped against navbar edges.
 
 ## 2025-10-10 01:50

@@ -75,7 +75,7 @@ export function SiteHeader({ navItems = [], status, action }: SiteHeaderProps) {
               href="/"
               className="flex items-center gap-3 text-[color:var(--color-text-primary)]"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-[18px] border border-border/55 bg-[color:var(--color-background-accent)]/80 text-[color:var(--color-primary)] shadow-soft">
+              <span className="flex h-11 w-11 items-center justify-center text-[color:var(--color-primary)]">
                 <Link2 size={20} aria-hidden />
               </span>
               <span className="flex flex-col leading-tight">
