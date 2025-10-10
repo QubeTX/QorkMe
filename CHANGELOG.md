@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10 01:26
+- Tuned Inter usage to default to light weight for body copy, added heavy fallback helpers, and refreshed typography guidance across docs and agent files.
+
 ## 2025-10-10 12:15
 - Shifted the design system to an earthy modern palette, limited typography to ZT Bros Oskon and Inter, and refreshed `AGENTS.md`, `CLAUDE.md`, and `qorkme/docs/DESIGN_SYSTEM.md` to match.
 

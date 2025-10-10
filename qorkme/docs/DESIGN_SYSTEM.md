@@ -35,9 +35,9 @@ All colors are defined as CSS custom properties in `qorkme/app/globals.css`. Use
 
 ### Typography
 Only two font families are permitted across the application.
-- `--font-display`: `ZT Bros Oskon` for hero titles, headings, and prominent buttons. Use weights 500–700.
-- `--font-body`: `Inter` for paragraphs, input text, supporting labels, and UI chrome. Use weights 400–700.
-- `--font-ui`/`--font-mono`: Alias to Inter to honor the "only ZT Bros Oskon or Inter" requirement. Use the tabular-numeric OpenType feature (`font-variant-numeric: tabular-nums`) when aligning numbers.
+- `--font-display`: `ZT Bros Oskon` for hero titles, headings, and prominent buttons. Default to weight 600; if ZT is unavailable for a heading, swap to `.font-inter-heavy` (Inter 900) to preserve contrast.
+- `--font-body`: `Inter` Light (weight 300) for paragraphs, input text, supporting labels, and UI chrome. Elevate emphasis with `.font-body-strong` (weight 500) instead of switching families.
+- `--font-ui`/`--font-mono`: Alias to Inter so UI chrome and numeric strings inherit the same palette. Enable `font-variant-numeric: tabular-nums` when aligning numbers.
 
 **Type scale** (implemented with responsive `clamp()` utilities in `globals.css`):
 - Display / Hero: `clamp(2.75rem, 4vw + 1rem, 4.5rem)`
@@ -47,7 +47,7 @@ Only two font families are permitted across the application.
 - Body: `1rem` base with `line-height: 1.6`
 - Small text / captions: 0.875rem with 1.4 line-height
 
-Headings use tight tracking (`letter-spacing: 0.008em`) and never all caps. Reserve uppercase for subdued pill labels or quiet metadata.
+Headings stay in ZT Bros Oskon with tight tracking (`letter-spacing: 0.008em`) and weight 600. Never set headings in all caps; reserve uppercase for subdued pill labels or quiet metadata, and only use Inter via `.font-inter-heavy` when ZT is not technically possible.
 
 ### Layout & Spacing
 - Base unit: `8px`. Stick to multiples via CSS custom properties (`--space-*`) defined in Tailwind theme utilities.
@@ -86,7 +86,7 @@ All buttons use the `.btn` class foundation defined in `globals.css`.
 
 ### Feedback & Messaging
 - Success, warning, error, and info banners use the dedicated status tokens for icon and accent backgrounds while keeping text on neutral surfaces for legibility.
-- Inline badges should stay lowercase, use Inter 600, and apply `--radius-full`.
+- Inline badges should stay lowercase, use `.font-body-strong` (Inter 500) or `--weight-ui-strong` when icons are present, and apply `--radius-full`.
 
 ## Interaction Patterns
 - Motion: rely on the predefined keyframes (`fadeIn`, `slideIn`, `float`, etc.) sparingly. Duration stays within 240–600ms and respects `prefers-reduced-motion`.
@@ -97,7 +97,7 @@ All buttons use the `.btn` class foundation defined in `globals.css`.
 ## Accessibility & Content
 - Maintain a minimum 4.5:1 contrast ratio for essential text. The provided tokens meet this requirement in both themes when used as directed.
 - Keep paragraphs to 65ch max (`--content-width`) for readability.
-- Headlines favor sentence case. Use Inter for long-form body copy to maximize readability, reserving ZT Bros Oskon for short statements or key calls to action.
+- Headlines favor sentence case. Keep long-form body copy in Inter Light (300) for softness, while ZT Bros Oskon handles hero statements and primary headings.
 - Iconography should stick to the existing outline style with 1.5px strokes matching `var(--color-secondary)`.
 
 ## Asset & Font Guidance
@@ -107,5 +107,5 @@ All buttons use the `.btn` class foundation defined in `globals.css`.
 ## Implementation Notes
 - Global tokens live in `qorkme/app/globals.css`; Tailwind utilities inherit these values via `@theme inline`.
 - Dark mode is toggled by setting `data-theme="dark"` on `<html>`, which automatically swaps the warm neutrals for deep espresso tones while maintaining accent colors.
-- Utility classes `.font-display`, `.font-body`, `.btn`, `.card`, `.input`, `.shadow-*`, and `.animate-*` already align with this system. Extend them only if the new styles still reference the existing tokens.
+- Utility classes `.font-display`, `.font-body`, `.font-body-strong`, `.font-inter-heavy`, `.btn`, `.card`, `.input`, `.shadow-*`, and `.animate-*` already align with this system. Extend them only if the new styles still reference the existing tokens.
 - Before shipping UI changes, scan for hard-coded hex values or font stacks and replace them with the sanctioned tokens to keep the experience cohesive.

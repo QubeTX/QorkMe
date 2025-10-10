@@ -64,7 +64,7 @@
   font-display: swap;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,900;1,14..32,300;1,14..32,500;1,14..32,700;1,14..32,900&display=swap');
 
 :root {
   --color-background: #f6f1e8;
@@ -110,6 +110,12 @@
   --font-body: 'Inter', sans-serif;
   --font-ui: 'Inter', sans-serif;
   --font-mono: 'Inter', sans-serif;
+
+  --weight-body-regular: 300;
+  --weight-body-strong: 500;
+  --weight-ui-strong: 600;
+  --weight-display-strong: 600;
+  --weight-inter-heavy: 900;
 
   --transition-fast: 140ms ease;
   --transition-base: 240ms ease;
@@ -195,6 +201,7 @@ body {
   color: var(--color-text-primary);
   font-family: var(--font-body);
   font-size: 1rem;
+  font-weight: var(--weight-body-regular);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -269,6 +276,11 @@ h6 {
 p {
   color: var(--color-text-secondary);
   margin-bottom: 1.25rem;
+}
+
+strong,
+b {
+  font-weight: var(--weight-body-strong);
 }
 
 a {
@@ -423,14 +435,28 @@ pre {
 
 .font-display {
   font-family: var(--font-display);
+  font-weight: var(--weight-display-strong);
 }
 
 .font-body {
   font-family: var(--font-body);
+  font-weight: var(--weight-body-regular);
+}
+
+.font-body-strong {
+  font-family: var(--font-body);
+  font-weight: var(--weight-body-strong);
 }
 
 .font-ui {
   font-family: var(--font-ui);
+  font-weight: var(--weight-body-regular);
+}
+
+.font-inter-heavy {
+  font-family: 'Inter', sans-serif;
+  font-weight: var(--weight-inter-heavy);
+  letter-spacing: 0.01em;
 }
 
 @keyframes fadeIn {
