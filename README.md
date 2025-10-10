@@ -1,6 +1,6 @@
 # QorkMe - Modern URL Shortener
 
-A professional, scalable URL shortener built with Next.js 15, TypeScript, and Supabase. Features a clean card-based design with natural earth tones, intelligent short code generation, and comprehensive analytics tracking.
+A professional, scalable URL shortener built with Next.js 15, TypeScript, and Supabase. The interface leans into an earthy modern aesthetic that pairs warm parchment neutrals, terracotta accents, and sage highlights with intelligent short code generation and comprehensive analytics tracking.
 
 ## Quick Start
 
@@ -16,21 +16,21 @@ See [`qorkme/README.md`](qorkme/README.md) for detailed installation, configurat
 
 ```
 QorkMe/
-├── qorkme/                    # Main application directory
-│   ├── app/                   # Next.js 15 App Router
-│   ├── components/            # React components
-│   ├── lib/                   # Utilities and database clients
-│   ├── docs/                  # Complete documentation
-│   ├── supabase/             # Database schema and setup
-│   └── README.md             # Comprehensive setup guide
-├── README.md                 # This file (project overview)
-└── LICENSE                   # Apache 2.0 license
+|-- qorkme/                    # Main application directory
+|   |-- app/                   # Next.js 15 App Router
+|   |-- components/            # React components
+|   |-- lib/                   # Utilities and database clients
+|   |-- docs/                  # Complete documentation
+|   |-- supabase/             # Database schema and setup
+|   \-- README.md             # Comprehensive setup guide
+|-- README.md                 # This file (project overview)
+\-- LICENSE                   # Apache 2.0 license
 ```
 
 ## Key Features
 
 - **Smart URL Shortening**: Memorable short codes using intelligent patterns
-- **Modern Design**: Clean card-based SF startup aesthetic with natural colors
+- **Earthy Modern Design**: Warm parchment surfaces, terracotta primaries, and sage accents with soft depth
 - **Theme Support**: Light/dark mode with smooth transitions
 - **Analytics**: Comprehensive click tracking and device analytics
 - **QR Codes**: Instant QR code generation for mobile sharing
@@ -42,20 +42,20 @@ QorkMe/
 - **Framework**: Next.js 15.5.3 with App Router and React 19
 - **Language**: TypeScript 5 for full type safety
 - **Database**: Supabase (PostgreSQL) with real-time capabilities
-- **Styling**: Tailwind CSS v4 with custom design tokens
-- **Typography**: ZT Bros font family (Gatha, Grafton, Mono)
+- **Styling**: Tailwind CSS v4 with an earthy modern token palette
+- **Typography**: ZT Bros Oskon for display work and Inter Light for body/UI text
 - **Deployment**: Vercel with automatic CI/CD integration
 
 ## Design System
 
-QorkMe features a modern card-based design system with:
+QorkMe features an earthy modern design system with:
 
-- **Natural Color Palette**: Sage green, warm beige, terracotta, and forest brown
-- **ZT Bros Typography**: Professional font system with Inter fallbacks
-- **Card Architecture**: Elevated components with soft shadows and interactions
-- **Responsive Design**: Mobile-first approach optimized for all devices
-- **Accessibility**: WCAG 2.1 AA compliant with comprehensive keyboard navigation
-- **Tagline-free Masthead**: Navigation header now displays only the QorkMe wordmark so the brand bar stays clean across marketing and app views
+- **Warm Neutral Palette**: Parchment backgrounds with terracotta and sage accents
+- **ZT Bros Display + Inter Body**: ZT Bros Oskon for headings, Inter Light (300) for long-form copy, and Inter Heavy (900) only when ZT is unavailable
+- **Card Architecture**: Elevated surfaces, soft organic shadows, and calm hover states
+- **Responsive Design**: Mobile-first layouts tuned for comfortable reading
+- **Accessibility**: WCAG 2.1 AA compliant with visible focus indicators and high contrast
+- **Tagline-free Masthead**: Navigation header shows only the QorkMe wordmark for a clean top bar
 
 See [`qorkme/docs/DESIGN_SYSTEM.md`](qorkme/docs/DESIGN_SYSTEM.md) for complete design specifications.
 

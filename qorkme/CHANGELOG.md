@@ -5,17 +5,43 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.15] - 2025-10-10
+## [3.0.19] - 2025-10-10
+
+### Documentation
+
+- Updated repository and workspace READMEs to describe the earthy modern design system with warm parchment neutrals, terracotta accents, and sage highlights.
+
+## [3.0.18] - 2025-10-10
+
+### Documentation
+
+- Polished wording and refined design system documentation after ASCII normalization cleanup.
+
+## [3.0.17] - 2025-10-10
+
+### Documentation
+
+- Normalized all markdown punctuation to plain ASCII across AGENTS.md, CLAUDE.md, and design system files for better compatibility.
+
+## [3.0.16] - 2025-10-10
 
 ### Changed
 
 - Set Inter Light (300) as the default body weight, added an Inter heavy utility for fallback headings, and updated documentation to reflect the stricter typography guidance.
 
-## [3.0.14] - 2025-10-10
+## [3.0.15] - 2025-10-10
 
 ### Changed
 
-- Recast the global token palette to the new earthy modern theme, limited font usage to ZT Bros Oskon and Inter, and updated `docs/DESIGN_SYSTEM.md` plus shared contributor guides to enforce the look.
+- Recast the global token palette to the new earthy modern theme with parchment, terracotta, and sage colors.
+- Limited font usage to ZT Bros Oskon for display and Inter for body text.
+- Updated `docs/DESIGN_SYSTEM.md` and `globals.css` to enforce the new earthy aesthetic.
+
+## [3.0.14] - 2025-10-10
+
+### Documentation
+
+- Streamlined agent contributor guide formatting and clarified workflow expectations.
 
 ## [3.0.13] - 2025-10-10
 

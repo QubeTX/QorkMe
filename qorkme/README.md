@@ -1,6 +1,6 @@
 # QorkMe - Premium URL Shortener
 
-A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring advanced glassmorphism design with midnight blue aesthetics, premium interactive effects, and intelligent short code generation.
+A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring an earthy modern interface with warm parchment neutrals, terracotta accents, sage highlights, and intelligent short code generation.
 
 ## Features
 
@@ -15,16 +15,13 @@ A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and S
 
 ### Design & User Experience
 
-- **Advanced Glassmorphism Design**: Sophisticated backdrop-blur effects with layered shadow systems
-- **Premium Dark Mode**: Deep midnight blue (#0f172a) with bright accents (blue, purple, cyan)
-- **Enhanced Interactivity**: Shimmer effects, hover transforms, and floating animations
-- **Responsive Excellence**: Optimized for all devices with premium touch interactions
-- **Dual Theme Support**: Dark mode primary with sophisticated light mode fallback
-- **ZT Bros Oskon Typography**: Bold serif fonts with uppercase styling and enhanced spacing
-- **Premium Visual Effects**: Scale transforms, gradient overlays, and sophisticated micro-animations
-- **Integrated Notification System**: Glassmorphic toasts matching the overall aesthetic
-- **Minimal Navigation Header**: Marketing view drops the beta badge by default while keeping optional taglines for result-specific branding
-- **Tagline-free Branding**: Navigation header now presents the QorkMe wordmark on its own across marketing and result contexts for a cleaner masthead
+- **Earthy Modern Surfaces**: Warm parchment backgrounds with terracotta primaries and sage accent colors
+- **Calm Depth**: Soft organic shadows and restrained blur deliver depth without heavy effects
+- **Accessible Typography**: ZT Bros Oskon for headings paired with Inter Light (300) for long-form content
+- **Gentle Interactions**: Subtle motion, gradient overlays, and responsive feedback tuned for focus
+- **Responsive Excellence**: Mobile-first layouts optimized for quick scanning and comfortable reading
+- **Dual Theme Support**: Espresso-toned dark mode and parchment light mode share the same token palette
+- **Minimal Navigation Header**: Marketing and result views share a clean wordmark-only masthead
 
 ### Technical Excellence
 
@@ -114,44 +111,44 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 
 ```
 qorkme/
-├── .github/              # GitHub Actions workflows
-│   └── workflows/        # CI/CD automation
-│       ├── ci.yml        # Testing, linting, security scans
-│       └── deploy.yml    # Production deployment
-├── app/                  # Next.js 15 App Router
-│   ├── api/             # API routes
-│   │   └── shorten/     # URL shortening endpoint
-│   ├── result/[id]/     # Results page
-│   ├── [shortCode]/     # Dynamic redirect handler
-│   ├── layout.tsx       # Root layout with fonts
-│   ├── page.tsx         # Home page
-│   └── not-found.tsx    # 404 page
-├── components/           # React components
-│   ├── ui/              # Base UI components
-│   │   ├── Button.tsx   # Modern styled button
-│   │   └── Input.tsx    # Form input component
-│   ├── cards/           # Card-based components
-│   │   ├── Card.tsx     # Base card component
-│   │   └── FeatureCard.tsx # Feature display cards
-│   ├── ThemeToggle.tsx  # Light/dark theme toggle
-│   ├── UrlShortener.tsx # Main shortener form
-│   └── ShortUrlDisplay.tsx # Results display
-├── lib/                  # Utility libraries
-│   ├── shortcode/       # Short code generation
-│   │   ├── generator.ts # Smart generation algorithm
-│   │   ├── validator.ts # Validation logic
-│   │   └── reserved.ts  # Reserved words list
-│   ├── supabase/        # Database client
-│   ├── theme.tsx        # Theme context provider
-│   └── utils.ts         # Shared utilities
-├── supabase/            # Database schema
-│   └── schema.sql       # Complete database setup
-├── docs/                # Documentation
-│   ├── VERCEL_SETUP.md  # Comprehensive Vercel & Supabase guide
-│   ├── DEPLOYMENT.md    # General deployment instructions
-│   └── DESIGN_SYSTEM.md # Complete design specifications
-├── .prettierrc          # Code formatting configuration
-└── package.json         # Dependencies and scripts
+|-- .github/              # GitHub Actions workflows
+|   \-- workflows/        # CI/CD automation
+|       |-- ci.yml        # Testing, linting, security scans
+|       \-- deploy.yml    # Production deployment
+|-- app/                  # Next.js 15 App Router
+|   |-- api/             # API routes
+|   |   \-- shorten/     # URL shortening endpoint
+|   |-- result/[id]/     # Results page
+|   |-- [shortCode]/     # Dynamic redirect handler
+|   |-- layout.tsx       # Root layout with fonts
+|   |-- page.tsx         # Home page
+|   \-- not-found.tsx    # 404 page
+|-- components/           # React components
+|   |-- ui/              # Base UI components
+|   |   |-- Button.tsx   # Modern styled button
+|   |   \-- Input.tsx    # Form input component
+|   |-- cards/           # Card-based components
+|   |   |-- Card.tsx     # Base card component
+|   |   \-- FeatureCard.tsx # Feature display cards
+|   |-- ThemeToggle.tsx  # Light/dark theme toggle
+|   |-- UrlShortener.tsx # Main shortener form
+|   \-- ShortUrlDisplay.tsx # Results display
+|-- lib/                  # Utility libraries
+|   |-- shortcode/       # Short code generation
+|   |   |-- generator.ts # Smart generation algorithm
+|   |   |-- validator.ts # Validation logic
+|   |   \-- reserved.ts  # Reserved words list
+|   |-- supabase/        # Database client
+|   |-- theme.tsx        # Theme context provider
+|   \-- utils.ts         # Shared utilities
+|-- supabase/            # Database schema
+|   \-- schema.sql       # Complete database setup
+|-- docs/                # Documentation
+|   |-- VERCEL_SETUP.md  # Comprehensive Vercel & Supabase guide
+|   |-- DEPLOYMENT.md    # General deployment instructions
+|   \-- DESIGN_SYSTEM.md # Complete design specifications
+|-- .prettierrc          # Code formatting configuration
+\-- package.json         # Dependencies and scripts
 ```
 
 > Deployment configuration lives in the repository root [`../vercel.json`](../vercel.json), which orchestrates installs and builds for this sub-application on Vercel.
@@ -161,9 +158,9 @@ qorkme/
 - **Framework**: Next.js 15.5.3 with App Router
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
-- **Styling**: Tailwind CSS v4 with sophisticated glassmorphism design tokens and advanced CSS variables
-- **UI Components**: Card-based components with refined shadows and sophisticated interactions
-- **Theme System**: Dynamic light/dark mode with deep earth tone variants
+- **Styling**: Tailwind CSS v4 with earthy modern design tokens and advanced CSS variables
+- **UI Components**: Card-based components with soft organic shadows and calm interactions
+- **Theme System**: Dynamic light/dark mode with parchment light and espresso dark variants
 - **Icons**: Lucide React v0.544.0
 - **QR Codes**: qrcode v1.5.4 library
 - **Notifications**: React Hot Toast v2.6.0
@@ -197,18 +194,17 @@ Key performance features:
 - Comprehensive indexing strategy for 200,000+ URLs
 - Row-level security for multi-tenant support
 
-## Premium Design Philosophy
+## Earthy Modern Design
 
-QorkMe delivers a sophisticated, premium user experience:
+QorkMe delivers a relaxed yet polished experience:
 
-- **Refined & Sophisticated**: Every element crafted for premium feel and elegant functionality
-- **Advanced Color Architecture**: Deep midnight blues with bright, high-contrast accent colors
-- **Glassmorphism Excellence**: Backdrop-blur effects with layered shadow systems for depth
-- **Dark-First Approach**: Sophisticated dark mode as primary experience with elegant light fallback
-- **Typography Mastery**: ZT Bros Oskon serif fonts with uppercase styling and enhanced character
-- **Premium Interactions**: Shimmer effects, transform animations, and floating elements for engaging UX
+- **Grounded Color Story**: Parchment backgrounds, terracotta primaries, and sage accents create warmth
+- **Soft Depth**: Layered shadows and minimal blur provide dimension without distraction
+- **Typography Balance**: ZT Bros Oskon leads hero moments while Inter Light (300) keeps body copy airy
+- **Dark and Light Harmony**: Espresso dark mode shares the same palette tokens as the light theme
+- **Measured Motion**: Calm transitions and focus rings favor clarity over spectacle
 
-See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete glassmorphism and sophisticated design specifications.
+See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete earthy modern design specifications.
 
 ## Production Configuration
 
@@ -400,4 +396,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Built with sophistication - Bringing premium glassmorphism and advanced interactive design to URL shortening.
+Built with calm confidence - Bringing earthy modern design and purposeful interactions to URL shortening.

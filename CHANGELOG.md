@@ -1,13 +1,31 @@
 # Changelog
 
-## 2025-10-10 01:26
-- Tuned Inter usage to default to light weight for body copy, added heavy fallback helpers, and refreshed typography guidance across docs and agent files.
+## 2025-10-10 01:33
+- Updated repository and app READMEs to describe the earthy modern design system with warm parchment neutrals, terracotta accents, and sage highlights.
 
-## 2025-10-10 12:15
+## 2025-10-10 01:31
+- Polished wording and refined design system documentation after ASCII normalization cleanup.
+
+## 2025-10-10 01:29
+- Normalized all markdown punctuation to plain ASCII across AGENTS.md, CLAUDE.md, and design system documentation for better compatibility.
+
+## 2025-10-10 01:26
+- Tuned Inter usage to default to light weight (300) for body copy, added heavy (900) fallback helpers, and refreshed typography guidance across docs and agent files.
+
+## 2025-10-10 01:21
 - Shifted the design system to an earthy modern palette, limited typography to ZT Bros Oskon and Inter, and refreshed `AGENTS.md`, `CLAUDE.md`, and `qorkme/docs/DESIGN_SYSTEM.md` to match.
 
-## 2025-10-10 11:30
+## 2025-10-10 01:06
+- Streamlined agent contributor guide formatting and clarified workflow expectations.
+
+## 2025-10-10 01:03
 - Removed the homepage hero badge so the main content area starts directly with the heading for cleaner visual flow.
+
+## 2025-10-10 00:45
+- Enforced dual changelog update requirements in agent guidelines to ensure both root and application changelogs stay synchronized.
+
+## 2025-10-10 00:44
+- Refreshed agent guidelines with clearer structure and simplified contribution workflow documentation.
 
 ## 2025-09-27 10:20
 - Clarified `AGENTS.md` so contributors must update both changelog files with every project change.

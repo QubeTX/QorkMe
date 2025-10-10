@@ -1,19 +1,30 @@
 # Font Files
 
-This directory should contain the ZT Bros font files:
+This directory contains the ZT Bros Oskon 90s font family files in WOFF2 format.
 
-- ZT Gatha (Bold) - For headers
-- ZT Grafton (Regular, Medium, Semibold) - For body text
-- ZT Mono (Regular) - For code/monospace text
+## Current Font Family
 
-Currently using Google Fonts Inter as fallback until ZT Bros fonts are obtained and added.
+**ZT Bros Oskon 90s** - Display and heading font with multiple weights and italic variants:
 
-To add the fonts:
+- `ZTBrosOskon90s-Regular.woff2` - Regular (400)
+- `ZTBrosOskon90s-Italic.woff2` - Regular Italic
+- `ZTBrosOskon90s-Medium.woff2` - Medium (500)
+- `ZTBrosOskon90s-MediumItalic.woff2` - Medium Italic
+- `ZTBrosOskon90s-SemiBold.woff2` - SemiBold (600)
+- `ZTBrosOskon90s-SemiBoldItalic.woff2` - SemiBold Italic
+- `ZTBrosOskon90s-Bold.woff2` - Bold (700)
+- `ZTBrosOskon90s-BoldItalic.woff2` - Bold Italic
 
-1. Obtain licensed ZT Bros font files in WOFF2 and WOFF formats
-2. Place them in this directory with naming convention:
-   - ZTGatha-Bold.woff2 / ZTGatha-Bold.woff
-   - ZTGrafton-Regular.woff2 / ZTGrafton-Regular.woff
-   - ZTGrafton-Medium.woff2 / ZTGrafton-Medium.woff
-   - ZTGrafton-Semibold.woff2 / ZTGrafton-Semibold.woff
-   - ZTMono-Regular.woff2 / ZTMono-Regular.woff
+## Typography System
+
+QorkMe's earthy modern design system uses:
+
+- **Display/Headings**: ZT Bros Oskon 90s (weight 600 default)
+- **Body/UI Text**: Inter Light (300) from Google Fonts
+- **Fallback Headlines**: Inter Heavy (900) when ZT Bros Oskon cannot be used
+
+See `app/globals.css` for font-face declarations and `docs/DESIGN_SYSTEM.md` for complete typography specifications.
+
+## Source Files
+
+Full font family source files (OTF/TTF/WEB) are available in the repository root at `/ZT Bros Oskon 90s/` directory.
