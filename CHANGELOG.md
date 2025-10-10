@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-09-27 10:20
+- Clarified `AGENTS.md` so contributors must update both changelog files with every project change.
+
 ## 2025-09-27 09:55
 - Reframed `AGENTS.md` as a Repository Guidelines contributor guide covering structure, commands, and release hygiene expectations.
 
