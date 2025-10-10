@@ -70,7 +70,7 @@ export function SiteHeader({ navItems = [], status, action }: SiteHeaderProps) {
     <nav className="fixed inset-x-0 top-0 z-50">
       <div className="container py-4">
         <div className="rounded-[24px] border border-border/50 bg-[color:var(--color-surface)]/92 backdrop-blur-lg shadow-[0_18px_50px_-30px_rgba(31,31,29,0.65)]">
-          <div className="flex h-16 items-center justify-between px-5 sm:px-8 lg:px-12">
+          <div className="flex h-16 items-center justify-between px-7 sm:px-10 lg:px-16">
             <Link
               href="/"
               className="flex items-center gap-3 text-[color:var(--color-text-primary)]"

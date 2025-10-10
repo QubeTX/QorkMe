@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10
+- Increased the SiteHeader horizontal padding to prevent icon backgrounds from appearing cramped against navbar edges.
+
 ## 2025-10-10 01:50
 - Refined the SiteFooter spacing and alignment so the brand line and metadata sit evenly across breakpoints.
 
