@@ -5,6 +5,12 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.13] - 2025-10-10
+
+### Changed
+
+- Removed the "Share-ready link studio" badge from the homepage hero section to streamline the visual hierarchy and allow the main heading to take immediate focus.
+
 ## [3.0.12] - 2025-09-27
 
 ### Changed

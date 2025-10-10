@@ -55,7 +55,6 @@ QorkMe features a modern card-based design system with:
 - **Card Architecture**: Elevated components with soft shadows and interactions
 - **Responsive Design**: Mobile-first approach optimized for all devices
 - **Accessibility**: WCAG 2.1 AA compliant with comprehensive keyboard navigation
-- **Hero Share-ready Callout**: Homepage hero badge now reinforces the share-ready positioning without reviving the retired taglines
 - **Tagline-free Masthead**: Navigation header now displays only the QorkMe wordmark so the brand bar stays clean across marketing and app views
 
 See [`qorkme/docs/DESIGN_SYSTEM.md`](qorkme/docs/DESIGN_SYSTEM.md) for complete design specifications.

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10 11:30
+- Removed the homepage hero badge so the main content area starts directly with the heading for cleaner visual flow.
+
 ## 2025-09-27 10:20
 - Clarified `AGENTS.md` so contributors must update both changelog files with every project change.
 

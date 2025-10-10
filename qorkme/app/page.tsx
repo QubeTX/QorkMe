@@ -59,10 +59,6 @@ export default function Home() {
             <div className="container">
               <div className="grid gap-y-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-x-16">
                 <div className="flex flex-col gap-12">
-                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border/60 bg-[color:var(--color-background-accent)]/65 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-secondary)]">
-                    <Sparkles size={18} aria-hidden="true" />
-                    Share-ready link studio
-                  </span>
                   <div className="flex flex-col gap-6">
                     <h1 className="font-display text-[clamp(2.75rem,5vw+1.25rem,4.5rem)] font-semibold leading-[1.08] text-text-primary">
                       Precision short links for teams that move quickly
