@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10 01:50
+- Refined the SiteFooter spacing and alignment so the brand line and metadata sit evenly across breakpoints.
+
 ## 2025-10-10 01:33
 - Updated repository and app READMEs to describe the earthy modern design system with warm parchment neutrals, terracotta accents, and sage highlights.
 
