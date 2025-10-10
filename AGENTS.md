@@ -1,46 +1,31 @@
-# QorkMe Workspace Agent Guide
+# Repository Guidelines
 
-## Project Context
-- This repo hosts **QorkMe**, a premium URL shortener built with Next.js 15.5, React 19, TypeScript, Tailwind CSS v4 tokens, and Supabase PostgreSQL.
-- Active application code lives in `qorkme/`; root-level assets (fonts, deployment config, instruction files) support that subproject.
-- For architecture nuance, read `qorkme/README.md` and `qorkme/CLAUDE.md` before significant edits. `CODEX_PROJECT.md` carries the current workspace summary and file tree.
+## Project Structure & Module Organization
+QorkMe’s Next.js 15 app lives in `qorkme/`; root-level files cover meta docs, fonts, and CI configs. Key directories:
+- `qorkme/app/` — App Router routes, including `/api/shorten` and redirect handlers.
+- `qorkme/components/` — Shared UI (preserve glassmorphism styling defined in `qorkme/docs/DESIGN_SYSTEM.md`).
+- `qorkme/lib/shortcode/` & `qorkme/lib/supabase/` — Business logic and typed clients.
+- `qorkme/tests/` — Vitest specs mirroring the source tree.
+- `qorkme/supabase/` — Schema + setup instructions; sync schema updates here.
+Licensed font sources sit in `ZT Bros Oskon 90s/`; ship webfont copies via `qorkme/public/fonts/`.
 
-## Working Agreements
-- Maintain both `CHANGELOG.md` files: the workspace log at repo root (this directory) and the existing `qorkme/CHANGELOG.md` when you touch application code.
-- Preserve the glassmorphism visual language (deep midnight blues, shimmering gradients, ZT Bros Oskon typography). Consult `qorkme/docs/DESIGN_SYSTEM.md` when altering UI.
-- Treat Supabase schema (`qorkme/supabase/schema.sql`) and setup guide as canonical; coordinate API or DB changes with those docs.
-- Fonts under `ZT Bros Oskon 90s/` are licensed assets—never remove or rename files without updating `public/fonts/README.md` and deployment notes.
+## Build, Test, and Development Commands
+Run all commands from `qorkme/`:
+- `npm run dev` – Start the local Next.js dev server.
+- `npm run lint` – ESLint using the project config.
+- `npm run type-check` – TypeScript `--noEmit` verification.
+- `npm test` – Vitest suite (UI, API, Supabase helpers).
+- `npx prettier --check .` – Enforce formatting; fix with `--write` before committing.
+- `npm run build` – Production build parity with CI.
 
-## Edit & Review Checklist
-1. Re-read relevant docs (`qorkme/CLAUDE.md`, design/system docs) tied to the area you plan to modify.
-2. Sync environment secrets in `.env.local` (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SHORT_DOMAIN`).
-3. Make changes inside `qorkme/` unless explicitly working on workspace-level tooling/docs.
-4. Update documentation alongside code (README sections, Supabase guides, design notes) if behavior shifts.
-5. Record your updates in `CHANGELOG.md` (root) plus `qorkme/CHANGELOG.md` when app logic/UI changes.
+## Coding Style & Naming Conventions
+TypeScript + React with Prettier formatting (2-space indent, single quotes). Keep components PascalCase (`UrlShortener.tsx`), hooks/utilities camelCase, and route segment folders lowercase. Favor Tailwind CSS tokens already defined; extend via `qorkme/docs/DESIGN_SYSTEM.md` when adding styles. Import paths should use the configured `@/` alias. Document complex logic with short comments; avoid noise.
 
-## Quality Gates (run from `qorkme/`)
-- `npm run lint`
-- `npm run type-check`
-- `npm test`
-- `npx prettier --check .` (or `npm run format:check`)
-- `npm run build`
-- Vitest currently exercises the shortcode engine, `/api/shorten` route logic, Supabase client factories, and the `UrlShortener` UI—extend coverage alongside new features.
+## Testing Guidelines
+Write Vitest specs alongside new features under `qorkme/tests/`, matching the source path (`lib/shortcode/generator.test.ts`, etc.). Use `.test.ts`/`.test.tsx` suffixes and reuse shared setup from `qorkme/tests/setup.ts`. Cover edge cases for Supabase interactions, redirects, and shortcode validation; expand mocks when adding RPCs. UI changes need DOM assertions or screenshot references to verify state.
 
-## Deployment & CI Notes
-- CI pipeline (`qorkme/.github/workflows/ci.yml`) mirrors the commands above, adds bundle-size echo, npm audit, and optional Vercel preview deploy.
-- Root-level `.github/workflows/ci.yml` should stay aligned with the project pipeline; leave `deploy.yml.disabled` untouched unless re-enabling root deploy automation.
-- Preview deploys require `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`; avoid committing secrets.
+## Commit & Pull Request Guidelines
+Commits follow short, imperative subjects (`Update redirect caching`). Batch related changes and update `CHANGELOG.md` plus `qorkme/CHANGELOG.md` when application behavior shifts. PRs should describe intent, list testing performed (commands above), link issues/tasks, and attach before/after screenshots or recordings for UI updates. Confirm environment variables (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SHORT_DOMAIN`, etc.) are documented when configurations change.
 
-## Supabase & Data Considerations
-- Schema + RLS policies reside in `qorkme/supabase/schema.sql`; helper walkthrough in `supabase/SETUP_INSTRUCTIONS.md`.
-- Redirect handler expects Supabase RPC `increment_click_count` and tables (`urls`, `clicks`, `reserved_words`) to exist.
-- Any throttle/cache adjustment in `app/[shortCode]/route.ts` should respect current analytics logging (failures must not break redirects).
-
-## Useful References
-- UI components: `qorkme/components/`
-- Short code engine: `qorkme/lib/shortcode/`
-- Supabase clients: `qorkme/lib/supabase/`
-- Deployment doc set: `qorkme/docs/`
-- Fonts in production: `qorkme/public/fonts/`
-
-> Keep this file updated as workflows evolve. Treat it as the first stop for any new agent picking up QorkMe work.
+## Security & Configuration Tips
+Use `.env.local` for secrets; never commit Supabase keys or Vercel tokens. Align schema edits with `qorkme/supabase/schema.sql` and keep RLS policies intact. Preserve licensed font filenames and update `qorkme/public/fonts/README.md` if assets move. Review `vercel.json` and GitHub workflows after modifying deployment behavior.

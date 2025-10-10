@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-09-27 09:55
+- Reframed `AGENTS.md` as a Repository Guidelines contributor guide covering structure, commands, and release hygiene expectations.
+
 ## 2025-09-27 08:40
 - Removed the navigation tagline entirely so the QorkMe wordmark stands alone in every header context without fallback copy.
 
