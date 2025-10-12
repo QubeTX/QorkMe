@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10 09:30
+- Added top offset to the SiteHeader so the navbar floats off the viewport edge across breakpoints.
+
 ## 2025-10-10 08:48
 - Restored padding and vertical rhythm for the UrlShortener custom alias dropdown so the toggle and fields align with the design system spacing.
 

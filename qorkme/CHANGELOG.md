@@ -1,5 +1,8 @@
 # Changelog
 
+## 2025-10-10 09:30
+- Added top offset to the SiteHeader so the glass navbar no longer presses against the viewport edge across breakpoints.
+
 ## 2025-10-10 08:48
 - Restored padding and vertical rhythm for the UrlShortener custom alias dropdown so the toggle and fields align with the design system spacing.
 
@@ -7,6 +10,12 @@ All notable changes to the QorkMe URL Shortener project will be documented in th
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [3.0.23] - 2025-10-10
+
+### Changed
+
+- Raised the fixed SiteHeader to `top-5 md:top-6` so the navbar consistently clears the top window edge.
 
 ## [3.0.22] - 2025-10-10
 
