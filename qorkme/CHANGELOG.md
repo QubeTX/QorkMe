@@ -1,9 +1,15 @@
 # Changelog
 
+## 2025-10-12 20:47
+
+- Documented the Prettier cleanup for the root changelog to keep CI formatting checks green.
+
 ## 2025-10-10 09:30
+
 - Added top offset to the SiteHeader so the glass navbar no longer presses against the viewport edge across breakpoints.
 
 ## 2025-10-10 08:48
+
 - Restored padding and vertical rhythm for the UrlShortener custom alias dropdown so the toggle and fields align with the design system spacing.
 
 All notable changes to the QorkMe URL Shortener project will be documented in this file.
