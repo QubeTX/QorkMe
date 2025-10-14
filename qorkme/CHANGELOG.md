@@ -1,5 +1,9 @@
 # Changelog
 
+## 2025-10-14 12:45
+
+- Reduced the SiteFooter leading at medium breakpoints so the wordmark, tagline, and admin link stay vertically balanced across responsive layouts.
+
 ## 2025-10-12 20:47
 
 - Documented the Prettier cleanup for the root changelog to keep CI formatting checks green.

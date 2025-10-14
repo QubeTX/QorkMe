@@ -1,5 +1,9 @@
 # Changelog
 
+## 2025-10-14 12:45
+
+- Tightened the SiteFooter typography so the brand line, tagline, and metadata stay aligned with the refined responsive leading.
+
 ## 2025-10-12 20:47
 
 - Re-ran Prettier on the repository changelog so CI's formatting check passes again.
