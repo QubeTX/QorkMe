@@ -2,7 +2,7 @@
 
 ## 2025-10-14 12:45
 
-- Tightened the SiteFooter typography so the brand line, tagline, and metadata stay aligned with the refined responsive leading.
+- Fixed horizontal alignment in SiteFooter component by standardizing line-height values across all footer text elements to use `md:leading-none` at desktop breakpoints, ensuring "QorkMe", "Thoughtful short links for modern teams", "Designed in San Francisco • Powered by Supabase & Vercel", and "Admin" are all aligned on the same horizontal baseline.
 
 ## 2025-10-12 20:47
 

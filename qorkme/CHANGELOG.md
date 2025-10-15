@@ -2,7 +2,11 @@
 
 ## 2025-10-14 12:45
 
-- Reduced the SiteFooter leading at medium breakpoints so the wordmark, tagline, and admin link stay vertically balanced across responsive layouts.
+### Fixed
+
+- Fixed horizontal alignment in SiteFooter component (qorkme/components/SiteFooter.tsx) by standardizing line-height values across all footer text elements to use `md:leading-none` at desktop breakpoints.
+- Removed redundant flex classes from subtitle span.
+- Ensures "QorkMe", "Thoughtful short links for modern teams", "Designed in San Francisco • Powered by Supabase & Vercel", and "Admin" are all aligned on the same horizontal baseline in the footer.
 
 ## 2025-10-12 20:47
 

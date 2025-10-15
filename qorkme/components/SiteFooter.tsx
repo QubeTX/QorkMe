@@ -22,7 +22,7 @@ export function SiteFooter({
           <span className="font-display text-xl font-semibold uppercase tracking-[0.16em] text-text-primary md:text-2xl md:leading-none">
             QorkMe
           </span>
-          <span className="text-sm text-text-muted leading-relaxed md:flex md:items-center md:border-l md:border-border/60 md:pl-6 md:text-base md:leading-tight">
+          <span className="text-sm text-text-muted leading-relaxed md:border-l md:border-border/60 md:pl-6 md:text-base md:leading-none">
             {subtitle}
           </span>
         </div>
