@@ -54,7 +54,7 @@ describe('UrlShortener', () => {
     expect(pushMock).not.toHaveBeenCalled();
   });
 
-  it('submits the URL and routes to the result page on success', async () => {
+  it('submits the URL and displays the shortened result', async () => {
     const user = userEvent.setup();
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
@@ -65,14 +65,15 @@ describe('UrlShortener', () => {
     render(<UrlShortener />);
 
     await user.type(
-      screen.getByLabelText(/destination url/i),
+      screen.getByLabelText(/enter your url/i),
       'https://incredible.example/landing'
     );
 
     await user.click(screen.getByRole('button', { name: /shorten url/i }));
 
     await waitFor(() => {
-      expect(pushMock).toHaveBeenCalledWith('/result/123?code=fresh');
+      expect(screen.getByText(/your shortened url/i)).toBeInTheDocument();
+      expect(screen.getByText(/qork\.me\/fresh/i)).toBeInTheDocument();
     });
 
     expect(fetchMock).toHaveBeenCalledWith('/api/shorten', {
@@ -80,48 +81,30 @@ describe('UrlShortener', () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ url: 'https://incredible.example/landing', customAlias: null }),
+      body: JSON.stringify({ url: 'https://incredible.example/landing' }),
     });
     expect(toastErrorMock).not.toHaveBeenCalled();
   });
 
-  it('checks custom alias availability and surfaces the API response', async () => {
+  it('displays error toast when API request fails', async () => {
     const user = userEvent.setup();
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValueOnce({ json: async () => ({ available: true }) })
-      .mockResolvedValueOnce({ json: async () => ({ available: false, error: 'taken' }) });
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      json: async () => ({ error: 'Invalid URL format' }),
+    });
     vi.stubGlobal('fetch', fetchMock);
 
     render(<UrlShortener />);
 
-    await user.click(screen.getByRole('button', { name: /add a custom alias/i }));
+    await user.type(
+      screen.getByLabelText(/enter your url/i),
+      'https://example.com'
+    );
 
-    const aliasInput = screen.getByRole('textbox', { name: /custom alias/i });
-    const checkButton = screen.getByRole('button', { name: /^check$/i });
-
-    await user.type(aliasInput, 'stellar');
-    await waitFor(() => {
-      expect(checkButton).toBeEnabled();
-    });
-    await user.click(checkButton);
+    await user.click(screen.getByRole('button', { name: /shorten url/i }));
 
     await waitFor(() => {
-      expect(toastSuccessMock).toHaveBeenCalledWith('This alias is available!');
+      expect(toastErrorMock).toHaveBeenCalledWith('Invalid URL format');
     });
-
-    await user.clear(aliasInput);
-    await user.type(aliasInput, 'taken');
-    await waitFor(() => {
-      expect(checkButton).toBeEnabled();
-    });
-    await user.click(checkButton);
-
-    await waitFor(() => {
-      expect(toastErrorMock).toHaveBeenCalledWith('taken');
-    });
-
-    expect(fetchMock).toHaveBeenNthCalledWith(1, '/api/shorten?alias=stellar');
-    expect(fetchMock).toHaveBeenNthCalledWith(2, '/api/shorten?alias=taken');
   });
 });
