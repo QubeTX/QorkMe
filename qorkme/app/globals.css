@@ -212,30 +212,7 @@ body {
   position: relative;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      circle at 12% 18%,
-      color-mix(in srgb, var(--color-primary) 14%, transparent) 0%,
-      transparent 58%
-    ),
-    radial-gradient(
-      circle at 78% 12%,
-      color-mix(in srgb, var(--color-accent) 18%, transparent) 0%,
-      transparent 48%
-    ),
-    radial-gradient(
-      circle at 22% 82%,
-      color-mix(in srgb, var(--color-secondary) 8%, transparent) 0%,
-      transparent 55%
-    );
-  opacity: 0.35;
-  z-index: -1;
-}
+/* Matrix background replaces body::before gradient */
 
 h1,
 h2,
@@ -482,6 +459,20 @@ pre {
   }
 }
 
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -584,6 +575,18 @@ pre {
 ::selection {
   background: color-mix(in srgb, var(--color-primary) 35%, transparent);
   color: var(--color-text-inverse);
+}
+
+/* Responsive adjustments for the redesign */
+@media (max-width: 768px) {
+  .container {
+    padding-inline: 1rem;
+  }
+
+  /* Adjust card padding on mobile */
+  .url-shortener-card {
+    padding: 2rem 1.5rem !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QorkMe - Smart URL Shortening</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark: #141413;
+            --light: #faf9f5;
+            --mid-gray: #b0aea5;
+            --light-gray: #e8e6dc;
+            --orange: #d97757;
+            --blue: #6a9bcc;
+            --green: #788c5d;
+        }
+
+        body {
+            font-family: 'Lora', Georgia, serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Dot Matrix Canvas Background */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 700px;
+            padding: 2rem;
+        }
+
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .logo h1 {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--light);
+            letter-spacing: -2px;
+            text-shadow: 0 4px 20px rgba(217, 119, 87, 0.3);
+        }
+
+        .logo .accent {
+            color: var(--orange);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--mid-gray);
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+
+        /* Main Card - Fusion Aesthetic */
+        .card {
+            background: rgba(250, 249, 245, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease 0.3s backwards;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--orange), var(--blue), var(--green));
+            border-radius: 30px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .card:hover::before {
+            opacity: 0.1;
+        }
+
+        /* Card States */
+        .card.shortening {
+            transform: scale(0.98);
+        }
+
+        .card.shortened {
+            background: rgba(250, 249, 245, 0.05);
+        }
+
+        /* Input State */
+        .input-state {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-state.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        .input-label {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 0.9rem;
+            color: var(--mid-gray);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: rgba(20, 20, 19, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.05rem;
+            color: var(--light);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: var(--orange);
+            background: rgba(20, 20, 19, 0.6);
+            box-shadow: 0 0 0 4px rgba(217, 119, 87, 0.1);
+        }
+
+        .url-input::placeholder {
+            color: var(--mid-gray);
+        }
+
+        /* Button */
+        .shorten-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--orange), #c56647);
+            border: none;
+            border-radius: 16px;
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 4px 20px rgba(217, 119, 87, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shorten-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .shorten-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 30px rgba(217, 119, 87, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .shorten-btn:hover::before {
+            left: 100%;
+        }
+
+        .shorten-btn:active {
+            transform: translateY(0);
+        }
+
+        .shorten-btn.loading {
+            background: var(--mid-gray);
+            cursor: not-allowed;
+        }
+
+        /* Output State */
+        .output-state {
+            display: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+        .output-state.visible {
+            display: block;
+            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: successPop 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+        }
+
+        .output-label {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 0.85rem;
+            color: var(--mid-gray);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .shortened-url-display {
+            background: rgba(20, 20, 19, 0.4);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(217, 119, 87, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .shortened-url-display:hover {
+            border-color: var(--orange);
+            background: rgba(20, 20, 19, 0.6);
+            transform: scale(1.02);
+        }
+
+        .shortened-url {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--orange);
+            word-break: break-all;
+            text-shadow: 0 2px 10px rgba(217, 119, 87, 0.3);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, var(--blue), #5a8bbc);
+            color: var(--light);
+            box-shadow: 
+                0 4px 20px rgba(106, 155, 204, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 30px rgba(106, 155, 204, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .new-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .new-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(135deg, var(--green), #687c4d);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--light);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 1rem;
+            }
+
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .card {
+                padding: 2rem 1.5rem;
+            }
+
+            .shortened-url {
+                font-size: 1.3rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dot Matrix Canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">
+            <h1>Qork<span class="accent">Me</span></h1>
+            <p class="tagline">Smart URL shortening, beautifully simple</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="card" id="main-card">
+            <!-- Input State -->
+            <div class="input-state" id="input-state">
+                <label class="input-label">Enter Your URL</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        class="url-input" 
+                        id="url-input"
+                        placeholder="https://example.com/your/very/long/url/here..."
+                        autocomplete="off"
+                    >
+                </div>
+                <button class="shorten-btn" id="shorten-btn">
+                    <span id="btn-text">Shorten URL</span>
+                </button>
+            </div>
+
+            <!-- Output State -->
+            <div class="output-state" id="output-state">
+                <div class="success-icon">✨</div>
+                <div class="output-label">Your shortened URL</div>
+                <div class="shortened-url-display">
+                    <div class="shortened-url" id="shortened-url">qork.me/abc123</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn copy-btn" id="copy-btn">
+                        <span id="copy-text">Copy Link</span>
+                    </button>
+                    <button class="action-btn new-btn" id="new-btn">Shorten Another</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dot Matrix Background Animation
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let dots = [];
+        const dotCount = 150;
+        const maxDistance = 150;
+        const colors = ['#d97757', '#6a9bcc', '#788c5d'];
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Dot {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initDots() {
+            dots = [];
+            for (let i = 0; i < dotCount; i++) {
+                dots.push(new Dot());
+            }
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < dots.length; i++) {
+                for (let j = i + 1; j < dots.length; j++) {
+                    const dx = dots[i].x - dots[j].x;
+                    const dy = dots[i].y - dots[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(dots[i].x, dots[i].y);
+                        ctx.lineTo(dots[j].x, dots[j].y);
+                        ctx.strokeStyle = `rgba(217, 119, 87, ${0.15 * (1 - distance / maxDistance)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            dots.forEach(dot => {
+                dot.update();
+                dot.draw();
+            });
+
+            drawConnections();
+
+            requestAnimationFrame(animate);
+        }
+
+        resizeCanvas();
+        initDots();
+        animate();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initDots();
+        });
+
+        // URL Shortener Functionality
+        const urlInput = document.getElementById('url-input');
+        const shortenBtn = document.getElementById('shorten-btn');
+        const btnText = document.getElementById('btn-text');
+        const mainCard = document.getElementById('main-card');
+        const inputState = document.getElementById('input-state');
+        const outputState = document.getElementById('output-state');
+        const shortenedUrlEl = document.getElementById('shortened-url');
+        const copyBtn = document.getElementById('copy-btn');
+        const copyText = document.getElementById('copy-text');
+        const newBtn = document.getElementById('new-btn');
+
+        // Generate random short code
+        function generateShortCode() {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        // Shorten URL
+        shortenBtn.addEventListener('click', async () => {
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                urlInput.focus();
+                return;
+            }
+
+            // Start loading
+            mainCard.classList.add('shortening');
+            shortenBtn.classList.add('loading');
+            btnText.innerHTML = '<span class="spinner"></span>';
+            shortenBtn.disabled = true;
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Generate short URL
+            const shortCode = generateShortCode();
+            shortenedUrlEl.textContent = `qork.me/${shortCode}`;
+
+            // Transition to output state
+            inputState.classList.add('hidden');
+            
+            setTimeout(() => {
+                mainCard.classList.remove('shortening');
+                mainCard.classList.add('shortened');
+                outputState.classList.add('visible');
+                shortenBtn.classList.remove('loading');
+                btnText.textContent = 'Shorten URL';
+                shortenBtn.disabled = false;
+            }, 300);
+        });
+
+        // Copy to clipboard
+        copyBtn.addEventListener('click', async () => {
+            const url = shortenedUrlEl.textContent;
+            
+            try {
+                await navigator.clipboard.writeText(url);
+                copyBtn.classList.add('copied');
+                copyText.textContent = '✓ Copied!';
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyText.textContent = 'Copy Link';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        });
+
+        // Create new short URL
+        newBtn.addEventListener('click', () => {
+            mainCard.classList.remove('shortened');
+            outputState.classList.remove('visible');
+            
+            setTimeout(() => {
+                inputState.classList.remove('hidden');
+                urlInput.value = '';
+                urlInput.focus();
+            }, 300);
+        });
+
+        // Enter key support
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                shortenBtn.click();
+            }
+        });
+
+        // 3D tilt effect on card
+        mainCard.addEventListener('mousemove', (e) => {
+            const rect = mainCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+        });
+
+        mainCard.addEventListener('mouseleave', () => {
+            mainCard.style.transform = '';
+        });
+    </script>
+</body>
+</html>

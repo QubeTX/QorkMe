@@ -1,22 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/cards/Card';
-import { Link2, Zap, Settings2, Check, ChevronDown } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+
+type CardState = 'input' | 'shortening' | 'shortened';
 
 export function UrlShortener() {
   const [url, setUrl] = useState('');
-  const [customAlias, setCustomAlias] = useState('');
-  const [showCustom, setShowCustom] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const urlHelpId = 'url-help-text';
-  const aliasSectionId = 'custom-alias-section';
-  const aliasHelpId = 'alias-help-text';
+  const [cardState, setCardState] = useState<CardState>('input');
+  const [shortenedUrl, setShortenedUrl] = useState('');
+  const [copyButtonText, setCopyButtonText] = useState('Copy Link');
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // 3D Tilt effect
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (cardState !== 'input') return;
+
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = (y - centerY) / 20;
+      const rotateY = (centerX - x) / 20;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+    };
+
+    const handleMouseLeave = () => {
+      if (card) {
+        card.style.transform = '';
+      }
+    };
+
+    card.addEventListener('mousemove', handleMouseMove);
+    card.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      card.removeEventListener('mousemove', handleMouseMove);
+      card.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [cardState]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +58,8 @@ export function UrlShortener() {
       return;
     }
 
-    setLoading(true);
+    // Start loading
+    setCardState('shortening');
 
     try {
       const response = await fetch('/api/shorten', {
@@ -34,10 +67,7 @@ export function UrlShortener() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          url,
-          customAlias: showCustom ? customAlias : null,
-        }),
+        body: JSON.stringify({ url }),
       });
 
       const data = await response.json();
@@ -46,173 +76,164 @@ export function UrlShortener() {
         throw new Error(data.error || 'Failed to shorten URL');
       }
 
-      // Navigate to result page
-      router.push(`/result/${data.id}?code=${data.shortCode}`);
+      // Simulate a slight delay for animation smoothness
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      const shortUrl = `${process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me'}/${data.shortCode}`;
+      setShortenedUrl(shortUrl);
+      setCardState('shortened');
     } catch (error) {
       console.error('Error shortening URL:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to shorten URL');
-    } finally {
-      setLoading(false);
+      setCardState('input');
     }
   };
 
-  const checkAliasAvailability = async () => {
-    if (!customAlias.trim()) return;
-
+  const handleCopy = async () => {
     try {
-      const response = await fetch(`/api/shorten?alias=${encodeURIComponent(customAlias)}`);
-      const data = await response.json();
+      await navigator.clipboard.writeText(shortenedUrl);
+      setCopyButtonText('✓ Copied!');
+      toast.success('Link copied to clipboard!');
 
-      if (data.available) {
-        toast.success('This alias is available!');
-      } else {
-        toast.error(data.error || 'This alias is not available');
-      }
-    } catch (error) {
-      console.error('Error checking alias:', error);
+      setTimeout(() => {
+        setCopyButtonText('Copy Link');
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      toast.error('Failed to copy link');
+    }
+  };
+
+  const handleCreateNew = () => {
+    setCardState('input');
+    setUrl('');
+    setShortenedUrl('');
+    setCopyButtonText('Copy Link');
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e as unknown as React.FormEvent);
     }
   };
 
   return (
-    <>
-      <CardHeader className="gap-4 text-left">
-        <CardTitle className="text-2xl md:text-3xl">Create a short link</CardTitle>
-        <CardDescription className="text-base text-text-secondary">
-          Paste a destination URL and optionally layer on a custom alias. Every field is spaced for
-          clarity and ready for keyboard or touch input.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="gap-0 pt-0">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-          {/* Main URL Input */}
-          <div className="space-y-3">
-            <label htmlFor="url" className="block text-sm font-semibold text-text-secondary">
-              Destination URL
-            </label>
-            <div className="relative">
-              <Input
-                id="url"
-                type="url"
-                placeholder="https://example.com/your-very-long-url-here"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                disabled={loading}
-                className="pr-12 text-base"
-                aria-describedby={urlHelpId}
-                required
-              />
-              <Link2
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted"
-                size={20}
-                aria-hidden="true"
-              />
-            </div>
-            <p id={urlHelpId} className="text-xs text-text-muted">
-              We support http(s) URLs and trackable query strings.
-            </p>
+    <div
+      ref={cardRef}
+      className={`
+        relative overflow-hidden rounded-[30px]
+        bg-[color:var(--color-surface)]/[0.03]
+        p-6 sm:p-8 md:p-12
+        shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1),0_0_0_1px_rgba(255,255,255,0.05)]
+        backdrop-blur-xl
+        border border-white/10
+        transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+        animate-fadeIn
+        ${cardState === 'shortening' ? 'scale-[0.98]' : ''}
+        ${cardState === 'shortened' ? 'bg-[color:var(--color-surface)]/[0.05]' : ''}
+        hover:shadow-[0_20px_60px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15),0_0_0_1px_rgba(255,255,255,0.1)]
+        hover:-translate-y-[5px]
+      `}
+      style={{
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {/* Gradient border effect */}
+      <div
+        className={`
+          absolute -inset-[2px] rounded-[30px]
+          bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-primary)]
+          opacity-0 -z-10 transition-opacity duration-500
+          ${cardState === 'shortened' ? 'opacity-10' : ''}
+        `}
+        aria-hidden="true"
+      />
+
+      {/* Input State */}
+      <div
+        className={`
+          transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+          ${cardState !== 'input' ? 'opacity-0 -translate-y-5 pointer-events-none absolute' : ''}
+        `}
+      >
+        <label
+          htmlFor="url-input"
+          className="mb-4 block font-ui text-sm uppercase tracking-[0.2em] text-text-muted"
+        >
+          Enter Your URL
+        </label>
+        <div className="mb-6">
+          <Input
+            id="url-input"
+            type="url"
+            placeholder="https://example.com/your/very/long/url/here..."
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className="w-full rounded-2xl border-2 border-white/10 bg-[rgba(20,20,19,0.4)] px-6 py-5 text-lg text-text-primary backdrop-blur-sm transition-all duration-300 placeholder:text-text-muted focus:border-[color:var(--color-primary)] focus:bg-[rgba(20,20,19,0.6)] focus:shadow-[0_0_0_4px_rgba(196,114,79,0.1)]"
+            required
+          />
+        </div>
+        <Button
+          onClick={handleSubmit}
+          className="group relative w-full overflow-hidden rounded-2xl border-none bg-gradient-to-br from-[color:var(--color-primary)] to-[#c56647] px-5 py-6 font-ui text-lg font-semibold text-text-inverse shadow-[0_4px_20px_rgba(196,114,79,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(196,114,79,0.4),inset_0_1px_0_rgba(255,255,255,0.3)] active:translate-y-0"
+        >
+          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
+          <span className="relative">Shorten URL</span>
+        </Button>
+      </div>
+
+      {/* Loading State */}
+      <div
+        className={`
+          flex items-center justify-center transition-all duration-500
+          ${cardState !== 'shortening' ? 'opacity-0 pointer-events-none absolute' : ''}
+        `}
+      >
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-[color:var(--color-primary)]/20 border-t-[color:var(--color-primary)]" />
+          <p className="font-ui text-lg text-text-secondary">Creating your link...</p>
+        </div>
+      </div>
+
+      {/* Output State */}
+      <div
+        className={`
+          text-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+          ${cardState !== 'shortened' ? 'opacity-0 pointer-events-none absolute' : 'animate-slideIn'}
+        `}
+      >
+        <div className="mb-6 inline-block animate-[successPop_0.6s_cubic-bezier(0.4,0,0.2,1)]">
+          <span className="text-6xl" role="img" aria-label="Success">
+            ✨
+          </span>
+        </div>
+        <div className="mb-4 font-ui text-sm uppercase tracking-[0.2em] text-text-muted">
+          Your shortened URL
+        </div>
+        <div className="mb-6 rounded-2xl border-2 border-[color:var(--color-primary)]/30 bg-[rgba(20,20,19,0.4)] px-8 py-6 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-[color:var(--color-primary)] hover:bg-[rgba(20,20,19,0.6)]">
+          <div className="break-all font-ui text-2xl font-semibold text-[color:var(--color-primary)] drop-shadow-[0_2px_10px_rgba(196,114,79,0.3)] md:text-3xl">
+            {shortenedUrl}
           </div>
-
-          {/* Custom Alias Section */}
-          <div className="space-y-5">
-            <button
-              type="button"
-              onClick={() => setShowCustom(!showCustom)}
-              aria-expanded={showCustom}
-              aria-controls={aliasSectionId}
-              className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-lg)] border border-border/55 bg-[color:var(--color-surface-elevated)]/90 px-6 py-4 text-left shadow-soft transition-all duration-200 hover:-translate-y-[1px] hover:border-[color:var(--color-primary)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-surface)]"
-            >
-              <span className="flex items-center gap-3 text-base font-semibold text-text-primary">
-                <Settings2 size={20} aria-hidden="true" />
-                Add a custom alias (optional)
-              </span>
-              <ChevronDown
-                size={18}
-                aria-hidden="true"
-                className={`transition-transform duration-200 ${showCustom ? 'rotate-180' : ''}`}
-              />
-            </button>
-
-            {showCustom && (
-              <div
-                id={aliasSectionId}
-                role="region"
-                aria-label="Custom alias options"
-                className="animate-slideIn space-y-5 rounded-[var(--radius-xl)] border border-border/55 bg-[color:var(--color-surface)]/95 p-6 shadow-[0_18px_48px_-28px_rgba(47,42,38,0.38)] focus-within:border-[color:var(--color-primary)]/65 focus-within:shadow-[0_0_0_4px_color-mix(in srgb, var(--color-primary) 30%, transparent)]"
-              >
-                <label htmlFor="alias" className="block text-sm font-semibold text-text-secondary">
-                  Custom alias
-                </label>
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                  <span className="inline-flex h-12 items-center rounded-[var(--radius-lg)] bg-[color:var(--color-surface-elevated)] px-5 font-mono text-sm text-text-muted">
-                    qork.me/
-                  </span>
-                  <Input
-                    id="alias"
-                    type="text"
-                    placeholder="your-custom-alias"
-                    value={customAlias}
-                    onChange={(e) =>
-                      setCustomAlias(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))
-                    }
-                    disabled={loading}
-                    className="flex-1 h-12 font-mono"
-                    pattern="[a-z0-9-]+"
-                    minLength={3}
-                    maxLength={50}
-                    aria-describedby={aliasHelpId}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="md"
-                    onClick={checkAliasAvailability}
-                    disabled={!customAlias || loading}
-                    className="h-12 whitespace-nowrap px-5"
-                  >
-                    <Check size={16} aria-hidden="true" />
-                    Check
-                  </Button>
-                </div>
-                <p id={aliasHelpId} className="text-xs text-text-muted">
-                  Use lowercase letters, numbers, and hyphens. 3-50 characters.
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Submit Button */}
-          <div className="pt-3">
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              disabled={loading}
-              className="w-full justify-center"
-            >
-              {loading ? (
-                <>
-                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-[color:var(--color-text-inverse)] border-t-transparent" />
-                  <span>Creating your link...</span>
-                </>
-              ) : (
-                <>
-                  <Zap
-                    size={20}
-                    className="text-[color:var(--color-text-inverse)]"
-                    aria-hidden="true"
-                  />
-                  <span>Shorten URL</span>
-                </>
-              )}
-            </Button>
-          </div>
-
-          {/* Info Text */}
-          <p className="pt-3 text-center text-xs text-text-muted">
-            By shortening a URL, you agree to our Terms of Service and Privacy Policy.
-          </p>
-        </form>
-      </CardContent>
-    </>
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+          <Button
+            onClick={handleCopy}
+            className={`
+              flex-1 rounded-2xl border-none px-4 py-5 font-ui text-base font-medium shadow-[0_4px_20px_rgba(106,155,204,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(106,155,204,0.4),inset_0_1px_0_rgba(255,255,255,0.3)] active:translate-y-0
+              ${copyButtonText === 'Copy Link' ? 'bg-gradient-to-br from-[#6a9bcc] to-[#5a8bbc] text-text-inverse' : 'bg-gradient-to-br from-[color:var(--color-accent)] to-[#4f6a49] text-text-inverse'}
+            `}
+          >
+            {copyButtonText}
+          </Button>
+          <Button
+            onClick={handleCreateNew}
+            className="flex-1 rounded-2xl border-2 border-white/20 bg-white/10 px-4 py-5 font-ui text-base font-medium text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition-all duration-300 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/15 active:translate-y-0"
+          >
+            Shorten Another
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }
