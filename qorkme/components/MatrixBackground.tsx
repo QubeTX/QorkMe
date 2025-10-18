@@ -1,139 +1,166 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Matrix, digits, type Frame } from '@/components/ui/matrix';
 
-interface Dot {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  color: string;
-  update(): void;
-  draw(): void;
-}
+/**
+ * MatrixBackground renders a single large viewport-filling Matrix display
+ * with animated wave effects and a centered digital clock.
+ *
+ * The entire background is one unified matrix grid that responds to
+ * viewport size and includes a real-time clock display at the center.
+ */
 
-export function MatrixBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+// Helper to build empty frame
+const buildEmptyFrame = (rows: number, cols: number): Frame =>
+  Array.from({ length: rows }, () => Array(cols).fill(0));
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+// Helper to clamp values
+const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+// Create unified frames with wave pattern and clock overlay
+function createUnifiedFrames(rows: number, cols: number, time: Date, frameCount = 24): Frame[] {
+  const frames: Frame[] = [];
+  const centerRow = Math.floor(rows / 2);
+  const centerCol = Math.floor(cols / 2);
 
-    let width: number;
-    let height: number;
-    const dots: Dot[] = [];
-    const dotCount = 150;
-    const maxDistance = 150;
-    const colors = ['#c4724f', '#5f7d58', '#d08a3b']; // Using QorkMe's color palette
+  // Format time as HH:MM:SS
+  const hours = time.getHours().toString().padStart(2, '0');
+  const minutes = time.getMinutes().toString().padStart(2, '0');
+  const seconds = time.getSeconds().toString().padStart(2, '0');
+  const timeString = `${hours}${minutes}${seconds}`;
 
-    const resizeCanvas = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
+  // Each digit is 7 rows × 5 cols, total width for 6 digits = 30 cols (5 × 6)
+  // Add spacing between digit pairs: 2 cols each = +4 cols total = 34 cols
+  const clockWidth = 34;
+  const clockHeight = 7;
+  const clockStartCol = centerCol - Math.floor(clockWidth / 2);
+  const clockStartRow = centerRow - Math.floor(clockHeight / 2);
 
-    class DotClass implements Dot {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      color: string;
+  for (let frameIndex = 0; frameIndex < frameCount; frameIndex++) {
+    const frame = buildEmptyFrame(rows, cols);
+    const progress = frameIndex / frameCount;
 
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 2 + 1;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-      }
+    // Generate radial wave pattern emanating from center
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        // Calculate distance from center
+        const dx = c - centerCol;
+        const dy = r - centerRow;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const maxDistance = Math.sqrt(centerRow ** 2 + centerCol ** 2);
 
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
+        // Create expanding wave effect
+        const wave =
+          Math.sin((distance / maxDistance) * Math.PI * 4 - progress * Math.PI * 2) * 0.5 + 0.5;
 
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-      }
+        // Add horizontal wave component
+        const horizontalWave =
+          Math.sin((c / cols) * Math.PI * 3 + progress * Math.PI * 2) * 0.3 + 0.5;
 
-      draw() {
-        if (!ctx) return;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+        // Combine waves
+        frame[r][c] = clamp((wave * 0.6 + horizontalWave * 0.4) * 0.8);
       }
     }
 
-    const initDots = () => {
-      dots.length = 0;
-      for (let i = 0; i < dotCount; i++) {
-        dots.push(new DotClass());
-      }
-    };
+    // Overlay clock digits
+    for (let digitIndex = 0; digitIndex < 6; digitIndex++) {
+      const digitValue = parseInt(timeString[digitIndex], 10);
+      const digitPattern = digits[digitValue];
 
-    const drawConnections = () => {
-      if (!ctx) return;
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x;
-          const dy = dots[i].y - dots[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+      // Calculate position for this digit (5 cols per digit + 2 col spacing after pairs)
+      const spacingOffset = digitIndex >= 2 ? 2 : 0;
+      const extraSpacing = digitIndex >= 4 ? 2 : 0;
+      const digitCol = clockStartCol + digitIndex * 5 + spacingOffset + extraSpacing;
 
-          if (distance < maxDistance) {
-            ctx.beginPath();
-            ctx.moveTo(dots[i].x, dots[i].y);
-            ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.strokeStyle = `rgba(196, 114, 79, ${0.15 * (1 - distance / maxDistance)})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
+      // Render digit pattern
+      for (let dr = 0; dr < 7; dr++) {
+        for (let dc = 0; dc < 5; dc++) {
+          const targetRow = clockStartRow + dr;
+          const targetCol = digitCol + dc;
+
+          // Bounds check
+          if (targetRow >= 0 && targetRow < rows && targetCol >= 0 && targetCol < cols) {
+            const digitValue = digitPattern[dr][dc];
+            // Make clock digits bright and override wave pattern
+            if (digitValue > 0) {
+              frame[targetRow][targetCol] = 1;
+            } else {
+              // Dim the wave pattern around the clock for contrast
+              frame[targetRow][targetCol] *= 0.3;
+            }
           }
         }
       }
-    };
+    }
 
-    let animationFrameId: number;
+    frames.push(frame);
+  }
 
-    const animate = () => {
-      if (!ctx) return;
-      ctx.clearRect(0, 0, width, height);
+  return frames;
+}
 
-      dots.forEach((dot) => {
-        dot.update();
-        dot.draw();
-      });
+export function MatrixBackground() {
+  const [time, setTime] = useState(new Date());
 
-      drawConnections();
+  // Update time every second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
 
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    resizeCanvas();
-    initDots();
-    animate();
-
-    const handleResize = () => {
-      resizeCanvas();
-      initDots();
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-    };
+    return () => clearInterval(interval);
   }, []);
 
+  // Calculate matrix dimensions based on viewport
+  const matrixConfig = useMemo(() => {
+    if (typeof window === 'undefined') {
+      // SSR fallback
+      return {
+        rows: 100,
+        cols: 180,
+        cellSize: 7,
+        gap: 2,
+      };
+    }
+
+    const cellSize = 7; // pixels per cell
+    const gap = 2; // pixels between cells
+    const totalPerCell = cellSize + gap;
+
+    const cols = Math.floor(window.innerWidth / totalPerCell);
+    const rows = Math.floor(window.innerHeight / totalPerCell);
+
+    return { rows, cols, cellSize, gap };
+  }, []);
+
+  // Generate frames with current time
+  const frames = useMemo(
+    () => createUnifiedFrames(matrixConfig.rows, matrixConfig.cols, time, 24),
+    [matrixConfig.rows, matrixConfig.cols, time]
+  );
+
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 z-0 opacity-40"
+    <div
+      className="fixed inset-0 z-0 flex items-center justify-center overflow-hidden"
       aria-hidden="true"
-    />
+    >
+      <Matrix
+        rows={matrixConfig.rows}
+        cols={matrixConfig.cols}
+        frames={frames}
+        fps={18}
+        autoplay
+        loop
+        size={matrixConfig.cellSize}
+        gap={matrixConfig.gap}
+        palette={{
+          on: 'rgba(196, 114, 79, 0.9)', // Terracotta from design system
+          off: 'rgba(196, 114, 79, 0.05)',
+        }}
+        brightness={0.75}
+        ariaLabel="Animated matrix background with digital clock"
+      />
+    </div>
   );
 }

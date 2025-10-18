@@ -15,6 +15,7 @@ A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and S
 
 ### Design & User Experience
 
+- **Animated Matrix Background**: Viewport-filling retro dot-matrix display with real-time digital clock and radial wave animations in earthy terracotta tones
 - **Earthy Modern Surfaces**: Warm parchment backgrounds with terracotta primaries and sage accent colors
 - **Calm Depth**: Soft organic shadows and restrained blur deliver depth without heavy effects
 - **Accessible Typography**: ZT Bros Oskon for headings paired with Inter Regular (400) for improved readability

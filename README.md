@@ -15,21 +15,34 @@ See [`qorkme/README.md`](qorkme/README.md) for detailed installation, configurat
 ## Project Structure
 
 ```
-QorkMe/
-|-- qorkme/                    # Main application directory
-|   |-- app/                   # Next.js 15 App Router
-|   |-- components/            # React components
-|   |-- lib/                   # Utilities and database clients
-|   |-- docs/                  # Complete documentation
-|   |-- supabase/             # Database schema and setup
-|   \-- README.md             # Comprehensive setup guide
-|-- README.md                 # This file (project overview)
-\-- LICENSE                   # Apache 2.0 license
+.
+├── NEW_REDESIGN_SAMPLE           # Design component documentation
+│   ├── MATRIX_DOCS.md            # Matrix component specifications
+│   ├── SHIMMERING_TEXT_DOCS.md   # Shimmering text component specs
+│   └── qorkme.html               # Design reference samples
+├── ZT Bros Oskon 90s             # Display font source files
+├── qorkme/                       # Main Next.js application
+│   ├── app/                      # Next.js 15 App Router
+│   ├── components/               # React components
+│   ├── docs/                     # Documentation
+│   ├── lib/                      # Utilities and database clients
+│   ├── public/                   # Static assets
+│   ├── supabase/                 # Database schema and setup
+│   ├── tests/                    # Vitest test suites
+│   └── README.md                 # Application setup guide
+├── AGENTS.md                     # Agent contribution guidelines
+├── CHANGELOG.md                  # Repository changelog
+├── CLAUDE.md                     # Claude Code instructions
+├── CODEX_PROJECT.md             # Detailed project brief
+├── MATRIX_BACKGROUND_PLAN.md    # Matrix background technical docs
+├── README.md                     # This file (project overview)
+└── vercel.json                   # Deployment configuration
 ```
 
 ## Key Features
 
 - **Smart URL Shortening**: Memorable short codes using intelligent patterns
+- **Retro Matrix Background**: Animated dot-matrix display with real-time clock and pulsing wave effects
 - **Earthy Modern Design**: Warm parchment surfaces, terracotta primaries, and sage accents with soft depth
 - **Theme Support**: Light/dark mode with smooth transitions
 - **Analytics**: Comprehensive click tracking and device analytics

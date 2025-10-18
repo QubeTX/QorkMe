@@ -1,5 +1,29 @@
 # Changelog
 
+## [3.0.24] - 2025-10-18
+
+### Changed
+
+- Completely redesigned MatrixBackground component (components/MatrixBackground.tsx):
+  - Replaced canvas-based moving dots and connection lines with unified viewport-filling Matrix display
+  - Implemented single large matrix grid that dynamically calculates dimensions based on viewport size (~200×100 cells for typical screens)
+  - Added centered digital clock displaying HH:MM:SS in retro 7-segment style using the digits preset from matrix.tsx
+  - Created custom frame generator combining radial wave effects emanating from center with horizontal wave patterns
+  - Waves pulse outward from clock center creating mesmerizing unified animation across entire background
+  - Uses terracotta color palette (rgba(196, 114, 79)) matching QorkMe's earthy design system
+  - Real-time clock updates every second without flickering
+  - Optimized with memoization: frames only regenerate when time changes
+  - 24 frames at 18 FPS for smooth retro aesthetic
+  - 7px cells with 2px gaps for subtle background presence
+
+### Added
+
+- Created comprehensive technical documentation (MATRIX_BACKGROUND_PLAN.md) including implementation specifications, frame generation algorithms, performance optimization strategies, and troubleshooting guide
+
+### Fixed
+
+- Fixed TypeScript type compatibility issue in shimmering-text component (components/ui/shimmering-text.tsx) for framer-motion margin property with eslint-disable directive
+
 ## 2025-10-14 12:45
 
 ### Fixed
