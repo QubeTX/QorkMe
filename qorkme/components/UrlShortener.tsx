@@ -29,8 +29,8 @@ export function UrlShortener() {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const rotateX = (y - centerY) / 20;
-      const rotateY = (centerX - x) / 20;
+      const rotateX = (y - centerY) / 80;
+      const rotateY = (centerX - x) / 80;
 
       card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
     };
@@ -158,7 +158,7 @@ export function UrlShortener() {
       >
         <label
           htmlFor="url-input"
-          className="mb-4 block font-ui text-sm uppercase tracking-[0.2em] text-text-muted"
+          className="mb-6 block font-ui text-sm uppercase tracking-[0.2em] text-text-muted"
         >
           Enter Your URL
         </label>
