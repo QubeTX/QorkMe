@@ -59,8 +59,7 @@ function createOffsetWaveFrames(
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         // Radial wave component
-        const radialWave =
-          Math.sin(phaseOffset - progress * Math.PI * 2) * 0.5 + 0.5;
+        const radialWave = Math.sin(phaseOffset - progress * Math.PI * 2) * 0.5 + 0.5;
 
         // Horizontal wave component
         const horizontalWave =
@@ -94,11 +93,7 @@ function ClockOverlay() {
   const hours = time.getHours().toString().padStart(2, '0');
   const minutes = time.getMinutes().toString().padStart(2, '0');
   const seconds = time.getSeconds().toString().padStart(2, '0');
-  const timeDigits = [
-    ...hours.split(''),
-    ...minutes.split(''),
-    ...seconds.split(''),
-  ];
+  const timeDigits = [...hours.split(''), ...minutes.split(''), ...seconds.split('')];
 
   return (
     <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
