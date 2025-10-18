@@ -1,5 +1,10 @@
 # Changelog
 
+## 2025-10-18 23:45
+
+- Reduced the UrlShortener card 3D tilt cursor-following animation from divisor `/20` to `/80` for an extremely subtle effect that doesn't distract from the user experience.
+- Increased "Enter Your URL" label bottom margin from `mb-4` to `mb-6` to provide better visual breathing room between the label and the container edges.
+
 ## 2025-10-18 23:30
 
 - Fixed React hydration mismatch error in Matrix component by adding explicit `px` units to width/height inline styles, changing from unitless numbers to properly formatted CSS strings.

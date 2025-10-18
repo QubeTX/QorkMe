@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.0.26] - 2025-10-18
+
+### Changed
+
+- **UrlShortener 3D Tilt Animation** (components/UrlShortener.tsx, lines 32-33)
+  - Reduced cursor-following rotation effect divisor from `/20` to `/80`
+  - Creates extremely subtle 3D tilt effect instead of exaggerated movement
+  - Provides refined, non-distracting visual feedback on mouse movement
+
+- **UrlShortener Label Spacing** (components/UrlShortener.tsx, line 161)
+  - Increased "Enter Your URL" label margin from `mb-4` (16px) to `mb-6` (24px)
+  - Improves visual breathing room between label text and container edges
+  - Better aligns with responsive padding across mobile, tablet, and desktop
+
 ## [3.0.25] - 2025-10-18
 
 ### Fixed
