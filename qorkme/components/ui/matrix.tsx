@@ -184,12 +184,12 @@ export function Matrix({
             key={index}
             className="inline-block rounded-full transition-[opacity,transform,box-shadow] duration-700 ease-out will-change-transform"
             style={{
-              width: size,
-              height: size,
+              width: `${size}px`,
+              height: `${size}px`,
               backgroundColor: isActive ? palette.on : palette.off,
               opacity,
               transform: isActive ? `scale(${0.88 + value * 0.2})` : 'scale(0.72)',
-              boxShadow: isActive ? `0 0 ${10 + value * 18}px ${palette.on}` : 'none',
+              boxShadow: 'none',
             }}
           />
         );
@@ -529,5 +529,23 @@ export const letters: Record<string, Frame> = {
     [0, 0, 0, 0, 0],
     [0, 1, 1, 0, 0],
     [0, 1, 1, 0, 0],
+  ],
+  A: [
+    [0, 1, 1, 1, 0],
+    [1, 0, 0, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 1],
+    [1, 0, 0, 0, 1],
+  ],
+  P: [
+    [1, 1, 1, 1, 0],
+    [1, 0, 0, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 0],
+    [1, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0],
   ],
 };

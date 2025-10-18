@@ -4,11 +4,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { Matrix, digits, type Frame } from '@/components/ui/matrix';
 
 /**
- * MatrixBackground renders a single large viewport-filling Matrix display
- * with animated wave effects and a centered digital clock.
+ * MatrixBackground renders a grid of small Matrix components that together
+ * create a unified viewport-filling display with animated wave effects and
+ * a centered digital clock overlay.
  *
- * The entire background is one unified matrix grid that responds to
- * viewport size and includes a real-time clock display at the center.
+ * This approach uses multiple small matrices (7×7 cells each) with coordinated
+ * phase offsets to create the appearance of one large unified matrix, while
+ * maintaining better performance and lower memory usage.
  */
 
 // Helper to build empty frame
@@ -18,149 +20,240 @@ const buildEmptyFrame = (rows: number, cols: number): Frame =>
 // Helper to clamp values
 const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
-// Create unified frames with wave pattern and clock overlay
-function createUnifiedFrames(rows: number, cols: number, time: Date, frameCount = 24): Frame[] {
+// Calculate phase offset based on distance from center
+function calculatePhaseOffset(
+  cellPosition: { x: number; y: number },
+  center: { x: number; y: number }
+): number {
+  const dx = cellPosition.x - center.x;
+  const dy = cellPosition.y - center.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const maxDistance = Math.sqrt(center.x ** 2 + center.y ** 2);
+
+  // Normalized distance creates radial wave effect
+  const normalizedDistance = distance / maxDistance;
+  return normalizedDistance * Math.PI * 4;
+}
+
+// Create wave frames with phase offset for small matrix
+const frameCache = new Map<string, Frame[]>();
+
+function createOffsetWaveFrames(
+  rows: number,
+  cols: number,
+  frameCount: number,
+  phaseOffset: number
+): Frame[] {
+  const cacheKey = `${rows}-${cols}-${frameCount}-${phaseOffset.toFixed(3)}`;
+
+  if (frameCache.has(cacheKey)) {
+    return frameCache.get(cacheKey)!;
+  }
+
   const frames: Frame[] = [];
-  const centerRow = Math.floor(rows / 2);
-  const centerCol = Math.floor(cols / 2);
 
-  // Format time as HH:MM:SS
-  const hours = time.getHours().toString().padStart(2, '0');
-  const minutes = time.getMinutes().toString().padStart(2, '0');
-  const seconds = time.getSeconds().toString().padStart(2, '0');
-  const timeString = `${hours}${minutes}${seconds}`;
-
-  // Each digit is 7 rows × 5 cols, total width for 6 digits = 30 cols (5 × 6)
-  // Add spacing between digit pairs: 2 cols each = +4 cols total = 34 cols
-  const clockWidth = 34;
-  const clockHeight = 7;
-  const clockStartCol = centerCol - Math.floor(clockWidth / 2);
-  const clockStartRow = centerRow - Math.floor(clockHeight / 2);
-
-  for (let frameIndex = 0; frameIndex < frameCount; frameIndex++) {
+  for (let f = 0; f < frameCount; f++) {
     const frame = buildEmptyFrame(rows, cols);
-    const progress = frameIndex / frameCount;
+    const progress = f / frameCount;
 
-    // Generate radial wave pattern emanating from center
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        // Calculate distance from center
-        const dx = c - centerCol;
-        const dy = r - centerRow;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDistance = Math.sqrt(centerRow ** 2 + centerCol ** 2);
+        // Radial wave component
+        const radialWave =
+          Math.sin(phaseOffset - progress * Math.PI * 2) * 0.5 + 0.5;
 
-        // Create expanding wave effect
-        const wave =
-          Math.sin((distance / maxDistance) * Math.PI * 4 - progress * Math.PI * 2) * 0.5 + 0.5;
-
-        // Add horizontal wave component
+        // Horizontal wave component
         const horizontalWave =
-          Math.sin((c / cols) * Math.PI * 3 + progress * Math.PI * 2) * 0.3 + 0.5;
+          Math.sin((c / cols) * Math.PI * 2 + progress * Math.PI * 2) * 0.3 + 0.5;
+
+        // Vertical wave component
+        const verticalWave =
+          Math.sin((r / rows) * Math.PI * 2 + progress * Math.PI * 2) * 0.2 + 0.5;
 
         // Combine waves
-        frame[r][c] = clamp((wave * 0.6 + horizontalWave * 0.4) * 0.8);
-      }
-    }
-
-    // Overlay clock digits
-    for (let digitIndex = 0; digitIndex < 6; digitIndex++) {
-      const digitValue = parseInt(timeString[digitIndex], 10);
-      const digitPattern = digits[digitValue];
-
-      // Calculate position for this digit (5 cols per digit + 2 col spacing after pairs)
-      const spacingOffset = digitIndex >= 2 ? 2 : 0;
-      const extraSpacing = digitIndex >= 4 ? 2 : 0;
-      const digitCol = clockStartCol + digitIndex * 5 + spacingOffset + extraSpacing;
-
-      // Render digit pattern
-      for (let dr = 0; dr < 7; dr++) {
-        for (let dc = 0; dc < 5; dc++) {
-          const targetRow = clockStartRow + dr;
-          const targetCol = digitCol + dc;
-
-          // Bounds check
-          if (targetRow >= 0 && targetRow < rows && targetCol >= 0 && targetCol < cols) {
-            const digitValue = digitPattern[dr][dc];
-            // Make clock digits bright and override wave pattern
-            if (digitValue > 0) {
-              frame[targetRow][targetCol] = 1;
-            } else {
-              // Dim the wave pattern around the clock for contrast
-              frame[targetRow][targetCol] *= 0.3;
-            }
-          }
-        }
+        frame[r][c] = clamp((radialWave * 0.6 + horizontalWave * 0.25 + verticalWave * 0.15) * 0.8);
       }
     }
 
     frames.push(frame);
   }
 
+  frameCache.set(cacheKey, frames);
   return frames;
 }
 
-export function MatrixBackground() {
+// Clock overlay component
+function ClockOverlay() {
   const [time, setTime] = useState(new Date());
 
-  // Update time every second
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-
+    const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Calculate matrix dimensions based on viewport
-  const matrixConfig = useMemo(() => {
+  const hours = time.getHours().toString().padStart(2, '0');
+  const minutes = time.getMinutes().toString().padStart(2, '0');
+  const seconds = time.getSeconds().toString().padStart(2, '0');
+  const timeDigits = [
+    ...hours.split(''),
+    ...minutes.split(''),
+    ...seconds.split(''),
+  ];
+
+  return (
+    <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="flex gap-3">
+        {/* Hours */}
+        <div className="flex gap-1">
+          {timeDigits.slice(0, 2).map((digit, index) => (
+            <Matrix
+              key={`h-${index}`}
+              rows={7}
+              cols={5}
+              pattern={digits[parseInt(digit, 10)]}
+              size={7}
+              gap={2}
+              palette={{
+                on: 'rgba(196, 114, 79, 1)',
+                off: 'rgba(196, 114, 79, 0)',
+              }}
+              brightness={1}
+              ariaLabel={index === 0 ? `${hours} hours` : undefined}
+            />
+          ))}
+        </div>
+
+        {/* Minutes */}
+        <div className="flex gap-1">
+          {timeDigits.slice(2, 4).map((digit, index) => (
+            <Matrix
+              key={`m-${index}`}
+              rows={7}
+              cols={5}
+              pattern={digits[parseInt(digit, 10)]}
+              size={7}
+              gap={2}
+              palette={{
+                on: 'rgba(196, 114, 79, 1)',
+                off: 'rgba(196, 114, 79, 0)',
+              }}
+              brightness={1}
+              ariaLabel={index === 0 ? `${minutes} minutes` : undefined}
+            />
+          ))}
+        </div>
+
+        {/* Seconds */}
+        <div className="flex gap-1">
+          {timeDigits.slice(4, 6).map((digit, index) => (
+            <Matrix
+              key={`s-${index}`}
+              rows={7}
+              cols={5}
+              pattern={digits[parseInt(digit, 10)]}
+              size={7}
+              gap={2}
+              palette={{
+                on: 'rgba(196, 114, 79, 1)',
+                off: 'rgba(196, 114, 79, 0)',
+              }}
+              brightness={1}
+              ariaLabel={index === 0 ? `${seconds} seconds` : undefined}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function MatrixBackground() {
+  // Calculate grid of small matrices
+  const gridConfig = useMemo(() => {
     if (typeof window === 'undefined') {
-      // SSR fallback
-      return {
-        rows: 100,
-        cols: 180,
-        cellSize: 7,
-        gap: 2,
-      };
+      return { gridCells: [], center: { x: 0, y: 0 } };
     }
 
-    const cellSize = 7; // pixels per cell
-    const gap = 2; // pixels between cells
-    const totalPerCell = cellSize + gap;
+    const MATRIX_SIZE = 12; // Each matrix is 12×12 cells (larger for better performance)
+    const CELL_SIZE = 6; // 6px per cell (slightly smaller)
+    const GAP = 2; // 2px between cells
 
-    const cols = Math.floor(window.innerWidth / totalPerCell);
-    const rows = Math.floor(window.innerHeight / totalPerCell);
+    // Calculate total size of one matrix including gaps
+    const matrixPixelSize = MATRIX_SIZE * CELL_SIZE + (MATRIX_SIZE - 1) * GAP;
 
-    return { rows, cols, cellSize, gap };
+    // Calculate how many matrices fit with minimal spacing
+    const matrixSpacing = 2; // Minimal gap between matrices
+    const totalMatrixSize = matrixPixelSize + matrixSpacing;
+
+    const gridCols = Math.ceil(window.innerWidth / totalMatrixSize) + 1;
+    const gridRows = Math.ceil(window.innerHeight / totalMatrixSize) + 1;
+
+    const center = {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    };
+
+    const gridCells = [];
+
+    for (let r = 0; r < gridRows; r++) {
+      for (let c = 0; c < gridCols; c++) {
+        const x = c * totalMatrixSize;
+        const y = r * totalMatrixSize;
+        const phaseOffset = calculatePhaseOffset({ x, y }, center);
+
+        gridCells.push({
+          id: `${r}-${c}`,
+          position: { x, y },
+          phaseOffset,
+        });
+      }
+    }
+
+    return { gridCells, center };
   }, []);
-
-  // Generate frames with current time
-  const frames = useMemo(
-    () => createUnifiedFrames(matrixConfig.rows, matrixConfig.cols, time, 24),
-    [matrixConfig.rows, matrixConfig.cols, time]
-  );
 
   return (
     <div
-      className="fixed inset-0 z-0 flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-0 overflow-hidden"
       aria-hidden="true"
+      aria-label="Animated matrix background"
     >
-      <Matrix
-        rows={matrixConfig.rows}
-        cols={matrixConfig.cols}
-        frames={frames}
-        fps={18}
-        autoplay
-        loop
-        size={matrixConfig.cellSize}
-        gap={matrixConfig.gap}
-        palette={{
-          on: 'rgba(196, 114, 79, 0.9)', // Terracotta from design system
-          off: 'rgba(196, 114, 79, 0.05)',
-        }}
-        brightness={0.75}
-        ariaLabel="Animated matrix background with digital clock"
-      />
+      {/* Grid of small matrices */}
+      <div className="relative h-full w-full">
+        {gridConfig.gridCells.map((cell) => {
+          const frames = createOffsetWaveFrames(12, 12, 24, cell.phaseOffset);
+
+          return (
+            <div
+              key={cell.id}
+              className="absolute"
+              style={{
+                left: cell.position.x,
+                top: cell.position.y,
+              }}
+            >
+              <Matrix
+                rows={12}
+                cols={12}
+                frames={frames}
+                fps={18}
+                autoplay
+                loop
+                size={6}
+                gap={2}
+                palette={{
+                  on: 'rgba(196, 114, 79, 0.9)',
+                  off: 'rgba(196, 114, 79, 0.05)',
+                }}
+                brightness={0.75}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Clock overlay */}
+      <ClockOverlay />
     </div>
   );
 }

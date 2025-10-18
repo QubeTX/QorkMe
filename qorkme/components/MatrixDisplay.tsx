@@ -4,10 +4,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { Matrix, digits, letters, type Frame } from '@/components/ui/matrix';
 
 /**
- * MatrixDisplay renders a unified dot-matrix display showing:
- * - "Qork.Me" title with glittering/shimmer animation
- * - Current time (HH:MM:SS) below the title
- * - Feathered edges for smooth blending
+ * MatrixDisplay renders two separate dot-matrix displays:
+ * - "Qork.Me" title with glittering/shimmer animation (larger, 8px cells)
+ * - Current time in 24-hour format (HH:MM:SS) below the title (smaller, 6px cells)
+ * - Increased vertical spacing for visual hierarchy
+ * - Feathered edges on both displays for smooth blending
  */
 
 const buildEmptyFrame = (rows: number, cols: number): Frame =>
@@ -73,11 +74,7 @@ function createTitleFrames(frameCount: number): number[][] {
       // Subtle shimmer between 0.7 and 1.0
       const shimmer = Math.sin(progress + phase) * 0.15 + 0.85;
 
-      // Occasional sparkle
-      const sparkleChance = Math.random();
-      const sparkle = sparkleChance > 0.95 ? 0.2 : 0;
-
-      brightness.push(clamp(shimmer + sparkle, 0.7, 1.0));
+      brightness.push(clamp(shimmer, 0.7, 1.0));
     }
 
     frames.push(brightness);
@@ -86,16 +83,11 @@ function createTitleFrames(frameCount: number): number[][] {
   return frames;
 }
 
-// Create unified frame with title and time
-function createUnifiedFrame(
-  time: Date,
-  titleBrightness: number[],
-  rows: number,
-  cols: number
-): Frame {
+// Create title frame with shimmer
+function createTitleFrame(titleBrightness: number[], rows: number, cols: number): Frame {
   const frame = buildEmptyFrame(rows, cols);
 
-  // Calculate centered positions
+  // Calculate centered position for title
   const titleText = 'Qork.Me';
   const titleWidth = titleText.length * 6 - 1; // 6 per char (5 + 1 spacing), minus last spacing
   const titleStartCol = Math.floor((cols - titleWidth) / 2);
@@ -104,26 +96,36 @@ function createUnifiedFrame(
   // Render title with shimmer
   renderTextToFrame(frame, titleText, titleStartRow, titleStartCol, letters, titleBrightness);
 
-  // Format time
-  const hours = time.getHours().toString().padStart(2, '0');
+  return frame;
+}
+
+// Create time frame
+function createTimeFrame(time: Date, rows: number, cols: number): Frame {
+  const frame = buildEmptyFrame(rows, cols);
+
+  // Format time (12-hour format with AM/PM)
+  const hours24 = time.getHours();
+  const hours12 = hours24 % 12 || 12; // Convert 0-23 to 1-12
   const minutes = time.getMinutes().toString().padStart(2, '0');
   const seconds = time.getSeconds().toString().padStart(2, '0');
-  const timeText = `${hours}:${minutes}:${seconds}`;
+  const period = hours24 >= 12 ? 'PM' : 'AM';
+  const timeText = `${hours12.toString().padStart(2, '0')}:${minutes}:${seconds} ${period}`;
 
-  // Calculate time position (below title with spacing)
-  const timeWidth = 6 * 6 + 2 * 6 - 1; // 6 digits + 2 colons
+  // Calculate centered position for time
+  const timeWidth = 8 * 6 + 2 * 6 + 6 - 1; // 8 digits + 2 colons + 1 space + 2 letters (AM/PM) - 1
   const timeStartCol = Math.floor((cols - timeWidth) / 2);
-  const timeStartRow = titleStartRow + 7 + 2; // Title height + gap
+  const timeStartRow = 1;
 
-  // Create time character map combining digits and colon
-  const timeCharMap = { ...digits, ':': letters[':'] };
-
-  // Convert digit characters to patterns
+  // Create time character map combining digits, colon, space, and AM/PM letters
   const timeCharMapConverted: Record<string, Frame> = {};
   for (const [key, value] of Object.entries(digits)) {
     timeCharMapConverted[key] = value;
   }
   timeCharMapConverted[':'] = letters[':'];
+  timeCharMapConverted[' '] = letters[' '];
+  timeCharMapConverted['A'] = letters['A'];
+  timeCharMapConverted['P'] = letters['P'];
+  timeCharMapConverted['M'] = letters['M'];
 
   // Render time
   renderTextToFrame(frame, timeText, timeStartRow, timeStartCol, timeCharMapConverted);
@@ -152,19 +154,33 @@ export function MatrixDisplay() {
   // Generate title shimmer frames
   const titleShimmerFrames = useMemo(() => createTitleFrames(24), []);
 
-  // Matrix dimensions
-  const rows = 17; // Title (7) + gap (2) + time (7) + padding (1 top/bottom)
-  const cols = 60; // Wide enough for "Qork.Me" and "HH:MM:SS"
+  // Matrix dimensions for title
+  const titleRows = 9; // Title (7) + padding (1 top/bottom)
+  const titleCols = 50; // Wide enough for "Qork.Me"
 
-  // Create current frame
-  const currentFrame = useMemo(() => {
+  // Matrix dimensions for time
+  const timeRows = 9; // Time (7) + padding (1 top/bottom)
+  const timeCols = 66; // Wide enough for "HH:MM:SS AM/PM"
+
+  // Create title frame with shimmer
+  const titleFrame = useMemo(() => {
     const titleBrightness = titleShimmerFrames[frameIndex];
-    return createUnifiedFrame(time, titleBrightness, rows, cols);
-  }, [time, frameIndex, titleShimmerFrames, rows, cols]);
+    return createTitleFrame(titleBrightness, titleRows, titleCols);
+  }, [frameIndex, titleShimmerFrames, titleRows, titleCols]);
+
+  // Create time frame
+  const timeFrame = useMemo(() => {
+    return createTimeFrame(time, timeRows, timeCols);
+  }, [time, timeRows, timeCols]);
+
+  const palette = {
+    on: 'rgba(196, 114, 79, 1)', // Bright terracotta
+    off: 'rgba(196, 114, 79, 0.08)', // Very subtle off state
+  };
 
   return (
-    <div className="relative mb-8 flex justify-center">
-      {/* Feathered edge effect using CSS mask */}
+    <div className="relative mb-8 flex flex-col items-center gap-6">
+      {/* Title Matrix with feathered edges */}
       <div
         className="relative"
         style={{
@@ -174,17 +190,35 @@ export function MatrixDisplay() {
         }}
       >
         <Matrix
-          rows={rows}
-          cols={cols}
-          pattern={currentFrame}
+          rows={titleRows}
+          cols={titleCols}
+          pattern={titleFrame}
           size={8}
           gap={2}
-          palette={{
-            on: 'rgba(196, 114, 79, 1)', // Bright terracotta
-            off: 'rgba(196, 114, 79, 0.08)', // Very subtle off state
-          }}
+          palette={palette}
           brightness={1}
-          ariaLabel="Qork.Me - Animated title and current time display"
+          ariaLabel="Qork.Me animated title"
+        />
+      </div>
+
+      {/* Time Matrix - smaller size for secondary importance */}
+      <div
+        className="relative"
+        style={{
+          WebkitMaskImage:
+            'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+          maskImage: 'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+        }}
+      >
+        <Matrix
+          rows={timeRows}
+          cols={timeCols}
+          pattern={timeFrame}
+          size={6}
+          gap={2}
+          palette={palette}
+          brightness={1}
+          ariaLabel="Current time in 12-hour format with AM/PM"
         />
       </div>
     </div>

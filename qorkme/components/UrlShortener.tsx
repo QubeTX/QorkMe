@@ -121,9 +121,8 @@ export function UrlShortener() {
     <div
       ref={cardRef}
       className={`
-        relative overflow-hidden rounded-[30px]
+        relative rounded-[30px]
         bg-[color:var(--color-surface)]/[0.03]
-        p-6 sm:p-8 md:p-12
         shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1),0_0_0_1px_rgba(255,255,255,0.05)]
         backdrop-blur-xl
         border border-white/10
@@ -152,8 +151,9 @@ export function UrlShortener() {
       {/* Input State */}
       <div
         className={`
+          p-6 sm:p-8 md:p-12
           transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-          ${cardState !== 'input' ? 'opacity-0 -translate-y-5 pointer-events-none absolute' : ''}
+          ${cardState !== 'input' ? 'opacity-0 -translate-y-5 pointer-events-none absolute inset-0' : ''}
         `}
       >
         <label
@@ -186,8 +186,9 @@ export function UrlShortener() {
       {/* Loading State */}
       <div
         className={`
+          p-6 sm:p-8 md:p-12
           flex items-center justify-center transition-all duration-500
-          ${cardState !== 'shortening' ? 'opacity-0 pointer-events-none absolute' : ''}
+          ${cardState !== 'shortening' ? 'opacity-0 pointer-events-none absolute inset-0' : ''}
         `}
       >
         <div className="flex flex-col items-center gap-4">
@@ -199,8 +200,9 @@ export function UrlShortener() {
       {/* Output State */}
       <div
         className={`
+          p-6 sm:p-8 md:p-12
           text-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-          ${cardState !== 'shortened' ? 'opacity-0 pointer-events-none absolute' : 'animate-slideIn'}
+          ${cardState !== 'shortened' ? 'opacity-0 pointer-events-none absolute inset-0' : 'animate-slideIn'}
         `}
       >
         <div className="mb-6 inline-block animate-[successPop_0.6s_cubic-bezier(0.4,0,0.2,1)]">

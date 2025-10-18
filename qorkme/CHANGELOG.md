@@ -1,5 +1,54 @@
 # Changelog
 
+## [3.0.25] - 2025-10-18
+
+### Fixed
+
+- **React Hydration Mismatch** (components/ui/matrix.tsx, lines 187-188)
+  - Fixed hydration error by adding explicit `px` units to width/height inline styles
+  - Changed from `width: size` to `width: \`${size}px\`` to ensure server/client HTML match
+  - Changed from `height: size` to `height: \`${size}px\`` to ensure consistent rendering
+  - Eliminates console warnings about attribute mismatches between server and client
+
+- **UrlShortener Padding Issue** (components/UrlShortener.tsx)
+  - Fixed Input field and Button touching card edges by restructuring padding architecture
+  - Removed `p-6 sm:p-8 md:p-12` from parent card container (line 126)
+  - Added matching padding to each state container (Input/Loading/Output) with `inset-0` for absolute positioning
+  - Ensures consistent internal spacing: 24px mobile, 32px small screens, 48px desktop
+  - Input focus rings now display properly without being clipped by parent overflow
+  - All three states (Input/Loading/Output) maintain proper breathing room from card edges
+
+- **Non-Deterministic Rendering** (components/MatrixDisplay.tsx, lines 78-80)
+  - Removed `Math.random()` sparkle effect from title animation
+  - Ensures server and client render identical HTML for shimmer effect
+  - Prevents hydration mismatches caused by random values
+
+### Changed
+
+- **Time Display Format** (components/MatrixDisplay.tsx, lines 103-134, 163, 221)
+  - Converted from 24-hour format (HH:MM:SS) to 12-hour format with AM/PM (HH:MM:SS AM/PM)
+  - Hours now display in 1-12 range instead of 0-23
+  - Added AM/PM period detection based on 24-hour time
+  - Increased matrix width from 54 to 66 columns to accommodate longer time string
+  - Updated character map to include space, 'A', 'P', 'M' letters
+  - Updated ARIA label to "Current time in 12-hour format with AM/PM" for accessibility
+
+### Added
+
+- **Letter Patterns** (components/ui/matrix.tsx, lines 533-550)
+  - Added uppercase 'A' pattern (7×5 matrix) for AM/PM display
+  - Added uppercase 'P' pattern (7×5 matrix) for AM/PM display
+  - 'M' pattern already existed from "Qork.Me" title
+
+- **Testing Documentation** (TESTING_CHECKLIST.md)
+  - Created comprehensive testing checklist for Playwright session
+  - Includes visual verification steps for all three fixes
+  - Console error checks for hydration issues
+  - Accessibility compliance verification
+  - Responsive padding tests across breakpoints
+  - Playwright test code examples for automated testing
+  - Success criteria checklist and rollback plan
+
 ## [3.0.24] - 2025-10-18
 
 ### Changed

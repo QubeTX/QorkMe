@@ -1,5 +1,13 @@
 # Changelog
 
+## 2025-10-18 23:30
+
+- Fixed React hydration mismatch error in Matrix component by adding explicit `px` units to width/height inline styles, changing from unitless numbers to properly formatted CSS strings.
+- Converted MatrixDisplay time format from 24-hour to 12-hour with AM/PM period display, added letter patterns for 'A' and 'P' to matrix.tsx, increased matrix width from 54 to 66 columns to accommodate longer time string, and updated ARIA label for accessibility.
+- Removed non-deterministic `Math.random()` sparkle effect from MatrixDisplay title animation to ensure consistent server/client rendering.
+- Fixed UrlShortener card padding issue where Input field and Button were touching card edges: moved padding from parent card container to individual state containers (Input/Loading/Output), added `inset-0` to absolute positioned states to properly respect internal spacing across all responsive breakpoints (24px mobile, 32px small screens, 48px desktop).
+- Created comprehensive testing checklist document (TESTING_CHECKLIST.md) with visual verification steps, accessibility checks, responsive padding tests, Playwright test scenarios, and success criteria for all changes.
+
 ## 2025-10-18 21:45
 
 - Redesigned MatrixBackground component from canvas-based particle system to viewport-filling dot-matrix display with animated wave effects and centered digital clock showing HH:MM:SS in retro 7-segment style using terracotta colors from design system.
