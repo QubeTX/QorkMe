@@ -1,5 +1,35 @@
 # Changelog
 
+## 2025-10-18 21:16
+
+### Added
+
+- **Interactive Grid Background Pattern** (qorkme/components/ui/interactive-grid-pattern.tsx)
+  - Implemented SVG-based interactive grid background with organic noise-driven opacity variation
+  - 20×20 grid (400 cells) at 40px cell size provides subtle visual texture without overwhelming content
+  - Terracotta hover glow using `--color-primary` at 12% opacity for brand-aligned interactivity
+  - SVG fractal noise filter creates paper-like, organic opacity variation (0.4-1.0 range) on grid lines
+  - Single SVG element architecture ensures 60fps performance with minimal DOM overhead
+  - React state tracks only hovered cells (not all 400), CSS transitions handle animations
+  - Grid lines use `--color-border-strong` with strokeOpacity 0.6 for warm, visible earthy strokes
+  - Integrated into homepage (qorkme/app/page.tsx) as absolute positioned background layer at z-0
+
+### Changed
+
+- **Documentation Updates**
+  - CLAUDE.md: Added Interactive Grid Background section under Critical UI/Layout Patterns with implementation details, customization guide, and noise filter parameter explanations
+  - qorkme/docs/UI_LAYOUT_GUIDE.md: Added comprehensive Interactive Grid Background section documenting:
+    - Key features (single SVG element, 60fps performance, noise-based opacity)
+    - Implementation pattern with proper z-index layering
+    - Customization guide for grid density, noise filter parameters, line appearance, and hover effects
+    - Performance considerations (cell limits, mobile behavior, pointer events)
+    - Common adjustments for visibility, noise intensity, and pattern variation
+  - qorkme/docs/DESIGN_SYSTEM.md: Added Interactive Grid Background subsection under Elevation & Effects with:
+    - Visual characteristics and design token usage
+    - Noise filter specifications including alpha modulation formula
+    - Performance metrics and usage guidelines
+  - qorkme/CHANGELOG.md: Added version 3.0.28 entry documenting grid implementation and documentation updates
+
 ## 2025-10-18 21:01
 
 - Enhanced CLAUDE.md with new Critical UI/Layout Patterns section documenting Tailwind v4 gotchas and common pitfalls (inset-0 with padding, backdrop-blur browser support, container overflow issues).

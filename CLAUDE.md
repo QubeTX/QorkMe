@@ -147,6 +147,37 @@ Implementation: `qorkme/lib/shortcode/generator.ts`
 
 Complete troubleshooting guide: `qorkme/docs/UI_LAYOUT_GUIDE.md`
 
+### Interactive Grid Background
+
+QorkMe features a subtle interactive grid background that creates visual depth and user engagement:
+
+- **Component**: `qorkme/components/ui/interactive-grid-pattern.tsx`
+- **Implementation**: Single SVG element with 60fps performance
+- **Grid specs**: 20×20 cells at 40px each
+- **Visual effects**:
+  - Base grid: Earthy border lines with noise-based opacity variation for organic texture
+  - Hover interaction: Terracotta glow (`--color-primary` at 12% opacity) on cell hover
+  - Noise filter: SVG fractal noise modulates grid line opacity (0.4-1.0 range) for subtle, paper-like inconsistency
+- **Z-index**: Grid at z-0, content at z-10
+- **Performance**: Minimal DOM manipulation, CSS transitions, pointer events isolated to interactive cells only
+
+**Customization**:
+```tsx
+<InteractiveGridPattern
+  width={40}           // Cell width in pixels
+  height={40}          // Cell height in pixels
+  squares={[20, 20]}   // [columns, rows]
+  className="..."      // Additional styles
+/>
+```
+
+**Noise Filter Details** (in SVG `<defs>`):
+- `baseFrequency="0.025"`: Controls noise scale (lower = larger patterns)
+- `numOctaves="3"`: Noise layer detail (higher = more complex)
+- `feColorMatrix` alpha values `0.6 0.4`: Opacity range (slope × input + intercept)
+
+Implementation: `qorkme/app/page.tsx` (absolute positioned behind main content)
+
 ## Environment Variables
 
 Required in `qorkme/.env.local`:

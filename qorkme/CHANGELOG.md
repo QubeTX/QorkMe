@@ -1,5 +1,32 @@
 # Changelog
 
+## [3.0.28] - 2025-10-18
+
+### Added
+
+- **Interactive Grid Background Pattern** (components/ui/interactive-grid-pattern.tsx)
+  - New SVG-based interactive grid background with organic noise texture
+  - 20×20 grid (400 cells) at 40px cell size for subtle visual depth
+  - Terracotta hover effect using `--color-primary` at 12% opacity
+  - SVG fractal noise filter creates paper-like opacity variation (0.4-1.0 range) on grid lines
+  - Single SVG element with minimal DOM overhead for 60fps performance
+  - React state tracking only for hovered cells (not all 400 cells)
+  - CSS transitions handle animations, pointer events isolated to interactive cells
+  - Grid lines use `--color-border-strong` with strokeOpacity 0.6 for visible earthy strokes
+  - Integrated into homepage (app/page.tsx) as absolute positioned background layer (z-0)
+
+- **Comprehensive Grid Documentation**
+  - CLAUDE.md: Added Interactive Grid Background section with implementation details and customization guide
+  - docs/UI_LAYOUT_GUIDE.md: Added complete Interactive Grid Background section with:
+    - Noise filter parameter explanations (baseFrequency, numOctaves, feColorMatrix)
+    - Grid density and size customization examples
+    - Performance considerations and cell limits
+    - Common adjustment patterns (visibility, noise intensity, hover colors)
+  - docs/DESIGN_SYSTEM.md: Added Interactive Grid Background subsection under Elevation & Effects:
+    - Visual characteristics and design token usage
+    - Noise filter specifications with alpha modulation formula
+    - Performance metrics and usage guidelines
+
 ## [3.0.27] - 2025-10-18
 
 ### Added

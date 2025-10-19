@@ -652,6 +652,117 @@ gap-32  // 8rem = 128px    - Section spacing
 
 ---
 
+## Interactive Grid Background
+
+### Overview
+
+QorkMe uses an SVG-based interactive grid background that adds subtle visual depth without impacting performance.
+
+**Component**: `qorkme/components/ui/interactive-grid-pattern.tsx`
+
+### Key Features
+
+- **Single SVG element**: Renders 400 cells (20×20) with minimal DOM overhead
+- **60fps performance**: CSS transitions handle animations, React only tracks hover state
+- **Noise-based opacity**: Organic, paper-like texture via SVG fractal noise filter
+- **Terracotta hover glow**: Uses `--color-primary` at 12% opacity for brand alignment
+
+### Implementation Pattern
+
+```tsx
+<div className="relative">
+  {/* Background layer */}
+  <InteractiveGridPattern
+    className="absolute inset-0 z-0"
+    width={40}
+    height={40}
+    squares={[20, 20]}
+  />
+
+  {/* Content layer */}
+  <div className="relative z-10">
+    {/* Your content */}
+  </div>
+</div>
+```
+
+### Customization Guide
+
+**Grid Density & Size:**
+```tsx
+<InteractiveGridPattern
+  width={40}          // Cell width (px) - smaller = denser grid
+  height={40}         // Cell height (px)
+  squares={[20, 20]}  // [columns, rows] - max ~50×50 for performance
+/>
+```
+
+**Noise Filter Parameters** (in component `<defs>`):
+
+```tsx
+<feTurbulence
+  baseFrequency="0.025"  // 0.01-0.05: Noise scale (lower = larger patterns)
+  numOctaves="3"         // 1-4: Detail layers (higher = more complex)
+  seed="42"              // Any number: Deterministic pattern
+/>
+
+<feColorMatrix
+  values="0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0.6 0.4"  // Last row: [slope] [intercept] for alpha
+/>
+// Alpha = (noise × 0.6) + 0.4 = range 0.4 to 1.0
+// Adjust slope/intercept to change opacity variation intensity
+```
+
+**Grid Line Appearance** (in `<pattern>` section):
+
+```tsx
+<path
+  stroke="var(--color-border-strong)"  // Line color token
+  strokeWidth="1"                      // Line thickness (0.5-2)
+  strokeOpacity="0.6"                  // Base opacity (0.3-0.8)
+/>
+```
+
+**Hover Effect** (in interactive cells):
+
+```tsx
+fill={isHovered ? 'var(--color-primary)' : 'transparent'}
+fillOpacity={isHovered ? '0.12' : '0'}  // Adjust 0.08-0.20
+className="transition-all duration-300"  // Adjust 150-500ms
+```
+
+### Performance Considerations
+
+- **Cell limit**: Keep total cells under 2500 (50×50) to maintain 60fps
+- **Mobile**: Touch devices don't show hover effects - grid remains static
+- **Z-index**: Always place grid at `z-0`, content at `z-10` or higher
+- **Pointer events**: Grid uses `pointer-events-none` on container, `pointer-events-auto` only on interactive cells
+
+### Common Adjustments
+
+**Make grid more visible:**
+- Increase `strokeWidth` to `1.5` or `2`
+- Increase `strokeOpacity` to `0.7` or `0.8`
+- Use `--color-border-strong` instead of `--color-border`
+
+**Make noise more/less intense:**
+- More variation: `0 0 0 0.8 0.2` (wider opacity range 0.2-1.0)
+- Less variation: `0 0 0 0.4 0.6` (narrower range 0.6-1.0)
+
+**Change noise pattern:**
+- Finer details: Increase `baseFrequency` to `0.04`
+- Coarser texture: Decrease `baseFrequency` to `0.015`
+- More layers: Increase `numOctaves` to `4`
+
+**Change hover color:**
+- Green accent: `var(--color-accent)` instead of `var(--color-primary)`
+- Custom color: Any CSS color value
+
+---
+
 ## Summary: Golden Rules
 
 1. ✅ **Use `gap` on flex parents, not `margin` on children**
@@ -662,6 +773,7 @@ gap-32  // 8rem = 128px    - Section spacing
 6. ✅ **Clear `.next` cache when changes don't appear**
 7. ✅ **Hard refresh browser after CSS/layout changes**
 8. ✅ **Verify changes in both source files AND rendered HTML**
+9. ✅ **Use InteractiveGridPattern at z-0, content at z-10 for proper layering**
 
 ---
 
