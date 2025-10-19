@@ -120,7 +120,7 @@ export default async function AdminPage() {
 
         <main
           id="main-content"
-          className="main-content flex flex-1 flex-col justify-center overflow-hidden py-8"
+          className="main-content flex flex-1 flex-col items-center justify-center py-8"
         >
           <div
             id="content-container"

@@ -5,7 +5,8 @@
 ### Changed
 
 - **Admin Dashboard Page UI** (app/admin/page.tsx)
-  - Added `justify-center` className to main element for vertical centering
+  - Added `items-center justify-center` to main element for complete centering (both axes)
+  - Removed `overflow-hidden` to enable proper scrolling when content exceeds viewport height
   - Dashboard content now properly centered both vertically and horizontally on viewport
   - Scrollability preserved for content overflow while improving overall visual balance
   - Enhances user experience with better spatial positioning of admin console elements

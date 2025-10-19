@@ -5,8 +5,9 @@
 ### Changed
 
 - **Admin Dashboard Page** (qorkme/app/admin/page.tsx)
-  - Added vertical centering to main element by including `justify-center` className
-  - Dashboard content now centered both vertically and horizontally on screen
+  - Added vertical and horizontal centering to main element with `items-center justify-center`
+  - Removed `overflow-hidden` to allow proper scrolling when content exceeds viewport
+  - Dashboard content now properly centered both vertically and horizontally on screen
   - Maintains scrollability for overflow content while improving visual balance
 - **Admin Login Page** (qorkme/app/admin/login/page.tsx)
   - Increased GitHub OAuth alert box padding from 16px to 24px using inline styles
