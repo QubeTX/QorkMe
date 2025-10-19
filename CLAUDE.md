@@ -68,11 +68,15 @@ npm run format:check # Verify formatting (used in CI)
   - `app/api/admin/purge/route.ts`: Admin database purge endpoint
 
 - **`components/`**: Modular React components organized by function
-  - `ui/`: Base components (Button, Input)
+  - `ui/`: Base components and core UI primitives
+    - `Button.tsx`: Reusable button component
+    - `Input.tsx`: Reusable input component
+    - `matrix.tsx`: Matrix display core logic with dot-matrix rendering
+    - `shimmering-text.tsx`: Shimmering text animation effect
   - `cards/`: Card-based components (Card, FeatureCard, MetricCard)
   - `admin/`: Admin console components (sign-in/out, database operations)
   - `bauhaus/`: Decorative geometric elements
-  - Root-level: Main features (UrlShortener, ThemeToggle, NavigationHeader)
+  - Root-level: Main features (UrlShortener, MatrixDisplay, MatrixBackground, NavigationHeader, ThemeToggle)
 
 - **`lib/`**: Business logic and utilities
   - `shortcode/`: Intelligent short code generation with consonant-vowel patterns
@@ -107,9 +111,41 @@ QorkMe uses a sophisticated consonant-vowel pattern generator:
 2. Collision detection with automatic retry on conflicts
 3. Reserved word filtering to exclude profanity and system terms
 4. Case-insensitive storage with database-level normalization
-5. Custom alias support with validation (3-8 characters)
+5. Custom alias support with validation (3-50 characters)
 
 Implementation: `qorkme/lib/shortcode/generator.ts`
+
+### Critical UI/Layout Patterns
+
+**IMPORTANT**: QorkMe uses Tailwind CSS v4 which has different behavior than v3. Key gotchas:
+
+1. **Flexbox Margin Collapse**: When a parent has `items-center justify-center`, margins on children are collapsed/ignored. Always use `gap` on the flex parent instead of `margin` on children.
+
+   ```jsx
+   // ❌ WRONG - margin ignored
+   <main className="flex items-center justify-center">
+     <div className="mt-32"><Component /></div>
+   </main>
+
+   // ✅ RIGHT - use gap
+   <main className="flex items-center justify-center">
+     <div className="flex flex-col gap-32">
+       <Component1 />
+       <Component2 />
+     </div>
+   </main>
+   ```
+
+2. **Tailwind v4 Utility Generation**: Large padding values (>12) may not generate properly. Use inline styles with explicit pixel values when Tailwind classes fail:
+
+   ```jsx
+   // May not work: <div className="p-16">
+   // Always works: <div style={{ padding: '64px' }}>
+   ```
+
+3. **Component Structure**: Keep layouts flat - avoid unnecessary nesting. Each extra div adds complexity and potential layout issues.
+
+Complete troubleshooting guide: `qorkme/docs/UI_LAYOUT_GUIDE.md`
 
 ## Environment Variables
 
@@ -160,7 +196,7 @@ Configure in repository Settings -> Secrets and variables -> Actions:
 QorkMe now leans into an earthy modern aesthetic that pairs warm parchment neutrals with terracotta and sage accents:
 
 - **Color palette**: Soft sand surfaces (`#f6f1e8`, `#f2e7d6`) contrasted with terracotta primary (`#c4724f`) and sage accent (`#5f7d58`).
-- **Typography**: Only `ZT Bros Oskon` for display moments and Inter Regular (400) for body, UI, and numeric content; buttons use Inter Black (900) for maximum contrast via `--weight-ui-button`; if Inter must headline a section, use the `.font-inter-heavy` helper (weight 900). No other families are allowed.
+- **Typography**: **ZT Bros Oskon 90s** for display/hero moments ONLY. Inter Regular (400) for ALL body text, UI labels, and numeric content. Buttons use Inter Black (900) via `--weight-ui-button` CSS variable for maximum contrast. If Inter must be used for a section headline, apply `.font-inter-heavy` helper class (weight 900). **No other font families permitted.**
 - **Surfaces & depth**: Rounded cards (`12px-28px` radii) with diffused warm shadows; blur is subtle and used sparingly.
 - **Theme**: Light theme focused, dark mode swaps to espresso tones via the same tokens. Tokens live in `qorkme/app/globals.css`.
 - **Interaction**: Calm transitions (140-420ms), faint gradient overlays, and focus rings using the primary terracotta.
@@ -192,13 +228,30 @@ Comprehensive guide: `qorkme/docs/VERCEL_SETUP.md`
 
 Vitest suite covering core functionality:
 
-- **Shortcode logic**: Generation patterns, validation, reserved words
-- **API routes**: POST/GET endpoints for `/api/shorten`
-- **Supabase clients**: Client/server factory functions
-- **UI components**: UrlShortener form interactions with Testing Library
+- **Shortcode logic**: Generation patterns, validation, reserved words (`tests/shortcode/generator.test.ts`)
+- **API routes**: POST/GET endpoints for `/api/shorten` (`tests/routes/shorten-route.test.ts`)
+- **Supabase clients**: Client/server factory functions (`tests/supabase/client.test.ts`)
+- **UI components**: UrlShortener form interactions with Testing Library (`tests/ui/url-shortener.test.tsx`)
 - **Setup**: Shared test configuration in `qorkme/tests/setup.ts`
 
-Test files mirror source structure (e.g., `lib/shortcode/generator.test.ts`)
+**Test Patterns**:
+- UI tests use @testing-library/react with user-event for realistic interactions
+- API route tests mock Supabase client responses
+- Tests mirror source structure for easy navigation
+
+**Running specific tests**:
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run specific test file
+npx vitest run tests/shortcode/generator.test.ts
+```
+
+Test files mirror source structure (e.g., `lib/shortcode/generator.ts` → `tests/shortcode/generator.test.ts`)
 
 ## Admin Console
 
@@ -246,6 +299,60 @@ Every redirect logs:
 - Code splitting and lazy loading
 - Bundle optimization with Next.js 15
 
+### Matrix Display with Real-Time Clock
+
+- Animated dot-matrix title using "QORKME" in stylized characters
+- Real-time clock in 12-hour format with AM/PM period (updated 2025-10-18)
+- Matrix width: 66 columns to accommodate time string + AM/PM
+- Character map includes digits 0-9, colon, space, and letters A, P, M
+- Shimmer effect on title letters (deterministic, no random values for hydration safety)
+- Server/client rendering consistency maintained for Next.js hydration
+
+Implementation: `qorkme/components/MatrixDisplay.tsx`, `qorkme/components/ui/matrix.tsx`
+
+### URL Shortener Card Interactions
+
+- Subtle 3D tilt effect on mouse movement (rotation divisor: /80 for refined feel)
+- Responsive internal padding: 24px mobile, 32px tablet, 48px desktop
+- Three states: Input form, Loading spinner, Success display
+- State-aware rendering (conditional, not absolute positioning overlays)
+- Proper focus ring display without clipping
+- Consistent spacing maintained via flexbox `gap` property
+
+Implementation: `qorkme/components/UrlShortener.tsx`
+
+## Development Troubleshooting
+
+### Clear Cache and Restart Dev Server
+
+When changes don't appear or layout behaves unexpectedly:
+
+```bash
+# Kill dev server if running
+pkill -f "next dev"
+
+# Clear Next.js cache
+rm -rf qorkme/.next
+
+# Restart from qorkme directory
+cd qorkme && npm run dev
+```
+
+### Verify Changes Applied
+
+1. **Hard refresh browser**: Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows)
+2. **Check rendered HTML**: `curl -s http://localhost:3000 | grep "your-class"`
+3. **Browser inspector**: Check "Computed" tab for actual CSS values
+
+### Layout Debugging
+
+1. Add temporary colored backgrounds to visualize container boundaries
+2. Check parent for `items-center` or `justify-center` (these collapse margins)
+3. Verify `gap` is on the direct parent of elements you're spacing
+4. Use inline styles if Tailwind classes aren't generating
+
+See `qorkme/docs/UI_LAYOUT_GUIDE.md` for comprehensive layout troubleshooting.
+
 ## Common Development Tasks
 
 ### Update short code generation logic
@@ -263,10 +370,20 @@ Update `qorkme/app/[shortCode]/route.ts` server component
 ### Add new API endpoint
 Create route handler in `qorkme/app/api/` following Next.js App Router conventions
 
+### Modify matrix display or clock
+
+Matrix rendering logic is split between:
+- `qorkme/components/MatrixDisplay.tsx` - Main component with title and clock
+- `qorkme/components/ui/matrix.tsx` - Core matrix dot rendering engine
+- Matrix uses deterministic rendering (no `Math.random()`) to avoid hydration mismatches
+- Time format is 12-hour with AM/PM, updates in real-time
+- Character map: digits 0-9, colon, space, and letters A, P, M
+
 ## Documentation
 
 - **Setup guide**: `qorkme/README.md` - Complete installation and configuration
 - **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - Earthy modern palette, typography, and component tokens
+- **UI/Layout guide**: `qorkme/docs/UI_LAYOUT_GUIDE.md` - Critical Tailwind v4 gotchas, flexbox patterns, troubleshooting
 - **Vercel deployment**: `qorkme/docs/VERCEL_SETUP.md` - CI/CD configuration
 - **General deployment**: `qorkme/docs/DEPLOYMENT.md` - Multi-platform options
 - **Database setup**: `qorkme/supabase/SETUP_INSTRUCTIONS.md` - Supabase configuration

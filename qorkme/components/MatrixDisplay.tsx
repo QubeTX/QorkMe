@@ -166,6 +166,12 @@ function createTimeFrame(time: Date, rows: number, cols: number): Frame {
 export function MatrixDisplay() {
   const [time, setTime] = useState(new Date());
   const [frameIndex, setFrameIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  // Only render on client to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Update time every second
   useEffect(() => {
@@ -208,11 +214,22 @@ export function MatrixDisplay() {
     off: 'rgba(196, 114, 79, 0.08)', // Very subtle off state
   };
 
+  // Return placeholder during SSR to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div id="matrix-display-container" className="matrix-display-container relative mb-8 flex flex-col items-center gap-6">
+        <div id="title-matrix-placeholder" className="title-matrix-placeholder" style={{ width: `${titleCols * 8 + (titleCols - 1) * 2}px`, height: `${titleRows * 8 + (titleRows - 1) * 2}px` }} />
+        <div id="time-matrix-placeholder" className="time-matrix-placeholder" style={{ width: `${timeCols * 6 + (timeCols - 1) * 2}px`, height: `${timeRows * 6 + (timeRows - 1) * 2}px` }} />
+      </div>
+    );
+  }
+
   return (
-    <div className="relative mb-8 flex flex-col items-center gap-6">
+    <div id="matrix-display-container" className="matrix-display-container relative mb-8 flex flex-col items-center gap-6">
       {/* Title Matrix with feathered edges */}
       <div
-        className="relative"
+        id="title-matrix-wrapper"
+        className="title-matrix-wrapper relative"
         style={{
           WebkitMaskImage:
             'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
@@ -233,7 +250,8 @@ export function MatrixDisplay() {
 
       {/* Time Matrix - smaller size for secondary importance */}
       <div
-        className="relative"
+        id="time-matrix-wrapper"
+        className="time-matrix-wrapper relative"
         style={{
           WebkitMaskImage:
             'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',

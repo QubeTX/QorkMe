@@ -20,16 +20,16 @@ export default function Home() {
         }}
       />
 
-      <div className="relative flex min-h-screen flex-col transition-colors duration-300">
-        <main className="flex flex-1 items-center justify-center overflow-hidden">
-          <div className="container relative z-10 w-full max-w-[700px] px-8 py-8">
+      <div id="page-wrapper" className="page-wrapper relative flex min-h-screen flex-col transition-colors duration-300">
+        <main id="main-content" className="main-content flex flex-1 items-center justify-center overflow-hidden py-8">
+          <div id="content-container" className="content-container relative z-10 flex w-full max-w-[700px] flex-col gap-32 px-4">
             {/* Matrix Display with Title and Clock */}
-            <div className="animate-fadeIn text-center">
+            <div id="matrix-display-wrapper" className="matrix-display-wrapper animate-fadeIn text-center">
               <MatrixDisplay />
             </div>
 
             {/* Main Card with URL Shortener */}
-            <div className="mt-12">
+            <div id="url-shortener-wrapper" className="url-shortener-wrapper">
               <UrlShortener />
             </div>
           </div>
