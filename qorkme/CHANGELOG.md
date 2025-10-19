@@ -1,5 +1,61 @@
 # Changelog
 
+## [3.0.35] - 2025-10-19
+
+### Added
+
+- **Dot Matrix-Inspired Favicon System**
+  - Created comprehensive favicon implementation matching the dot-matrix aesthetic of MatrixDisplay component
+  - **Primary Icon Design** ([public/favicon.svg](public/favicon.svg))
+    - Four circular dots at corners creating unified square composition
+    - Top-left dot (128,128): Terracotta primary #c4724f
+    - Top-right dot (384,128): Terracotta primary #c4724f
+    - Bottom-left dot (128,384): Terracotta primary #c4724f
+    - Bottom-right dot (384,384): Lighter tint #e8b399 at 65% opacity for visual hierarchy
+    - Each dot: 128px radius (256px diameter) positioned to touch edges of 512×512 viewBox
+    - Creates cohesive square when viewed as browser tab icon
+  - **Multi-Resolution PNG Icon Set**
+    - [public/favicon-16x16.png](public/favicon-16x16.png): 16×16 standard browser tab icon
+    - [public/favicon-32x32.png](public/favicon-32x32.png): 32×32 retina browser tab icon
+    - [public/favicon-48x48.png](public/favicon-48x48.png): 48×48 Windows taskbar icon
+    - [public/apple-touch-icon.png](public/apple-touch-icon.png): 180×180 iOS/iPadOS home screen icon
+    - [public/icon-192.png](public/icon-192.png): 192×192 PWA icon (Android home screen)
+    - [public/icon-512.png](public/icon-512.png): 512×512 PWA icon (splash screens, high-res contexts)
+    - All PNGs generated from SVG source maintaining crisp edges at all sizes
+  - **Legacy ICO Format** ([app/favicon.ico](app/favicon.ico))
+    - Multi-resolution .ico file containing 16×16, 32×32, and 48×48 sizes
+    - Provides fallback support for older browsers (IE11, legacy Windows)
+    - Automatically served at /favicon.ico route by Next.js
+  - **Progressive Web App Support** ([public/manifest.json](public/manifest.json))
+    - Web app manifest enabling "Add to Home Screen" functionality
+    - Name: "QorkMe - URL Shortener"
+    - Short name: "QorkMe"
+    - Theme color: Terracotta #c4724f (matches primary brand color)
+    - Background color: Parchment #f6f1e8 (matches light theme surface)
+    - Display mode: "standalone" for app-like experience without browser chrome
+    - Icons configured with "any maskable" purpose for adaptive display
+    - Supports Android, iOS, and desktop PWA installation
+
+### Changed
+
+- **Next.js Metadata Configuration** ([app/layout.tsx](app/layout.tsx), lines 8-16)
+  - Updated `metadata.icons` object to reference new favicon files
+  - Icon array now includes:
+    - SVG favicon for modern browsers with scalable vector support
+    - 16×16 PNG for standard-DPI displays
+    - 32×32 PNG for high-DPI/retina displays
+  - Added `metadata.icons.apple` array with 180×180 apple-touch-icon
+  - Added `metadata.manifest` reference to /manifest.json for PWA capabilities
+  - Ensures proper favicon display across all browsers, devices, and contexts
+
+### Design Notes
+
+- **Visual Coherence**: Favicon design directly inspired by MatrixDisplay component's dot-matrix rendering
+- **Brand Alignment**: Uses exact terracotta colors from design system (--color-primary)
+- **Scalability**: SVG-first approach ensures crisp rendering at any size
+- **Accessibility**: High contrast between terracotta dots and transparent/white backgrounds
+- **Progressive Enhancement**: Graceful degradation from SVG to PNG to ICO for maximum compatibility
+
 ## [3.0.34] - 2025-10-19
 
 ### Added
