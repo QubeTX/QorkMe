@@ -1,5 +1,34 @@
 # Changelog
 
+## [3.0.34] - 2025-10-19
+
+### Added
+
+- **Dynamic Responsive Interactive Grid**
+  - Interactive grid now automatically calculates required columns/rows based on viewport size
+  - Formula: `Math.ceil(window.innerWidth / cellWidth) + 2` buffer cells for full coverage
+  - Grid responds to window resize events for continuous full-screen coverage
+  - Eliminates the previous hardcoded 20×20 grid limitation (800px × 800px)
+  - All pages updated: homepage, admin dashboard, admin login
+
+### Fixed
+
+- **Interactive Grid Hover Coverage**
+  - Fixed issue where only the left side of screen (~800px) had interactive hover effects
+  - Right half of screen now fully interactive with terracotta glow on hover
+  - Grid cells now cover entire viewport on all screen sizes (including ultra-wide monitors)
+  - Responsive grid updates dynamically when browser window is resized
+
+### Changed
+
+- **Enhanced Matrix Display Edge Feathering** ([components/MatrixDisplay.tsx](components/MatrixDisplay.tsx))
+  - Upgraded from simple 2-step gradient to sophisticated 4-step multi-opacity fade
+  - Old gradient: `black 40%, transparent 100%`
+  - New gradient: `black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%`
+  - Creates much smoother, more gradual blending into earthy parchment background
+  - Softer edges provide more organic, natural appearance
+  - Applied to all 4 matrix wrappers: title/time displays on desktop and mobile
+
 ## [3.0.33] - 2025-10-19
 
 ### Added

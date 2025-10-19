@@ -115,12 +115,7 @@ export default async function AdminPage() {
         className="page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
       >
         {/* Interactive Grid Background */}
-        <InteractiveGridPattern
-          className="absolute inset-0 z-0"
-          width={40}
-          height={40}
-          squares={[20, 20]}
-        />
+        <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
 
         <main id="main-content" className="main-content flex flex-1 flex-col overflow-hidden py-8">
           <div

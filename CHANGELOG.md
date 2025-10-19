@@ -1,5 +1,20 @@
 # Changelog
 
+## 2025-10-20 00:05
+
+### Added
+
+- **Dynamic Responsive Interactive Grid**: Grid now automatically calculates required cells based on viewport size with `useEffect` and resize listeners, ensuring full-screen coverage on all monitor sizes including ultra-wide displays
+
+### Fixed
+
+- **Interactive Grid Hover Coverage**: Fixed critical issue where only left ~800px of screen had interactive hover effects - right side now fully interactive across entire viewport
+- **Grid Responsiveness**: Grid cells now dynamically update when browser window is resized, maintaining full coverage at all times
+
+### Changed
+
+- **Enhanced Matrix Display Edge Feathering**: Upgraded from 2-step to 4-step gradient fade (`black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%`) for smoother, more organic blending into background on all matrix displays (title/time, desktop/mobile)
+
 ## 2025-10-19 23:55
 
 ### Added

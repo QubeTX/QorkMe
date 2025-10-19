@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 
 interface InteractiveGridPatternProps {
   className?: string;
@@ -14,11 +14,30 @@ export function InteractiveGridPattern({
   className = '',
   width = 40,
   height = 40,
-  squares = [20, 20],
+  squares,
   squaresClassName = '',
 }: InteractiveGridPatternProps) {
   const [hoveredCells, setHoveredCells] = useState<Set<string>>(new Set());
+  const [gridSize, setGridSize] = useState({ cols: 20, rows: 20 });
   const containerRef = useRef<SVGSVGElement>(null);
+
+  // Dynamically calculate grid size based on viewport
+  useEffect(() => {
+    const updateGridSize = () => {
+      // Calculate columns and rows needed to cover viewport
+      // Add buffer of 2 cells to ensure full coverage during resize
+      const cols = Math.ceil(window.innerWidth / width) + 2;
+      const rows = Math.ceil(window.innerHeight / height) + 2;
+      setGridSize({ cols, rows });
+    };
+
+    // Initial calculation
+    updateGridSize();
+
+    // Update on resize
+    window.addEventListener('resize', updateGridSize);
+    return () => window.removeEventListener('resize', updateGridSize);
+  }, [width, height]);
 
   const handleCellEnter = useCallback((cellId: string) => {
     setHoveredCells((prev) => {
@@ -36,7 +55,9 @@ export function InteractiveGridPattern({
     });
   }, []);
 
-  const [cols, rows] = squares;
+  // Use provided squares or dynamically calculated gridSize
+  const cols = squares ? squares[0] : gridSize.cols;
+  const rows = squares ? squares[1] : gridSize.rows;
 
   return (
     <svg

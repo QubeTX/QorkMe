@@ -270,8 +270,9 @@ export function MatrixDisplay() {
         className="title-matrix-wrapper-desktop relative hidden md:block"
         style={{
           WebkitMaskImage:
-            'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
-          maskImage: 'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+            'radial-gradient(ellipse 100% 100% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+          maskImage:
+            'radial-gradient(ellipse 100% 100% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%)',
         }}
       >
         <Matrix
@@ -294,8 +295,9 @@ export function MatrixDisplay() {
         className="title-matrix-wrapper-mobile relative md:hidden"
         style={{
           WebkitMaskImage:
-            'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
-          maskImage: 'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+            'radial-gradient(ellipse 100% 100% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+          maskImage:
+            'radial-gradient(ellipse 100% 100% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%)',
         }}
       >
         <Matrix
@@ -318,8 +320,9 @@ export function MatrixDisplay() {
         className="time-matrix-wrapper-desktop relative hidden md:block"
         style={{
           WebkitMaskImage:
-            'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
-          maskImage: 'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+            'radial-gradient(ellipse 100% 100% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+          maskImage:
+            'radial-gradient(ellipse 100% 100% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%)',
         }}
       >
         <Matrix
@@ -342,8 +345,9 @@ export function MatrixDisplay() {
         className="time-matrix-wrapper-mobile relative md:hidden"
         style={{
           WebkitMaskImage:
-            'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
-          maskImage: 'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+            'radial-gradient(ellipse 100% 100% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+          maskImage:
+            'radial-gradient(ellipse 100% 100% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 100%)',
         }}
       >
         <Matrix

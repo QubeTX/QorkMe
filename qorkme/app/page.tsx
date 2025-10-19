@@ -26,12 +26,7 @@ export default function Home() {
         className="page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
       >
         {/* Interactive Grid Background */}
-        <InteractiveGridPattern
-          className="absolute inset-0 z-0"
-          width={40}
-          height={40}
-          squares={[20, 20]}
-        />
+        <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
 
         <main
           id="main-content"
