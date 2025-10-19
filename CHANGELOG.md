@@ -1,5 +1,20 @@
 # Changelog
 
+## 2025-10-19 04:30
+
+### Added
+
+- **In-Card URL Shortener Result Display** (qorkme/components/UrlShortener.tsx)
+  - Completely redesigned URL shortener flow to display results within the same card without page navigation
+  - Implemented three-state system with smooth fade transitions between input, loading, and success views
+  - Added automatic clipboard copy functionality that triggers immediately upon successful URL creation
+  - Created success view with light-colored inner container using design system tokens (`--color-surface-elevated` at 15% opacity)
+  - Integrated visual feedback elements: green checkmark icon, success message, and manual copy button with terracotta hover effect
+  - Added "Shorten Another URL" button to seamlessly reset back to input view
+  - Implemented fade animations: 200ms fade out for input elements, 300ms fade in for success display
+  - Enhanced user experience eliminates navigation, provides instant feedback, and maintains context within single card interface
+  - Updated qorkme/CHANGELOG.md with version 3.0.31 entry documenting all new features
+
 ## 2025-10-18 23:15
 
 ### Changed

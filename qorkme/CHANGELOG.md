@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.0.31] - 2025-10-19
+
+### Added
+
+- **In-Card Result Display with Smooth Transitions** (components/UrlShortener.tsx)
+  - Transformed URL shortener to display results within the same card instead of navigating away
+  - Three distinct view states with smooth fade transitions:
+    - **Input View**: Standard form with URL input and "Shorten URL" button
+    - **Loading View**: Centered spinner with "Creating your short link..." message during API request
+    - **Success View**: Light-colored inner container displaying the shortened URL
+  - Automatic clipboard copy on successful URL creation using `navigator.clipboard.writeText()`
+  - Success container styling:
+    - Uses `--color-surface-elevated` with 15% opacity for lighter background within dark card
+    - Rounded corners (20px) matching design system
+    - Green checkmark icon with success message
+    - Short URL displayed in monospace font for clarity
+    - Manual copy button with terracotta accent color on hover
+  - Fade animations:
+    - Input/button fade out (200ms) when submitting
+    - Success view fades in (300ms) with new shortlink
+    - Smooth reset transition when clicking "Shorten Another URL"
+  - Enhanced user experience:
+    - No page navigation required
+    - Instant visual feedback through state transitions
+    - URL automatically cleared after successful creation
+    - Toast notifications for copy confirmations
+    - Error handling returns gracefully to input view
+
 ## [3.0.30] - 2025-10-18
 
 ### Changed
