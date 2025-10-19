@@ -1,5 +1,31 @@
 # Changelog
 
+## 2025-10-19 11:00
+
+### Added
+
+- **Staggered Cascade Page Load Animations** (qorkme/app/globals.css, qorkme/components/ui/matrix.tsx, qorkme/components/MatrixDisplay.tsx, qorkme/app/page.tsx, qorkme/components/SiteFooter.tsx)
+  - Implemented sophisticated diagonal fade-in animation sequence for polished page load experience
+  - Added custom animation delay utilities to globals.css: `anim-delay-200`, `anim-delay-500`, `anim-delay-800`, `anim-delay-1200` (200ms, 500ms, 800ms, 1200ms delays)
+  - Created cell-by-cell diagonal cascade for Matrix component with top-left to bottom-right progression
+  - Matrix component now supports `cascadeDelay` and `cascadeStartDelay` props for precise animation control
+  - QorkMe title matrix: Cascades at 8ms per cell delay starting at 200ms
+  - Time matrix: Cascades at 6ms per cell delay starting at 500ms
+  - URL shortener card: Fades in at 800ms after matrix animations establish visual hierarchy
+  - Footer: Fades in at 1200ms as final element in page load sequence
+  - Total animation sequence: ~1.8 seconds from page load to fully visible interface
+  - All animations use 12px upward motion (`translateY(12px)` to `translateY(0)`) with smooth easing
+  - Keyframe animation: Fade from 0 to 1 opacity with subtle vertical rise for natural entry
+  - Diagonal cascade formula: Each cell's delay = row index × cascadeDelay + column index × cascadeDelay + cascadeStartDelay
+  - Creates mesmerizing top-left to bottom-right wave effect revealing content progressively
+
+### Changed
+
+- **SiteFooter Logo Font Weight** (qorkme/components/SiteFooter.tsx)
+  - Reduced QorkMe footer logo from `font-semibold` (600) to `font-normal` (400)
+  - Creates more elegant, refined footer appearance
+  - Makes footer logo less visually heavy compared to page content
+
 ## 2025-10-19 04:30
 
 ### Added
