@@ -7,6 +7,7 @@ import { ADMIN_GITHUB_USERNAME, ADMIN_GITHUB_USERNAME_DISPLAY } from '@/lib/conf
 import { AdminSignOutButton } from '@/components/admin/AdminSignOutButton';
 import { ClearDatabaseButton } from '@/components/admin/ClearDatabaseButton';
 import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
+import { SecureAccessMatrix } from '@/components/SecureAccessMatrix';
 import { Toaster } from 'react-hot-toast';
 import { Activity, Database, RefreshCcw, Shield, BarChart3, AlertTriangle } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
@@ -125,7 +126,7 @@ export default async function AdminPage() {
           >
             {/* Header Section */}
             <div className="flex flex-col gap-6 animate-fadeIn-delay-200 opacity-0">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-3">
                 <div
                   className="flex items-center gap-3 rounded-full px-6 py-3"
                   style={{
@@ -145,11 +146,10 @@ export default async function AdminPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4">
-                <h1 className="font-display text-4xl md:text-5xl font-semibold text-[color:var(--color-text-primary)]">
-                  Workspace Analytics
-                </h1>
-                <p className="max-w-2xl text-[color:var(--color-text-secondary)] text-base">
+              <SecureAccessMatrix />
+
+              <div className="flex flex-col gap-4 text-center">
+                <p className="max-w-2xl mx-auto text-[color:var(--color-text-secondary)] text-base">
                   Authenticated as{' '}
                   <span className="font-mono text-[color:var(--color-primary)]">
                     {ADMIN_GITHUB_USERNAME_DISPLAY}

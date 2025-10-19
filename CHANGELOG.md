@@ -1,5 +1,30 @@
 # Changelog
 
+## 2025-10-19 (Admin Page Enhancements)
+
+### Added
+
+- **Dot Matrix Title Component for Admin Pages**
+  - Created SecureAccessMatrix component displaying "SECURE" and "ACCESS" in stacked dot-matrix format
+  - Implements same shimmer/glitter animation effect as homepage MatrixDisplay
+  - Responsive sizing with feathered edges for smooth visual blending
+  - Added missing uppercase letters (S, E, C, U, R) to matrix character map
+
+### Changed
+
+- **Admin Pages Visual Redesign**
+  - Admin dashboard: Replaced "Workspace Analytics" text heading with SecureAccessMatrix component
+  - Admin login: Replaced "Secure Access" text heading with SecureAccessMatrix component
+  - Consistent dot-matrix branding across all admin pages
+  - Centered layout for matrix titles and badges
+
+### Fixed
+
+- **Admin Login Button Visibility**
+  - Added missing animation classes (animate-fadeIn-delay-300, animate-fadeIn-delay-400) to globals.css
+  - Fixed login button and error alerts being completely invisible due to undefined animation classes
+  - All fade-in animation delays now properly defined (200ms, 300ms, 400ms, 500ms, 800ms, 1200ms)
+
 ## 2025-10-19 (Documentation Update)
 
 ### Changed

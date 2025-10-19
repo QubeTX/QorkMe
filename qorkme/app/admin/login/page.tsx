@@ -5,6 +5,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/cards/Card';
 import { AdminSignInButton } from '@/components/admin/AdminSignInButton';
 import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
+import { SecureAccessMatrix } from '@/components/SecureAccessMatrix';
 import { Toaster } from 'react-hot-toast';
 import { Shield, Lock, Github, AlertCircle } from 'lucide-react';
 import { ADMIN_GITHUB_USERNAME_DISPLAY } from '@/lib/config/admin';
@@ -89,10 +90,9 @@ export default async function AdminLoginPage({
                 </div>
               </div>
 
-              <h1 className="font-display text-4xl font-semibold text-[color:var(--color-text-primary)] mb-4">
-                Secure Access
-              </h1>
-              <p className="text-[color:var(--color-text-secondary)] text-base">
+              <SecureAccessMatrix />
+
+              <p className="text-[color:var(--color-text-secondary)] text-base mt-6">
                 Authenticate with GitHub to access workspace analytics and administrative controls.
               </p>
             </div>

@@ -1,5 +1,37 @@
 # Changelog
 
+## [3.0.37] - 2025-10-19
+
+### Added
+
+- **Dot Matrix Title for Admin Pages**
+  - Created SecureAccessMatrix component ([components/SecureAccessMatrix.tsx](components/SecureAccessMatrix.tsx))
+    - Displays "SECURE" and "ACCESS" in stacked dot-matrix format
+    - Same shimmer/glitter animation effect as homepage MatrixDisplay
+    - Responsive sizing (6px cells desktop, 4.5px cells mobile)
+    - Feathered edges with radial gradient mask
+  - Added missing uppercase letters to matrix character map
+    - S, E, C, U, R patterns added to [components/ui/matrix.tsx](components/ui/matrix.tsx)
+    - All letters follow 7×5 pixel-art style
+
+### Changed
+
+- **Admin Dashboard Page** ([app/admin/page.tsx](app/admin/page.tsx))
+  - Replaced "Workspace Analytics" text heading with SecureAccessMatrix component
+  - Centered layout for matrix title and admin badge
+  - Centered authentication info text below matrix
+- **Admin Login Page** ([app/admin/login/page.tsx](app/admin/login/page.tsx))
+  - Replaced "Secure Access" text heading with SecureAccessMatrix component
+  - Maintains consistent visual identity across admin pages
+
+### Fixed
+
+- **Admin Login Button Visibility Issue**
+  - Added missing `animate-fadeIn-delay-300` animation class to [app/globals.css](app/globals.css)
+  - Added missing `animate-fadeIn-delay-400` animation class to [app/globals.css](app/globals.css)
+  - Fixed login button and error alert remaining invisible due to undefined animation classes
+  - All fade-in delays now available: 200ms, 300ms, 400ms, 500ms, 800ms, 1200ms
+
 ## [3.0.36] - 2025-10-19
 
 ### Changed
