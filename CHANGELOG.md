@@ -1,5 +1,14 @@
 # Changelog
 
+## 2025-10-20 (Contributor Guide Update)
+
+### Changed
+
+- **Repository Documentation**
+  - Rewrote `AGENTS.md` with concise contributor guidance covering structure, tooling, style, testing, release hygiene, and security expectations
+  - Clarified command list for local development (`npm run dev`, `npm run lint`, `npm run type-check`, `npm test`, `npm run build`)
+  - Reiterated dual changelog requirements and environment variable documentation in pull requests
+
 ## 2025-10-19 (Admin Page Enhancements)
 
 ### Added

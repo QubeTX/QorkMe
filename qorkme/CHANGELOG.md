@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.38] - 2025-10-20
+
+### Changed
+
+- **Contributor Guide**
+  - Refreshed root `AGENTS.md` to outline current project structure, required commands, coding conventions, testing expectations, and release hygiene
+  - Highlighted dual changelog updates, environment variable documentation, and Supabase/security guardrails for every contribution
+
 ## [3.0.37] - 2025-10-19
 
 ### Added
