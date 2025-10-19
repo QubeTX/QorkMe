@@ -1,5 +1,18 @@
 # Changelog
 
+## 2025-10-20 (Admin Page UI Improvements)
+
+### Changed
+
+- **Admin Dashboard Page** (qorkme/app/admin/page.tsx)
+  - Added vertical centering to main element by including `justify-center` className
+  - Dashboard content now centered both vertically and horizontally on screen
+  - Maintains scrollability for overflow content while improving visual balance
+- **Admin Login Page** (qorkme/app/admin/login/page.tsx)
+  - Increased GitHub OAuth alert box padding from 16px to 24px using inline styles
+  - Improved breathing room and visual comfort around alert content
+  - Uses inline styles for Tailwind v4 compatibility and guaranteed rendering
+
 ## 2025-10-20 (Contributor Guide Update)
 
 ### Changed

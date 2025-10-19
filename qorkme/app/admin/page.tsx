@@ -118,7 +118,7 @@ export default async function AdminPage() {
         {/* Interactive Grid Background */}
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
 
-        <main id="main-content" className="main-content flex flex-1 flex-col overflow-hidden py-8">
+        <main id="main-content" className="main-content flex flex-1 flex-col justify-center overflow-hidden py-8">
           <div
             id="content-container"
             className="content-container relative z-10 flex w-full max-w-[1200px] flex-col gap-12 mx-auto"

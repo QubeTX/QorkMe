@@ -164,10 +164,11 @@ export default async function AdminLoginPage({
                 </CardHeader>
                 <CardContent className="flex flex-col gap-6">
                   <div
-                    className="rounded-lg p-4 flex items-start gap-3"
+                    className="rounded-lg flex items-start gap-3"
                     style={{
                       background: 'color-mix(in srgb, var(--color-info) 8%, transparent)',
                       border: '1px solid color-mix(in srgb, var(--color-info) 20%, transparent)',
+                      padding: '24px',
                     }}
                   >
                     <Github

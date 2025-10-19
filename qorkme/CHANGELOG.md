@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.39] - 2025-10-20
+
+### Changed
+
+- **Admin Dashboard Page UI** (app/admin/page.tsx)
+  - Added `justify-center` className to main element for vertical centering
+  - Dashboard content now properly centered both vertically and horizontally on viewport
+  - Scrollability preserved for content overflow while improving overall visual balance
+  - Enhances user experience with better spatial positioning of admin console elements
+
+- **Admin Login Page UI** (app/admin/login/page.tsx)
+  - Increased GitHub OAuth alert box padding from 16px to 24px
+  - Applied padding using inline styles (`style={{ padding: '24px' }}`) for Tailwind v4 compatibility
+  - Improved breathing room and visual comfort around authentication alert content
+  - Consistent with design system spacing for better hierarchy and readability
+
 ## [3.0.38] - 2025-10-20
 
 ### Changed
