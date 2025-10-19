@@ -102,7 +102,9 @@ export function UrlShortener() {
         <div className="flex min-h-[200px] items-center justify-center">
           <div className="flex flex-col items-center gap-4">
             <div className="h-12 w-12 animate-spin rounded-full border-4 border-[color:var(--color-surface-muted)] border-t-[color:var(--color-primary)]" />
-            <p className="font-ui text-sm text-[color:var(--color-text-muted)]">Creating your short link...</p>
+            <p className="font-ui text-sm text-[color:var(--color-text-muted)]">
+              Creating your short link...
+            </p>
           </div>
         </div>
       )}
@@ -133,7 +135,9 @@ export function UrlShortener() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="font-ui text-xs text-[color:var(--color-text-muted)]">Your short link:</p>
+              <p className="font-ui text-xs text-[color:var(--color-text-muted)]">
+                Your short link:
+              </p>
               <div className="flex items-center gap-3 rounded-xl bg-[rgba(255,255,255,0.05)] p-4">
                 <p className="flex-1 font-mono text-lg text-[color:var(--color-text-primary)] break-all">
                   {shortUrl}
@@ -143,12 +147,7 @@ export function UrlShortener() {
                   className="flex-shrink-0 rounded-lg bg-[color:var(--color-primary)]/20 p-2 text-[color:var(--color-primary)] transition-colors hover:bg-[color:var(--color-primary)]/30"
                   aria-label="Copy to clipboard"
                 >
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
