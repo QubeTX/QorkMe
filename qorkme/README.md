@@ -111,45 +111,126 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 ### Project Structure
 
 ```
-qorkme/
-|-- .github/              # GitHub Actions workflows
-|   \-- workflows/        # CI/CD automation
-|       |-- ci.yml        # Testing, linting, security scans
-|       \-- deploy.yml    # Production deployment
-|-- app/                  # Next.js 15 App Router
-|   |-- api/             # API routes
-|   |   \-- shorten/     # URL shortening endpoint
-|   |-- result/[id]/     # Results page
-|   |-- [shortCode]/     # Dynamic redirect handler
-|   |-- layout.tsx       # Root layout with fonts
-|   |-- page.tsx         # Home page
-|   \-- not-found.tsx    # 404 page
-|-- components/           # React components
-|   |-- ui/              # Base UI components
-|   |   |-- Button.tsx   # Modern styled button
-|   |   \-- Input.tsx    # Form input component
-|   |-- cards/           # Card-based components
-|   |   |-- Card.tsx     # Base card component
-|   |   \-- FeatureCard.tsx # Feature display cards
-|   |-- ThemeToggle.tsx  # Light/dark theme toggle
-|   |-- UrlShortener.tsx # Main shortener form
-|   \-- ShortUrlDisplay.tsx # Results display
-|-- lib/                  # Utility libraries
-|   |-- shortcode/       # Short code generation
-|   |   |-- generator.ts # Smart generation algorithm
-|   |   |-- validator.ts # Validation logic
-|   |   \-- reserved.ts  # Reserved words list
-|   |-- supabase/        # Database client
-|   |-- theme.tsx        # Theme context provider
-|   \-- utils.ts         # Shared utilities
-|-- supabase/            # Database schema
-|   \-- schema.sql       # Complete database setup
-|-- docs/                # Documentation
-|   |-- VERCEL_SETUP.md  # Comprehensive Vercel & Supabase guide
-|   |-- DEPLOYMENT.md    # General deployment instructions
-|   \-- DESIGN_SYSTEM.md # Complete design specifications
-|-- .prettierrc          # Code formatting configuration
-\-- package.json         # Dependencies and scripts
+.
+├── app/                       # Next.js 15 App Router
+│   ├── [shortCode]/
+│   │   └── route.ts          # Dynamic redirect handler
+│   ├── admin/                # Admin console
+│   │   ├── login/
+│   │   │   └── page.tsx      # Admin login page
+│   │   └── page.tsx          # Admin dashboard
+│   ├── api/                  # API routes
+│   │   ├── admin/
+│   │   │   └── purge/
+│   │   └── shorten/
+│   │       └── route.ts      # URL shortening endpoint
+│   ├── auth/
+│   │   └── callback/
+│   │       └── route.ts      # OAuth callback handler
+│   ├── result/
+│   │   └── [id]/
+│   │       └── page.tsx      # Success page
+│   ├── favicon.ico           # Site favicon
+│   ├── globals.css           # Global styles & design tokens
+│   ├── layout.tsx            # Root layout with fonts
+│   ├── not-found.tsx         # 404 page
+│   └── page.tsx              # Homepage
+├── components/               # React components
+│   ├── admin/               # Admin console components
+│   │   ├── AdminSignInButton.tsx
+│   │   ├── AdminSignOutButton.tsx
+│   │   └── ClearDatabaseButton.tsx
+│   ├── bauhaus/
+│   │   └── GeometricDecor.tsx
+│   ├── cards/               # Card-based components
+│   │   ├── Card.tsx         # Base card component
+│   │   ├── FeatureCard.tsx  # Feature showcase card
+│   │   └── MetricCard.tsx   # Metric display card
+│   ├── ui/                  # Base UI components
+│   │   ├── Button.tsx       # Button component
+│   │   ├── Input.tsx        # Input component
+│   │   ├── interactive-grid-pattern.tsx  # Interactive grid background
+│   │   ├── matrix.tsx       # Matrix display core logic
+│   │   └── shimmering-text.tsx  # Shimmering text effect
+│   ├── ClientThemeToggle.tsx
+│   ├── MatrixBackground.tsx
+│   ├── MatrixDisplay.tsx
+│   ├── NavigationHeader.tsx
+│   ├── ResultNavigationHeader.tsx
+│   ├── ShortUrlDisplay.tsx
+│   ├── SiteFooter.tsx
+│   ├── SiteHeader.tsx
+│   ├── ThemeToggle.tsx
+│   └── UrlShortener.tsx
+├── docs/                    # Documentation
+│   ├── DEPLOYMENT.md        # Deployment guide
+│   ├── DESIGN_SYSTEM.md     # Design system specs
+│   ├── UI_LAYOUT_GUIDE.md   # UI/layout troubleshooting
+│   └── VERCEL_SETUP.md      # Vercel setup guide
+├── lib/                     # Utilities and helpers
+│   ├── config/
+│   │   └── admin.ts
+│   ├── shortcode/          # Short code generation
+│   │   ├── generator.ts    # Code generation algorithm
+│   │   ├── reserved.ts     # Reserved words list
+│   │   └── validator.ts    # Validation logic
+│   ├── supabase/           # Database clients
+│   │   ├── client.ts       # Client-side Supabase
+│   │   ├── server.ts       # Server-side Supabase
+│   │   └── types.ts        # TypeScript types
+│   ├── theme.tsx           # Theme context provider
+│   └── utils.ts            # Utility functions
+├── public/                  # Static assets
+│   ├── fonts/              # ZT Bros Oskon fonts (woff2)
+│   │   ├── README.md
+│   │   ├── ZTBrosOskon90s-Bold.woff2
+│   │   ├── ZTBrosOskon90s-BoldItalic.woff2
+│   │   ├── ZTBrosOskon90s-Italic.woff2
+│   │   ├── ZTBrosOskon90s-Medium.woff2
+│   │   ├── ZTBrosOskon90s-MediumItalic.woff2
+│   │   ├── ZTBrosOskon90s-Regular.woff2
+│   │   ├── ZTBrosOskon90s-SemiBold.woff2
+│   │   └── ZTBrosOskon90s-SemiBoldItalic.woff2
+│   ├── apple-touch-icon.png   # iOS home screen icon (180×180)
+│   ├── favicon-16x16.png      # Browser tab icon
+│   ├── favicon-32x32.png      # Retina browser tab icon
+│   ├── favicon-48x48.png      # Windows taskbar icon
+│   ├── favicon.svg            # Vector dot-matrix favicon
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── icon-192.png           # PWA icon (192×192)
+│   ├── icon-512.png           # PWA icon (512×512)
+│   ├── manifest.json          # PWA manifest
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── supabase/                # Database
+│   ├── SETUP_INSTRUCTIONS.md
+│   └── schema.sql
+├── tests/                   # Vitest test suites
+│   ├── routes/
+│   │   └── shorten-route.test.ts
+│   ├── shortcode/
+│   │   └── generator.test.ts
+│   ├── supabase/
+│   │   └── client.test.ts
+│   ├── ui/
+│   │   └── url-shortener.test.tsx
+│   └── setup.ts
+├── CHANGELOG.md             # Version history
+├── CLAUDE.md                # AI assistant guide
+├── README.md                # This file
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── tsconfig.json
+├── tsconfig.tsbuildinfo
+└── vitest.config.ts
+
+31 directories, 87 files
 ```
 
 > Deployment configuration lives in the repository root [`../vercel.json`](../vercel.json), which orchestrates installs and builds for this sub-application on Vercel.

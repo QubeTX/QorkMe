@@ -1,5 +1,24 @@
 # Changelog
 
+## 2025-10-19 (Documentation Update)
+
+### Changed
+
+- **README Directory Trees Refreshed**
+  - Root README.md: Updated project structure tree with actual CLI-generated output from `tree` command
+  - Application README.md (qorkme/): Updated detailed structure tree with accurate file counts
+  - Both trees now show exact directory and file counts: 38 directories, 568 files total
+  - Accurately reflects all current components, routes, and assets:
+    - Complete admin authentication structure (login page, OAuth callback)
+    - Dot-matrix favicon system (favicon.svg, multi-resolution PNGs)
+    - PWA assets (manifest.json, icon-192.png, icon-512.png)
+    - All 22 React components across 4 subdirectories
+    - Complete test suite structure (4 test files + setup)
+    - All configuration files including tsconfig.tsbuildinfo
+  - Font directory shows accurate counts: 36 italic variants, 37 regular variants
+  - Added missing root-level files: CODEX.md, TODO-2025-09-22.md
+  - Tree output now matches actual codebase structure as of 2025-10-19
+
 ## 2025-10-19 (Later)
 
 ### Added

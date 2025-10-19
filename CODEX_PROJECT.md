@@ -51,52 +51,126 @@ QorkMe delivers branded short links, QR codes, server-side analytics logging, an
 - `ZT Bros Oskon 90s/` — Font family bundle used by the UI; mirrored copies exist in `qorkme/public/fonts/` as woff2 assets.
 - `vercel.json` — Root-level headers and install instructions for deployments.
 
-## Workspace File Tree (abridged)
+## Workspace File Tree (current as of 2025-10-19)
 ```
 QorkMe/
 ├── AGENTS.md                  # workspace-specific agent guidance
 ├── CHANGELOG.md               # workspace change log
-├── CODEX.md                   # operational guidance for Codex
+├── CLAUDE.md                  # Claude Code instruction set
 ├── CODEX_PROJECT.md           # <— this file
+├── LICENSE                    # Apache License 2.0
+├── MATRIX_BACKGROUND_PLAN.md  # matrix background technical docs
 ├── README.md                  # repo-level overview
+├── TESTING_CHECKLIST.md       # testing verification guide
 ├── vercel.json                # deployment configuration
-├── chatgpt-5-pro-FEEDBACK.md  # user feedback log
-├── CLAUDE.md                  # legacy instruction set
-├── ZT Bros Oskon 90s/         # font source files (OTF/TTF/WEB)
-├── qorkme/
-│   ├── CHANGELOG.md
-│   ├── README.md
-│   ├── app/
-│   │   ├── api/shorten/route.ts
-│   │   ├── [shortCode]/route.ts
-│   │   ├── result/[id]/page.tsx
-│   │   ├── layout.tsx, page.tsx, not-found.tsx, globals.css, favicon.ico
-│   ├── components/
-│   │   ├── ui/{Button.tsx, Input.tsx}
-│   │   ├── cards/{Card.tsx, FeatureCard.tsx, MetricCard.tsx}
-│   │   ├── admin/{AdminSignInButton.tsx, AdminSignOutButton.tsx, ClearDatabaseButton.tsx}
-│   │   ├── bauhaus/GeometricDecor.tsx
-│   │   └── *root components (UrlShortener, ThemeToggle, etc.)*
-│   ├── docs/{DESIGN_SYSTEM.md, DEPLOYMENT.md, VERCEL_SETUP.md}
-│   ├── lib/
-│   │   ├── shortcode/{generator.ts, validator.ts, reserved.ts}
-│   │   └── supabase/{client.ts, server.ts, types.ts}
-│   ├── tests/
-│   │   ├── routes/shorten-route.test.ts
-│   │   ├── shortcode/generator.test.ts
-│   │   ├── supabase/client.test.ts
-│   │   ├── ui/url-shortener.test.tsx
-│   │   └── setup.ts
-│   ├── vitest.config.ts
-│   ├── public/
-│   │   ├── fonts/*.woff2
-│   │   └── svg assets (globe.svg, window.svg, etc.)
-│   ├── supabase/{schema.sql, SETUP_INSTRUCTIONS.md}
-│   ├── eslint.config.mjs, next.config.ts, package.json, tsconfig.json
-│   └── node_modules/, .next/, .vercel/ (generated artifacts — not checked in)
-└── .github/workflows/{ci.yml, deploy.yml.disabled}
+├── NEW_REDESIGN_SAMPLE/       # design component documentation
+│   ├── INTERACTIVE_GRID_BACKGROUND.md
+│   ├── MATRIX_DOCS.md
+│   ├── SHIMMERING_TEXT_DOCS.md
+│   └── qorkme.html
+├── ZT Bros Oskon 90s/         # font source files (OTF/TTF/WEB variants)
+└── qorkme/                    # main Next.js application
+    ├── CHANGELOG.md           # application changelog
+    ├── CLAUDE.md              # application-specific guidance
+    ├── README.md              # application setup guide
+    ├── app/                   # Next.js 15 App Router
+    │   ├── [shortCode]/route.ts      # dynamic redirect handler
+    │   ├── admin/
+    │   │   ├── login/page.tsx        # admin login page
+    │   │   └── page.tsx              # admin dashboard
+    │   ├── api/
+    │   │   ├── admin/purge/route.ts  # database purge endpoint
+    │   │   └── shorten/route.ts      # URL shortening endpoint
+    │   ├── auth/callback/route.ts    # OAuth callback handler
+    │   ├── result/[id]/page.tsx      # success page
+    │   ├── favicon.ico               # multi-resolution favicon
+    │   ├── globals.css               # global styles & design tokens
+    │   ├── layout.tsx                # root layout with fonts
+    │   ├── not-found.tsx             # 404 page
+    │   └── page.tsx                  # homepage
+    ├── components/            # React components
+    │   ├── admin/             # admin console components
+    │   │   ├── AdminSignInButton.tsx
+    │   │   ├── AdminSignOutButton.tsx
+    │   │   └── ClearDatabaseButton.tsx
+    │   ├── bauhaus/GeometricDecor.tsx
+    │   ├── cards/             # card-based components
+    │   │   ├── Card.tsx
+    │   │   ├── FeatureCard.tsx
+    │   │   └── MetricCard.tsx
+    │   ├── ui/                # base UI components
+    │   │   ├── Button.tsx
+    │   │   ├── Input.tsx
+    │   │   ├── interactive-grid-pattern.tsx
+    │   │   ├── matrix.tsx
+    │   │   └── shimmering-text.tsx
+    │   ├── ClientThemeToggle.tsx
+    │   ├── MatrixBackground.tsx
+    │   ├── MatrixDisplay.tsx
+    │   ├── NavigationHeader.tsx
+    │   ├── ResultNavigationHeader.tsx
+    │   ├── ShortUrlDisplay.tsx
+    │   ├── SiteFooter.tsx
+    │   ├── SiteHeader.tsx
+    │   ├── ThemeToggle.tsx
+    │   └── UrlShortener.tsx
+    ├── docs/                  # documentation
+    │   ├── DEPLOYMENT.md
+    │   ├── DESIGN_SYSTEM.md
+    │   ├── UI_LAYOUT_GUIDE.md
+    │   └── VERCEL_SETUP.md
+    ├── lib/                   # utilities and helpers
+    │   ├── config/
+    │   ├── shortcode/         # short code generation
+    │   │   ├── generator.ts
+    │   │   ├── reserved.ts
+    │   │   └── validator.ts
+    │   ├── supabase/          # database clients
+    │   │   ├── client.ts
+    │   │   ├── server.ts
+    │   │   └── types.ts
+    │   ├── theme.tsx          # theme context provider
+    │   └── utils.ts           # utility functions
+    ├── public/                # static assets
+    │   ├── fonts/             # ZT Bros Oskon woff2 files
+    │   │   ├── ZTBrosOskon90s-Bold.woff2
+    │   │   ├── ZTBrosOskon90s-BoldItalic.woff2
+    │   │   ├── ZTBrosOskon90s-Italic.woff2
+    │   │   ├── ZTBrosOskon90s-Medium.woff2
+    │   │   ├── ZTBrosOskon90s-MediumItalic.woff2
+    │   │   ├── ZTBrosOskon90s-Regular.woff2
+    │   │   ├── ZTBrosOskon90s-SemiBold.woff2
+    │   │   ├── ZTBrosOskon90s-SemiBoldItalic.woff2
+    │   │   └── README.md
+    │   ├── apple-touch-icon.png   # iOS home screen icon (180×180)
+    │   ├── favicon-16x16.png      # browser tab icon
+    │   ├── favicon-32x32.png      # retina browser tab icon
+    │   ├── favicon-48x48.png      # Windows taskbar icon
+    │   ├── favicon.svg            # vector favicon
+    │   ├── icon-192.png           # PWA icon (192×192)
+    │   ├── icon-512.png           # PWA icon (512×512)
+    │   ├── manifest.json          # PWA manifest
+    │   └── *.svg                  # SVG icons
+    ├── supabase/              # database schema and setup
+    │   ├── SETUP_INSTRUCTIONS.md
+    │   └── schema.sql
+    ├── tests/                 # Vitest test suites
+    │   ├── routes/shorten-route.test.ts
+    │   ├── shortcode/generator.test.ts
+    │   ├── supabase/client.test.ts
+    │   ├── ui/url-shortener.test.tsx
+    │   └── setup.ts
+    ├── eslint.config.mjs
+    ├── next.config.ts
+    ├── package.json
+    ├── postcss.config.mjs
+    ├── tsconfig.json
+    ├── vitest.config.ts
+    ├── node_modules/          # generated - not checked in
+    ├── .next/                 # generated - not checked in
+    └── .vercel/               # generated - not checked in
 ```
-*Generated directories such as `qorkme/node_modules/` and `.next/` change after installs/builds; update this tree if new source directories are added.*
+*Generated directories such as `node_modules/`, `.next/`, and `.vercel/` change after installs/builds and are not version controlled.*
 
 ## Known Risks & TODOs
 - Expand automated testing beyond current unit/UI suites to cover redirect edge cases, analytics persistence, and Supabase RPC behaviors.

@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.0.36] - 2025-10-19
+
+### Changed
+
+- **README Project Structure Updated**
+  - Replaced hand-coded directory tree with actual CLI-generated output from `tree` command
+  - Accurate file counts: 31 directories, 87 files
+  - Complete component inventory visible in tree structure
+  - All recent additions now properly reflected:
+    - admin/login/page.tsx (admin login page)
+    - auth/callback/route.ts (OAuth callback handler)
+    - lib/config/admin.ts (admin configuration)
+    - public/favicon.svg (vector dot-matrix favicon)
+    - All PWA icons (icon-192.png, icon-512.png)
+    - public/manifest.json (PWA manifest)
+    - All SVG icons (file.svg, globe.svg, next.svg, vercel.svg, window.svg)
+  - Tree shows exact structure including configuration files (next-env.d.ts, tsconfig.tsbuildinfo)
+  - Documentation now 100% accurate to actual codebase structure
+
 ## [3.0.35] - 2025-10-19
 
 ### Added
