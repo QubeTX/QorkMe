@@ -27,9 +27,15 @@ This guide documents critical lessons learned about QorkMe's UI layout system, T
 QorkMe uses a three-level flexbox layout:
 
 ```jsx
-<div id="page-wrapper">           {/* min-h-screen flex flex-col */}
-  <main id="main-content">         {/* flex flex-1 items-center justify-center */}
-    <div id="content-container">   {/* flex flex-col gap-32 */}
+<div id="page-wrapper">
+  {' '}
+  {/* min-h-screen flex flex-col */}
+  <main id="main-content">
+    {' '}
+    {/* flex flex-1 items-center justify-center */}
+    <div id="content-container">
+      {' '}
+      {/* flex flex-col gap-32 */}
       <MatrixDisplay />
       <UrlShortener />
     </div>
@@ -83,6 +89,7 @@ Some Tailwind utility classes don't always generate properly in v4:
 #### When Tailwind Classes Fail
 
 **Symptoms**:
+
 - Class appears in HTML but no visual change
 - Browser inspector shows class but no CSS rules
 - Changes compile successfully but don't render
@@ -137,11 +144,11 @@ Inline styles have the highest specificity and will always override Tailwind cla
 
 Based on QorkMe's design system:
 
-| Use Case | Gap Class | Pixels | Rem |
-|----------|-----------|--------|-----|
-| Tight spacing (input → button) | `gap-6` | 24px | 1.5rem |
-| Standard spacing (card elements) | `gap-8` | 32px | 2rem |
-| Large spacing (sections) | `gap-32` | 128px | 8rem |
+| Use Case                         | Gap Class | Pixels | Rem    |
+| -------------------------------- | --------- | ------ | ------ |
+| Tight spacing (input → button)   | `gap-6`   | 24px   | 1.5rem |
+| Standard spacing (card elements) | `gap-8`   | 32px   | 2rem   |
+| Large spacing (sections)         | `gap-32`  | 128px  | 8rem   |
 
 ### Responsive Spacing Pattern
 
@@ -161,7 +168,7 @@ For internal spacing (padding within a card/container), use inline styles if Tai
 // ✅ Guaranteed to work
 <div
   className="card-container"
-  style={{ padding: '48px' }}  // 3rem
+  style={{ padding: '48px' }} // 3rem
 >
   <Content />
 </div>
@@ -218,10 +225,7 @@ Put flex layout properties on the **direct parent** of the elements you want to 
 Always add meaningful IDs and classes for easy debugging and targeting:
 
 ```jsx
-<div
-  id="url-shortener-card"
-  className="url-shortener-card flex flex-col gap-6"
->
+<div id="url-shortener-card" className="url-shortener-card flex flex-col gap-6">
   <div id="input-wrapper" className="input-wrapper">
     <Input id="url-input" className="url-input" />
   </div>
@@ -230,6 +234,7 @@ Always add meaningful IDs and classes for easy debugging and targeting:
 ```
 
 This makes it easy to:
+
 - Target elements in browser inspector
 - Reference in documentation
 - Debug layout issues
@@ -242,6 +247,7 @@ This makes it easy to:
 ### Problem 1: Margins Not Showing
 
 **Symptoms**:
+
 - Added `mt-32` to element
 - No visual change
 - Margin shows in inspector but has no effect
@@ -249,6 +255,7 @@ This makes it easy to:
 **Cause**: Parent container has `items-center` or `justify-center`
 
 **Solution**:
+
 ```jsx
 // Change from margin on child to gap on parent
 <div className="flex flex-col gap-32">
@@ -262,6 +269,7 @@ This makes it easy to:
 ### Problem 2: Tailwind Class Not Applying
 
 **Symptoms**:
+
 - Class appears in HTML: `class="p-16"`
 - No CSS rules in browser inspector
 - No visual effect
@@ -269,6 +277,7 @@ This makes it easy to:
 **Cause**: Tailwind v4 didn't generate that utility class
 
 **Solution**:
+
 ```jsx
 // Use inline style instead
 <div style={{ padding: '64px' }}>
@@ -281,6 +290,7 @@ This makes it easy to:
 ### Problem 3: Changes Not Visible
 
 **Symptoms**:
+
 - Made changes to code
 - Dev server recompiled successfully
 - No visual change in browser
@@ -292,11 +302,13 @@ This makes it easy to:
    - Windows: `Ctrl + Shift + R`
 
 2. **Next.js cache**: Clear and restart
+
    ```bash
    rm -rf .next && npm run dev
    ```
 
 3. **Verify file saved**: Check the actual file
+
    ```bash
    grep -n "your-change" path/to/file.tsx
    ```
@@ -311,6 +323,7 @@ This makes it easy to:
 ### Problem 4: Spacing Collapsed
 
 **Symptoms**:
+
 - Element should have space around it
 - Everything is squished together
 - Gap or padding seems ignored
@@ -318,6 +331,7 @@ This makes it easy to:
 **Cause**: Parent flexbox properties are interfering
 
 **Checklist**:
+
 1. Does parent have `items-center`? → Use `gap` not `margin`
 2. Does parent have `justify-center`? → Use `gap` not `margin`
 3. Is element absolutely positioned? → Remove `absolute`
@@ -328,6 +342,7 @@ This makes it easy to:
 ### Problem 5: Absolute Positioning Issues
 
 **Symptoms**:
+
 - Multiple states overlapping
 - Layout height is wrong
 - Spacing calculations are unpredictable
@@ -385,11 +400,13 @@ Always hard refresh after making CSS/layout changes:
 ### Verify Changes Applied
 
 1. **Check source file**:
+
    ```bash
    cat qorkme/components/YourComponent.tsx | grep -A 2 "className"
    ```
 
 2. **Check rendered HTML**:
+
    ```bash
    curl -s http://localhost:3000 | grep 'id="your-element"'
    ```
@@ -403,22 +420,26 @@ Always hard refresh after making CSS/layout changes:
 ### Debugging Spacing Issues
 
 1. Add temporary colored backgrounds:
+
    ```jsx
    <div style={{ background: 'red' }}>
    <div style={{ background: 'blue' }}>
    ```
 
 2. Check parent flex properties:
+
    ```jsx
    // Look for these in parent elements:
-   items-center      // Collapses vertical margins
-   justify-center    // Collapses horizontal margins
+   items - center; // Collapses vertical margins
+   justify - center; // Collapses horizontal margins
    ```
 
 3. Verify gap is on correct element:
    ```jsx
    // gap must be on the PARENT of spaced children
-   <Parent className="flex gap-8">  ← gap here
+   <Parent className="flex gap-8">
+     {' '}
+     ← gap here
      <Child1 />
      <Child2 />
    </Parent>
@@ -430,13 +451,13 @@ Always hard refresh after making CSS/layout changes:
 
 ### Key Files and What They Control
 
-| File | Purpose | What to Change Here |
-|------|---------|---------------------|
-| `app/page.tsx` | Main page layout | Overall page structure, container centering, major spacing between sections |
-| `app/globals.css` | Global styles, design tokens | Color variables, typography, reusable utility classes |
-| `components/UrlShortener.tsx` | Card component | Card structure, internal spacing, form layout |
-| `components/MatrixDisplay.tsx` | Matrix/clock component | Matrix display logic and layout |
-| `docs/DESIGN_SYSTEM.md` | Design tokens reference | Color palette, typography scale, spacing values |
+| File                           | Purpose                      | What to Change Here                                                         |
+| ------------------------------ | ---------------------------- | --------------------------------------------------------------------------- |
+| `app/page.tsx`                 | Main page layout             | Overall page structure, container centering, major spacing between sections |
+| `app/globals.css`              | Global styles, design tokens | Color variables, typography, reusable utility classes                       |
+| `components/UrlShortener.tsx`  | Card component               | Card structure, internal spacing, form layout                               |
+| `components/MatrixDisplay.tsx` | Matrix/clock component       | Matrix display logic and layout                                             |
+| `docs/DESIGN_SYSTEM.md`        | Design tokens reference      | Color palette, typography scale, spacing values                             |
 
 ### When to Edit Which File
 
@@ -528,6 +549,7 @@ export default function Page() {
 ```
 
 **Why this works**:
+
 - `items-center justify-center` on `main` centers the entire content container
 - `gap-32` on inner `div` creates spacing between children
 - `flex flex-col` on inner `div` stacks children vertically
@@ -544,7 +566,7 @@ export function Card() {
     <div
       id="card"
       className="flex flex-col gap-6 rounded-[30px] border bg-surface"
-      style={{ padding: '48px' }}  // Inline style for reliability
+      style={{ padding: '48px' }} // Inline style for reliability
     >
       <div id="input-wrapper">
         <Input />
@@ -556,6 +578,7 @@ export function Card() {
 ```
 
 **Why this works**:
+
 - Single container, no unnecessary nesting
 - `flex flex-col gap-6` spaces input and button
 - `padding` as inline style guarantees it applies
@@ -570,13 +593,23 @@ export function Card() {
 export function BadCard() {
   return (
     <div className="flex items-center justify-center">
-      <div className="p-16">  {/* Tailwind class may not work */}
-        <div className="card-outer">  {/* Unnecessary nesting */}
-          <div className="card-inner">  {/* More unnecessary nesting */}
-            <div className="mt-8">  {/* Margin will be collapsed */}
+      <div className="p-16">
+        {' '}
+        {/* Tailwind class may not work */}
+        <div className="card-outer">
+          {' '}
+          {/* Unnecessary nesting */}
+          <div className="card-inner">
+            {' '}
+            {/* More unnecessary nesting */}
+            <div className="mt-8">
+              {' '}
+              {/* Margin will be collapsed */}
               <Input />
             </div>
-            <div className="mt-6">  {/* Fragile spacing */}
+            <div className="mt-6">
+              {' '}
+              {/* Fragile spacing */}
               <Button />
             </div>
           </div>
@@ -588,6 +621,7 @@ export function BadCard() {
 ```
 
 **Problems**:
+
 1. `items-center` collapses margins on children
 2. `p-16` may not generate in Tailwind v4
 3. Too many nested containers
@@ -611,6 +645,7 @@ export function ResponsiveLayout() {
 ```
 
 **Spacing breakdown**:
+
 - Mobile: `gap-16` (4rem / 64px)
 - Tablet: `gap-24` (6rem / 96px)
 - Desktop: `gap-32` (8rem / 128px)
@@ -627,11 +662,13 @@ This guide complements `DESIGN_SYSTEM.md`:
 ### When to Use Design Tokens vs Inline Values
 
 **Use Design Tokens** (from `globals.css`):
+
 - Colors: `bg-[color:var(--color-primary)]`
 - Typography: `font-display`, `font-body`
 - Borders: `border-[color:var(--color-border)]`
 
 **Use Inline Values**:
+
 - Padding when Tailwind classes fail: `style={{ padding: '48px' }}`
 - Specific pixel values: `style={{ marginTop: '8rem' }}`
 - Custom responsive values: `style={{ gap: '2rem' }}`
@@ -641,13 +678,13 @@ This guide complements `DESIGN_SYSTEM.md`:
 From the design system, these values work reliably:
 
 ```jsx
-gap-1   // 0.25rem = 4px   - Tiny gaps
-gap-2   // 0.5rem = 8px    - Compact spacing
-gap-4   // 1rem = 16px     - Standard spacing
-gap-6   // 1.5rem = 24px   - Comfortable spacing
-gap-8   // 2rem = 32px     - Generous spacing
-gap-12  // 3rem = 48px     - Large spacing
-gap-32  // 8rem = 128px    - Section spacing
+gap - 1; // 0.25rem = 4px   - Tiny gaps
+gap - 2; // 0.5rem = 8px    - Compact spacing
+gap - 4; // 1rem = 16px     - Standard spacing
+gap - 6; // 1.5rem = 24px   - Comfortable spacing
+gap - 8; // 2rem = 32px     - Generous spacing
+gap - 12; // 3rem = 48px     - Large spacing
+gap - 32; // 8rem = 128px    - Section spacing
 ```
 
 ---
@@ -680,20 +717,19 @@ QorkMe uses an SVG-based interactive grid background that adds subtle visual dep
   />
 
   {/* Content layer */}
-  <div className="relative z-10">
-    {/* Your content */}
-  </div>
+  <div className="relative z-10">{/* Your content */}</div>
 </div>
 ```
 
 ### Customization Guide
 
 **Grid Density & Size:**
+
 ```tsx
 <InteractiveGridPattern
-  width={40}          // Cell width (px) - smaller = denser grid
-  height={40}         // Cell height (px)
-  squares={[20, 20]}  // [columns, rows] - max ~50×50 for performance
+  width={40} // Cell width (px) - smaller = denser grid
+  height={40} // Cell height (px)
+  squares={[20, 20]} // [columns, rows] - max ~50×50 for performance
 />
 ```
 
@@ -720,9 +756,9 @@ QorkMe uses an SVG-based interactive grid background that adds subtle visual dep
 
 ```tsx
 <path
-  stroke="var(--color-border-strong)"  // Line color token
-  strokeWidth="1"                      // Line thickness (0.5-2)
-  strokeOpacity="0.6"                  // Base opacity (0.3-0.8)
+  stroke="var(--color-border-strong)" // Line color token
+  strokeWidth="1" // Line thickness (0.5-2)
+  strokeOpacity="0.6" // Base opacity (0.3-0.8)
 />
 ```
 
@@ -744,20 +780,24 @@ className="transition-all duration-300"  // Adjust 150-500ms
 ### Common Adjustments
 
 **Make grid more visible:**
+
 - Increase `strokeWidth` to `1.5` or `2`
 - Increase `strokeOpacity` to `0.7` or `0.8`
 - Use `--color-border-strong` instead of `--color-border`
 
 **Make noise more/less intense:**
+
 - More variation: `0 0 0 0.8 0.2` (wider opacity range 0.2-1.0)
 - Less variation: `0 0 0 0.4 0.6` (narrower range 0.6-1.0)
 
 **Change noise pattern:**
+
 - Finer details: Increase `baseFrequency` to `0.04`
 - Coarser texture: Decrease `baseFrequency` to `0.015`
 - More layers: Increase `numOctaves` to `4`
 
 **Change hover color:**
+
 - Green accent: `var(--color-accent)` instead of `var(--color-primary)`
 - Custom color: Any CSS color value
 

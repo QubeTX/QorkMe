@@ -217,15 +217,35 @@ export function MatrixDisplay() {
   // Return placeholder during SSR to prevent hydration mismatch
   if (!mounted) {
     return (
-      <div id="matrix-display-container" className="matrix-display-container relative mb-8 flex flex-col items-center gap-6">
-        <div id="title-matrix-placeholder" className="title-matrix-placeholder" style={{ width: `${titleCols * 8 + (titleCols - 1) * 2}px`, height: `${titleRows * 8 + (titleRows - 1) * 2}px` }} />
-        <div id="time-matrix-placeholder" className="time-matrix-placeholder" style={{ width: `${timeCols * 6 + (timeCols - 1) * 2}px`, height: `${timeRows * 6 + (timeRows - 1) * 2}px` }} />
+      <div
+        id="matrix-display-container"
+        className="matrix-display-container relative mb-8 flex flex-col items-center gap-6"
+      >
+        <div
+          id="title-matrix-placeholder"
+          className="title-matrix-placeholder"
+          style={{
+            width: `${titleCols * 8 + (titleCols - 1) * 2}px`,
+            height: `${titleRows * 8 + (titleRows - 1) * 2}px`,
+          }}
+        />
+        <div
+          id="time-matrix-placeholder"
+          className="time-matrix-placeholder"
+          style={{
+            width: `${timeCols * 6 + (timeCols - 1) * 2}px`,
+            height: `${timeRows * 6 + (timeRows - 1) * 2}px`,
+          }}
+        />
       </div>
     );
   }
 
   return (
-    <div id="matrix-display-container" className="matrix-display-container relative mb-8 flex flex-col items-center gap-6">
+    <div
+      id="matrix-display-container"
+      className="matrix-display-container relative mb-8 flex flex-col items-center gap-6"
+    >
       {/* Title Matrix with feathered edges */}
       <div
         id="title-matrix-wrapper"

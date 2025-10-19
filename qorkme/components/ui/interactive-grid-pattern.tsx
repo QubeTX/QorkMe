@@ -74,11 +74,7 @@ export function InteractiveGridPattern({
             result="noiseAlpha"
           />
           {/* Apply noise as opacity mask to grid lines */}
-          <feComposite
-            in="SourceGraphic"
-            in2="noiseAlpha"
-            operator="in"
-          />
+          <feComposite in="SourceGraphic" in2="noiseAlpha" operator="in" />
         </filter>
       </defs>
 
@@ -132,12 +128,7 @@ export function InteractiveGridPattern({
       </g>
 
       {/* Subtle radial overlay for depth */}
-      <rect
-        width="100%"
-        height="100%"
-        fill="url(#grid-gradient)"
-        pointerEvents="none"
-      />
+      <rect width="100%" height="100%" fill="url(#grid-gradient)" pointerEvents="none" />
     </svg>
   );
 }

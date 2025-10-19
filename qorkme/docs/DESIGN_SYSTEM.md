@@ -86,30 +86,35 @@ QorkMe features a subtle, organic grid background that adds visual depth and int
 **Implementation**: `qorkme/components/ui/interactive-grid-pattern.tsx`
 
 **Visual Characteristics**:
+
 - Grid lines use `--color-border-strong` with subtle opacity (`strokeOpacity: 0.6`)
 - Cell size: 40×40px for gentle texture without overwhelming content
 - Hover effect: `--color-primary` (terracotta) at 12% opacity creates warm glow
 - Organic variation: SVG fractal noise filter modulates line opacity (0.4-1.0 range) for paper-like inconsistency
 
 **Design Tokens Applied**:
+
 - Line color: `var(--color-border-strong)` for warm, visible strokes
 - Hover fill: `var(--color-primary)` at low opacity maintains brand alignment
 - Transition duration: 300ms matches QorkMe's "quiet confidence" motion principle
 - Z-layering: Grid at `z-0`, content at `z-10+` for proper hierarchy
 
 **Noise Filter Specs**:
+
 - Type: `fractalNoise` for smooth, cloud-like organic variation
 - Base frequency: `0.025` (low value creates larger, subtler patterns)
 - Octaves: `3` (layered noise for natural texture)
 - Alpha modulation: `(noise × 0.6) + 0.4` creates opacity range 0.4-1.0
 
 **Performance**:
+
 - Single SVG element renders entire grid (minimal DOM overhead)
 - React state tracks only hovered cells (not all 400 cells)
 - CSS transitions handle animations (60fps on all devices)
 - Pointer events isolated to interactive cells only
 
 **Usage Guidelines**:
+
 - Always position grid absolutely behind content (`absolute inset-0 z-0`)
 - Keep grid density at 20×20 (400 cells) or lower for optimal performance
 - Maintain subtle opacity values (0.08-0.15 for hover) to avoid overwhelming content
