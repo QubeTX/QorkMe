@@ -1,5 +1,31 @@
 # Changelog
 
+## 2025-10-19 (Mobile-Optimized Matrix Display)
+
+### Changed
+
+- **Mobile-Optimized Matrix Display** (qorkme/components/MatrixDisplay.tsx)
+  - Title matrix now displays "Qork" only on mobile instead of full "Qork.Me" for better fit on narrow viewports
+  - Mobile title: 4 characters at 5px cell size with 26 columns (down from 50 columns on desktop)
+  - Time matrix now displays "HH:MM AM/PM" without seconds on mobile instead of full "HH:MM:SS AM/PM"
+  - Mobile time: 11 characters at 3px cell size with 50 columns (compact display ensures full visibility)
+  - Prevents horizontal scrolling and overflow on small screens while maintaining full desktop experience
+  - Maintains full "Qork.Me" title and "HH:MM:SS AM/PM" format on desktop (md:768px+)
+
+- **Implementation Details** (qorkme/components/MatrixDisplay.tsx)
+  - Added `createTitleFrameMobile()` function to render shortened "Qork" title for mobile displays
+  - Added `createTimeFrameMobile()` function to format time without seconds for mobile constraints
+  - Added `titleFrameMobile` useMemo hook for optimized mobile title rendering
+  - Added `timeFrameMobile` useMemo hook for optimized mobile time rendering
+  - Mobile Matrix components use reduced cell sizes (5px for title, 3px for time) vs desktop (8px, 6px)
+  - Separate render paths using Tailwind `md:hidden` and `hidden md:block` utilities
+  - Responsive gap spacing maintained: `gap-4` mobile, `md:gap-6` desktop
+
+### Documentation
+
+- Updated root CLAUDE.md with expanded Matrix Display section documenting mobile optimization details
+- Updated root README.md Key Features to highlight mobile-optimized matrix display
+
 ## 2025-10-19 (Admin Dashboard UI Enhancements)
 
 ### Removed

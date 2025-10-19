@@ -360,19 +360,32 @@ Every redirect logs:
 - Code splitting and lazy loading
 - Bundle optimization with Next.js 15
 
-### Matrix Display with Real-Time Clock
+### Matrix Display with Real-Time Clock and Mobile Optimization
 
 - Animated dot-matrix title using "QORKME" in stylized characters
 - Real-time clock in 12-hour format with AM/PM period (updated 2025-10-18)
-- **Responsive matrix sizing** (added 2025-10-18):
-  - **Desktop (md:768px+)**: Title at 8px cells (50 columns), Time at 6px cells (66 columns)
-  - **Mobile (<768px)**: Title at 5px cells (32 columns), Time at 3.5px cells (42 columns)
-  - Prevents overflow on narrow viewports while maintaining readability
+- **Mobile-Optimized Matrix Sizing** (updated 2025-10-19):
+  - **Desktop (md:768px+)**:
+    - Title matrix: "Qork.Me" (7 characters) at 8px cells with 50 columns
+    - Time matrix: "HH:MM:SS AM/PM" (14 characters including spaces) at 6px cells with 66 columns
+  - **Mobile (<768px)**:
+    - Title matrix: "Qork" only (4 characters, shortened from "Qork.Me") at 5px cells with 26 columns
+    - Time matrix: "HH:MM AM/PM" (11 characters without seconds) at 3px cells with 50 columns
+  - Prevents horizontal overflow on narrow viewports while maintaining readability
   - Uses Tailwind `md:hidden` and `hidden md:block` utilities for separate render paths
+  - Mobile time format removes seconds to fit screen width constraints
+  - Mobile title uses shorter "Qork" for better visual balance on small screens
+- **Implementation Details**:
+  - `createTitleFrame()` and `createTimeFrame()` functions render full desktop versions
+  - `createTitleFrameMobile()` function renders shortened "Qork" title for mobile
+  - `createTimeFrameMobile()` function formats time without seconds for mobile display
+  - Separate `titleFrameMobile` and `timeFrameMobile` useMemo hooks for responsive rendering
+  - Mobile Matrix components use separate size props (5px for title, 3px for time) vs desktop (8px, 6px)
 - Character map includes digits 0-9, colon, space, and letters A, P, M
 - Shimmer effect on title letters (deterministic, no random values for hydration safety)
 - Server/client rendering consistency maintained for Next.js hydration
 - Responsive gap spacing: `gap-4` mobile, `md:gap-6` desktop
+- Edge feathering with 4-step gradient fade for smooth blending into background
 
 Implementation: `qorkme/components/MatrixDisplay.tsx`, `qorkme/components/ui/matrix.tsx`
 

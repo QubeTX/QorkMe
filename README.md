@@ -106,7 +106,7 @@ See [`qorkme/README.md`](qorkme/README.md) for detailed installation, configurat
 ## Key Features
 
 - **Smart URL Shortening**: Memorable short codes using intelligent patterns
-- **Retro Matrix Background**: Animated dot-matrix display with real-time clock and pulsing wave effects
+- **Retro Matrix Display**: Mobile-optimized animated dot-matrix title and real-time clock with responsive sizing and shimmer animation
 - **Earthy Modern Design**: Warm parchment surfaces, terracotta primaries, and sage accents with soft depth
 - **Theme Support**: Light/dark mode with smooth transitions
 - **Analytics**: Comprehensive click tracking and device analytics

@@ -259,44 +259,57 @@ When components need different props at different breakpoints (e.g., different s
 
 ### MatrixDisplay Implementation Details
 
-From `qorkme/components/MatrixDisplay.tsx` (lines 267-353):
+From `qorkme/components/MatrixDisplay.tsx` (lines 250-280+, 335-435):
+
+**Mobile-Optimized Matrix Rendering** (updated 2025-10-19):
 
 ```tsx
+// Responsive column configurations
+const titleCols = 50;        // Desktop: "Qork.Me" (7 characters)
+const titleColsMobile = 26;  // Mobile: "Qork" only (4 characters)
+const timeCols = 66;         // Desktop: "HH:MM:SS AM/PM" (14 chars)
+const timeColsMobile = 50;   // Mobile: "HH:MM AM/PM" (11 chars, no seconds)
+
 {
-  /* Title Matrix - Desktop */
+  /* Title Matrix - Desktop: "Qork.Me" full display */
 }
 <div className="hidden md:block">
   <Matrix rows={9} cols={50} size={8} gap={2} />
 </div>;
 
 {
-  /* Title Matrix - Mobile */
+  /* Title Matrix - Mobile: "Qork" shortened for narrow screens */
 }
 <div className="md:hidden">
-  <Matrix rows={9} cols={32} size={5} gap={2} />
+  <Matrix rows={9} cols={26} size={5} gap={2} />
 </div>;
 
 {
-  /* Time Matrix - Desktop */
+  /* Time Matrix - Desktop: Full time with seconds */
 }
 <div className="hidden md:block">
   <Matrix rows={9} cols={66} size={6} gap={2} />
 </div>;
 
 {
-  /* Time Matrix - Mobile */
+  /* Time Matrix - Mobile: Compact time without seconds */
 }
 <div className="md:hidden">
-  <Matrix rows={9} cols={42} size={3.5} gap={2} />
+  <Matrix rows={9} cols={50} size={3} gap={2} />
 </div>;
 ```
 
-**Result**:
+**Result** (updated 2025-10-19):
 
-- Desktop: Title (8px cells, 50 cols), Time (6px cells, 66 cols)
-- Mobile: Title (5px cells, 32 cols), Time (3.5px cells, 42 cols)
+- **Desktop (md:768px+)**:
+  - Title: "Qork.Me" at 8px cells with 50 columns
+  - Time: "HH:MM:SS AM/PM" at 6px cells with 66 columns
+- **Mobile (<768px)**:
+  - Title: "Qork" only at 5px cells with 26 columns (shortened for mobile readability)
+  - Time: "HH:MM AM/PM" at 3px cells with 50 columns (no seconds for compactness)
 - No horizontal overflow on narrow screens
 - Only one instance per matrix renders at any given breakpoint
+- Separate `createTitleFrameMobile()` and `createTimeFrameMobile()` functions handle content generation
 
 ### Tailwind Visibility Utilities
 

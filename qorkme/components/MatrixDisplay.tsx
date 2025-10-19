@@ -107,7 +107,7 @@ function createTitleFrames(frameCount: number): number[][] {
   return frames;
 }
 
-// Create title frame with shimmer
+// Create title frame with shimmer (desktop - "Qork.Me")
 function createTitleFrame(titleBrightness: number[], rows: number, cols: number): Frame {
   const frame = buildEmptyFrame(rows, cols);
 
@@ -129,7 +129,30 @@ function createTitleFrame(titleBrightness: number[], rows: number, cols: number)
   return frame;
 }
 
-// Create time frame
+// Create title frame for mobile (shorter - "Qork" only)
+function createTitleFrameMobile(titleBrightness: number[], rows: number, cols: number): Frame {
+  const frame = buildEmptyFrame(rows, cols);
+
+  // Calculate centered position for title
+  const titleText = 'Qork';
+  const titleWidth = titleText.length * 6 - 1; // 6 per char (5 + 1 spacing), minus last spacing
+  const titleStartCol = Math.floor((cols - titleWidth) / 2);
+  const titleStartRow = 1;
+
+  // Create bold letter patterns for title
+  const boldLetters: Record<string, Frame> = {};
+  for (const [char, pattern] of Object.entries(letters)) {
+    boldLetters[char] = makeBoldPattern(pattern);
+  }
+
+  // Render title with bold letters and shimmer (only first 4 brightness values for "Qork")
+  const mobileBrightness = titleBrightness.slice(0, 4);
+  renderTextToFrame(frame, titleText, titleStartRow, titleStartCol, boldLetters, mobileBrightness);
+
+  return frame;
+}
+
+// Create time frame (desktop - with seconds)
 function createTimeFrame(time: Date, rows: number, cols: number): Frame {
   const frame = buildEmptyFrame(rows, cols);
 
@@ -143,6 +166,40 @@ function createTimeFrame(time: Date, rows: number, cols: number): Frame {
 
   // Calculate centered position for time
   const timeWidth = 8 * 6 + 2 * 6 + 6 - 1; // 8 digits + 2 colons + 1 space + 2 letters (AM/PM) - 1
+  const timeStartCol = Math.floor((cols - timeWidth) / 2);
+  const timeStartRow = 1;
+
+  // Create time character map combining digits, colon, space, and AM/PM letters
+  const timeCharMapConverted: Record<string, Frame> = {};
+  for (const [key, value] of Object.entries(digits)) {
+    timeCharMapConverted[key] = value;
+  }
+  timeCharMapConverted[':'] = letters[':'];
+  timeCharMapConverted[' '] = letters[' '];
+  timeCharMapConverted['A'] = letters['A'];
+  timeCharMapConverted['P'] = letters['P'];
+  timeCharMapConverted['M'] = letters['M'];
+
+  // Render time
+  renderTextToFrame(frame, timeText, timeStartRow, timeStartCol, timeCharMapConverted);
+
+  return frame;
+}
+
+// Create time frame for mobile (without seconds)
+function createTimeFrameMobile(time: Date, rows: number, cols: number): Frame {
+  const frame = buildEmptyFrame(rows, cols);
+
+  // Format time (12-hour format with AM/PM, no seconds)
+  const hours24 = time.getHours();
+  const hours12 = hours24 % 12 || 12; // Convert 0-23 to 1-12
+  const minutes = time.getMinutes().toString().padStart(2, '0');
+  const period = hours24 >= 12 ? 'PM' : 'AM';
+  const timeText = `${hours12.toString().padStart(2, '0')}:${minutes} ${period}`;
+
+  // Calculate centered position for time
+  // "HH:MM AM/PM" = 8 characters total (2+1+2+1+2)
+  const timeWidth = 8 * 6 - 1; // 8 characters * 6px each - 1 for final spacing
   const timeStartCol = Math.floor((cols - timeWidth) / 2);
   const timeStartRow = 1;
 
@@ -193,23 +250,34 @@ export function MatrixDisplay() {
   // Matrix dimensions for title (responsive)
   const titleRows = 9; // Title (7) + padding (1 top/bottom)
   const titleCols = 50; // Wide enough for "Qork.Me" (desktop)
-  const titleColsMobile = 32; // Compact for mobile with whitespace
+  const titleColsMobile = 26; // Compact for mobile "Qork" only (4 characters)
 
   // Matrix dimensions for time (responsive)
   const timeRows = 9; // Time (7) + padding (1 top/bottom)
   const timeCols = 66; // Wide enough for "HH:MM:SS AM/PM" (desktop)
-  const timeColsMobile = 42; // Compact for mobile
+  const timeColsMobile = 50; // Compact for mobile "HH:MM AM/PM" (without seconds, ensures full display)
 
-  // Create title frame with shimmer
+  // Create title frame with shimmer (desktop - "Qork.Me")
   const titleFrame = useMemo(() => {
     const titleBrightness = titleShimmerFrames[frameIndex];
     return createTitleFrame(titleBrightness, titleRows, titleCols);
   }, [frameIndex, titleShimmerFrames, titleRows, titleCols]);
 
-  // Create time frame
+  // Create title frame for mobile (shorter - "Qork" only)
+  const titleFrameMobile = useMemo(() => {
+    const titleBrightness = titleShimmerFrames[frameIndex];
+    return createTitleFrameMobile(titleBrightness, titleRows, titleColsMobile);
+  }, [frameIndex, titleShimmerFrames, titleRows, titleColsMobile]);
+
+  // Create time frame (desktop with seconds)
   const timeFrame = useMemo(() => {
     return createTimeFrame(time, timeRows, timeCols);
   }, [time, timeRows, timeCols]);
+
+  // Create time frame for mobile (without seconds)
+  const timeFrameMobile = useMemo(() => {
+    return createTimeFrameMobile(time, timeRows, timeColsMobile);
+  }, [time, timeRows, timeColsMobile]);
 
   const palette = {
     on: 'rgba(196, 114, 79, 1)', // Bright terracotta
@@ -251,8 +319,8 @@ export function MatrixDisplay() {
           id="time-matrix-placeholder-mobile"
           className="time-matrix-placeholder-mobile md:hidden"
           style={{
-            width: `${timeColsMobile * 3.5 + (timeColsMobile - 1) * 2}px`,
-            height: `${timeRows * 3.5 + (timeRows - 1) * 2}px`,
+            width: `${timeColsMobile * 3 + (timeColsMobile - 1) * 2}px`,
+            height: `${timeRows * 3 + (timeRows - 1) * 2}px`,
           }}
         />
       </div>
@@ -303,12 +371,12 @@ export function MatrixDisplay() {
         <Matrix
           rows={titleRows}
           cols={titleColsMobile}
-          pattern={titleFrame}
+          pattern={titleFrameMobile}
           size={5}
           gap={2}
           palette={palette}
           brightness={1}
-          ariaLabel="Qork.Me animated title"
+          ariaLabel="Qork animated title"
           cascadeDelay={8}
           cascadeStartDelay={200}
         />
@@ -353,12 +421,12 @@ export function MatrixDisplay() {
         <Matrix
           rows={timeRows}
           cols={timeColsMobile}
-          pattern={timeFrame}
-          size={3.5}
+          pattern={timeFrameMobile}
+          size={3}
           gap={2}
           palette={palette}
           brightness={1}
-          ariaLabel="Current time in 12-hour format with AM/PM"
+          ariaLabel="Current time in 12-hour format with AM/PM (without seconds)"
           cascadeDelay={6}
           cascadeStartDelay={500}
         />
