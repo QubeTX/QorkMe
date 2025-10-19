@@ -25,6 +25,10 @@
 
 - Updated root CLAUDE.md with expanded Matrix Display section documenting mobile optimization details
 - Updated root README.md Key Features to highlight mobile-optimized matrix display
+- Updated root README.md Project Structure section with fresh `tree` command output
+  - Simplified tree structure from manually annotated version to raw CLI output
+  - Updated directory/file counts from outdated figures to current state (30 directories, 32 files at level 2)
+  - Removed inline comments for cleaner, more maintainable structure documentation
 
 ## 2025-10-19 (Admin Dashboard UI Enhancements)
 

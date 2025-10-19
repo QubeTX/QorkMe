@@ -265,10 +265,10 @@ From `qorkme/components/MatrixDisplay.tsx` (lines 250-280+, 335-435):
 
 ```tsx
 // Responsive column configurations
-const titleCols = 50;        // Desktop: "Qork.Me" (7 characters)
-const titleColsMobile = 26;  // Mobile: "Qork" only (4 characters)
-const timeCols = 66;         // Desktop: "HH:MM:SS AM/PM" (14 chars)
-const timeColsMobile = 50;   // Mobile: "HH:MM AM/PM" (11 chars, no seconds)
+const titleCols = 50; // Desktop: "Qork.Me" (7 characters)
+const titleColsMobile = 26; // Mobile: "Qork" only (4 characters)
+const timeCols = 66; // Desktop: "HH:MM:SS AM/PM" (14 chars)
+const timeColsMobile = 50; // Mobile: "HH:MM AM/PM" (11 chars, no seconds)
 
 {
   /* Title Matrix - Desktop: "Qork.Me" full display */

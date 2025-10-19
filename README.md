@@ -16,91 +16,69 @@ See [`qorkme/README.md`](qorkme/README.md) for detailed installation, configurat
 
 ```
 .
-├── NEW_REDESIGN_SAMPLE/          # Design component documentation
+├── .claude
+│   └── settings.local.json
+├── .github
+│   └── workflows
+├── .mcp
+│   └── sequential-thinking
+├── .vscode
+│   ├── extensions.json
+│   └── settings.json
+├── NEW_REDESIGN_SAMPLE
 │   ├── INTERACTIVE_GRID_BACKGROUND.md
 │   ├── MATRIX_DOCS.md
 │   ├── SHIMMERING_TEXT_DOCS.md
 │   └── qorkme.html
-├── ZT Bros Oskon 90s/            # Display font source files (OTF/TTF/WEB)
-│   ├── Italic - OTF/            # 36 italic font variants
-│   ├── Italic - TTF/            # 36 italic font variants
-│   ├── Italic - WEB OTF/        # 72 files (OTF + woff2)
-│   ├── Italic - WEB TTF/        # 108 files (TTF + woff + woff2)
-│   ├── OTF/                     # 37 regular font variants
-│   ├── TTF/                     # 37 regular font variants
-│   ├── WEB OTF/                 # 74 files (OTF + woff2)
-│   └── WEB TTF/                 # 111 files (TTF + woff + woff2)
-├── app/                          # Legacy admin directory
-│   └── admin/
-├── qorkme/                       # Main Next.js application
-│   ├── app/                      # Next.js 15 App Router
-│   │   ├── [shortCode]/         # Dynamic redirect handler
-│   │   │   └── route.ts
-│   │   ├── admin/               # Admin dashboard
-│   │   │   ├── login/page.tsx   # Admin login page
-│   │   │   └── page.tsx         # Admin dashboard
-│   │   ├── api/                 # API routes
-│   │   │   ├── admin/purge/     # Database purge endpoint
-│   │   │   └── shorten/         # URL shortening endpoint
-│   │   ├── auth/                # Authentication
-│   │   │   └── callback/route.ts # OAuth callback handler
-│   │   ├── result/              # Success pages
-│   │   │   └── [id]/page.tsx
-│   │   ├── favicon.ico          # Site favicon
-│   │   ├── globals.css          # Global styles & design tokens
-│   │   ├── layout.tsx           # Root layout
-│   │   ├── not-found.tsx        # 404 page
-│   │   └── page.tsx             # Homepage
-│   ├── components/              # React components (22 total)
-│   │   ├── admin/               # Admin components (3)
-│   │   ├── bauhaus/             # Geometric decorative elements (1)
-│   │   ├── cards/               # Card-based components (3)
-│   │   └── ui/                  # Base UI components (5)
-│   ├── docs/                    # Documentation
-│   │   ├── DEPLOYMENT.md
-│   │   ├── DESIGN_SYSTEM.md
-│   │   ├── UI_LAYOUT_GUIDE.md
-│   │   └── VERCEL_SETUP.md
-│   ├── lib/                     # Utilities and database clients
-│   │   ├── config/              # Configuration
-│   │   ├── shortcode/           # Short code generation (3 files)
-│   │   ├── supabase/            # Database clients (3 files)
-│   │   ├── theme.tsx
-│   │   └── utils.ts
-│   ├── public/                  # Static assets
-│   │   ├── fonts/               # ZT Bros Oskon woff2 files (8 variants + README)
-│   │   ├── apple-touch-icon.png # iOS home screen icon
-│   │   ├── favicon-*.png        # Multi-resolution favicons
-│   │   ├── favicon.svg          # Vector dot-matrix favicon
-│   │   ├── icon-*.png           # PWA icons (192×192, 512×512)
-│   │   ├── manifest.json        # PWA manifest
-│   │   └── *.svg                # UI icons
-│   ├── supabase/                # Database schema and setup
-│   │   ├── SETUP_INSTRUCTIONS.md
-│   │   └── schema.sql
-│   ├── tests/                   # Vitest test suites (4 test files + setup)
-│   │   ├── routes/              # API route tests
-│   │   ├── shortcode/           # Short code generation tests
-│   │   ├── supabase/            # Database client tests
-│   │   ├── ui/                  # Component tests
-│   │   └── setup.ts
-│   ├── CHANGELOG.md             # Application changelog
-│   ├── CLAUDE.md                # AI assistant guide
-│   ├── README.md                # Application setup guide
-│   └── *.config.*               # Configuration files
-├── AGENTS.md                    # Agent contribution guidelines
-├── CHANGELOG.md                 # Repository changelog
-├── CLAUDE.md                    # Claude Code instructions
-├── CODEX.md                     # Project codex
-├── CODEX_PROJECT.md             # Detailed project brief
-├── LICENSE                      # Apache License 2.0
-├── MATRIX_BACKGROUND_PLAN.md    # Matrix background technical docs
-├── README.md                    # This file (project overview)
-├── TESTING_CHECKLIST.md         # Testing verification guide
-├── TODO-2025-09-22.md           # Historical TODO list
-└── vercel.json                  # Deployment configuration
+├── ZT Bros Oskon 90s
+│   ├── Italic - OTF
+│   ├── Italic - TTF
+│   ├── Italic - WEB OTF
+│   ├── Italic - WEB TTF
+│   ├── OTF
+│   ├── TTF
+│   ├── WEB OTF
+│   └── WEB TTF
+├── app
+│   └── admin
+├── qorkme
+│   ├── .claude
+│   ├── .github
+│   ├── .vercel
+│   ├── app
+│   ├── components
+│   ├── docs
+│   ├── lib
+│   ├── public
+│   ├── supabase
+│   ├── tests
+│   ├── .env.local
+│   ├── .gitignore
+│   ├── .prettierrc
+│   ├── CHANGELOG.md
+│   ├── CLAUDE.md
+│   ├── README.md
+│   ├── eslint.config.mjs
+│   ├── next-env.d.ts
+│   ├── next.config.ts
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.mjs
+│   ├── tsconfig.json
+│   └── vitest.config.ts
+├── .gitattributes
+├── AGENTS.md
+├── CHANGELOG.md
+├── CLAUDE.md
+├── CODEX.md
+├── CODEX_PROJECT.md
+├── LICENSE
+├── MATRIX_PLAN.md
+├── README.md
+├── RELEASE_V2.0.md
+└── vercel.json
 
-38 directories, 568 files
+30 directories, 32 files
 ```
 
 ## Key Features
