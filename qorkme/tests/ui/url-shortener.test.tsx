@@ -64,10 +64,7 @@ describe('UrlShortener', () => {
 
     render(<UrlShortener />);
 
-    await user.type(
-      screen.getByLabelText(/enter your url/i),
-      'https://incredible.example/landing'
-    );
+    await user.type(screen.getByLabelText(/enter your url/i), 'https://incredible.example/landing');
 
     await user.click(screen.getByRole('button', { name: /shorten url/i }));
 
@@ -96,10 +93,7 @@ describe('UrlShortener', () => {
 
     render(<UrlShortener />);
 
-    await user.type(
-      screen.getByLabelText(/enter your url/i),
-      'https://example.com'
-    );
+    await user.type(screen.getByLabelText(/enter your url/i), 'https://example.com');
 
     await user.click(screen.getByRole('button', { name: /shorten url/i }));
 
