@@ -283,6 +283,8 @@ export function MatrixDisplay() {
           palette={palette}
           brightness={1}
           ariaLabel="Qork.Me animated title"
+          cascadeDelay={8}
+          cascadeStartDelay={200}
         />
       </div>
 
@@ -305,6 +307,8 @@ export function MatrixDisplay() {
           palette={palette}
           brightness={1}
           ariaLabel="Qork.Me animated title"
+          cascadeDelay={8}
+          cascadeStartDelay={200}
         />
       </div>
 
@@ -327,6 +331,8 @@ export function MatrixDisplay() {
           palette={palette}
           brightness={1}
           ariaLabel="Current time in 12-hour format with AM/PM"
+          cascadeDelay={6}
+          cascadeStartDelay={500}
         />
       </div>
 
@@ -349,6 +355,8 @@ export function MatrixDisplay() {
           palette={palette}
           brightness={1}
           ariaLabel="Current time in 12-hour format with AM/PM"
+          cascadeDelay={6}
+          cascadeStartDelay={500}
         />
       </div>
     </div>

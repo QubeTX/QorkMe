@@ -43,17 +43,14 @@ export default function Home() {
             style={{ paddingLeft: '24px', paddingRight: '24px' }}
           >
             {/* Matrix Display with Title and Clock */}
-            <div
-              id="matrix-display-wrapper"
-              className="matrix-display-wrapper animate-fadeIn text-center"
-            >
+            <div id="matrix-display-wrapper" className="matrix-display-wrapper text-center">
               <MatrixDisplay />
             </div>
 
             {/* Main Card with URL Shortener */}
             <div
               id="url-shortener-wrapper"
-              className="url-shortener-wrapper"
+              className="url-shortener-wrapper animate-fadeIn-delay-800 opacity-0"
               style={{ marginLeft: '16px', marginRight: '16px' }}
             >
               <UrlShortener />

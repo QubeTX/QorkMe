@@ -26,6 +26,8 @@ export interface MatrixProps extends HTMLAttributes<HTMLDivElement> {
   onFrame?: (index: number) => void;
   mode?: 'default' | 'vu';
   levels?: number[];
+  cascadeDelay?: number; // Delay in ms per cell for cascade effect (diagonal top-left to bottom-right)
+  cascadeStartDelay?: number; // Initial delay before cascade starts (in ms)
 }
 
 const defaultPalette: MatrixPalette = {
@@ -80,6 +82,8 @@ export function Matrix({
   onFrame,
   mode = 'default',
   levels,
+  cascadeDelay = 0,
+  cascadeStartDelay = 0,
   className,
   style,
   ...rest
@@ -179,10 +183,21 @@ export function Matrix({
       {cells.map(({ index, value }) => {
         const isActive = value > 0.02;
         const opacity = isActive ? Math.max(value, 0.18) : 1;
+
+        // Calculate cascade animation delay based on diagonal position (top-left to bottom-right)
+        const row = Math.floor(index / cols);
+        const col = index % cols;
+        const diagonalIndex = row + col; // Cells on same diagonal have same sum
+        const animationDelay =
+          cascadeDelay > 0 ? `${cascadeStartDelay + diagonalIndex * cascadeDelay}ms` : undefined;
+
         return (
           <span
             key={index}
-            className="inline-block rounded-full transition-[opacity,transform,box-shadow] duration-700 ease-out will-change-transform"
+            className={cn(
+              'inline-block rounded-full transition-[opacity,transform,box-shadow] duration-700 ease-out will-change-transform',
+              cascadeDelay > 0 && 'animate-[fadeIn_0.4s_ease-out_both]'
+            )}
             style={{
               width: `${size}px`,
               height: `${size}px`,
@@ -190,6 +205,7 @@ export function Matrix({
               opacity,
               transform: isActive ? `scale(${0.88 + value * 0.2})` : 'scale(0.72)',
               boxShadow: 'none',
+              animationDelay,
             }}
           />
         );
