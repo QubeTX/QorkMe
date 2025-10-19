@@ -1,5 +1,20 @@
 # Changelog
 
+## 2025-10-18 21:45
+
+### Changed
+
+- **SiteFooter Alignment and Layout Improvements** (qorkme/components/SiteFooter.tsx)
+  - Fixed vertical baseline alignment by replacing `<p>` block element with `<span>` inline element for consistency with left column
+  - Removed "Designed in San Francisco • " text from right column, streamlined to "Powered by Supabase & Vercel"
+  - Unified responsive breakpoints from `sm:` to `md:` across both columns for consistent layout transitions
+  - Implemented edge-aligned layout using `md:justify-between` to position left column flush-left and right column flush-right
+  - Added `md:px-8` horizontal padding to parent container for comfortable breathing room from viewport edges
+  - Removed `md:flex-1 md:basis-0` from both columns to allow natural content-based width sizing
+  - Standardized both columns with identical flex patterns: `flex flex-col gap-2 md:flex-row md:items-center md:gap-6`
+  - Applied consistent `md:leading-none` line-height across all footer text elements for proper baseline alignment at desktop breakpoint
+  - Updated qorkme/CHANGELOG.md with version 3.0.29 entry
+
 ## 2025-10-18 21:16
 
 ### Added

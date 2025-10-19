@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.0.29] - 2025-10-18
+
+### Changed
+
+- **SiteFooter Alignment and Layout** (components/SiteFooter.tsx)
+  - Fixed vertical alignment issues by replacing `<p>` element with `<span>` for consistent inline behavior
+  - Removed "Designed in San Francisco • " text, now reads "Powered by Supabase & Vercel"
+  - Updated responsive breakpoints from `sm:` to `md:` for consistent layout switching across both columns
+  - Implemented edge-aligned layout with `md:justify-between` for left-flush and right-flush column positioning
+  - Added `md:px-8` padding to parent container for comfortable breathing room from viewport edges
+  - Removed `md:flex-1 md:basis-0` from columns to allow natural content-based sizing
+  - Both columns now use matching `flex flex-col gap-2 md:flex-row md:items-center md:gap-6` pattern
+  - Consistent `md:leading-none` line-height across all text elements for proper baseline alignment
+
 ## [3.0.28] - 2025-10-18
 
 ### Added
