@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.0.40] - 2025-10-19
+
+### Removed
+
+- **Admin Console Pill Badge** (app/admin/page.tsx)
+  - Removed decorative pill-shaped badge with Shield icon and "Admin Console" text from page header
+  - Streamlines dashboard visual design for cleaner, more minimalist appearance
+
+### Changed
+
+- **Admin Dashboard Main Content Spacing** (app/admin/page.tsx)
+  - Updated padding from `py-8` to `pt-8 pb-16` on main element (line 124)
+  - Increased bottom padding from 32px to 64px for improved breathing room before footer
+  - Enhanced visual hierarchy and content separation
+
+### Added
+
+- **Sixth Animated Metrics Card - System Status** (app/admin/page.tsx)
+  - New card at position 6 in metrics grid (lines 279-312)
+  - Title: "System Status" with description "Live system heartbeat monitor"
+  - Features 7×7 dot-matrix grid powered by pulse animation
+  - Zap icon in sage accent color (`--color-accent`) matching design system
+  - Animated pulse effect with configurable frame rate (20 fps)
+  - Terracotta color palette (`--color-primary`) for on-state dots
+  - 10px cell size with 2px gaps for clean, readable display
+  - Completes sixth slot in metrics grid, enabling perfect 2×3 layout on xl screens
+  - Accessible ARIA label: "System status pulse animation"
+
 ## [3.0.39] - 2025-10-20
 
 ### Changed

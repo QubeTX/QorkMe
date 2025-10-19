@@ -1,5 +1,19 @@
 # Changelog
 
+## 2025-10-19 (Admin Dashboard UI Enhancements)
+
+### Removed
+
+- **Admin Console Pill Badge** - Eliminated decorative Shield icon and "Admin Console" text badge from dashboard header for cleaner visual presentation
+
+### Changed
+
+- **Main Content Spacing** - Increased bottom padding from 32px to 64px (changed `py-8` to `pt-8 pb-16`) to provide better breathing room before footer
+
+### Added
+
+- **Sixth Animated Metrics Card - System Status** with pulse animation, 7×7 dot-matrix grid, Zap icon in sage accent color, completing perfect 2×3 layout on xl screens
+
 ## 2025-10-20 (Admin Page UI Improvements)
 
 ### Changed

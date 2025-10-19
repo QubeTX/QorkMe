@@ -8,8 +8,17 @@ import { AdminSignOutButton } from '@/components/admin/AdminSignOutButton';
 import { ClearDatabaseButton } from '@/components/admin/ClearDatabaseButton';
 import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
 import { SecureAccessMatrix } from '@/components/SecureAccessMatrix';
+import { Matrix, pulse } from '@/components/ui/matrix';
 import { Toaster } from 'react-hot-toast';
-import { Activity, Database, RefreshCcw, Shield, BarChart3, AlertTriangle } from 'lucide-react';
+import {
+  Activity,
+  Database,
+  RefreshCcw,
+  Shield,
+  BarChart3,
+  AlertTriangle,
+  Zap,
+} from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 
@@ -120,7 +129,7 @@ export default async function AdminPage() {
 
         <main
           id="main-content"
-          className="main-content flex flex-1 flex-col items-center justify-center py-8"
+          className="main-content flex flex-1 flex-col items-center justify-center pt-8 pb-16"
         >
           <div
             id="content-container"
@@ -129,26 +138,6 @@ export default async function AdminPage() {
           >
             {/* Header Section */}
             <div className="flex flex-col gap-6 animate-fadeIn-delay-200 opacity-0">
-              <div className="flex items-center justify-center gap-3">
-                <div
-                  className="flex items-center gap-3 rounded-full px-6 py-3"
-                  style={{
-                    background: 'var(--color-surface)',
-                    border: '1px solid var(--color-border)',
-                    boxShadow: '0 4px 12px -4px rgba(38, 38, 35, 0.15)',
-                  }}
-                >
-                  <Shield
-                    size={20}
-                    className="text-[color:var(--color-primary)]"
-                    aria-hidden="true"
-                  />
-                  <span className="font-ui text-xs font-semibold uppercase tracking-[0.26em] text-[color:var(--color-secondary)]">
-                    Admin Console
-                  </span>
-                </div>
-              </div>
-
               <SecureAccessMatrix />
 
               <div className="flex flex-col gap-4 text-center">
@@ -292,6 +281,41 @@ export default async function AdminPage() {
                       <p className="text-lg font-semibold text-[color:var(--color-text-primary)]">
                         {formatDate(metrics.lastCreatedAt)}
                       </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card
+                    style={{
+                      background: 'var(--color-surface)',
+                      borderColor: 'var(--color-border)',
+                      boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
+                    }}
+                  >
+                    <CardHeader className="flex flex-row items-center justify-between">
+                      <div>
+                        <CardTitle>System Status</CardTitle>
+                        <CardDescription>Live system heartbeat monitor.</CardDescription>
+                      </div>
+                      <Zap
+                        size={22}
+                        className="text-[color:var(--color-accent)]"
+                        aria-hidden="true"
+                      />
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-center pt-2">
+                      <Matrix
+                        rows={7}
+                        cols={7}
+                        frames={pulse}
+                        fps={20}
+                        size={10}
+                        gap={2}
+                        palette={{
+                          on: 'var(--color-primary)',
+                          off: 'color-mix(in srgb, var(--color-primary) 12%, transparent)',
+                        }}
+                        ariaLabel="System status pulse animation"
+                      />
                     </CardContent>
                   </Card>
                 </div>
