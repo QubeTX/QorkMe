@@ -26,9 +26,6 @@ export default function Home() {
             {/* Matrix Display with Title and Clock */}
             <div className="animate-fadeIn text-center">
               <MatrixDisplay />
-              <p className="mt-4 text-lg text-text-secondary md:text-xl">
-                Smart URL shortening, beautifully simple
-              </p>
             </div>
 
             {/* Main Card with URL Shortener */}

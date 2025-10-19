@@ -16,6 +16,30 @@ const buildEmptyFrame = (rows: number, cols: number): Frame =>
 
 const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
+// Make letter pattern bold by expanding each dot with an outline
+function makeBoldPattern(pattern: Frame): Frame {
+  const rows = pattern.length;
+  const cols = pattern[0]?.length || 0;
+  const boldPattern: Frame = Array.from({ length: rows }, () => Array(cols).fill(0));
+
+  // Copy original pattern and add outline/stroke effect
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (pattern[r][c] > 0) {
+        // Set the original dot
+        boldPattern[r][c] = 1;
+
+        // Add adjacent dots for thickness (right and bottom for consistency)
+        if (c + 1 < cols) boldPattern[r][c + 1] = 1; // Right
+        if (r + 1 < rows) boldPattern[r + 1][c] = 1; // Bottom
+        if (r + 1 < rows && c + 1 < cols) boldPattern[r + 1][c + 1] = 1; // Diagonal
+      }
+    }
+  }
+
+  return boldPattern;
+}
+
 // Render text string into frame at specified position
 function renderTextToFrame(
   frame: Frame,
@@ -93,8 +117,14 @@ function createTitleFrame(titleBrightness: number[], rows: number, cols: number)
   const titleStartCol = Math.floor((cols - titleWidth) / 2);
   const titleStartRow = 1;
 
-  // Render title with shimmer
-  renderTextToFrame(frame, titleText, titleStartRow, titleStartCol, letters, titleBrightness);
+  // Create bold letter patterns for title
+  const boldLetters: Record<string, Frame> = {};
+  for (const [char, pattern] of Object.entries(letters)) {
+    boldLetters[char] = makeBoldPattern(pattern);
+  }
+
+  // Render title with bold letters and shimmer
+  renderTextToFrame(frame, titleText, titleStartRow, titleStartCol, boldLetters, titleBrightness);
 
   return frame;
 }
