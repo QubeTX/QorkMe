@@ -1,5 +1,58 @@
 # Changelog
 
+## [3.0.30] - 2025-10-18
+
+### Changed
+
+- **Mobile Responsive Optimizations** (components/MatrixDisplay.tsx, components/UrlShortener.tsx, app/page.tsx)
+
+  **MatrixDisplay Component** (components/MatrixDisplay.tsx):
+  - Implemented responsive matrix sizing to prevent overflow on narrow mobile screens
+  - Desktop (md:768px+) rendering:
+    - Title matrix: 8px cells, 50 columns (lines 268-287)
+    - Time matrix: 6px cells, 66 columns (lines 312-331)
+  - Mobile (<768px) rendering:
+    - Title matrix: 5px cells, 32 columns with whitespace for compact display (lines 289-309)
+    - Time matrix: 3.5px cells, 42 columns to prevent horizontal overflow (lines 333-353)
+  - Separate render paths using Tailwind `md:hidden` and `hidden md:block` utilities
+  - Responsive gap spacing: `gap-4` mobile, `md:gap-6` desktop (line 265)
+  - SSR placeholders updated with responsive dimensions (lines 226-257)
+
+  **UrlShortener Component** (components/UrlShortener.tsx):
+  - Simplified card padding from responsive Tailwind classes to fixed inline style
+  - Changed from `p-6 sm:p-8 md:p-12` to `style={{ padding: '24px' }}` (line 53)
+  - Tailwind v4 compatibility fix: Responsive padding classes were not generating properly
+  - Consistent 24px padding across all viewports for simplified maintenance
+
+  **Homepage Layout** (app/page.tsx):
+  - Added mobile breathing room with inline styles for Tailwind v4 compatibility
+  - Content container: `paddingLeft: '24px', paddingRight: '24px'` (line 43)
+  - Card wrapper: `marginLeft: '16px', marginRight: '16px'` (line 57)
+  - Layout calculation: Card width on 375px viewport = 295px (375 - 48 - 32)
+  - Prevents card from touching screen edges on narrow viewports
+  - Changed content gap from `gap-32` to `gap-12` for better mobile spacing (line 42)
+
+### Technical Notes
+
+- **Tailwind v4 Behavior**: This project uses Tailwind CSS v4 (`@import 'tailwindcss'` in globals.css)
+  - Utility generation differs from v3: Classes like `px-6`, `mx-4`, `p-12` may not generate
+  - Solution: Use inline styles with explicit pixel values for guaranteed rendering
+  - Pattern: `style={{ padding: '24px' }}` instead of `className="p-6"`
+- **Responsive Rendering Pattern**: When components need different props at different breakpoints:
+  - Render separate instances rather than making single instance responsive
+  - Use Tailwind visibility utilities: `md:hidden` for mobile, `hidden md:block` for desktop
+  - Example: MatrixDisplay renders 4 total instances (2 title + 2 time, 1 pair per breakpoint)
+- **Mobile Layout Strategy**:
+  - Viewport width (375px) - container padding (48px) - wrapper margin (32px) = card width (295px)
+  - Provides comfortable breathing room without card touching edges
+  - All spacing uses inline styles for Tailwind v4 compatibility
+
+### Documentation
+
+- Updated root CLAUDE.md with mobile responsive patterns
+- Updated qorkme/docs/UI_LAYOUT_GUIDE.md (if applicable)
+- Added real-world Tailwind v4 inline style examples to documentation
+
 ## [3.0.29] - 2025-10-18
 
 ### Changed

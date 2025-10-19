@@ -50,7 +50,7 @@ export function UrlShortener() {
     <div
       id="url-shortener-card"
       className="url-shortener-card flex flex-col gap-6 rounded-[30px] border border-white/10 bg-[color:var(--color-surface)]/[0.03] shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1),0_0_0_1px_rgba(255,255,255,0.05)] backdrop-blur-xl"
-      style={{ padding: '48px' }}
+      style={{ padding: '24px' }}
     >
       <div id="input-wrapper" className="input-wrapper">
         <Input

@@ -1,5 +1,43 @@
 # Changelog
 
+## 2025-10-18 23:15
+
+### Changed
+
+- **Mobile Responsive Improvements** (qorkme/components/MatrixDisplay.tsx, qorkme/components/UrlShortener.tsx, qorkme/app/page.tsx)
+  - **MatrixDisplay Component**: Implemented responsive matrix sizing to prevent overflow on narrow viewports
+    - Desktop (md:768px+): Title renders at 8px cells with 50 columns, Time at 6px cells with 66 columns
+    - Mobile (<768px): Title renders at 5px cells with 32 columns, Time at 3.5px cells with 42 columns
+    - Separate mobile/desktop render paths using Tailwind `md:hidden` and `hidden md:block` utilities
+    - Gap spacing now responsive: `gap-4` mobile, `md:gap-6` desktop
+    - Prevents horizontal scrolling on small screens while maintaining readability
+  - **UrlShortener Component**: Simplified card padding for mobile optimization
+    - Changed from responsive Tailwind classes to fixed inline style: `style={{ padding: '24px' }}`
+    - Tailwind v4 compatibility fix: `p-6`, `sm:p-8`, `md:p-12` classes were not generating properly
+    - Consistent 24px padding across all viewports for simplified maintenance
+  - **Homepage Layout**: Added mobile breathing room with inline styles
+    - Content container: Added `paddingLeft: '24px', paddingRight: '24px'` for horizontal spacing
+    - Card wrapper: Added `marginLeft: '16px', marginRight: '16px'` to prevent card from touching screen edges
+    - Result: Card width on 375px viewport = 295px (375 - 48 container padding - 32 wrapper margin)
+    - Inline styles used throughout due to Tailwind v4 utility generation issues with `px-6`, `mx-4` classes
+  - **Documentation Updates**:
+    - CLAUDE.md: Updated Matrix Display, URL Shortener Card, and Critical UI/Layout Patterns sections
+    - Added new "Homepage Layout Spacing" section documenting mobile improvements
+    - Added real-world examples of Tailwind v4 inline style workarounds
+    - Added "Responsive Rendering" pattern for components with breakpoint-specific sizing
+    - Updated qorkme/CHANGELOG.md with version 3.0.30 entry
+
+### Technical Notes
+
+- **Tailwind v4 Compatibility**: Project uses Tailwind CSS v4 which has different utility generation behavior than v3
+  - Classes like `px-6`, `mx-4`, `p-12` may not generate properly depending on configuration
+  - Solution: Use inline styles with explicit pixel values for guaranteed rendering
+  - Pattern: `style={{ padding: '24px' }}` instead of `className="p-6"`
+- **Responsive Component Pattern**: When components need different props at different breakpoints, render separate instances with Tailwind visibility utilities rather than trying to make single instance responsive
+- **Mobile Layout Calculation**: Card width = viewport width - container padding - wrapper margins
+  - 375px (iPhone SE) - 48px - 32px = 295px card width
+  - Provides comfortable breathing room on all sides without card touching edges
+
 ## 2025-10-18 21:45
 
 ### Changed

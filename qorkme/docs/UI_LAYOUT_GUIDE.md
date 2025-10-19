@@ -158,6 +158,12 @@ Based on QorkMe's design system:
   <Section1 />
   <Section2 />
 </div>
+
+// ✅ Mobile-optimized spacing (real example from page.tsx, 2025-10-18)
+<div className="flex flex-col gap-12">  {/* Compact for mobile */}
+  <MatrixDisplay />
+  <UrlShortener />
+</div>
 ```
 
 ### Internal Padding
@@ -172,7 +178,149 @@ For internal spacing (padding within a card/container), use inline styles if Tai
 >
   <Content />
 </div>
+
+// ✅ Real example from UrlShortener (2025-10-18)
+// Changed from className="p-6 sm:p-8 md:p-12" (didn't work)
+// To inline style (works everywhere):
+<div
+  className="url-shortener-card flex flex-col gap-6"
+  style={{ padding: '24px' }}
+>
+  <Input />
+  <Button />
+</div>
 ```
+
+### Mobile Breathing Room
+
+Always add horizontal spacing on mobile to prevent content from touching screen edges:
+
+```jsx
+// ✅ Container + wrapper pattern from page.tsx (2025-10-18)
+<div
+  className="content-container"
+  style={{ paddingLeft: '24px', paddingRight: '24px' }} // Container padding
+>
+  <div style={{ marginLeft: '16px', marginRight: '16px' }}>
+    {' '}
+    {/* Wrapper margin */}
+    <Card /> {/* Result: Card has comfortable space on all sides */}
+  </div>
+</div>
+
+// Math: On 375px viewport
+// Card width = 375px - 48px (container) - 32px (wrapper) = 295px
+// Prevents card from edge-to-edge rendering
+```
+
+---
+
+## Responsive Component Rendering
+
+### Pattern: Separate Instances for Different Breakpoints
+
+When components need different props at different breakpoints (e.g., different sizes, column counts), render **separate instances** with Tailwind visibility utilities rather than trying to make a single instance responsive.
+
+**Why this approach?**
+
+- Component props are static - can't change based on breakpoint
+- CSS can only modify styling, not component behavior (like matrix dimensions)
+- Clearer code - each breakpoint's requirements are explicit
+- Better performance - only one instance renders at a time
+
+### Real-World Example: MatrixDisplay Mobile Optimization
+
+**Problem**: MatrixDisplay needs different cell sizes and column counts on mobile vs desktop to prevent overflow.
+
+**Solution** (implemented 2025-10-18):
+
+```tsx
+// ❌ WRONG - Can't make props responsive
+<Matrix
+  size={isDesktop ? 8 : 5} // Won't work - props are static
+  cols={isDesktop ? 50 : 32}
+/>;
+
+// ✅ RIGHT - Render separate instances
+{
+  /* Desktop version - hidden on mobile */
+}
+<div className="hidden md:block">
+  <Matrix rows={9} cols={50} size={8} gap={2} />
+</div>;
+
+{
+  /* Mobile version - hidden on desktop */
+}
+<div className="md:hidden">
+  <Matrix rows={9} cols={32} size={5} gap={2} />
+</div>;
+```
+
+### MatrixDisplay Implementation Details
+
+From `qorkme/components/MatrixDisplay.tsx` (lines 267-353):
+
+```tsx
+{
+  /* Title Matrix - Desktop */
+}
+<div className="hidden md:block">
+  <Matrix rows={9} cols={50} size={8} gap={2} />
+</div>;
+
+{
+  /* Title Matrix - Mobile */
+}
+<div className="md:hidden">
+  <Matrix rows={9} cols={32} size={5} gap={2} />
+</div>;
+
+{
+  /* Time Matrix - Desktop */
+}
+<div className="hidden md:block">
+  <Matrix rows={9} cols={66} size={6} gap={2} />
+</div>;
+
+{
+  /* Time Matrix - Mobile */
+}
+<div className="md:hidden">
+  <Matrix rows={9} cols={42} size={3.5} gap={2} />
+</div>;
+```
+
+**Result**:
+
+- Desktop: Title (8px cells, 50 cols), Time (6px cells, 66 cols)
+- Mobile: Title (5px cells, 32 cols), Time (3.5px cells, 42 cols)
+- No horizontal overflow on narrow screens
+- Only one instance per matrix renders at any given breakpoint
+
+### Tailwind Visibility Utilities
+
+| Utility           | Behavior                                                       |
+| ----------------- | -------------------------------------------------------------- |
+| `md:hidden`       | Hidden on medium (768px+) and larger, visible on smaller       |
+| `hidden md:block` | Hidden on small screens, visible on medium (768px+) and larger |
+| `lg:hidden`       | Hidden on large (1024px+) and larger                           |
+| `hidden lg:flex`  | Hidden on small/medium, flex on large (1024px+) and larger     |
+
+### When to Use This Pattern
+
+✅ **Use separate instances when**:
+
+- Component behavior needs to change (not just styling)
+- Props need different values at different breakpoints
+- Layout structure differs significantly
+- Performance is good (only one instance renders)
+
+❌ **Don't use separate instances when**:
+
+- Only CSS properties need to change (use responsive classes instead)
+- Content is identical, only sizing differs slightly (use responsive Tailwind utilities)
+- Would cause unnecessary duplication of complex logic
 
 ---
 
@@ -814,6 +962,9 @@ className="transition-all duration-300"  // Adjust 150-500ms
 7. ✅ **Hard refresh browser after CSS/layout changes**
 8. ✅ **Verify changes in both source files AND rendered HTML**
 9. ✅ **Use InteractiveGridPattern at z-0, content at z-10 for proper layering**
+10. ✅ **Add mobile breathing room with container padding + wrapper margins**
+11. ✅ **Render separate component instances for different breakpoints when props need to change**
+12. ✅ **Use Tailwind visibility utilities (`md:hidden`, `hidden md:block`) for responsive rendering**
 
 ---
 

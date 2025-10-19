@@ -39,7 +39,8 @@ export default function Home() {
         >
           <div
             id="content-container"
-            className="content-container relative z-10 flex w-full max-w-[700px] flex-col gap-12 px-4"
+            className="content-container relative z-10 flex w-full max-w-[700px] flex-col gap-12"
+            style={{ paddingLeft: '24px', paddingRight: '24px' }}
           >
             {/* Matrix Display with Title and Clock */}
             <div
@@ -50,7 +51,11 @@ export default function Home() {
             </div>
 
             {/* Main Card with URL Shortener */}
-            <div id="url-shortener-wrapper" className="url-shortener-wrapper">
+            <div
+              id="url-shortener-wrapper"
+              className="url-shortener-wrapper"
+              style={{ marginLeft: '16px', marginRight: '16px' }}
+            >
               <UrlShortener />
             </div>
           </div>

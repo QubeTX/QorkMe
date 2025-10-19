@@ -190,13 +190,15 @@ export function MatrixDisplay() {
   // Generate title shimmer frames
   const titleShimmerFrames = useMemo(() => createTitleFrames(24), []);
 
-  // Matrix dimensions for title
+  // Matrix dimensions for title (responsive)
   const titleRows = 9; // Title (7) + padding (1 top/bottom)
-  const titleCols = 50; // Wide enough for "Qork.Me"
+  const titleCols = 50; // Wide enough for "Qork.Me" (desktop)
+  const titleColsMobile = 32; // Compact for mobile with whitespace
 
-  // Matrix dimensions for time
+  // Matrix dimensions for time (responsive)
   const timeRows = 9; // Time (7) + padding (1 top/bottom)
-  const timeCols = 66; // Wide enough for "HH:MM:SS AM/PM"
+  const timeCols = 66; // Wide enough for "HH:MM:SS AM/PM" (desktop)
+  const timeColsMobile = 42; // Compact for mobile
 
   // Create title frame with shimmer
   const titleFrame = useMemo(() => {
@@ -219,22 +221,38 @@ export function MatrixDisplay() {
     return (
       <div
         id="matrix-display-container"
-        className="matrix-display-container relative mb-8 flex flex-col items-center gap-6"
+        className="matrix-display-container relative mb-8 flex flex-col items-center gap-4 md:gap-6"
       >
         <div
           id="title-matrix-placeholder"
-          className="title-matrix-placeholder"
+          className="title-matrix-placeholder hidden md:block"
           style={{
             width: `${titleCols * 8 + (titleCols - 1) * 2}px`,
             height: `${titleRows * 8 + (titleRows - 1) * 2}px`,
           }}
         />
         <div
+          id="title-matrix-placeholder-mobile"
+          className="title-matrix-placeholder-mobile md:hidden"
+          style={{
+            width: `${titleColsMobile * 5 + (titleColsMobile - 1) * 2}px`,
+            height: `${titleRows * 5 + (titleRows - 1) * 2}px`,
+          }}
+        />
+        <div
           id="time-matrix-placeholder"
-          className="time-matrix-placeholder"
+          className="time-matrix-placeholder hidden md:block"
           style={{
             width: `${timeCols * 6 + (timeCols - 1) * 2}px`,
             height: `${timeRows * 6 + (timeRows - 1) * 2}px`,
+          }}
+        />
+        <div
+          id="time-matrix-placeholder-mobile"
+          className="time-matrix-placeholder-mobile md:hidden"
+          style={{
+            width: `${timeColsMobile * 3.5 + (timeColsMobile - 1) * 2}px`,
+            height: `${timeRows * 3.5 + (timeRows - 1) * 2}px`,
           }}
         />
       </div>
@@ -244,12 +262,12 @@ export function MatrixDisplay() {
   return (
     <div
       id="matrix-display-container"
-      className="matrix-display-container relative mb-8 flex flex-col items-center gap-6"
+      className="matrix-display-container relative mb-8 flex flex-col items-center gap-4 md:gap-6"
     >
-      {/* Title Matrix with feathered edges */}
+      {/* Title Matrix with feathered edges - Desktop */}
       <div
-        id="title-matrix-wrapper"
-        className="title-matrix-wrapper relative"
+        id="title-matrix-wrapper-desktop"
+        className="title-matrix-wrapper-desktop relative hidden md:block"
         style={{
           WebkitMaskImage:
             'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
@@ -268,10 +286,32 @@ export function MatrixDisplay() {
         />
       </div>
 
-      {/* Time Matrix - smaller size for secondary importance */}
+      {/* Title Matrix with feathered edges - Mobile */}
       <div
-        id="time-matrix-wrapper"
-        className="time-matrix-wrapper relative"
+        id="title-matrix-wrapper-mobile"
+        className="title-matrix-wrapper-mobile relative md:hidden"
+        style={{
+          WebkitMaskImage:
+            'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+          maskImage: 'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+        }}
+      >
+        <Matrix
+          rows={titleRows}
+          cols={titleColsMobile}
+          pattern={titleFrame}
+          size={5}
+          gap={2}
+          palette={palette}
+          brightness={1}
+          ariaLabel="Qork.Me animated title"
+        />
+      </div>
+
+      {/* Time Matrix - Desktop */}
+      <div
+        id="time-matrix-wrapper-desktop"
+        className="time-matrix-wrapper-desktop relative hidden md:block"
         style={{
           WebkitMaskImage:
             'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
@@ -283,6 +323,28 @@ export function MatrixDisplay() {
           cols={timeCols}
           pattern={timeFrame}
           size={6}
+          gap={2}
+          palette={palette}
+          brightness={1}
+          ariaLabel="Current time in 12-hour format with AM/PM"
+        />
+      </div>
+
+      {/* Time Matrix - Mobile */}
+      <div
+        id="time-matrix-wrapper-mobile"
+        className="time-matrix-wrapper-mobile relative md:hidden"
+        style={{
+          WebkitMaskImage:
+            'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+          maskImage: 'radial-gradient(ellipse 100% 100% at center, black 40%, transparent 100%)',
+        }}
+      >
+        <Matrix
+          rows={timeRows}
+          cols={timeColsMobile}
+          pattern={timeFrame}
+          size={3.5}
           gap={2}
           palette={palette}
           brightness={1}

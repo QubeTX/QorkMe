@@ -143,7 +143,31 @@ Implementation: `qorkme/lib/shortcode/generator.ts`
    // Always works: <div style={{ padding: '64px' }}>
    ```
 
-3. **Component Structure**: Keep layouts flat - avoid unnecessary nesting. Each extra div adds complexity and potential layout issues.
+   **Real-world example from mobile responsive improvements (2025-10-18)**:
+
+   ```jsx
+   // ❌ WRONG - Classes don't generate in Tailwind v4
+   <div className="px-6">  // Won't render
+   <div className="mx-4">  // Won't render
+
+   // ✅ RIGHT - Inline styles guaranteed to work
+   <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
+   <div style={{ marginLeft: '16px', marginRight: '16px' }}>
+   ```
+
+3. **Responsive Rendering**: For components that need different sizes at different breakpoints, render separate instances with Tailwind visibility utilities:
+
+   ```jsx
+   // ✅ Mobile and desktop versions with different props
+   <div className="md:hidden">
+     <Component size={5} cols={32} />  {/* Mobile */}
+   </div>
+   <div className="hidden md:block">
+     <Component size={8} cols={50} />  {/* Desktop */}
+   </div>
+   ```
+
+4. **Component Structure**: Keep layouts flat - avoid unnecessary nesting. Each extra div adds complexity and potential layout issues.
 
 Complete troubleshooting guide: `qorkme/docs/UI_LAYOUT_GUIDE.md`
 
@@ -162,16 +186,18 @@ QorkMe features a subtle interactive grid background that creates visual depth a
 - **Performance**: Minimal DOM manipulation, CSS transitions, pointer events isolated to interactive cells only
 
 **Customization**:
+
 ```tsx
 <InteractiveGridPattern
-  width={40}           // Cell width in pixels
-  height={40}          // Cell height in pixels
-  squares={[20, 20]}   // [columns, rows]
-  className="..."      // Additional styles
+  width={40} // Cell width in pixels
+  height={40} // Cell height in pixels
+  squares={[20, 20]} // [columns, rows]
+  className="..." // Additional styles
 />
 ```
 
 **Noise Filter Details** (in SVG `<defs>`):
+
 - `baseFrequency="0.025"`: Controls noise scale (lower = larger patterns)
 - `numOctaves="3"`: Noise layer detail (higher = more complex)
 - `feColorMatrix` alpha values `0.6 0.4`: Opacity range (slope × input + intercept)
@@ -266,11 +292,13 @@ Vitest suite covering core functionality:
 - **Setup**: Shared test configuration in `qorkme/tests/setup.ts`
 
 **Test Patterns**:
+
 - UI tests use @testing-library/react with user-event for realistic interactions
 - API route tests mock Supabase client responses
 - Tests mirror source structure for easy navigation
 
 **Running specific tests**:
+
 ```bash
 # Run all tests
 npm test
@@ -302,6 +330,7 @@ Test files mirror source structure (e.g., `lib/shortcode/generator.ts` → `test
 ### Case-Insensitive Short Codes
 
 Database uses generated columns for lowercase normalization:
+
 - User input "MyLink" is stored alongside normalized "mylink"
 - Lookups always use lowercase to prevent collisions
 - Display preserves original casing
@@ -309,6 +338,7 @@ Database uses generated columns for lowercase normalization:
 ### Analytics Tracking
 
 Every redirect logs:
+
 - Timestamp
 - User agent (parsed for device/browser/OS)
 - Referrer URL
@@ -334,23 +364,43 @@ Every redirect logs:
 
 - Animated dot-matrix title using "QORKME" in stylized characters
 - Real-time clock in 12-hour format with AM/PM period (updated 2025-10-18)
-- Matrix width: 66 columns to accommodate time string + AM/PM
+- **Responsive matrix sizing** (added 2025-10-18):
+  - **Desktop (md:768px+)**: Title at 8px cells (50 columns), Time at 6px cells (66 columns)
+  - **Mobile (<768px)**: Title at 5px cells (32 columns), Time at 3.5px cells (42 columns)
+  - Prevents overflow on narrow viewports while maintaining readability
+  - Uses Tailwind `md:hidden` and `hidden md:block` utilities for separate render paths
 - Character map includes digits 0-9, colon, space, and letters A, P, M
 - Shimmer effect on title letters (deterministic, no random values for hydration safety)
 - Server/client rendering consistency maintained for Next.js hydration
+- Responsive gap spacing: `gap-4` mobile, `md:gap-6` desktop
 
 Implementation: `qorkme/components/MatrixDisplay.tsx`, `qorkme/components/ui/matrix.tsx`
 
 ### URL Shortener Card Interactions
 
 - Subtle 3D tilt effect on mouse movement (rotation divisor: /80 for refined feel)
-- Responsive internal padding: 24px mobile, 32px tablet, 48px desktop
+- **Mobile-optimized padding** (updated 2025-10-18):
+  - Fixed 24px padding on all viewports using inline styles
+  - Tailwind v4 compatibility: Uses `style={{ padding: '24px' }}` instead of Tailwind classes
+  - Previous responsive padding (24px/32px/48px) simplified for consistency
 - Three states: Input form, Loading spinner, Success display
 - State-aware rendering (conditional, not absolute positioning overlays)
 - Proper focus ring display without clipping
 - Consistent spacing maintained via flexbox `gap` property
 
 Implementation: `qorkme/components/UrlShortener.tsx`
+
+### Homepage Layout Spacing
+
+- **Mobile breathing room** (added 2025-10-18):
+  - Content container: `paddingLeft: '24px', paddingRight: '24px'` for horizontal spacing
+  - Card wrapper: `marginLeft: '16px', marginRight: '16px'` to prevent edge touching
+  - Result: On 375px mobile viewport, card width is ~295px (375 - 48 - 32)
+  - Inline styles used for Tailwind v4 compatibility (classes like `px-6`, `mx-4` not generating)
+- Desktop layout unchanged and fully maintained
+- All spacing values use inline styles for guaranteed rendering
+
+Implementation: `qorkme/app/page.tsx`
 
 ## Development Troubleshooting
 
@@ -387,23 +437,29 @@ See `qorkme/docs/UI_LAYOUT_GUIDE.md` for comprehensive layout troubleshooting.
 ## Common Development Tasks
 
 ### Update short code generation logic
+
 Edit `qorkme/lib/shortcode/generator.ts` and add tests to `qorkme/tests/shortcode/generator.test.ts`
 
 ### Add new reserved words
+
 Update `qorkme/lib/shortcode/reserved.ts` and sync with database `reserved_words` table
 
 ### Modify design system colors
+
 Edit CSS custom properties in `qorkme/app/globals.css` following specifications in `qorkme/docs/DESIGN_SYSTEM.md`
 
 ### Change redirect behavior
+
 Update `qorkme/app/[shortCode]/route.ts` server component
 
 ### Add new API endpoint
+
 Create route handler in `qorkme/app/api/` following Next.js App Router conventions
 
 ### Modify matrix display or clock
 
 Matrix rendering logic is split between:
+
 - `qorkme/components/MatrixDisplay.tsx` - Main component with title and clock
 - `qorkme/components/ui/matrix.tsx` - Core matrix dot rendering engine
 - Matrix uses deterministic rendering (no `Math.random()`) to avoid hydration mismatches
@@ -424,6 +480,7 @@ Matrix rendering logic is split between:
 ## Changelog Management
 
 Both root and application changelogs must be updated:
+
 - **Root changelog**: `CHANGELOG.md` - Repository-level changes
 - **Application changelog**: `qorkme/CHANGELOG.md` - Application-specific updates
 
@@ -432,6 +489,7 @@ Update both files before committing changes to maintain accurate version history
 ## Font Asset Management
 
 ZT Bros Oskon 90s font family:
+
 - **Source files**: `ZT Bros Oskon 90s/` (OTF/TTF/WEB formats)
 - **Production files**: `qorkme/public/fonts/` (woff2 only)
 - Keep font licensing notes aligned between source README and `qorkme/public/fonts/README.md`
@@ -449,6 +507,7 @@ ZT Bros Oskon 90s font family:
 ## Browser Support
 
 Modern browsers with ES2020+ support:
+
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
