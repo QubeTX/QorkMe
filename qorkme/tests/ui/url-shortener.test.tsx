@@ -69,7 +69,7 @@ describe('UrlShortener', () => {
     await user.click(screen.getByRole('button', { name: /shorten url/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/your shortened url/i)).toBeInTheDocument();
+      expect(screen.getByText(/your short link/i)).toBeInTheDocument();
       expect(screen.getByText(/qork\.me\/fresh/i)).toBeInTheDocument();
     });
 

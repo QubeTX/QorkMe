@@ -1,5 +1,32 @@
 # Changelog
 
+## 2025-10-19 23:55
+
+### Added
+
+- **Admin Authentication System & Complete Redesign**
+  - Created OAuth callback route handler (qorkme/app/auth/callback/route.ts) - the critical missing piece that was blocking GitHub OAuth login
+  - Created standalone admin login page (qorkme/app/admin/login/page.tsx) with interactive grid background, earthy modern design, error handling, and staggered animations
+  - Completely redesigned admin dashboard (qorkme/app/admin/page.tsx) to match homepage aesthetic with interactive grid, new color palette, and proper auth flow
+  - Updated AdminSignInButton to use correct OAuth callback redirect URL
+  - Admin authentication now works end-to-end: login page → GitHub OAuth → callback → dashboard
+
+- **Accessibility Improvements**
+  - Added visually hidden label for URL input field (qorkme/components/UrlShortener.tsx) with `sr-only` class
+  - Added `.sr-only` utility class (qorkme/app/globals.css) for screen reader accessibility
+  - Improves WCAG compliance and enables tests to find input by accessible label
+
+### Fixed
+
+- **Admin Authentication Flow**: Fixed completely broken GitHub OAuth login by creating the missing auth callback route that handles code exchange for session
+- **Test Suite**: Fixed 2 failing UrlShortener tests - all 16 tests now passing
+  - Added accessible label so tests can find input field
+  - Updated test expectations to match actual UI text ("Your short link" instead of "Your shortened url")
+
+### Changed
+
+- **Admin Sign-In Button**: Updated OAuth redirect from `/admin` to `/auth/callback` for proper authentication flow
+
 ## 2025-10-19 11:00
 
 ### Added

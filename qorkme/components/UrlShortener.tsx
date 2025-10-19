@@ -175,6 +175,9 @@ export function UrlShortener() {
           className={`flex flex-col gap-6 transition-opacity duration-200 ${fadeState === 'in' ? 'opacity-100' : 'opacity-0'}`}
         >
           <div id="input-wrapper" className="input-wrapper">
+            <label htmlFor="url-input" className="sr-only">
+              Enter Your URL
+            </label>
             <Input
               id="url-input"
               type="url"

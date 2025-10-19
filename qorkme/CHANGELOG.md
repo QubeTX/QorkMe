@@ -1,5 +1,67 @@
 # Changelog
 
+## [3.0.33] - 2025-10-19
+
+### Added
+
+- **Admin Authentication System**
+  - Created OAuth callback route handler ([app/auth/callback/route.ts](app/auth/callback/route.ts))
+    - Exchanges authorization code for Supabase session after GitHub OAuth redirect
+    - Handles authentication errors gracefully with redirect to login page with error parameters
+    - Critical missing piece that was blocking admin login functionality
+  - Created standalone admin login page ([app/admin/login/page.tsx](app/admin/login/page.tsx))
+    - Interactive grid background matching homepage design aesthetic
+    - Earthy modern design system with terracotta and sage color palette
+    - Beautiful centered authentication card with GitHub OAuth sign-in button
+    - Error message handling for failed authentication and unauthorized access
+    - Responsive padding using inline styles for Tailwind v4 compatibility
+    - Staggered page load animations (Shield badge at 200ms, error at 300ms, card at 400ms, notice at 800ms)
+    - "Back to homepage" link for easy navigation
+    - Redirects authenticated users to admin dashboard automatically
+  - Updated AdminSignInButton to redirect to `/auth/callback` instead of directly to `/admin`
+
+- **Admin Dashboard Redesign**
+  - Redesigned admin dashboard ([app/admin/page.tsx](app/admin/page.tsx)) with new design system
+    - Interactive grid background with organic noise texture (matching homepage)
+    - Removed old NavigationHeader component for cleaner layout
+    - Applied earthy modern color palette throughout
+    - Metric cards with proper design system tokens
+    - Sage green (`--color-accent`) for metric icons
+    - Success/warning conditional colors for database health status
+    - Enhanced danger zone styling with error color scheme (`--color-error`)
+    - Proper authentication flow: unauthenticated users → redirect to `/admin/login`
+    - Authorization check: wrong GitHub user → redirect to login with `?error=unauthorized`
+    - Staggered page load animations (header at 200ms, metrics at 400ms)
+    - Improved session management section with clear sign-out UI
+
+- **Accessibility Improvements**
+  - Added visually hidden label for URL input field ([components/UrlShortener.tsx](components/UrlShortener.tsx))
+    - Label text: "Enter Your URL" with `sr-only` class
+    - Improves screen reader accessibility
+    - Enables tests to find input by accessible label
+  - Added `.sr-only` utility class ([app/globals.css](app/globals.css))
+    - Standard accessibility pattern for visually hiding elements while keeping them accessible to assistive technology
+    - Used by screen readers to announce input field purpose
+
+### Fixed
+
+- **Admin Authentication Flow**
+  - Fixed broken GitHub OAuth authentication by creating missing auth callback route
+  - Admin login now works end-to-end: login page → GitHub OAuth → callback → dashboard
+  - Proper session persistence after OAuth redirect
+
+- **Test Suite Fixes**
+  - Fixed failing UrlShortener tests ([tests/ui/url-shortener.test.tsx](tests/ui/url-shortener.test.tsx))
+    - Updated test to look for "Your short link" instead of "Your shortened url" (matching actual UI text)
+    - Tests can now find input field by accessible label
+    - All 16 tests now passing (was 14 passing, 2 failing)
+
+### Changed
+
+- **Admin Sign-In Button**
+  - Updated redirect URL from `/admin` to `/auth/callback` for proper OAuth flow
+  - Removed unused `redirectTo` prop (authentication always redirects to admin dashboard after callback)
+
 ## [3.0.32] - 2025-10-19
 
 ### Added

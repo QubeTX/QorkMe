@@ -6,11 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { LogIn } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-interface AdminSignInButtonProps {
-  redirectTo?: string;
-}
-
-export function AdminSignInButton({ redirectTo = '/admin' }: AdminSignInButtonProps) {
+export function AdminSignInButton() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
@@ -21,7 +17,7 @@ export function AdminSignInButton({ redirectTo = '/admin' }: AdminSignInButtonPr
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `${window.location.origin}${redirectTo}`,
+          redirectTo: `${window.location.origin}/auth/callback`,
           scopes: 'read:user user:email',
         },
       });
