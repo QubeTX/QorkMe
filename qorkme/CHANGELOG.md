@@ -1,5 +1,29 @@
 # Changelog
 
+## [3.0.27] - 2025-10-18
+
+### Added
+
+- **Comprehensive Documentation Enhancements** (CLAUDE.md, docs/UI_LAYOUT_GUIDE.md)
+  - Created new 683-line UI_LAYOUT_GUIDE.md documenting critical layout patterns, Tailwind v4 issues, and troubleshooting
+  - Added Critical UI/Layout Patterns section to CLAUDE.md covering:
+    - Tailwind v4 gotchas (inset-0 with padding, backdrop-blur browser support, container overflow)
+    - Component-specific implementation patterns
+    - Common pitfalls and their solutions
+  - Added Development Troubleshooting section with cache clearing and verification commands
+  - Expanded component structure documentation to include ui/ subdirectory (matrix.tsx, shimmering-text.tsx)
+  - Added Matrix Display implementation details (12-hour format, deterministic rendering, hydration fixes)
+  - Added URL Shortener Card Interactions documentation (3D tilt animation, responsive padding architecture)
+  - Added "Modify matrix display or clock" task to Common Development Tasks
+
+### Changed
+
+- **Documentation Updates** (CLAUDE.md)
+  - Updated custom alias validation length from 3-8 to 3-50 characters to match current implementation
+  - Enhanced Typography section with stricter font usage rules (ZT Bros Oskon for display, Inter Regular 400 for body/UI)
+  - Expanded Testing Strategy with specific test file paths and npm run commands
+  - Added UI_LAYOUT_GUIDE.md reference to Documentation section
+
 ## [3.0.26] - 2025-10-18
 
 ### Changed

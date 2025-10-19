@@ -1,5 +1,19 @@
 # Changelog
 
+## 2025-10-18 21:01
+
+- Enhanced CLAUDE.md with new Critical UI/Layout Patterns section documenting Tailwind v4 gotchas and common pitfalls (inset-0 with padding, backdrop-blur browser support, container overflow issues).
+- Added Development Troubleshooting section with cache clearing commands and verification steps for Next.js development issues.
+- Expanded component structure documentation to include ui/ subdirectory components (matrix.tsx, shimmering-text.tsx).
+- Updated custom alias validation documentation from 3-8 characters to 3-50 characters to match current implementation.
+- Enhanced Typography section with stricter font usage rules emphasizing ZT Bros Oskon for display and Inter Regular (400) for body/UI.
+- Expanded Testing Strategy documentation with specific test file paths and npm run commands.
+- Added Matrix Display implementation details documenting 12-hour time format, deterministic rendering, and hydration fixes.
+- Added URL Shortener Card Interactions documentation covering 3D tilt animation and responsive padding architecture.
+- Added "Modify matrix display or clock" task to Common Development Tasks section.
+- Created comprehensive UI_LAYOUT_GUIDE.md file (683 lines) documenting critical layout patterns, Tailwind v4 issues, troubleshooting steps, and component-specific implementation details.
+- Added UI_LAYOUT_GUIDE.md reference to Documentation section.
+
 ## 2025-10-18 23:45
 
 - Reduced the UrlShortener card 3D tilt cursor-following animation from divisor `/20` to `/80` for an extremely subtle effect that doesn't distract from the user experience.
