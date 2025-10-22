@@ -49,19 +49,22 @@ QorkMe delivers branded short links, QR codes, server-side analytics logging, an
 - `qorkme/docs/` — Deployment, design system, and Vercel setup guides.
 - `qorkme/supabase/` — SQL schema and setup walkthrough.
 - `ZT Bros Oskon 90s/` — Font family bundle used by the UI; mirrored copies exist in `qorkme/public/fonts/` as woff2 assets.
+- `LEARNED.md` — Implementation notes for the interactive grid background and dot-matrix display learnings.
 - `vercel.json` — Root-level headers and install instructions for deployments.
 
-## Workspace File Tree (current as of 2025-10-19)
+## Workspace File Tree (current as of 2025-10-22)
 ```
 QorkMe/
 ├── AGENTS.md                  # workspace-specific agent guidance
 ├── CHANGELOG.md               # workspace change log
 ├── CLAUDE.md                  # Claude Code instruction set
 ├── CODEX_PROJECT.md           # <— this file
+├── LEARNED.md                 # visual effects implementation lessons
 ├── LICENSE                    # Apache License 2.0
-├── MATRIX_BACKGROUND_PLAN.md  # matrix background technical docs
+├── MATRIX_PLAN.md             # matrix background technical docs
 ├── README.md                  # repo-level overview
-├── TESTING_CHECKLIST.md       # testing verification guide
+├── RELEASE_V2.0.md            # release planning notes
+├── app/                       # legacy prototype assets (deprecated)
 ├── vercel.json                # deployment configuration
 ├── NEW_REDESIGN_SAMPLE/       # design component documentation
 │   ├── INTERACTIVE_GRID_BACKGROUND.md

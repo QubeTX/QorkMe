@@ -1,5 +1,21 @@
 # Changelog
 
+## 2025-10-22 (Interactive Grid & Matrix Learnings)
+
+### Added
+
+- **LEARNED.md** — New root-level guide consolidating lessons from `NEW_REDESIGN_SAMPLE/INTERACTIVE_GRID_BACKGROUND.md`, `NEW_REDESIGN_SAMPLE/MATRIX_DOCS.md`, and current QorkMe implementations (interactive grid background + MatrixDisplay). Includes TL;DR, reuse checklist, and replication blueprint for future projects.
+
+### Changed
+
+- **CODEX_PROJECT.md**
+  - Documented `LEARNED.md` in key files list.
+  - Refreshed workspace file tree (2025-10-22) with accurate root entries (`MATRIX_PLAN.md`, `LEARNED.md`, `RELEASE_V2.0.md`, root `app/`).
+
+### Notes
+
+- No application code was modified as part of this documentation update.
+
 ## 2025-10-19 (Comprehensive Design System Documentation)
 
 ### Added

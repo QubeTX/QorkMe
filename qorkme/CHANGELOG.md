@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.43] - 2025-10-22
+
+### Documentation
+
+- Added root-level `LEARNED.md` summarizing interactive grid background and dot-matrix implementation details for reuse across projects. Highlights current QorkMe patterns (dynamic SVG grid, shimmered MatrixDisplay) along with lessons from reference docs.
+- Updated `CODEX_PROJECT.md` workspace tree to include the new documentation artifact and accurate root file listings.
+
+### Notes
+
+- No application source code or runtime behavior changed in this release.
+
 ## [3.0.42] - 2025-10-19
 
 ### Added
