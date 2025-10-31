@@ -1,5 +1,20 @@
 # Changelog
 
+## 2025-10-31 (Dependency Security Maintenance)
+
+### Fixed
+
+- **Security Update** — Updated Vite from 5.4.20 to 5.4.21 to resolve security vulnerability GHSA-93m4-6634-74q7 in qorkme application
+  - Ran `npm audit fix` to resolve all reported vulnerabilities
+  - Verified zero vulnerabilities with `npm audit --audit-level=moderate`
+  - All CI/CD checks confirmed passing: ESLint, Prettier, TypeScript, Vitest suite (16 tests)
+  - Production build verified successfully with no breaking changes
+
+### Notes
+
+- Maintenance release focused on dependency security improvements
+- No application source code changes
+
 ## 2025-10-22 (Interactive Grid & Matrix Learnings)
 
 ### Added

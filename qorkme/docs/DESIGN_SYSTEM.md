@@ -28,36 +28,42 @@ QorkMe embodies an **earthy modern** aesthetic that merges organic warmth with c
 ### Design Philosophy
 
 **Earthy Modern**
+
 - Organic color palettes (warm parchment, terracotta, sage) meet refined layouts
 - Natural tones create warmth while precise geometry maintains professionalism
 - Generous whitespace allows elements to breathe
 - Texture through subtle noise patterns and organic variations
 
 **Purposeful Contrast**
+
 - Terracotta (`#c4724f`) drives all primary actions and focus states
 - Sage (`#5f7d58`) supports secondary paths and success states
 - Deep browns (`#2f2a26`) provide structural clarity and text hierarchy
 - High contrast ensures legibility while maintaining warmth
 
 **Quiet Confidence**
+
 - Motion and depth remain subtle and refined
 - Blur, shadow, and animation enhance without overwhelming
 - Never gimmicky, always purposeful
 - Calm, professional interactions that feel premium
 
 **Glass-Morphic Depth**
+
 - Semi-transparent surfaces with backdrop blur create layered dimension
 - White borders at low opacity (5-20%) define edges subtly
 - Inset highlights add glass-like reflections
 - Multiple shadow layers create realistic depth
 
 **Clarity First**
+
 - Establish singular visual hierarchy per view
 - Copy stays concise and action-oriented
 - Emphasis reserved for primary actions
 - Information architecture drives layout decisions
 
 **Interactive Delight**
+
 - Subtle hover effects create engaging micro-interactions
 - Smooth transitions maintain flow between states
 - Responsive feedback makes interfaces feel alive
@@ -74,54 +80,52 @@ QorkMe's color palette combines warm, earthy neutrals with vibrant terracotta an
 **Backgrounds**
 
 ```css
---color-background: #f6f1e8        /* Warm parchment - page background */
---color-background-accent: #ece3d2  /* Lighter parchment - section dividers, footer */
+--color-background: #f6f1e8 /* Warm parchment - page background */
+  --color-background-accent: #ece3d2 /* Lighter parchment - section dividers, footer */;
 ```
 
 **Surfaces**
 
 ```css
---color-surface: #ffffff            /* Pure white - primary cards, modals */
---color-surface-elevated: #f2e7d6   /* Cream - hovered cards, sticky headers */
---color-surface-muted: #e5dac5      /* Muted cream - badges, table stripes */
+--color-surface: #ffffff /* Pure white - primary cards, modals */ --color-surface-elevated: #f2e7d6
+  /* Cream - hovered cards, sticky headers */ --color-surface-muted: #e5dac5
+  /* Muted cream - badges, table stripes */;
 ```
 
 **Brand Colors**
 
 ```css
---color-primary: #c4724f            /* Terracotta - CTAs, focus rings, icons */
---color-primary-hover: #b46444      /* Darker terracotta - hover states */
---color-accent: #5f7d58             /* Sage green - secondary actions, success */
---color-accent-hover: #4f6a49       /* Darker sage - accent hover */
+--color-primary: #c4724f /* Terracotta - CTAs, focus rings, icons */ --color-primary-hover: #b46444
+  /* Darker terracotta - hover states */ --color-accent: #5f7d58
+  /* Sage green - secondary actions, success */ --color-accent-hover: #4f6a49
+  /* Darker sage - accent hover */;
 ```
 
 **Text**
 
 ```css
---color-secondary: #2f2a26          /* Deep brown - primary text, icons */
---color-text-primary: #2f2a26       /* Headings, key text */
---color-text-secondary: #49413a     /* Body copy, labels, supporting text */
---color-text-muted: #6b6159         /* Captions, helper text, placeholders */
---color-text-inverse: #f6f1e8       /* Text on dark backgrounds (buttons) */
+--color-secondary: #2f2a26 /* Deep brown - primary text, icons */ --color-text-primary: #2f2a26
+  /* Headings, key text */ --color-text-secondary: #49413a /* Body copy, labels, supporting text */
+  --color-text-muted: #6b6159 /* Captions, helper text, placeholders */
+  --color-text-inverse: #f6f1e8 /* Text on dark backgrounds (buttons) */;
 ```
 
 **UI Elements**
 
 ```css
---color-border: rgba(108, 96, 81, 0.18)     /* Subtle warm borders */
---color-border-strong: rgba(79, 69, 58, 0.32) /* Stronger borders, hovers */
---color-ring: rgba(196, 114, 79, 0.32)      /* Focus ring (terracotta) */
---color-shadow: rgba(40, 32, 26, 0.08)      /* Base shadow (warm brown) */
---color-shadow-hover: rgba(40, 32, 26, 0.16) /* Elevated shadow */
+--color-border: rgba(108, 96, 81, 0.18) /* Subtle warm borders */
+  --color-border-strong: rgba(79, 69, 58, 0.32) /* Stronger borders, hovers */
+  --color-ring: rgba(196, 114, 79, 0.32) /* Focus ring (terracotta) */
+  --color-shadow: rgba(40, 32, 26, 0.08) /* Base shadow (warm brown) */
+  --color-shadow-hover: rgba(40, 32, 26, 0.16) /* Elevated shadow */;
 ```
 
 **Status Colors**
 
 ```css
---color-success: #4f7c5a           /* Deep sage - success states */
---color-warning: #d08a3b           /* Warm amber - warnings */
---color-error: #c04d3c             /* Terracotta red - errors */
---color-info: #5f7d58              /* Sage - informational */
+--color-success: #4f7c5a /* Deep sage - success states */ --color-warning: #d08a3b
+  /* Warm amber - warnings */ --color-error: #c04d3c /* Terracotta red - errors */
+  --color-info: #5f7d58 /* Sage - informational */;
 ```
 
 ### Dark Theme Palette
@@ -134,9 +138,9 @@ Dark theme uses espresso tones while maintaining the same warm character:
   --color-background-accent: #26221e;
   --color-surface: rgba(33, 29, 26, 0.94);
   --color-surface-elevated: rgba(46, 40, 36, 0.92);
-  --color-primary: #e08b61;          /* Brighter terracotta for dark */
-  --color-text-primary: #f4ede2;     /* Warm white */
-  --color-text-secondary: #d9cfc0;   /* Cream */
+  --color-primary: #e08b61; /* Brighter terracotta for dark */
+  --color-text-primary: #f4ede2; /* Warm white */
+  --color-text-secondary: #d9cfc0; /* Cream */
   /* ... additional tokens */
 }
 ```
@@ -144,6 +148,7 @@ Dark theme uses espresso tones while maintaining the same warm character:
 ### Color Usage in Code
 
 **Method 1: Direct CSS Variables**
+
 ```css
 background: var(--color-surface);
 color: var(--color-text-primary);
@@ -151,23 +156,27 @@ border: 1px solid var(--color-border);
 ```
 
 **Method 2: Tailwind Arbitrary Values**
+
 ```tsx
 <div className="bg-[color:var(--color-primary)] text-[color:var(--color-text-inverse)]">
 ```
 
 **Method 3: Opacity Modifiers**
+
 ```tsx
 <div className="bg-[color:var(--color-surface-elevated)]/[0.15]">
 {/* Renders as: background with 15% opacity */}
 ```
 
 **Method 4: Direct RGBA for Specific Effects**
+
 ```tsx
 <div style={{ background: 'rgba(250, 249, 245, 0.03)' }}>
 {/* Used for precise glassmorphic effects */}
 ```
 
 **Method 5: Color-mix for Dynamic Blending**
+
 ```css
 border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
 /* Mixes border color at 70% with 30% transparent */
@@ -177,13 +186,13 @@ border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
 
 All text/background combinations meet **WCAG 2.1 Level AA** (4.5:1 minimum):
 
-| Foreground             | Background           | Ratio | Pass |
-| ---------------------- | -------------------- | ----- | ---- |
-| Text Primary           | Background           | 11.2  | ✓    |
-| Text Secondary         | Background           | 7.8   | ✓    |
-| Text Muted             | Background           | 4.6   | ✓    |
-| Text Inverse           | Primary              | 5.1   | ✓    |
-| Primary                | Background           | 4.9   | ✓    |
+| Foreground     | Background | Ratio | Pass |
+| -------------- | ---------- | ----- | ---- |
+| Text Primary   | Background | 11.2  | ✓    |
+| Text Secondary | Background | 7.8   | ✓    |
+| Text Muted     | Background | 4.6   | ✓    |
+| Text Inverse   | Primary    | 5.1   | ✓    |
+| Primary        | Background | 4.9   | ✓    |
 
 ---
 
@@ -200,24 +209,28 @@ QorkMe uses **two font families exclusively**: ZT Bros Oskon for display moments
 ```
 
 **When to Use:**
+
 - Hero titles and main headings (h1-h3)
 - Brand name displays
 - Prominent section headers
 - Large decorative text
 
 **When NOT to Use:**
+
 - Body text or paragraphs
 - Form inputs or labels
 - UI chrome (nav, footer links)
 - **Buttons** (common mistake!)
 
 **Available Weights:**
+
 - 400 (Regular)
 - 500 (Medium)
 - 600 (SemiBold) ← Primary display weight
 - 700 (Bold)
 
 **Characteristics:**
+
 - Geometric, modern, slightly condensed
 - Tight letter-spacing (`0.008em`)
 - Line height: `1.15` (tight for visual impact)
@@ -227,11 +240,12 @@ QorkMe uses **two font families exclusively**: ZT Bros Oskon for display moments
 
 ```css
 --font-body: 'Inter', sans-serif;
---font-ui: 'Inter', sans-serif;     /* Alias for UI elements */
---font-mono: 'Inter', sans-serif;   /* Alias for numeric content */
+--font-ui: 'Inter', sans-serif; /* Alias for UI elements */
+--font-mono: 'Inter', sans-serif; /* Alias for numeric content */
 ```
 
 **When to Use:**
+
 - **All body text** (paragraphs, descriptions)
 - **All UI elements** (navigation, labels, badges)
 - **All buttons** (Inter Black 900 required!)
@@ -240,6 +254,7 @@ QorkMe uses **two font families exclusively**: ZT Bros Oskon for display moments
 - Footer text and links
 
 **Available Weights:**
+
 - 300 (Light) - rarely used
 - 400 (Regular) - **Default for body text**
 - 500 (Medium) - Emphasized text, labels
@@ -250,12 +265,11 @@ QorkMe uses **two font families exclusively**: ZT Bros Oskon for display moments
 ### Font Weight System
 
 ```css
---weight-body-regular: 400     /* Default body text, paragraphs */
---weight-body-strong: 500      /* Emphasized text, form labels */
---weight-ui-strong: 600        /* Strong UI elements */
---weight-display-strong: 600   /* ZT Bros Oskon display weight */
---weight-ui-button: 900        /* ALL buttons (Inter Black) */
---weight-inter-heavy: 900      /* Heavy Inter for headings if ZT unavailable */
+--weight-body-regular: 400 /* Default body text, paragraphs */ --weight-body-strong: 500
+  /* Emphasized text, form labels */ --weight-ui-strong: 600 /* Strong UI elements */
+  --weight-display-strong: 600 /* ZT Bros Oskon display weight */ --weight-ui-button: 900
+  /* ALL buttons (Inter Black) */ --weight-inter-heavy: 900
+  /* Heavy Inter for headings if ZT unavailable */;
 ```
 
 ### Type Scale
@@ -293,6 +307,7 @@ Admin links: 0.12em                 /* Medium tracking with uppercase */
 ### Typography Examples
 
 **Hero Heading**
+
 ```tsx
 <h1 className="font-display text-[clamp(2.75rem,4vw+1rem,4.5rem)] font-semibold tracking-[0.008em] leading-[1.15]">
   Smart URL Shortening
@@ -300,6 +315,7 @@ Admin links: 0.12em                 /* Medium tracking with uppercase */
 ```
 
 **Body Text**
+
 ```tsx
 <p className="font-body text-base text-[color:var(--color-text-secondary)] leading-relaxed">
   This is body copy with <strong className="font-medium">emphasized content</strong>.
@@ -307,6 +323,7 @@ Admin links: 0.12em                 /* Medium tracking with uppercase */
 ```
 
 **Button (CORRECT)**
+
 ```tsx
 <button className="font-ui [font-weight:var(--weight-ui-button)] tracking-[0.02em] text-base">
   Shorten URL
@@ -314,20 +331,21 @@ Admin links: 0.12em                 /* Medium tracking with uppercase */
 ```
 
 **Footer Brand**
+
 ```tsx
-<span className="font-display text-2xl font-normal uppercase tracking-[0.16em]">
-  QORKME
-</span>
+<span className="font-display text-2xl font-normal uppercase tracking-[0.16em]">QORKME</span>
 ```
 
 ### Common Typography Mistakes
 
 ❌ **WRONG: Button with display font**
+
 ```tsx
 <button className="font-display">Click Me</button>
 ```
 
 ✅ **CORRECT: Button with Inter Black**
+
 ```tsx
 <button className="font-ui [font-weight:var(--weight-ui-button)]">Click Me</button>
 ```
@@ -341,20 +359,17 @@ QorkMe follows an **8px base unit** system with responsive clamp values for flui
 ### Spacing Tokens
 
 ```css
---container-max: 1200px                                /* Maximum content width */
---container-padding: clamp(1.25rem, 6vw, 3.5rem)       /* 20px → 56px */
---section-spacing: clamp(4.5rem, 8vw, 7.5rem)          /* 72px → 120px */
---card-padding: clamp(1.75rem, 1.2vw + 1.35rem, 2.75rem) /* 28px → 44px */
+--container-max: 1200px /* Maximum content width */ --container-padding: clamp(1.25rem, 6vw, 3.5rem)
+  /* 20px → 56px */ --section-spacing: clamp(4.5rem, 8vw, 7.5rem) /* 72px → 120px */
+  --card-padding: clamp(1.75rem, 1.2vw + 1.35rem, 2.75rem) /* 28px → 44px */;
 ```
 
 ### Border Radius Scale
 
 ```css
---radius-sm: 12px       /* Small badges, pills */
---radius-md: 16px       /* Inputs, small cards */
---radius-lg: 22px       /* Standard buttons */
---radius-xl: 28px       /* Large cards */
---radius-full: 9999px   /* Perfect circles */
+--radius-sm: 12px /* Small badges, pills */ --radius-md: 16px /* Inputs, small cards */
+  --radius-lg: 22px /* Standard buttons */ --radius-xl: 28px /* Large cards */ --radius-full: 9999px
+  /* Perfect circles */;
 ```
 
 **Note:** UrlShortener uses `30px` radius for distinctive extra-rounded appearance.
@@ -362,14 +377,17 @@ QorkMe follows an **8px base unit** system with responsive clamp values for flui
 ### Spacing Guidelines
 
 **Page Sections**
+
 - Vertical rhythm: `var(--section-spacing)` (72-120px)
 - Horizontal padding: `var(--container-padding)` (20-56px)
 
 **Card Interiors**
+
 - Padding: `var(--card-padding)` (28-44px)
 - Internal gaps: `1.5rem` (24px) between sections
 
 **Component Spacing**
+
 - Vertical stacks: `clamp(2.75rem, 4vw, 4.5rem)` (44-72px)
 - Grid gaps: `clamp(2rem, 3.5vw, 3rem)` (32-48px)
 - All spacing: Multiples of 8px (0.5rem, 1rem, 1.5rem, 2rem, etc.)
@@ -377,12 +395,12 @@ QorkMe follows an **8px base unit** system with responsive clamp values for flui
 ### Transition Timing
 
 ```css
---transition-fast: 140ms ease       /* Quick hover responses */
---transition-base: 240ms ease       /* Standard interactions */
---transition-slow: 420ms ease       /* Theme transitions */
+--transition-fast: 140ms ease /* Quick hover responses */ --transition-base: 240ms ease
+  /* Standard interactions */ --transition-slow: 420ms ease /* Theme transitions */;
 ```
 
 **Usage:**
+
 - **Fast (140ms):** Icon color changes, subtle hover effects
 - **Base (240ms):** Buttons, cards, opacity fades
 - **Slow (420ms):** Theme switching, major layout shifts
@@ -408,12 +426,14 @@ QorkMe's signature aesthetic relies on **glassmorphism**—semi-transparent surf
 #### Layer Breakdown
 
 **1. Semi-Transparent Background**
+
 ```css
 bg-[color:var(--color-surface)]/[0.03]
 /* Pure white at 3% opacity - barely visible tint */
 ```
 
 **2. Backdrop Blur**
+
 ```css
 backdrop-blur-xl
 /* Translates to: backdrop-filter: blur(24px) */
@@ -421,6 +441,7 @@ backdrop-blur-xl
 ```
 
 **3. Subtle Border**
+
 ```css
 border border-white/10
 /* White border at 10% opacity */
@@ -428,6 +449,7 @@ border border-white/10
 ```
 
 **4. Multi-Layered Shadows**
+
 ```css
 shadow-[
   0_8px_32px_rgba(0,0,0,0.3),              /* Main drop shadow (depth) */
@@ -437,6 +459,7 @@ shadow-[
 ```
 
 **5. Extra-Rounded Corners**
+
 ```css
 rounded-[30px]
 /* 30px radius for modern, friendly appearance */
@@ -444,13 +467,13 @@ rounded-[30px]
 
 ### Glassmorphism Opacity Hierarchy
 
-| Surface Type            | Opacity | Usage Example                  |
-| ----------------------- | ------- | ------------------------------ |
-| Main card               | `0.03`  | Primary interactive surfaces   |
-| Elevated panel          | `0.15`  | Success panels, nested cards   |
-| Input (default)         | `0.4`   | Form inputs dark state         |
-| Input (focus)           | `0.6`   | Form inputs when focused       |
-| Footer/sections         | `0.55`  | Background accents             |
+| Surface Type    | Opacity | Usage Example                |
+| --------------- | ------- | ---------------------------- |
+| Main card       | `0.03`  | Primary interactive surfaces |
+| Elevated panel  | `0.15`  | Success panels, nested cards |
+| Input (default) | `0.4`   | Form inputs dark state       |
+| Input (focus)   | `0.6`   | Form inputs when focused     |
+| Footer/sections | `0.55`  | Background accents           |
 
 ### Complete Glassmorphic Card Example
 
@@ -493,6 +516,7 @@ Inputs use darker glassmorphic treatment for contrast:
 ```
 
 **Key Characteristics:**
+
 - Dark base: `rgba(20,20,19,0.4)` (40% opaque)
 - Light blur: `backdrop-blur-sm` (8px)
 - **Focus darkening**: Opacity increases to `0.6` (60%)
@@ -501,21 +525,22 @@ Inputs use darker glassmorphic treatment for contrast:
 ### Success Panel Glass Effect
 
 ```tsx
-<div className="flex flex-col gap-4
+<div
+  className="flex flex-col gap-4
                rounded-[20px]
                bg-[color:var(--color-surface-elevated)]/[0.15]
                p-8
-               backdrop-blur-sm">
+               backdrop-blur-sm"
+>
   <div className="flex items-center gap-2">
     <CheckIcon className="h-6 w-6 text-[color:var(--color-success)]" />
-    <p className="font-ui text-sm font-medium text-[color:var(--color-success)]">
-      Success!
-    </p>
+    <p className="font-ui text-sm font-medium text-[color:var(--color-success)]">Success!</p>
   </div>
 </div>
 ```
 
 **Characteristics:**
+
 - Surface elevated color at 15% (more visible than main card)
 - Lighter blur (`backdrop-blur-sm` = 8px)
 - Slightly smaller radius (20px) for nested hierarchy
@@ -557,8 +582,8 @@ box-shadow:
 
 ```css
 box-shadow:
-  0 4px 20px rgba(196, 114, 79, 0.3),      /* Terracotta glow */
-  inset 0 1px 0 rgba(255, 255, 255, 0.2); /* Top highlight */
+  0 4px 20px rgba(196, 114, 79, 0.3),
+  /* Terracotta glow */ inset 0 1px 0 rgba(255, 255, 255, 0.2); /* Top highlight */
 ```
 
 ### Performance Tips
@@ -731,11 +756,7 @@ export function InteractiveGridPattern({
 // In your page component
 <div className="relative min-h-screen">
   {/* Interactive grid background */}
-  <InteractiveGridPattern
-    className="absolute inset-0 z-0"
-    width={40}
-    height={40}
-  />
+  <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
 
   {/* Page content appears above grid */}
   <div className="relative z-10">
@@ -747,6 +768,7 @@ export function InteractiveGridPattern({
 ### Design Specifications
 
 **Visual Properties:**
+
 - **Cell size:** 40×40px (creates ~20×20 grid on typical viewports)
 - **Line color:** `var(--color-border-strong)` (warm gray)
 - **Line opacity:** `0.6` (60% visible)
@@ -756,6 +778,7 @@ export function InteractiveGridPattern({
 - **Transition:** 300ms ease-out
 
 **Noise Filter:**
+
 - **Type:** Fractal noise (smooth, cloud-like)
 - **Base frequency:** `0.025` (larger, subtler patterns)
 - **Octaves:** `3` (layered detail)
@@ -763,6 +786,7 @@ export function InteractiveGridPattern({
 - **Effect:** Creates organic paper-like texture
 
 **Performance:**
+
 - Single SVG element (minimal DOM)
 - State tracks only hovered cells (not all 2000+)
 - CSS transitions (GPU accelerated)
@@ -803,21 +827,21 @@ The dot-matrix display is QorkMe's most distinctive visual element—rendering r
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-export type Frame = number[][];  // [row][col] brightness 0..1
+export type Frame = number[][]; // [row][col] brightness 0..1
 
 export interface MatrixProps {
   rows: number;
   cols: number;
-  pattern?: Frame;        // Static pattern
-  frames?: Frame[];       // Animation frames
+  pattern?: Frame; // Static pattern
+  frames?: Frame[]; // Animation frames
   fps?: number;
   autoplay?: boolean;
   loop?: boolean;
-  size?: number;          // Cell size in pixels
-  gap?: number;           // Gap between cells
+  size?: number; // Cell size in pixels
+  gap?: number; // Gap between cells
   palette?: {
-    on: string;           // Full brightness color
-    off: string;          // Dim/off color
+    on: string; // Full brightness color
+    off: string; // Dim/off color
   };
   brightness?: number;
   ariaLabel?: string;
@@ -954,7 +978,7 @@ export const digits: Record<string, Frame> = {
 };
 
 export const letters: Record<string, Frame> = {
-  'Q': [
+  Q: [
     [0, 1, 1, 1, 0],
     [1, 0, 0, 0, 1],
     [1, 0, 0, 0, 1],
@@ -1129,15 +1153,22 @@ export function MatrixDisplay() {
     const timeWidth = 14 * 6 - 1;
     const startCol = Math.floor((cols - timeWidth) / 2);
 
-    const timeChars = { ...digits, ':': letters[':'], ' ': letters[' '], 'A': letters['A'], 'P': letters['P'], 'M': letters['M'] };
+    const timeChars = {
+      ...digits,
+      ':': letters[':'],
+      ' ': letters[' '],
+      A: letters['A'],
+      P: letters['P'],
+      M: letters['M'],
+    };
     renderTextToFrame(frame, timeText, 1, startCol, timeChars);
 
     return frame;
   }, [time]);
 
   const palette = {
-    on: 'rgba(196, 114, 79, 1)',      // Terracotta
-    off: 'rgba(196, 114, 79, 0.08)',  // 8% opacity
+    on: 'rgba(196, 114, 79, 1)', // Terracotta
+    off: 'rgba(196, 114, 79, 0.08)', // 8% opacity
   };
 
   if (!mounted) return <div style={{ height: '200px' }} />;
@@ -1195,24 +1226,29 @@ export function MatrixDisplay() {
 ### Matrix Specifications
 
 **Color Palette:**
+
 - **On:** `rgba(196, 114, 79, 1)` - Full terracotta
 - **Off:** `rgba(196, 114, 79, 0.08)` - 8% opacity (ghost pixels)
 
 **Sizing (Desktop):**
+
 - **Title:** 9 rows × 50 cols, 8px cells, 2px gap (~500px wide)
 - **Time:** 9 rows × 66 cols, 6px cells, 2px gap (~528px wide)
 
 **Sizing (Mobile):**
+
 - **Title:** 9 rows × 26 cols, 5px cells ("Qork" only)
 - **Time:** 9 rows × 50 cols, 3px cells (no seconds)
 
 **Animation:**
+
 - **Shimmer:** 24 frames at 10 FPS (100ms intervals)
 - **Brightness range:** 0.7-1.0 (70-100%)
 - **Phase offset:** Each character leads/lags by `2π / charCount`
 - **Cascade:** 8ms delay per cell, 200ms start delay
 
 **Radial Fade Mask:**
+
 ```css
 radial-gradient(
   ellipse 100% 100% at center,
@@ -1232,7 +1268,8 @@ radial-gradient(
 #### Primary Button (Standard)
 
 ```tsx
-<button className="
+<button
+  className="
   btn
   font-ui
   [font-weight:var(--weight-ui-button)]
@@ -1253,7 +1290,8 @@ radial-gradient(
   rounded-[var(--radius-lg)]
   transition-all
   duration-[var(--transition-base)]
-">
+"
+>
   Primary Action
 </button>
 ```
@@ -1261,7 +1299,8 @@ radial-gradient(
 #### Primary Button with Gradient
 
 ```tsx
-<button className="
+<button
+  className="
   btn
   w-full
   rounded-2xl
@@ -1274,7 +1313,8 @@ radial-gradient(
   hover:shadow-[0_6px_24px_rgba(196,114,79,0.4),inset_0_1px_0_rgba(255,255,255,0.2)]
   transition-all
   duration-[var(--transition-base)]
-">
+"
+>
   Shorten URL
 </button>
 ```
@@ -1282,7 +1322,8 @@ radial-gradient(
 #### Secondary (Outline) Button
 
 ```tsx
-<button className="
+<button
+  className="
   btn
   font-ui
   [font-weight:var(--weight-ui-button)]
@@ -1295,7 +1336,8 @@ radial-gradient(
   min-h-[46px]
   px-5
   rounded-[var(--radius-lg)]
-">
+"
+>
   Secondary Action
 </button>
 ```
@@ -1303,7 +1345,8 @@ radial-gradient(
 #### Ghost Button
 
 ```tsx
-<button className="
+<button
+  className="
   btn
   font-ui
   [font-weight:var(--weight-ui-button)]
@@ -1314,7 +1357,8 @@ radial-gradient(
   min-h-[46px]
   px-5
   rounded-[var(--radius-lg)]
-">
+"
+>
   Ghost Action
 </button>
 ```
@@ -1350,9 +1394,10 @@ Where `.input` is defined in CSS:
   font-family: var(--font-body);
   min-height: 48px;
   padding-inline: 1rem;
-  transition: border-color var(--transition-base),
-              box-shadow var(--transition-base),
-              background-color var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    background-color var(--transition-base);
 }
 
 .input:hover {
@@ -1400,9 +1445,7 @@ Where `.input` is defined in CSS:
 <div className="card">
   <div className="flex flex-col gap-6">
     <h3 className="font-display text-2xl">Card Title</h3>
-    <p className="font-body text-[color:var(--color-text-secondary)]">
-      Card content goes here
-    </p>
+    <p className="font-body text-[color:var(--color-text-secondary)]">Card content goes here</p>
   </div>
 </div>
 ```
@@ -1416,8 +1459,9 @@ Where `.card` is defined:
   padding: var(--card-padding);
   border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
   box-shadow: 0 20px 36px -26px var(--color-shadow);
-  transition: transform var(--transition-base),
-              box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .card:hover {
@@ -1451,17 +1495,17 @@ Where `.card` is defined:
 ```tsx
 <div className="flex min-h-[200px] items-center justify-center">
   <div className="flex flex-col items-center gap-4">
-    <div className="
+    <div
+      className="
       h-12 w-12
       animate-spin
       rounded-full
       border-4
       border-[color:var(--color-surface-muted)]
       border-t-[color:var(--color-primary)]
-    " />
-    <p className="font-ui text-sm text-[color:var(--color-text-muted)]">
-      Loading...
-    </p>
+    "
+    />
+    <p className="font-ui text-sm text-[color:var(--color-text-muted)]">Loading...</p>
   </div>
 </div>
 ```
@@ -1470,21 +1514,26 @@ Where `.card` is defined:
 
 ```tsx
 <div className="flex flex-col gap-6">
-  <div className="
+  <div
+    className="
     flex flex-col gap-4
     rounded-[20px]
     bg-[color:var(--color-surface-elevated)]/[0.15]
     p-8
     backdrop-blur-sm
-  ">
+  "
+  >
     {/* Success indicator */}
     <div className="flex items-center gap-2">
-      <svg className="h-6 w-6 text-[color:var(--color-success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg
+        className="h-6 w-6 text-[color:var(--color-success)]"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
       </svg>
-      <p className="font-ui text-sm font-medium text-[color:var(--color-success)]">
-        Success!
-      </p>
+      <p className="font-ui text-sm font-medium text-[color:var(--color-success)]">Success!</p>
     </div>
 
     {/* Result display */}
@@ -1507,8 +1556,12 @@ Where `.card` is defined:
         aria-label="Copy to clipboard"
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
         </svg>
       </button>
     </div>
@@ -1519,15 +1572,18 @@ Where `.card` is defined:
 ### Footer
 
 ```tsx
-<footer className="
+<footer
+  className="
   border-t border-[color:var(--color-border)]/60
   bg-[color:var(--color-background-accent)]/55
   py-14 md:py-16
-">
+"
+>
   <div className="container flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
     {/* Brand */}
     <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
-      <span className="
+      <span
+        className="
         font-display
         text-xl md:text-2xl
         font-normal
@@ -1535,24 +1591,25 @@ Where `.card` is defined:
         tracking-[0.16em]
         text-[color:var(--color-text-primary)]
         md:leading-none
-      ">
+      "
+      >
         QORKME
       </span>
-      <span className="
+      <span
+        className="
         text-sm md:text-base
         text-[color:var(--color-text-muted)]
         leading-relaxed
         md:border-l md:border-[color:var(--color-border)]/60 md:pl-6 md:leading-none
-      ">
+      "
+      >
         Thoughtful short links for modern teams
       </span>
     </div>
 
     {/* Links */}
     <div className="flex flex-col gap-2 text-sm md:flex-row md:items-center md:gap-6">
-      <span className="text-[color:var(--color-text-muted)]">
-        Powered by Supabase &amp; Vercel
-      </span>
+      <span className="text-[color:var(--color-text-muted)]">Powered by Supabase &amp; Vercel</span>
       <a
         href="/admin"
         className="
@@ -1592,13 +1649,22 @@ Where `.card` is defined:
 }
 
 /* Usage classes */
-.animate-fadeIn { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-.animate-fadeIn-delay-200 { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both; }
-.animate-fadeIn-delay-800 { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both; }
-.animate-fadeIn-delay-1200 { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.2s both; }
+.animate-fadeIn {
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.animate-fadeIn-delay-200 {
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+.animate-fadeIn-delay-800 {
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
+}
+.animate-fadeIn-delay-1200 {
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.2s both;
+}
 ```
 
 **Usage:**
+
 ```tsx
 <div className="animate-fadeIn">Fades in immediately</div>
 <div className="animate-fadeIn-delay-200">Fades in after 200ms</div>
@@ -1608,7 +1674,8 @@ Where `.card` is defined:
 
 ```css
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -1627,8 +1694,12 @@ Where `.card` is defined:
 
 ```css
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .animate-shimmer {
@@ -1649,8 +1720,13 @@ Where `.card` is defined:
 
 ```css
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .animate-float {
@@ -1673,13 +1749,15 @@ const handleTransition = () => {
     // Change state after fade completes
     setShowNewContent(true);
     setFadeState('in');
-  }, 200);  // Match transition duration
+  }, 200); // Match transition duration
 };
 
 // Apply to element
-<div className={`transition-opacity duration-200 ${fadeState === 'in' ? 'opacity-100' : 'opacity-0'}`}>
+<div
+  className={`transition-opacity duration-200 ${fadeState === 'in' ? 'opacity-100' : 'opacity-0'}`}
+>
   {content}
-</div>
+</div>;
 ```
 
 ### Reduced Motion
@@ -1718,29 +1796,33 @@ xl: 1280px   /* Desktops */
 **Visibility:**
 
 ```tsx
-{/* Mobile only */}
-<div className="md:hidden">Mobile content</div>
+{
+  /* Mobile only */
+}
+<div className="md:hidden">Mobile content</div>;
 
-{/* Desktop only */}
-<div className="hidden md:block">Desktop content</div>
+{
+  /* Desktop only */
+}
+<div className="hidden md:block">Desktop content</div>;
 ```
 
 **Layout Changes:**
 
 ```tsx
-{/* Stack on mobile, row on desktop */}
+{
+  /* Stack on mobile, row on desktop */
+}
 <div className="flex flex-col md:flex-row gap-4 md:gap-6">
   <div>Item 1</div>
   <div>Item 2</div>
-</div>
+</div>;
 ```
 
 **Grid Columns:**
 
 ```tsx
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {/* Cards */}
-</div>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{/* Cards */}</div>
 ```
 
 ### Tailwind v4 Compatibility
@@ -1750,27 +1832,33 @@ xl: 1280px   /* Desktops */
 **Solution:** Use inline styles for guaranteed results:
 
 ```tsx
-{/* ❌ May not work */}
-<div className="px-6 mx-4">Content</div>
+{
+  /* ❌ May not work */
+}
+<div className="px-6 mx-4">Content</div>;
 
-{/* ✅ Guaranteed to work */}
+{
+  /* ✅ Guaranteed to work */
+}
 <div style={{ paddingLeft: '24px', paddingRight: '24px', marginLeft: '16px', marginRight: '16px' }}>
   Content
-</div>
+</div>;
 ```
 
 ### Mobile-Specific Spacing
 
 ```tsx
-{/* Fixed padding via inline styles */}
+{
+  /* Fixed padding via inline styles */
+}
 <div style={{ padding: '24px' }}>
   <UrlShortener />
-</div>
+</div>;
 
-{/* Responsive gaps */}
-<div className="flex flex-col gap-4 md:gap-6 lg:gap-8">
-  {/* Content */}
-</div>
+{
+  /* Responsive gaps */
+}
+<div className="flex flex-col gap-4 md:gap-6 lg:gap-8">{/* Content */}</div>;
 ```
 
 ---
@@ -1796,19 +1884,25 @@ All interactive elements must have visible focus indicators:
 ### ARIA Labels
 
 ```tsx
-{/* Buttons with icons */}
+{
+  /* Buttons with icons */
+}
 <button aria-label="Copy to clipboard">
   <CopyIcon />
-</button>
+</button>;
 
-{/* Matrix displays */}
-<Matrix ariaLabel="Current time in 12-hour format" />
+{
+  /* Matrix displays */
+}
+<Matrix ariaLabel="Current time in 12-hour format" />;
 
-{/* Loading states */}
+{
+  /* Loading states */
+}
 <div role="status" aria-live="polite">
   <Spinner />
   <span className="sr-only">Loading...</span>
-</div>
+</div>;
 ```
 
 ### Screen Reader Only Class
@@ -1828,6 +1922,7 @@ All interactive elements must have visible focus indicators:
 ```
 
 **Usage:**
+
 ```tsx
 <label htmlFor="url-input" className="sr-only">
   Enter Your URL
@@ -1839,7 +1934,7 @@ All interactive elements must have visible focus indicators:
 
 ```css
 p {
-  max-width: 65ch;  /* Optimal reading width */
+  max-width: 65ch; /* Optimal reading width */
 }
 ```
 
@@ -1859,6 +1954,7 @@ npm install @fontsource/inter  # or use Google Fonts CDN
 **2. Configure Fonts**
 
 Place ZT Bros Oskon woff2 files in `public/fonts/`:
+
 - `ZTBrosOskon90s-Regular.woff2`
 - `ZTBrosOskon90s-SemiBold.woff2`
 - etc.
@@ -1924,7 +2020,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: 0.008em;
@@ -1961,8 +2062,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-body);
   min-height: 48px;
   padding-inline: 1rem;
-  transition: border-color var(--transition-base),
-              box-shadow var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .input:focus {
@@ -1983,9 +2085,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative min-h-screen">
       <InteractiveGridPattern className="absolute inset-0 z-0" />
-      <div className="relative z-10">
-        {children}
-      </div>
+      <div className="relative z-10">{children}</div>
     </div>
   );
 }
@@ -2006,7 +2106,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 ---
 
-*This brand and design system guide is comprehensive and verbose by design, intended for creating new websites in the QorkMe visual style with complete implementation details and examples.*
+_This brand and design system guide is comprehensive and verbose by design, intended for creating new websites in the QorkMe visual style with complete implementation details and examples._
 
 ---
 
@@ -2019,10 +2119,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 ## Matrix Component Reference
 
 ---
+
 title: Matrix
 description: A retro dot-matrix display component with circular cells and smooth animations. Perfect for retro displays, indicators, and audio visualizations.
 featured: true
 component: true
+
 ---
 
 <ComponentPreview
@@ -2066,7 +2168,7 @@ npx @elevenlabs/agents-cli@latest components add matrix
 ## Usage
 
 ```tsx showLineNumbers
-import { digits, loader, Matrix, vu, wave } from "@/components/ui/matrix"
+import { digits, loader, Matrix, vu, wave } from '@/components/ui/matrix';
 ```
 
 ### Static Pattern
@@ -2078,14 +2180,7 @@ import { digits, loader, Matrix, vu, wave } from "@/components/ui/matrix"
 ### Animated Display
 
 ```tsx showLineNumbers
-<Matrix
-  rows={7}
-  cols={7}
-  frames={wave}
-  fps={20}
-  loop
-  ariaLabel="Wave animation"
-/>
+<Matrix rows={7} cols={7} frames={wave} fps={20} loop ariaLabel="Wave animation" />
 ```
 
 ### VU Meter
@@ -2134,7 +2229,7 @@ The main matrix display component.
 ### Frame Type
 
 ```tsx
-type Frame = number[][] // [row][col] brightness 0..1
+type Frame = number[][]; // [row][col] brightness 0..1
 ```
 
 A frame is a 2D array where each value represents the brightness of a cell (0 = off, 1 = full brightness).
@@ -2148,7 +2243,7 @@ const smiley: Frame = [
   [1, 1, 0, 1, 1],
   [1, 0, 0, 0, 1],
   [0, 1, 1, 1, 0],
-]
+];
 ```
 
 ## Presets
@@ -2160,9 +2255,9 @@ The component comes with several built-in presets and animations:
 7-segment style digits (0-9) on a 7×5 grid.
 
 ```tsx
-import { digits, Matrix } from "@/components/ui/matrix"
+import { digits, Matrix } from '@/components/ui/matrix';
 
-export default () => <Matrix rows={7} cols={5} pattern={digits[5]} />
+export default () => <Matrix rows={7} cols={5} pattern={digits[5]} />;
 ```
 
 ### loader
@@ -2170,9 +2265,9 @@ export default () => <Matrix rows={7} cols={5} pattern={digits[5]} />
 Rotating spinner animation (7×7, 12 frames).
 
 ```tsx
-import { loader, Matrix } from "@/components/ui/matrix"
+import { loader, Matrix } from '@/components/ui/matrix';
 
-export default () => <Matrix rows={7} cols={7} frames={loader} fps={12} />
+export default () => <Matrix rows={7} cols={7} frames={loader} fps={12} />;
 ```
 
 ### pulse
@@ -2180,9 +2275,9 @@ export default () => <Matrix rows={7} cols={7} frames={loader} fps={12} />
 Expanding pulse effect (7×7, 16 frames).
 
 ```tsx
-import { Matrix, pulse } from "@/components/ui/matrix"
+import { Matrix, pulse } from '@/components/ui/matrix';
 
-export default () => <Matrix rows={7} cols={7} frames={pulse} fps={16} />
+export default () => <Matrix rows={7} cols={7} frames={pulse} fps={16} />;
 ```
 
 ### wave
@@ -2190,9 +2285,9 @@ export default () => <Matrix rows={7} cols={7} frames={pulse} fps={16} />
 Smooth sine wave animation (7×7, 24 frames).
 
 ```tsx
-import { Matrix, wave } from "@/components/ui/matrix"
+import { Matrix, wave } from '@/components/ui/matrix';
 
-export default () => <Matrix rows={7} cols={7} frames={wave} fps={20} />
+export default () => <Matrix rows={7} cols={7} frames={wave} fps={20} />;
 ```
 
 ### snake
@@ -2200,9 +2295,9 @@ export default () => <Matrix rows={7} cols={7} frames={wave} fps={20} />
 Snake traversal pattern (7×7, ~40 frames).
 
 ```tsx
-import { Matrix, snake } from "@/components/ui/matrix"
+import { Matrix, snake } from '@/components/ui/matrix';
 
-export default () => <Matrix rows={7} cols={7} frames={snake} fps={15} />
+export default () => <Matrix rows={7} cols={7} frames={snake} fps={15} />;
 ```
 
 ### chevronLeft / chevronRight
@@ -2210,9 +2305,9 @@ export default () => <Matrix rows={7} cols={7} frames={snake} fps={15} />
 Simple directional arrows (5×5).
 
 ```tsx
-import { chevronLeft, Matrix } from "@/components/ui/matrix"
+import { chevronLeft, Matrix } from '@/components/ui/matrix';
 
-export default () => <Matrix rows={5} cols={5} pattern={chevronLeft} />
+export default () => <Matrix rows={5} cols={5} pattern={chevronLeft} />;
 ```
 
 ### vu()
@@ -2220,12 +2315,12 @@ export default () => <Matrix rows={5} cols={5} pattern={chevronLeft} />
 Helper function to create VU meter frames.
 
 ```tsx
-import { Matrix, vu } from "@/components/ui/matrix"
+import { Matrix, vu } from '@/components/ui/matrix';
 
 export default () => {
-  const levels = [0.3, 0.6, 0.9, 0.7, 0.5]
-  return <Matrix rows={7} cols={5} pattern={vu(5, levels)} />
-}
+  const levels = [0.3, 0.6, 0.9, 0.7, 0.5];
+  return <Matrix rows={7} cols={5} pattern={vu(5, levels)} />;
+};
 ```
 
 ## Examples
@@ -2244,13 +2339,13 @@ function RetroDisplay() {
         size={16}
         gap={3}
         palette={{
-          on: "hsl(142 76% 36%)",
-          off: "hsl(142 76% 10%)",
+          on: 'hsl(142 76% 36%)',
+          off: 'hsl(142 76% 10%)',
         }}
         ariaLabel="Wave animation"
       />
     </div>
-  )
+  );
 }
 ```
 
@@ -2267,7 +2362,7 @@ function ClockDigit({ value }: { value: number }) {
       gap={2}
       ariaLabel={`Digit ${value}`}
     />
-  )
+  );
 }
 ```
 
@@ -2276,7 +2371,7 @@ function ClockDigit({ value }: { value: number }) {
 ```tsx showLineNumbers
 function AudioMeter({ frequencyData }: { frequencyData: number[] }) {
   // Convert frequency data to 0-1 levels
-  const levels = frequencyData.map((freq) => freq / 255)
+  const levels = frequencyData.map((freq) => freq / 255);
 
   return (
     <Matrix
@@ -2288,7 +2383,7 @@ function AudioMeter({ frequencyData }: { frequencyData: number[] }) {
       gap={1}
       ariaLabel="Audio frequency meter"
     />
-  )
+  );
 }
 ```
 
@@ -2303,7 +2398,7 @@ function Heart() {
     [0, 1, 1, 1, 1, 1, 0],
     [0, 0, 1, 1, 1, 0, 0],
     [0, 0, 0, 1, 0, 0, 0],
-  ]
+  ];
 
   return (
     <Matrix
@@ -2313,11 +2408,11 @@ function Heart() {
       size={14}
       gap={2}
       palette={{
-        on: "hsl(0 84% 60%)",
-        off: "hsl(0 84% 20%)",
+        on: 'hsl(0 84% 60%)',
+        off: 'hsl(0 84% 20%)',
       }}
     />
-  )
+  );
 }
 ```
 
@@ -2339,9 +2434,9 @@ function CustomAnimation() {
       [1, 0, 1],
       [0, 1, 0],
     ], // Frame 2
-  ]
+  ];
 
-  return <Matrix rows={3} cols={3} frames={frames} fps={2} loop />
+  return <Matrix rows={3} cols={3} frames={frames} fps={2} loop />;
 }
 ```
 
@@ -2349,20 +2444,14 @@ function CustomAnimation() {
 
 ```tsx showLineNumbers
 function AnimationTracker() {
-  const [currentFrame, setCurrentFrame] = useState(0)
+  const [currentFrame, setCurrentFrame] = useState(0);
 
   return (
     <div>
-      <Matrix
-        rows={7}
-        cols={7}
-        frames={loader}
-        fps={12}
-        onFrame={setCurrentFrame}
-      />
+      <Matrix rows={7} cols={7} frames={loader} fps={12} onFrame={setCurrentFrame} />
       <p>Frame: {currentFrame}</p>
     </div>
-  )
+  );
 }
 ```
 
@@ -2370,20 +2459,18 @@ function AnimationTracker() {
 
 ```tsx showLineNumbers
 function LiveVUMeter() {
-  const [levels, setLevels] = useState(Array(12).fill(0))
+  const [levels, setLevels] = useState(Array(12).fill(0));
 
   useEffect(() => {
     // Simulate audio levels
     const interval = setInterval(() => {
-      setLevels(Array.from({ length: 12 }, () => Math.random()))
-    }, 50)
+      setLevels(Array.from({ length: 12 }, () => Math.random()));
+    }, 50);
 
-    return () => clearInterval(interval)
-  }, [])
+    return () => clearInterval(interval);
+  }, []);
 
-  return (
-    <Matrix rows={7} cols={12} mode="vu" levels={levels} size={10} gap={2} />
-  )
+  return <Matrix rows={7} cols={12} mode="vu" levels={levels} size={10} gap={2} />;
 }
 ```
 
@@ -2394,8 +2481,8 @@ The component uses CSS variables for theming:
 ```tsx
 <Matrix
   palette={{
-    on: "currentColor", // Active cells (default - inherits text color)
-    off: "var(--muted-foreground)", // Inactive cells (default - muted but visible)
+    on: 'currentColor', // Active cells (default - inherits text color)
+    off: 'var(--muted-foreground)', // Inactive cells (default - muted but visible)
   }}
 />
 ```
@@ -2459,16 +2546,18 @@ palette={{
 ## Interactive Grid Pattern Reference
 
 # React Interactive Grid Pattern
+
 URL: /background/interactive-grid-pattern
 React interactive grid background with Tron-style hover effects. Smooth 60fps performance and TypeScript integration with shadcn/ui styling.
 
-***
+---
 
 title: React Interactive Grid Pattern
 description: React interactive grid background with Tron-style hover effects. Smooth 60fps performance and TypeScript integration with shadcn/ui styling.
 icon: Grid3x3
 component: true
----------------
+
+---
 
 <PoweredBy packages={[{ name: "React", url: "https://reactjs.org/" }]} />
 
@@ -2496,18 +2585,13 @@ Built for React and Next.js with full TypeScript support. The grid uses a single
 ## Usage
 
 ```tsx
-import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern";
+import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
 
 export default function Dashboard() {
   return (
     <div className="relative h-screen">
-      <InteractiveGridPattern 
-        className="absolute inset-0"
-        squares={[20, 20]}
-      />
-      <div className="relative z-10">
-        {/* Your content */}
-      </div>
+      <InteractiveGridPattern className="absolute inset-0" squares={[20, 20]} />
+      <div className="relative z-10">{/* Your content */}</div>
     </div>
   );
 }
@@ -2535,14 +2619,14 @@ Different grid styles for various use cases:
 
 ## Features
 
-* **Single SVG rendering** for thousands of cells without performance penalty
-* **React state tracking** only for hovered cells
-* **CSS transition animations** running at 60fps
-* **TypeScript definitions** for proper IDE support in React projects
-* **Customizable grid density** with width/height props
-* **Responsive scaling** that adapts to container size
-* **Radial gradient masking** for spotlight effects
-* **shadcn/ui compatible** using Tailwind CSS classes
+- **Single SVG rendering** for thousands of cells without performance penalty
+- **React state tracking** only for hovered cells
+- **CSS transition animations** running at 60fps
+- **TypeScript definitions** for proper IDE support in React projects
+- **Customizable grid density** with width/height props
+- **Responsive scaling** that adapts to container size
+- **Radial gradient masking** for spotlight effects
+- **shadcn/ui compatible** using Tailwind CSS classes
 
 ## API Reference
 
@@ -2607,10 +2691,12 @@ Perfect under [Particles](/background/particles) for layered effects. Combines w
 ## Shimmering Text Reference
 
 ---
+
 title: Shimmering Text
 description: Animated text with gradient shimmer effects and viewport-triggered animations using Motion.
 featured: true
 component: true
+
 ---
 
 <ComponentPreview
@@ -2662,7 +2748,7 @@ npm install motion
 ## Usage
 
 ```tsx showLineNumbers
-import { ShimmeringText } from "@/components/ui/shimmering-text"
+import { ShimmeringText } from '@/components/ui/shimmering-text';
 ```
 
 ### Basic Usage
@@ -2674,43 +2760,25 @@ import { ShimmeringText } from "@/components/ui/shimmering-text"
 ### Custom Duration and Colors
 
 ```tsx showLineNumbers
-<ShimmeringText
-  text="Custom Shimmer"
-  duration={3}
-  color="#6B7280"
-  shimmerColor="#3B82F6"
-/>
+<ShimmeringText text="Custom Shimmer" duration={3} color="#6B7280" shimmerColor="#3B82F6" />
 ```
 
 ### Trigger on Viewport Entry
 
 ```tsx showLineNumbers
-<ShimmeringText
-  text="Appears when scrolled into view"
-  startOnView={true}
-  once={true}
-/>
+<ShimmeringText text="Appears when scrolled into view" startOnView={true} once={true} />
 ```
 
 ### Repeating Animation
 
 ```tsx showLineNumbers
-<ShimmeringText
-  text="Repeating Shimmer"
-  repeat={true}
-  repeatDelay={1}
-  duration={2}
-/>
+<ShimmeringText text="Repeating Shimmer" repeat={true} repeatDelay={1} duration={2} />
 ```
 
 ### With Custom Styling
 
 ```tsx showLineNumbers
-<ShimmeringText
-  text="Large Heading"
-  className="text-4xl font-bold"
-  spread={3}
-/>
+<ShimmeringText text="Large Heading" className="text-4xl font-bold" spread={3} />
 ```
 
 ## API Reference

@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.0.44] - 2025-10-31
+
+### Fixed
+
+- **Security Update**: Updated Vite from 5.4.20 to 5.4.21 to resolve security vulnerability GHSA-93m4-6634-74q7
+  - Running `npm audit fix` resolved all reported vulnerabilities
+  - Verified with `npm audit --audit-level=moderate` confirming 0 vulnerabilities
+  - Build, lint, type-check, and test suite all passing
+
+### Verified
+
+- All CI/CD checks passing: ESLint, Prettier, TypeScript strict mode, Vitest (16 tests)
+- Production build verified successfully
+- No breaking changes or behavioral impact from dependency update
+
+### Notes
+
+- This is a maintenance release focused on dependency security improvements
+- No application source code changes in this release
+
 ## [3.0.43] - 2025-10-22
 
 ### Documentation
