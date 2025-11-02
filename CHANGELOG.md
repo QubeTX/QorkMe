@@ -1,5 +1,26 @@
 # Changelog
 
+## 2025-11-02 (Vercel Speed Insights Integration)
+
+### Added
+
+- **Vercel Speed Insights** — Integrated @vercel/speed-insights package for real-time performance monitoring in qorkme application
+  - Added SpeedInsights component to root layout (qorkme/app/layout.tsx) for application-wide metrics collection
+  - Installed package with --legacy-peer-deps to resolve vite peer dependency conflicts
+  - Automatic Web Vitals tracking (LCP, FID, CLS, FCP, TTFB) begins after deployment
+  - Metrics accessible via Vercel dashboard once site receives traffic
+
+### Technical Details
+
+- Package: @vercel/speed-insights@1.2.0
+- Integration: Next.js-specific component placed in root layout body
+- Installation method: npm with --legacy-peer-deps flag due to vite 5.x vs 6/7 conflict
+
+### Notes
+
+- No application functionality changes or runtime behavior modifications
+- Performance metrics collection is passive and non-intrusive
+
 ## 2025-10-31 (Dependency Security Maintenance)
 
 ### Fixed

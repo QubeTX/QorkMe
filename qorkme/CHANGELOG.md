@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.0.45] - 2025-11-02
+
+### Added
+
+- **Vercel Speed Insights Integration**: Integrated @vercel/speed-insights for real-time performance monitoring
+  - Installed @vercel/speed-insights package with legacy peer deps flag
+  - Added SpeedInsights component to root layout (app/layout.tsx)
+  - Will automatically collect Web Vitals metrics after deployment
+  - Provides insights into Core Web Vitals (LCP, FID, CLS, FCP, TTFB)
+
+### Technical Details
+
+- Package version: @vercel/speed-insights@1.2.0
+- Implementation: Next.js-specific component imported from "@vercel/speed-insights/next"
+- Placement: Root layout body for application-wide monitoring
+- Data collection begins automatically after visiting deployed site
+
+### Notes
+
+- No application functionality changes
+- Metrics will be visible in Vercel dashboard after deployment and initial site visits
+
 ## [3.0.44] - 2025-10-31
 
 ### Fixed
