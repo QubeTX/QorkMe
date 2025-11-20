@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-11-20 (CI Security Scan Removed)
+
+### Changed
+
+- Removed the `security-scan` job from `qorkme/.github/workflows/ci.yml` to simplify CI while leaving lint, type-check, tests, prettier, build, and bundle size steps intact.
+
 ## 2025-11-20 (CI Stabilization for UI Effects)
 
 ### Fixed
