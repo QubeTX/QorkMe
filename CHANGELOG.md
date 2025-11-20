@@ -1,5 +1,17 @@
 # Changelog
 
+## 2025-11-20 (Subtle Tilt Refinement)
+
+### Changed
+
+- Softened the URL shortener card tilt by lowering the TiltWrapper rotation factor to a gentle 5-degree envelope and clarified the prop docs so the 3D effect is present but barely perceptible during input focus.
+
+### Verified
+
+- `npm run lint`
+- `npm run type-check`
+- `npm test`
+
 ## 2025-11-20 (CI Security Scan Removed)
 
 ### Changed

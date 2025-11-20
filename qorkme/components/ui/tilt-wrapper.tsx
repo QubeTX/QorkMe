@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 interface TiltWrapperProps {
   children: React.ReactNode;
   className?: string;
-  rotationFactor?: number; // Higher = less rotation (divisor)
+  rotationFactor?: number; // Degrees of rotation at the extremes; higher values tilt more
   perspective?: number;
 }
 
