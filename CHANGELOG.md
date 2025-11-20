@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Removed the `security-scan` job from `qorkme/.github/workflows/ci.yml` to simplify CI while leaving lint, type-check, tests, prettier, build, and bundle size steps intact.
+- Removed the `security-scan` job from both CI workflows (`.github/workflows/ci.yml` at repo root and `qorkme/.github/workflows/ci.yml`) to simplify pipelines while keeping lint, type-check, tests, prettier, build, and bundle-size steps intact.
 
 ## 2025-11-20 (CI Stabilization for UI Effects)
 

@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Removed the `security-scan` job (npm audit + trufflehog) from `.github/workflows/ci.yml`, keeping test, lint, type-check, prettier, build, and bundle size checks in place.
+- Removed the `security-scan` job (npm audit + trufflehog) from both the app workflow (`qorkme/.github/workflows/ci.yml`) and the root CI (`../.github/workflows/ci.yml`), keeping test, lint, type-check, prettier, build, and bundle size checks in place.
 
 ## [3.0.46] - 2025-11-20
 
