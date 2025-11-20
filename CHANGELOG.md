@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Softened the URL shortener card tilt by lowering the TiltWrapper rotation factor to a gentle 5-degree envelope and clarified the prop docs so the 3D effect is present but barely perceptible during input focus.
+- Softened the URL shortener card tilt by lowering the TiltWrapper rotation factor to a gentle 5-degree envelope, dimmed the glare overlay to match the subtle motion, and clarified the prop docs so the 3D effect is present but barely perceptible during input focus.
 
 ### Verified
 

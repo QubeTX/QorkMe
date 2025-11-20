@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Softened the URL shortener card's 3D tilt by dropping the TiltWrapper rotation factor from 35° to 5° so the animation stays subtle while keeping depth cues; clarified the prop description to match its degree-based behavior.
+- Softened the URL shortener card's 3D tilt by dropping the TiltWrapper rotation factor from 35° to 5° so the animation stays subtle while keeping depth cues, dimmed the glare overlay to suit the gentler motion, and clarified the prop description to match its degree-based behavior.
 
 ### Verified
 

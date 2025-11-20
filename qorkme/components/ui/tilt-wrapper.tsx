@@ -36,7 +36,8 @@ export function TiltWrapper({
     [mouseXSpring, mouseYSpring],
     ([latestX, latestY]: number[]) => {
       const dist = Math.sqrt(latestX ** 2 + latestY ** 2);
-      return dist * 0.4; // Max 0.4 opacity at edge
+      const maxGlareOpacity = 0.18;
+      return Math.min(dist * maxGlareOpacity, maxGlareOpacity);
     }
   );
 
@@ -92,7 +93,7 @@ export function TiltWrapper({
           className="absolute inset-0 rounded-[inherit] pointer-events-none z-50 mix-blend-soft-light"
           style={{
             opacity: glareOpacity,
-            background: `radial-gradient(circle at ${glareX} ${glareY}, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 60%)`,
+            background: `radial-gradient(circle at ${glareX} ${glareY}, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 55%)`,
           }}
         />
       </motion.div>
