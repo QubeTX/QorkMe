@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.0.46] - 2025-11-20
+
+### Fixed
+
+- Resolved CI blockers: initialized the animation frame ref in `components/ui/interactive-grid-pattern.tsx` to satisfy `tsc --noEmit`, tied matrix physics recalculations to the per-frame tick in `components/ui/matrix.tsx` to address exhaustive-deps linting while keeping 60fps updates, and removed the unused hover state from `components/ui/tilt-wrapper.tsx`.
+- Normalized formatting for `components/ui/ambient-decor.tsx`, `interactive-grid-pattern.tsx`, `matrix.tsx`, and `tilt-wrapper.tsx` to keep Prettier and ESLint clean.
+
+### Verified
+
+- `npm run lint`
+- `npm run type-check`
+- `npm test`
+- `npx prettier --check .`
+- `NEXT_PUBLIC_SUPABASE_URL=https://example.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=mock-key-for-build NEXT_PUBLIC_SITE_URL=https://qork.me NEXT_PUBLIC_SHORT_DOMAIN=qork.me npm run build`
+
 ## [3.0.45] - 2025-11-02
 
 ### Added

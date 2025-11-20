@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { cn } from '@/lib/utils';
 
@@ -18,7 +18,6 @@ export function TiltWrapper({
   perspective = 1000,
 }: TiltWrapperProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
 
   // Mouse position
   const x = useMotionValue(0);
@@ -29,16 +28,8 @@ export function TiltWrapper({
   const mouseYSpring = useSpring(y, { stiffness: 100, damping: 20, mass: 1 });
 
   // Calculate rotation based on mouse position relative to center
-  const rotateX = useTransform(
-    mouseYSpring,
-    [-0.5, 0.5],
-    [rotationFactor, -rotationFactor]
-  );
-  const rotateY = useTransform(
-    mouseXSpring,
-    [-0.5, 0.5],
-    [-rotationFactor, rotationFactor]
-  );
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [rotationFactor, -rotationFactor]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-rotationFactor, rotationFactor]);
 
   // Glare effect opacity based on tilt intensity
   const glareOpacity = useTransform(
@@ -64,21 +55,16 @@ export function TiltWrapper({
     const mouseY = e.clientY - rect.top;
 
     // Normalize to -0.5 to 0.5
-    const xPct = (mouseX / width) - 0.5;
-    const yPct = (mouseY / height) - 0.5;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
 
     x.set(xPct);
     y.set(yPct);
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
     x.set(0);
     y.set(0);
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
   };
 
   return (
@@ -90,7 +76,6 @@ export function TiltWrapper({
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onMouseEnter={handleMouseEnter}
     >
       <motion.div
         className="relative w-full h-full preserve-3d"
@@ -114,4 +99,3 @@ export function TiltWrapper({
     </motion.div>
   );
 }
-

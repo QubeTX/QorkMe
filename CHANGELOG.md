@@ -1,5 +1,21 @@
 # Changelog
 
+## 2025-11-20 (CI Stabilization for UI Effects)
+
+### Fixed
+
+- **TypeScript & ESLint pass** — Initialized animation frame ref in `qorkme/components/ui/interactive-grid-pattern.tsx` to satisfy `useRef` typing and cleaned physics tick dependencies in `qorkme/components/ui/matrix.tsx` to honor React hook linting while keeping 60fps physics updates.
+- **UI tilt cleanup** — Removed unused hover state from `qorkme/components/ui/tilt-wrapper.tsx` and simplified glare math to silence lint warnings.
+- **Prettier conformance** — Normalized formatting in `components/ui/ambient-decor.tsx`, `interactive-grid-pattern.tsx`, `matrix.tsx`, and `tilt-wrapper.tsx` to satisfy CI formatting checks.
+
+### Verified
+
+- `npm run lint`
+- `npm run type-check`
+- `npm test`
+- `npx prettier --check .`
+- `NEXT_PUBLIC_SUPABASE_URL=https://example.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=mock-key-for-build NEXT_PUBLIC_SITE_URL=https://qork.me NEXT_PUBLIC_SHORT_DOMAIN=qork.me npm run build`
+
 ## 2025-11-02 (Vercel Speed Insights Integration)
 
 ### Added

@@ -101,11 +101,15 @@ export function Matrix({
   const lastTimestamp = useRef<number | null>(null);
   const animated = autoplay && mode !== 'vu' && (frames?.length ?? 0) > 1;
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Physics state
   const mousePos = useRef<{ x: number; y: number } | null>(null);
   const waves = useRef<Wave[]>([]);
   const [physicsTick, setPhysicsTick] = useState(0); // Force re-render for physics
+  const now = useMemo(
+    () => Date.now() + physicsTick * 0, // Tie recalculations to physics ticks without altering the timestamp
+    [physicsTick]
+  );
 
   useEffect(() => {
     frameIndexRef.current = 0;
@@ -149,14 +153,14 @@ export function Matrix({
         // Clean up old waves
         const now = Date.now();
         if (waves.current.length > 0) {
-          waves.current = waves.current.filter(w => now - w.startTime < 2000);
+          waves.current = waves.current.filter((w) => now - w.startTime < 2000);
         }
-        
+
         // Force re-render for physics updates (60fps)
         // We use a separate tick or just rely on the setFrameIndex if fps is high enough.
         // To get smooth 60fps physics, we need to render more often than 'fps' prop might suggest.
         // So we update a physics tick.
-        setPhysicsTick(p => (p + 1) % 60);
+        setPhysicsTick((p) => (p + 1) % 60);
       }
 
       raf = requestAnimationFrame(step);
@@ -219,10 +223,9 @@ export function Matrix({
 
     if (!enablePhysics) return baseCells;
 
-    const now = Date.now();
     const cellSpacing = size + gap;
-    
-    return baseCells.map(cell => {
+
+    return baseCells.map((cell) => {
       let { value } = cell;
       const r = Math.floor(cell.index / cols);
       const c = cell.index % cols;
@@ -235,7 +238,7 @@ export function Matrix({
         const dy = cellY - mousePos.current.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         const radius = 120; // Interaction radius
-        
+
         if (dist < radius) {
           // Scale boost based on proximity (gaussian-ish)
           const boost = Math.pow(1 - dist / radius, 2) * 0.6;
@@ -244,27 +247,27 @@ export function Matrix({
       }
 
       // Wave influence
-      waves.current.forEach(wave => {
+      waves.current.forEach((wave) => {
         const age = now - wave.startTime;
         const waveSpeed = 0.3; // px per ms
         const waveRadius = age * waveSpeed;
         const waveWidth = 60;
-        
+
         const dx = cellX - wave.x;
         const dy = cellY - wave.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (Math.abs(dist - waveRadius) < waveWidth) {
           // Wave peak calculation
           const relDist = Math.abs(dist - waveRadius);
-          const waveBoost = Math.cos((relDist / waveWidth) * Math.PI / 2) * 0.8;
+          const waveBoost = Math.cos(((relDist / waveWidth) * Math.PI) / 2) * 0.8;
           value = clamp(value + waveBoost * (1 - age / 2000)); // Fade out over time
         }
       });
 
       return { ...cell, value };
     });
-  }, [activeFrame, brightness, enablePhysics, physicsTick, rows, cols, size, gap]);
+  }, [activeFrame, brightness, enablePhysics, cols, size, gap, now]);
 
   return (
     <div
@@ -299,7 +302,7 @@ export function Matrix({
             key={index}
             className={cn(
               'inline-block rounded-full transition-all will-change-[transform,opacity,background-color]',
-              // If physics is enabled, we disable CSS transitions for snappier response, 
+              // If physics is enabled, we disable CSS transitions for snappier response,
               // otherwise we keep the smooth fade for frame animations
               !enablePhysics && 'duration-700 ease-out',
               enablePhysics && 'duration-75 ease-out', // Much faster for physics
@@ -310,7 +313,7 @@ export function Matrix({
               height: `${size}px`,
               backgroundColor: isActive ? palette.on : palette.off,
               opacity,
-              transform: isActive 
+              transform: isActive
                 ? `scale(${0.88 + value * 0.35})` // Slightly higher max scale for physics pop
                 : `scale(${0.72 + value * 0.2})`,
               boxShadow: isActive && enablePhysics ? `0 0 ${value * 8}px ${palette.on}` : 'none', // Add glow for high intensity

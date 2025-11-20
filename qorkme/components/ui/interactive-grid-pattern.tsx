@@ -27,7 +27,7 @@ export function InteractiveGridPattern({
   const [gridSize, setGridSize] = useState({ cols: 20, rows: 20 });
   const containerRef = useRef<SVGSVGElement>(null);
   const [ripples, setRipples] = useState<Ripple[]>([]);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | null>(null);
 
   // Dynamically calculate grid size based on viewport
   useEffect(() => {
@@ -50,10 +50,10 @@ export function InteractiveGridPattern({
   // Ripple animation loop
   useEffect(() => {
     const animate = () => {
-      setRipples(prev => {
+      setRipples((prev) => {
         const now = Date.now();
         // Filter out old ripples (older than 2s)
-        const active = prev.filter(r => now - r.startTime < 2000);
+        const active = prev.filter((r) => now - r.startTime < 2000);
         if (active.length !== prev.length) {
           return active;
         }
@@ -61,7 +61,7 @@ export function InteractiveGridPattern({
       });
       animationFrameRef.current = requestAnimationFrame(animate);
     };
-    
+
     animationFrameRef.current = requestAnimationFrame(animate);
     return () => {
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
@@ -87,13 +87,13 @@ export function InteractiveGridPattern({
   const handleClick = useCallback((e: React.MouseEvent) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    setRipples(prev => [
+    setRipples((prev) => [
       ...prev,
       {
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
         startTime: Date.now(),
-      }
+      },
     ]);
   }, []);
 
@@ -164,7 +164,13 @@ export function InteractiveGridPattern({
       </pattern>
 
       {/* Background grid with noise texture */}
-      <rect width="100%" height="100%" fill="url(#grid-pattern)" filter="url(#noise-texture)" style={{ pointerEvents: 'none' }} />
+      <rect
+        width="100%"
+        height="100%"
+        fill="url(#grid-pattern)"
+        filter="url(#noise-texture)"
+        style={{ pointerEvents: 'none' }}
+      />
 
       {/* Interactive cells */}
       <g className="pointer-events-auto">
@@ -173,19 +179,19 @@ export function InteractiveGridPattern({
             const cellId = `${rowIndex}-${colIndex}`;
             const cellX = colIndex * width + width / 2;
             const cellY = rowIndex * height + height / 2;
-            
+
             // Calculate ripple effect
             let rippleOpacity = 0;
-            ripples.forEach(ripple => {
+            ripples.forEach((ripple) => {
               const age = now - ripple.startTime;
               const radius = age * 0.4; // Expansion speed
               const width = 100; // Ripple width
               const dx = cellX - ripple.x;
               const dy = cellY - ripple.y;
               const dist = Math.sqrt(dx * dx + dy * dy);
-              
+
               if (Math.abs(dist - radius) < width) {
-                const intensity = Math.cos((Math.abs(dist - radius) / width) * Math.PI / 2);
+                const intensity = Math.cos(((Math.abs(dist - radius) / width) * Math.PI) / 2);
                 rippleOpacity += intensity * 0.2 * (1 - age / 2000);
               }
             });
@@ -207,7 +213,7 @@ export function InteractiveGridPattern({
                 onMouseLeave={() => handleCellLeave(cellId)}
                 style={{
                   cursor: 'default',
-                  transitionDuration: rippleOpacity > 0 ? '0ms' : '300ms' // Instant update for ripples
+                  transitionDuration: rippleOpacity > 0 ? '0ms' : '300ms', // Instant update for ripples
                 }}
               />
             );
