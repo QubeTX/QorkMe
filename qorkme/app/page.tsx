@@ -2,6 +2,7 @@ import { UrlShortener } from '@/components/UrlShortener';
 import { SiteFooter } from '@/components/SiteFooter';
 import { MatrixDisplay } from '@/components/MatrixDisplay';
 import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
+import { AmbientDecor } from '@/components/ui/ambient-decor';
 import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
@@ -23,18 +24,21 @@ export default function Home() {
 
       <div
         id="page-wrapper"
-        className="page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
+        className="page-wrapper relative flex min-h-screen flex-col transition-colors duration-300 overflow-hidden"
       >
-        {/* Interactive Grid Background */}
+        {/* Interactive Grid Background (Bottom Layer) */}
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
+
+        {/* Ambient Decor (Middle Layer - Floating Orbs) */}
+        <AmbientDecor />
 
         <main
           id="main-content"
-          className="main-content flex flex-1 items-center justify-center overflow-hidden py-8"
+          className="main-content flex flex-1 items-center justify-center py-8 relative z-10"
         >
           <div
             id="content-container"
-            className="content-container relative z-10 flex w-full max-w-[700px] flex-col gap-12"
+            className="content-container flex w-full max-w-[700px] flex-col gap-12"
             style={{ paddingLeft: '24px', paddingRight: '24px' }}
           >
             {/* Matrix Display with Title and Clock */}

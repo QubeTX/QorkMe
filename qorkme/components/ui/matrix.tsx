@@ -28,6 +28,7 @@ export interface MatrixProps extends HTMLAttributes<HTMLDivElement> {
   levels?: number[];
   cascadeDelay?: number; // Delay in ms per cell for cascade effect (diagonal top-left to bottom-right)
   cascadeStartDelay?: number; // Initial delay before cascade starts (in ms)
+  enablePhysics?: boolean; // Enable mouse interaction and click waves
 }
 
 const defaultPalette: MatrixPalette = {
@@ -66,6 +67,12 @@ const createVuFrame = (rows: number, cols: number, levels: number[] = []): Frame
   return frame;
 };
 
+interface Wave {
+  x: number;
+  y: number;
+  startTime: number;
+}
+
 export function Matrix({
   rows,
   cols,
@@ -84,6 +91,7 @@ export function Matrix({
   levels,
   cascadeDelay = 0,
   cascadeStartDelay = 0,
+  enablePhysics = true,
   className,
   style,
   ...rest
@@ -92,28 +100,34 @@ export function Matrix({
   const frameIndexRef = useRef(0);
   const lastTimestamp = useRef<number | null>(null);
   const animated = autoplay && mode !== 'vu' && (frames?.length ?? 0) > 1;
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Physics state
+  const mousePos = useRef<{ x: number; y: number } | null>(null);
+  const waves = useRef<Wave[]>([]);
+  const [physicsTick, setPhysicsTick] = useState(0); // Force re-render for physics
 
   useEffect(() => {
     frameIndexRef.current = 0;
     setFrameIndex(0);
   }, [frames, pattern, mode, rows, cols]);
 
+  // Main animation loop handling both frames and physics
   useEffect(() => {
-    if (!animated) return undefined;
+    if (!animated && !enablePhysics) return undefined;
 
     let raf = 0;
 
     const step = (timestamp: number) => {
-      if (!frames?.length) return;
-
       if (lastTimestamp.current === null) {
         lastTimestamp.current = timestamp;
       }
 
-      const interval = 1000 / fps;
       const elapsed = timestamp - lastTimestamp.current;
+      const frameInterval = 1000 / fps;
 
-      if (elapsed >= interval) {
+      // Update animation frames
+      if (animated && frames?.length && elapsed >= frameInterval) {
         lastTimestamp.current = timestamp;
 
         const total = frames.length;
@@ -124,10 +138,25 @@ export function Matrix({
         setFrameIndex(nextIndex);
         onFrame?.(nextIndex);
 
-        if (!loop && nextIndex === total - 1) {
+        if (!loop && nextIndex === total - 1 && !enablePhysics) {
           lastTimestamp.current = null;
           return;
         }
+      }
+
+      // Update physics (always runs if enabled)
+      if (enablePhysics) {
+        // Clean up old waves
+        const now = Date.now();
+        if (waves.current.length > 0) {
+          waves.current = waves.current.filter(w => now - w.startTime < 2000);
+        }
+        
+        // Force re-render for physics updates (60fps)
+        // We use a separate tick or just rely on the setFrameIndex if fps is high enough.
+        // To get smooth 60fps physics, we need to render more often than 'fps' prop might suggest.
+        // So we update a physics tick.
+        setPhysicsTick(p => (p + 1) % 60);
       }
 
       raf = requestAnimationFrame(step);
@@ -139,7 +168,30 @@ export function Matrix({
       cancelAnimationFrame(raf);
       lastTimestamp.current = null;
     };
-  }, [animated, frames, fps, loop, onFrame]);
+  }, [animated, frames, fps, loop, onFrame, enablePhysics]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!enablePhysics || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    mousePos.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  };
+
+  const handleMouseLeave = () => {
+    mousePos.current = null;
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!enablePhysics || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    waves.current.push({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      startTime: Date.now(),
+    });
+  };
 
   const activeFrame = useMemo(() => {
     if (mode === 'vu') {
@@ -158,20 +210,71 @@ export function Matrix({
     return buildEmptyFrame(rows, cols);
   }, [mode, levels, pattern, frames, frameIndex, rows, cols]);
 
-  const cells = useMemo(
-    () =>
-      activeFrame.flat().map((value, index) => ({
-        index,
-        value: clamp(value * brightness),
-      })),
-    [activeFrame, brightness]
-  );
+  // Calculate cells with physics
+  const cells = useMemo(() => {
+    const baseCells = activeFrame.flat().map((value, index) => ({
+      index,
+      value: clamp(value * brightness),
+    }));
+
+    if (!enablePhysics) return baseCells;
+
+    const now = Date.now();
+    const cellSpacing = size + gap;
+    
+    return baseCells.map(cell => {
+      let { value } = cell;
+      const r = Math.floor(cell.index / cols);
+      const c = cell.index % cols;
+      const cellX = c * cellSpacing + size / 2;
+      const cellY = r * cellSpacing + size / 2;
+
+      // Mouse influence
+      if (mousePos.current) {
+        const dx = cellX - mousePos.current.x;
+        const dy = cellY - mousePos.current.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const radius = 120; // Interaction radius
+        
+        if (dist < radius) {
+          // Scale boost based on proximity (gaussian-ish)
+          const boost = Math.pow(1 - dist / radius, 2) * 0.6;
+          value = clamp(value + boost);
+        }
+      }
+
+      // Wave influence
+      waves.current.forEach(wave => {
+        const age = now - wave.startTime;
+        const waveSpeed = 0.3; // px per ms
+        const waveRadius = age * waveSpeed;
+        const waveWidth = 60;
+        
+        const dx = cellX - wave.x;
+        const dy = cellY - wave.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (Math.abs(dist - waveRadius) < waveWidth) {
+          // Wave peak calculation
+          const relDist = Math.abs(dist - waveRadius);
+          const waveBoost = Math.cos((relDist / waveWidth) * Math.PI / 2) * 0.8;
+          value = clamp(value + waveBoost * (1 - age / 2000)); // Fade out over time
+        }
+      });
+
+      return { ...cell, value };
+    });
+  }, [activeFrame, brightness, enablePhysics, physicsTick, rows, cols, size, gap]);
 
   return (
     <div
+      ref={containerRef}
       role="img"
       aria-label={ariaLabel ?? 'Dot matrix display'}
-      className={cn('matrix grid select-none', className)}
+      className={cn('matrix grid select-none touch-none', className)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       style={{
         gridTemplateColumns: `repeat(${cols}, ${size}px)`,
         gridTemplateRows: `repeat(${rows}, ${size}px)`,
@@ -195,7 +298,11 @@ export function Matrix({
           <span
             key={index}
             className={cn(
-              'inline-block rounded-full transition-[opacity,transform,box-shadow] duration-700 ease-out will-change-transform',
+              'inline-block rounded-full transition-all will-change-[transform,opacity,background-color]',
+              // If physics is enabled, we disable CSS transitions for snappier response, 
+              // otherwise we keep the smooth fade for frame animations
+              !enablePhysics && 'duration-700 ease-out',
+              enablePhysics && 'duration-75 ease-out', // Much faster for physics
               cascadeDelay > 0 && 'animate-[fadeIn_0.4s_ease-out_both]'
             )}
             style={{
@@ -203,8 +310,10 @@ export function Matrix({
               height: `${size}px`,
               backgroundColor: isActive ? palette.on : palette.off,
               opacity,
-              transform: isActive ? `scale(${0.88 + value * 0.2})` : 'scale(0.72)',
-              boxShadow: 'none',
+              transform: isActive 
+                ? `scale(${0.88 + value * 0.35})` // Slightly higher max scale for physics pop
+                : `scale(${0.72 + value * 0.2})`,
+              boxShadow: isActive && enablePhysics ? `0 0 ${value * 8}px ${palette.on}` : 'none', // Add glow for high intensity
               animationDelay,
             }}
           />
