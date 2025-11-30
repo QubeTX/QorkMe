@@ -129,11 +129,11 @@ export default async function AdminPage() {
 
         <main
           id="main-content"
-          className="main-content flex flex-1 flex-col items-center justify-center pt-8 pb-16"
+          className="main-content flex flex-1 flex-col items-center justify-center pt-8 pb-16 pointer-events-none"
         >
           <div
             id="content-container"
-            className="content-container relative z-10 flex w-full max-w-[1200px] flex-col gap-12 mx-auto"
+            className="content-container relative z-10 flex w-full max-w-[1200px] flex-col gap-12 mx-auto pointer-events-auto"
             style={{ paddingLeft: '24px', paddingRight: '24px' }}
           >
             {/* Header Section */}

@@ -177,7 +177,7 @@ QorkMe features a subtle interactive grid background that creates visual depth a
 
 - **Component**: `qorkme/components/ui/interactive-grid-pattern.tsx`
 - **Implementation**: Single SVG element with 60fps performance
-- **Grid specs**: 20×20 cells at 40px each
+- **Grid specs**: Dynamic sizing based on viewport dimensions (40px cells with 2-cell buffer)
 - **Visual effects**:
   - Base grid: Earthy border lines with noise-based opacity variation for organic texture
   - Hover interaction: Terracotta glow (`--color-primary` at 12% opacity) on cell hover
@@ -198,9 +198,17 @@ QorkMe features a subtle interactive grid background that creates visual depth a
 
 **Noise Filter Details** (in SVG `<defs>`):
 
-- `baseFrequency="0.025"`: Controls noise scale (lower = larger patterns)
-- `numOctaves="3"`: Noise layer detail (higher = more complex)
-- `feColorMatrix` alpha values `0.6 0.4`: Opacity range (slope × input + intercept)
+- `baseFrequency="0.6"`: Controls noise scale (higher = finer grain texture)
+- `numOctaves="4"`: Noise layer detail (more octaves = more complex texture)
+- `feColorMatrix` alpha values `0.4 0.5`: Opacity range (slope × input + intercept)
+
+**Pointer Events Pattern** (critical for grid interactivity):
+
+To allow the grid to receive hover/click events in empty space while keeping UI elements interactive:
+- Container elements (`main`, content wrappers): `pointer-events-none`
+- Interactive elements (cards, forms, buttons, links): `pointer-events-auto`
+- Decorative elements (MatrixDisplay): `pointer-events-none`
+- Footer: `pointer-events-auto` with `relative z-10`
 
 Implementation: `qorkme/app/page.tsx` (absolute positioned behind main content)
 

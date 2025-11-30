@@ -1,5 +1,36 @@
 # Changelog
 
+## 2025-11-29 (Interactive Grid Pointer Events Fix)
+
+### Fixed
+
+- **Interactive Grid Hover/Click Events** — Resolved z-index layering issue in qorkme where transparent content containers were blocking grid interactivity
+  - Added `pointer-events-none` to main and content container elements across all pages (homepage, admin dashboard, admin login)
+  - Added `pointer-events-auto` to interactive UI elements (UrlShortener wrapper, cards, forms, buttons)
+  - Added `pointer-events-none` to decorative MatrixDisplay component
+  - Added `pointer-events-auto` and `relative z-10` to SiteFooter
+  - Grid hover effects now work in empty spaces between/around content while preserving full UI interactivity
+
+### Changed
+
+- **Documentation Corrections** — Updated noise filter values to match actual implementation
+  - `baseFrequency`: `0.025` → `0.6`
+  - `numOctaves`: `3` → `4`
+  - `feColorMatrix` alpha: `0.6 0.4` → `0.4 0.5`
+  - Grid specs now note dynamic viewport-based sizing
+  - Added comprehensive pointer-events pattern documentation to CLAUDE.md, DESIGN_SYSTEM.md, and UI_LAYOUT_GUIDE.md
+
+### Files Modified
+
+- `qorkme/app/page.tsx`
+- `qorkme/app/admin/page.tsx`
+- `qorkme/app/admin/login/page.tsx`
+- `qorkme/components/MatrixDisplay.tsx`
+- `qorkme/components/SiteFooter.tsx`
+- `CLAUDE.md` (root)
+- `qorkme/docs/DESIGN_SYSTEM.md`
+- `qorkme/docs/UI_LAYOUT_GUIDE.md`
+
 ## 2025-11-20 (Subtle Tilt Refinement)
 
 ### Changed

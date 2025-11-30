@@ -1,5 +1,36 @@
 # Changelog
 
+## [3.0.49] - 2025-11-29
+
+### Fixed
+
+- **Interactive Grid Pointer Events** — Fixed z-index layering issue where transparent content containers were blocking grid hover/click events
+  - Added `pointer-events-none` to `<main>` and content container elements
+  - Added `pointer-events-auto` to interactive elements (UrlShortener wrapper, cards, forms)
+  - Added `pointer-events-none` to decorative MatrixDisplay component
+  - Added `pointer-events-auto` and `relative z-10` to SiteFooter
+  - Grid hover effects now work in empty spaces while UI elements remain fully interactive
+
+### Changed
+
+- **Documentation Updates** — Corrected noise filter values in CLAUDE.md and DESIGN_SYSTEM.md
+  - Updated `baseFrequency` from `0.025` to `0.6` (actual implementation value)
+  - Updated `numOctaves` from `3` to `4` (actual implementation value)
+  - Updated `feColorMatrix` alpha values from `0.6 0.4` to `0.4 0.5`
+  - Updated grid specs to note dynamic viewport-based sizing
+  - Added pointer-events pattern documentation to CLAUDE.md, DESIGN_SYSTEM.md, and UI_LAYOUT_GUIDE.md
+
+### Files Modified
+
+- `app/page.tsx` — pointer-events on main and content wrapper
+- `app/admin/page.tsx` — pointer-events on main and content wrapper
+- `app/admin/login/page.tsx` — pointer-events on main and content wrapper
+- `components/MatrixDisplay.tsx` — pointer-events-none on container
+- `components/SiteFooter.tsx` — pointer-events-auto and z-10
+- `CLAUDE.md` (root) — Updated interactive grid documentation
+- `docs/DESIGN_SYSTEM.md` — Updated noise filter and pointer-events docs
+- `docs/UI_LAYOUT_GUIDE.md` — Added Problem 6 for grid pointer events
+
 ## [3.0.48] - 2025-11-20
 
 ### Changed

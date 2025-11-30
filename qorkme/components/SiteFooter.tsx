@@ -13,7 +13,7 @@ export function SiteFooter({
   return (
     <footer
       className={cn(
-        'animate-fadeIn-delay-1200 border-t border-border/60 bg-[color:var(--color-background-accent)]/55 py-14 opacity-0 md:py-16',
+        'animate-fadeIn-delay-1200 border-t border-border/60 bg-[color:var(--color-background-accent)]/55 py-14 opacity-0 md:py-16 pointer-events-auto relative z-10',
         className
       )}
     >

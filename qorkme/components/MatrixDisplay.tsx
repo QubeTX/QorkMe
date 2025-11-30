@@ -289,7 +289,7 @@ export function MatrixDisplay() {
     return (
       <div
         id="matrix-display-container"
-        className="matrix-display-container relative mb-8 flex flex-col items-center gap-4 md:gap-6"
+        className="matrix-display-container relative mb-8 flex flex-col items-center gap-4 md:gap-6 pointer-events-none"
       >
         <div
           id="title-matrix-placeholder"
@@ -330,7 +330,7 @@ export function MatrixDisplay() {
   return (
     <div
       id="matrix-display-container"
-      className="matrix-display-container relative mb-8 flex flex-col items-center gap-4 md:gap-6"
+      className="matrix-display-container relative mb-8 flex flex-col items-center gap-4 md:gap-6 pointer-events-none"
     >
       {/* Title Matrix with feathered edges - Desktop */}
       <div

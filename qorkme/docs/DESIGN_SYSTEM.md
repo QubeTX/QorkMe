@@ -780,10 +780,10 @@ export function InteractiveGridPattern({
 **Noise Filter:**
 
 - **Type:** Fractal noise (smooth, cloud-like)
-- **Base frequency:** `0.025` (larger, subtler patterns)
-- **Octaves:** `3` (layered detail)
-- **Opacity range:** 0.4-1.0 (40-100%)
-- **Effect:** Creates organic paper-like texture
+- **Base frequency:** `0.6` (fine grain texture)
+- **Octaves:** `4` (more complex texture)
+- **feColorMatrix alpha:** `0.4 0.5` (opacity range)
+- **Effect:** Creates organic "washi paper" texture
 
 **Performance:**
 
@@ -791,6 +791,35 @@ export function InteractiveGridPattern({
 - State tracks only hovered cells (not all 2000+)
 - CSS transitions (GPU accelerated)
 - 60fps on all modern devices
+
+**Pointer Events Pattern (Critical for Interactivity):**
+
+To allow the grid to receive hover/click events in empty space while keeping UI elements interactive:
+
+```tsx
+// Container elements: pointer-events-none (allow clicks through)
+<main className="... pointer-events-none">
+  <div className="content-container ... pointer-events-none">
+
+    {/* Interactive elements: pointer-events-auto (capture clicks) */}
+    <div className="url-shortener-wrapper ... pointer-events-auto">
+      <UrlShortener />
+    </div>
+  </div>
+</main>
+
+// Decorative elements: pointer-events-none
+<MatrixDisplay className="... pointer-events-none" />
+
+// Footer: pointer-events-auto with z-10
+<SiteFooter className="... pointer-events-auto relative z-10" />
+```
+
+This pattern ensures:
+
+- Grid hover effects work in empty spaces between/around content
+- Cards, buttons, inputs, and links remain fully interactive
+- Decorative elements don't block grid interaction
 
 ### Customization Options
 

@@ -61,11 +61,11 @@ export default async function AdminLoginPage({
 
         <main
           id="main-content"
-          className="main-content flex flex-1 items-center justify-center overflow-hidden py-8"
+          className="main-content flex flex-1 items-center justify-center overflow-hidden py-8 pointer-events-none"
         >
           <div
             id="content-container"
-            className="content-container relative z-10 flex w-full max-w-[500px] flex-col gap-12"
+            className="content-container relative z-10 flex w-full max-w-[500px] flex-col gap-12 pointer-events-auto"
             style={{ paddingLeft: '24px', paddingRight: '24px' }}
           >
             {/* Admin Badge */}

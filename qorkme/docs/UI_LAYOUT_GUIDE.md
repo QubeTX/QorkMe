@@ -533,6 +533,47 @@ This makes it easy to:
 
 ---
 
+### Problem 6: Interactive Grid Not Responding to Hover
+
+**Symptoms**:
+
+- Interactive grid background exists at z-0
+- Hover effects don't work in empty spaces around content
+- Grid only responds at screen edges, not near cards/text
+
+**Cause**: Content containers at z-10 capture pointer events even when transparent
+
+HTML elements receive pointer events by default, even without visible backgrounds. A transparent `<main>` or `<div>` at z-10 will still block events from reaching z-0.
+
+**Solution**: Use pointer-events pattern
+
+```jsx
+// Container elements: pointer-events-none (allow clicks through)
+<main className="... pointer-events-none">
+  <div className="content-container ... pointer-events-none">
+
+    {/* Interactive elements: pointer-events-auto (capture clicks) */}
+    <div className="url-shortener-wrapper ... pointer-events-auto">
+      <UrlShortener />
+    </div>
+  </div>
+</main>
+
+// Decorative elements: pointer-events-none
+<MatrixDisplay className="... pointer-events-none" />
+
+// Footer: pointer-events-auto with z-10
+<SiteFooter className="... pointer-events-auto relative z-10" />
+```
+
+**Result**:
+
+- Grid hover effects work in empty spaces between/around content
+- Cards, buttons, inputs, and links remain fully interactive
+- Decorative elements don't block grid interaction
+
+---
+
 ## Development Workflow
 
 ### Starting Fresh

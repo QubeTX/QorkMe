@@ -34,7 +34,7 @@ export default function Home() {
 
         <main
           id="main-content"
-          className="main-content flex flex-1 items-center justify-center py-8 relative z-10"
+          className="main-content flex flex-1 items-center justify-center py-8 relative z-10 pointer-events-none"
         >
           <div
             id="content-container"
@@ -49,7 +49,7 @@ export default function Home() {
             {/* Main Card with URL Shortener */}
             <div
               id="url-shortener-wrapper"
-              className="url-shortener-wrapper animate-fadeIn-delay-800 opacity-0"
+              className="url-shortener-wrapper animate-fadeIn-delay-800 opacity-0 pointer-events-auto"
               style={{ marginLeft: '16px', marginRight: '16px' }}
             >
               <UrlShortener />
