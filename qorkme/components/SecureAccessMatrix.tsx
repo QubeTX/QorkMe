@@ -138,12 +138,19 @@ export function SecureAccessMatrix() {
   const matrixCols = 50; // Wide enough for "SECURE" (desktop)
   const matrixColsMobile = 38; // Compact for mobile
 
-  // Create combined frame with shimmer
+  // Create combined frame with shimmer (desktop)
   const combinedFrame = useMemo(() => {
     const secureBrightness = secureShimmerFrames[frameIndex];
     const accessBrightness = accessShimmerFrames[frameIndex];
     return createSecureAccessFrame(secureBrightness, accessBrightness, matrixRows, matrixCols);
   }, [frameIndex, secureShimmerFrames, accessShimmerFrames, matrixRows, matrixCols]);
+
+  // Create combined frame with shimmer (mobile - properly centered for smaller column count)
+  const combinedFrameMobile = useMemo(() => {
+    const secureBrightness = secureShimmerFrames[frameIndex];
+    const accessBrightness = accessShimmerFrames[frameIndex];
+    return createSecureAccessFrame(secureBrightness, accessBrightness, matrixRows, matrixColsMobile);
+  }, [frameIndex, secureShimmerFrames, accessShimmerFrames, matrixRows, matrixColsMobile]);
 
   const palette = {
     on: 'rgba(196, 114, 79, 1)', // Bright terracotta
@@ -155,7 +162,7 @@ export function SecureAccessMatrix() {
     return (
       <div
         id="secure-access-matrix-container"
-        className="secure-access-matrix-container relative mb-8 flex items-center justify-center"
+        className="secure-access-matrix-container relative flex items-center justify-center"
       >
         <div
           id="matrix-placeholder"
@@ -180,7 +187,7 @@ export function SecureAccessMatrix() {
   return (
     <div
       id="secure-access-matrix-container"
-      className="secure-access-matrix-container relative mb-8 flex items-center justify-center"
+      className="secure-access-matrix-container relative flex items-center justify-center"
     >
       {/* Matrix with feathered edges - Desktop */}
       <div
@@ -221,7 +228,7 @@ export function SecureAccessMatrix() {
         <Matrix
           rows={matrixRows}
           cols={matrixColsMobile}
-          pattern={combinedFrame}
+          pattern={combinedFrameMobile}
           size={4.5}
           gap={2}
           palette={palette}
