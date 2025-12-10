@@ -149,7 +149,12 @@ export function SecureAccessMatrix() {
   const combinedFrameMobile = useMemo(() => {
     const secureBrightness = secureShimmerFrames[frameIndex];
     const accessBrightness = accessShimmerFrames[frameIndex];
-    return createSecureAccessFrame(secureBrightness, accessBrightness, matrixRows, matrixColsMobile);
+    return createSecureAccessFrame(
+      secureBrightness,
+      accessBrightness,
+      matrixRows,
+      matrixColsMobile
+    );
   }, [frameIndex, secureShimmerFrames, accessShimmerFrames, matrixRows, matrixColsMobile]);
 
   const palette = {
