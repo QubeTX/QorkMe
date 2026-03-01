@@ -354,6 +354,7 @@ export function MatrixDisplay() {
           ariaLabel="Qork.Me animated title"
           cascadeDelay={8}
           cascadeStartDelay={200}
+          enablePhysics={false}
         />
       </div>
 
@@ -379,6 +380,7 @@ export function MatrixDisplay() {
           ariaLabel="Qork animated title"
           cascadeDelay={8}
           cascadeStartDelay={200}
+          enablePhysics={false}
         />
       </div>
 
@@ -404,6 +406,7 @@ export function MatrixDisplay() {
           ariaLabel="Current time in 12-hour format with AM/PM"
           cascadeDelay={6}
           cascadeStartDelay={500}
+          enablePhysics={false}
         />
       </div>
 
@@ -429,6 +432,7 @@ export function MatrixDisplay() {
           ariaLabel="Current time in 12-hour format with AM/PM (without seconds)"
           cascadeDelay={6}
           cascadeStartDelay={500}
+          enablePhysics={false}
         />
       </div>
     </div>

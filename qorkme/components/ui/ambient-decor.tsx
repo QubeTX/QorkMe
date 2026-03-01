@@ -16,7 +16,8 @@ export function AmbientDecor() {
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
       {/* Large Terracotta Orb - Top Left */}
       <motion.div
-        className="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vw] rounded-full bg-[var(--color-primary)] opacity-[0.03] blur-[120px]"
+        className="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vw] rounded-full bg-[var(--color-primary)] opacity-[0.03] blur-[80px]"
+        style={{ willChange: 'transform' }}
         animate={{
           x: [0, 50, 0],
           y: [0, 30, 0],
@@ -31,7 +32,8 @@ export function AmbientDecor() {
 
       {/* Sage Orb - Bottom Right */}
       <motion.div
-        className="absolute -bottom-[20%] -right-[10%] w-[50vw] h-[50vw] rounded-full bg-[var(--color-accent)] opacity-[0.04] blur-[100px]"
+        className="absolute -bottom-[20%] -right-[10%] w-[50vw] h-[50vw] rounded-full bg-[var(--color-accent)] opacity-[0.04] blur-[60px]"
+        style={{ willChange: 'transform' }}
         animate={{
           x: [0, -40, 0],
           y: [0, -20, 0],

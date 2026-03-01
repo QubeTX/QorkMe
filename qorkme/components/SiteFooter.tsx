@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -7,32 +8,67 @@ interface SiteFooterProps {
 }
 
 export function SiteFooter({
-  subtitle = 'Thoughtful short links for modern teams',
+  subtitle = 'Thoughtful short links',
   className,
 }: SiteFooterProps) {
   return (
     <footer
       className={cn(
-        'animate-fadeIn-delay-1200 border-t border-border/60 bg-[color:var(--color-background-accent)]/55 py-14 opacity-0 md:py-16 pointer-events-auto relative z-10',
+        'animate-fadeIn-delay-1200 opacity-0 pointer-events-auto relative z-10',
         className
       )}
+      style={{ paddingTop: '24px', paddingBottom: '24px' }}
     >
-      <div className="container flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-12 md:px-8">
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
-          <span className="font-display text-xl font-normal uppercase tracking-[0.16em] text-text-primary md:text-2xl md:leading-none">
-            QorkMe
-          </span>
-          <span className="text-sm text-text-muted leading-relaxed md:border-l md:border-border/60 md:pl-6 md:text-base md:leading-none">
-            {subtitle}
-          </span>
+      <div className="container" style={{ paddingLeft: '32px', paddingRight: '32px' }}>
+        {/* Mobile layout: logo centered above name + admin row */}
+        <div className="flex flex-col items-center gap-4 md:hidden">
+          <Image
+            src="/shaughv-brandmark.svg"
+            alt="SHAUGHV"
+            width={28}
+            height={28}
+            className="text-text-muted opacity-40 transition-opacity duration-300 hover:opacity-70 dark:invert"
+          />
+          <div className="flex items-center justify-between w-full">
+            <div className="flex flex-col gap-0.5">
+              <span className="font-display text-lg font-normal uppercase tracking-[0.16em] text-text-primary leading-none">
+                QorkMe
+              </span>
+              <span className="text-xs text-text-muted leading-snug">
+                {subtitle}
+              </span>
+            </div>
+            <Link
+              href="/admin"
+              className="text-sm font-semibold uppercase tracking-[0.12em] text-text-muted transition-colors hover:text-[color:var(--color-primary)] leading-none"
+            >
+              Admin
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-2 text-sm text-text-muted md:flex-row md:items-center md:gap-6">
-          <span className="leading-relaxed md:leading-none md:text-base">
-            Powered by Supabase &amp; Vercel
-          </span>
+
+        {/* Desktop layout: three-column with centered logo */}
+        <div className="hidden md:flex md:items-center md:justify-between">
+          <div className="flex flex-col gap-1">
+            <span className="font-display text-xl font-normal uppercase tracking-[0.16em] text-text-primary leading-none">
+              QorkMe
+            </span>
+            <span className="text-sm text-text-muted leading-none">
+              {subtitle}
+            </span>
+          </div>
+
+          <Image
+            src="/shaughv-brandmark.svg"
+            alt="SHAUGHV"
+            width={28}
+            height={28}
+            className="text-text-muted opacity-40 transition-opacity duration-300 hover:opacity-70 dark:invert"
+          />
+
           <Link
             href="/admin"
-            className="font-semibold uppercase tracking-[0.12em] text-[color:var(--color-secondary)] transition-colors hover:text-[color:var(--color-primary)] md:leading-none"
+            className="text-sm font-semibold uppercase tracking-[0.12em] text-text-muted transition-colors hover:text-[color:var(--color-primary)] leading-none"
           >
             Admin
           </Link>

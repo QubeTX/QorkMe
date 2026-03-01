@@ -1,5 +1,38 @@
 # Changelog
 
+## 2026-03-01 (Footer Redesign + Performance Optimizations)
+
+### Changed
+
+- **Footer Redesign** — Completely redesigned SiteFooter with SHAUGHV brand mark integration
+  - Removed semi-transparent background and top border for a cleaner look on non-scrollable layout
+  - Reduced vertical padding from 56-64px to 24-32px
+  - Three-column desktop layout: QorkMe name/subtitle | SHAUGHV logo (centered) | Admin link
+  - Two-row mobile layout: centered logo above name + admin row
+  - Removed "Powered by Supabase & Vercel" text
+  - SHAUGHV SVG uses `currentColor` fill for automatic light/dark theme adaptation
+  - Added `dark:invert` for proper dark mode rendering
+
+### Added
+
+- **SHAUGHV Brand Mark** — Saved official SHAUGHV SVG to `qorkme/public/shaughv-brandmark.svg` with `currentColor` fills for theme-adaptive coloring
+
+### Fixed
+
+- **Matrix Physics Performance (Critical)** — Disabled physics on all 4 Matrix instances in MatrixDisplay, eliminating ~108,000 unnecessary DOM updates/second from 60fps `requestAnimationFrame` loops that were running on static display elements
+- **InteractiveGridPattern Idle CPU** — Changed ripple animation loop to only run when active ripples exist, preventing continuous 60fps state updates and re-renders of 1,500+ SVG elements when idle
+- **Matrix Cell GPU Layers** — Removed `will-change-[transform,opacity,background-color]` from every matrix cell span (~1,800 elements), eliminating excessive GPU compositing layer creation
+- **AmbientDecor Blur Cost** — Reduced blur values from 120px/100px to 80px/60px on large orb elements (still visually effective at 3-4% opacity) and added targeted `will-change: transform` (appropriate for 2 continuously animating elements vs 1,800)
+
+### Files Modified
+
+- `qorkme/components/SiteFooter.tsx`
+- `qorkme/public/shaughv-brandmark.svg` (new)
+- `qorkme/components/MatrixDisplay.tsx`
+- `qorkme/components/ui/interactive-grid-pattern.tsx`
+- `qorkme/components/ui/matrix.tsx`
+- `qorkme/components/ui/ambient-decor.tsx`
+
 ## 2025-11-29 (Interactive Grid Pointer Events Fix)
 
 ### Fixed

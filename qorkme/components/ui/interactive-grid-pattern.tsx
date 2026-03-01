@@ -47,12 +47,13 @@ export function InteractiveGridPattern({
     return () => window.removeEventListener('resize', updateGridSize);
   }, [width, height]);
 
-  // Ripple animation loop
+  // Ripple animation loop — only runs when ripples exist
   useEffect(() => {
+    if (ripples.length === 0) return;
+
     const animate = () => {
       setRipples((prev) => {
         const now = Date.now();
-        // Filter out old ripples (older than 2s)
         const active = prev.filter((r) => now - r.startTime < 2000);
         if (active.length !== prev.length) {
           return active;
@@ -66,7 +67,7 @@ export function InteractiveGridPattern({
     return () => {
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
     };
-  }, []);
+  }, [ripples.length]);
 
   const handleCellEnter = useCallback((cellId: string) => {
     setHoveredCells((prev) => {

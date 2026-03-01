@@ -301,7 +301,7 @@ export function Matrix({
           <span
             key={index}
             className={cn(
-              'inline-block rounded-full transition-all will-change-[transform,opacity,background-color]',
+              'inline-block rounded-full transition-all',
               // If physics is enabled, we disable CSS transitions for snappier response,
               // otherwise we keep the smooth fade for frame animations
               !enablePhysics && 'duration-700 ease-out',

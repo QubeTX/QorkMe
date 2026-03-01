@@ -1,5 +1,37 @@
 # Changelog
 
+## [3.0.50] - 2026-03-01
+
+### Changed
+
+- **Footer Redesign** — Completely redesigned SiteFooter with SHAUGHV brand mark integration
+  - Removed semi-transparent background and top border
+  - Reduced vertical padding from 56-64px to 24-32px
+  - Three-column desktop layout: QorkMe name/subtitle | SHAUGHV logo (centered) | Admin link
+  - Two-row mobile layout: centered logo above name + admin row
+  - Removed "Powered by Supabase & Vercel" text
+  - SHAUGHV SVG uses `currentColor` fill with `dark:invert` for theme adaptation
+
+### Added
+
+- **SHAUGHV Brand Mark** — `public/shaughv-brandmark.svg` with `currentColor` fills for theme-adaptive coloring
+
+### Fixed
+
+- **Matrix Physics Performance** — Passed `enablePhysics={false}` to all 4 Matrix instances in MatrixDisplay, eliminating ~108,000 DOM updates/second from unnecessary 60fps `requestAnimationFrame` loops
+- **InteractiveGridPattern Idle CPU** — Ripple animation loop now only runs when active ripples exist, preventing continuous 60fps re-renders of 1,500+ SVG elements when idle
+- **Matrix Cell GPU Layers** — Removed `will-change-[transform,opacity,background-color]` from ~1,800 matrix cell spans to eliminate excessive GPU compositing layers
+- **AmbientDecor Blur Cost** — Reduced blur from 120px/100px to 80px/60px on large orb elements; added targeted `will-change: transform` for the 2 continuously animating elements
+
+### Files Modified
+
+- `components/SiteFooter.tsx`
+- `public/shaughv-brandmark.svg` (new)
+- `components/MatrixDisplay.tsx`
+- `components/ui/interactive-grid-pattern.tsx`
+- `components/ui/matrix.tsx`
+- `components/ui/ambient-decor.tsx`
+
 ## [3.0.49] - 2025-11-29
 
 ### Fixed
