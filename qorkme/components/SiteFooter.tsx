@@ -7,10 +7,7 @@ interface SiteFooterProps {
   className?: string;
 }
 
-export function SiteFooter({
-  subtitle = 'Thoughtful short links',
-  className,
-}: SiteFooterProps) {
+export function SiteFooter({ subtitle = 'Thoughtful short links', className }: SiteFooterProps) {
   return (
     <footer
       className={cn(
@@ -34,9 +31,7 @@ export function SiteFooter({
               <span className="font-display text-lg font-normal uppercase tracking-[0.16em] text-text-primary leading-none">
                 QorkMe
               </span>
-              <span className="text-xs text-text-muted leading-snug">
-                {subtitle}
-              </span>
+              <span className="text-xs text-text-muted leading-snug">{subtitle}</span>
             </div>
             <Link
               href="/admin"
@@ -53,9 +48,7 @@ export function SiteFooter({
             <span className="font-display text-xl font-normal uppercase tracking-[0.16em] text-text-primary leading-none">
               QorkMe
             </span>
-            <span className="text-sm text-text-muted leading-none">
-              {subtitle}
-            </span>
+            <span className="text-sm text-text-muted leading-none">{subtitle}</span>
           </div>
 
           <Image
