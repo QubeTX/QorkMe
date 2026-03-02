@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-03-02 (GPU-Accelerated CSS Ripple)
+
+### Changed
+
+- **Grid Click Ripple — JS to CSS** — Replaced the per-cell JavaScript ripple animation in InteractiveGridPattern with a single GPU-composited CSS ripple overlay
+  - Old: ~1,300 `Math.sqrt`/`Math.cos` distance calculations per `requestAnimationFrame` tick, triggering massive React state updates and SVG DOM re-renders at 60fps for 2 seconds per click
+  - New: Single `<div>` with CSS `@keyframes` animating only `transform` (scale) and `opacity` — both GPU-composited properties with zero layout/paint cost
+  - React re-renders reduced from every frame (120+ renders per click) to exactly 2 (one on click, one on cleanup via `onAnimationEnd`)
+  - Removed `Ripple` interface, `requestAnimationFrame` loop, `animationFrameRef`, per-cell ripple opacity math, and inline `transitionDuration` overrides
+  - SVG wrapped in container `<div>` that handles clicks and renders CSS ripple overlays
+  - Cell rendering simplified to pure hover-based opacity (no ripple calculations)
+
+### Added
+
+- **`.grid-ripple` CSS class** — 1600px terracotta radial-gradient ring with `grid-ripple-expand` keyframe animation (2s ease-out, scale 0→1, opacity 0.12→0)
+
+### Files Modified
+
+- `qorkme/components/ui/interactive-grid-pattern.tsx`
+- `qorkme/app/globals.css`
+
 ## 2026-03-01 (Footer Redesign + Performance Optimizations)
 
 ### Changed

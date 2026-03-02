@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.0.51] - 2026-03-02
+
+### Changed
+
+- **Grid Click Ripple — JS to CSS** — Replaced expensive per-cell JavaScript ripple with a single GPU-composited CSS ripple overlay, eliminating ~1,300 distance calculations per frame and reducing React re-renders from 120+ to 2 per click
+
+### Added
+
+- **`.grid-ripple` CSS class and `@keyframes grid-ripple-expand`** — Terracotta radial-gradient ring animation using only GPU-composited properties (`transform`, `opacity`)
+
+### Files Modified
+
+- `components/ui/interactive-grid-pattern.tsx`
+- `app/globals.css`
+
 ## [3.0.50] - 2026-03-01
 
 ### Changed

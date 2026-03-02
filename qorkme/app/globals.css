@@ -626,6 +626,35 @@ pre {
   }
 }
 
+/* Grid click ripple — GPU-composited, no layout/paint */
+.grid-ripple {
+  width: 1600px;
+  height: 1600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    transparent 55%,
+    var(--color-primary) 67%,
+    var(--color-primary) 72%,
+    transparent 85%
+  );
+  transform: translate(-50%, -50%) scale(0);
+  animation: grid-ripple-expand 2s ease-out forwards;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@keyframes grid-ripple-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.12;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
