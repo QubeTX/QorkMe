@@ -85,7 +85,7 @@ export function InteractiveGridPattern({
 
   return (
     <div
-      className={`relative overflow-hidden ${className}`}
+      className={`overflow-hidden ${className}`}
       onClick={handleClick}
       style={{ pointerEvents: 'auto' }}
     >

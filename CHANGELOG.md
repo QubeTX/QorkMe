@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-03-02 (Grid Background Position Fix)
+
+### Fixed
+
+- **Grid Background Viewport Fill** — Removed hardcoded `relative` from InteractiveGridPattern wrapper div that was overriding the `absolute` passed via className prop, causing the grid to collapse to content height instead of filling the viewport via `inset-0`
+
+### Files Modified
+
+- `qorkme/components/ui/interactive-grid-pattern.tsx`
+
 ## 2026-03-02 (GPU-Accelerated CSS Ripple)
 
 ### Changed

@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.0.52] - 2026-03-02
+
+### Fixed
+
+- **Grid Background Viewport Fill** — Removed hardcoded `relative` from InteractiveGridPattern wrapper div that conflicted with `absolute inset-0` positioning, restoring full-viewport grid coverage
+
+### Files Modified
+
+- `components/ui/interactive-grid-pattern.tsx`
+
 ## [3.0.51] - 2026-03-02
 
 ### Changed
