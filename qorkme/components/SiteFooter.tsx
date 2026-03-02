@@ -22,8 +22,8 @@ export function SiteFooter({ subtitle = 'Thoughtful short links', className }: S
           <Image
             src="/shaughv-brandmark.svg"
             alt="SHAUGHV"
-            width={28}
-            height={28}
+            width={44}
+            height={44}
             className="text-text-muted opacity-40 transition-opacity duration-300 hover:opacity-70 dark:invert"
           />
           <div className="flex items-center justify-between w-full">
@@ -54,8 +54,8 @@ export function SiteFooter({ subtitle = 'Thoughtful short links', className }: S
           <Image
             src="/shaughv-brandmark.svg"
             alt="SHAUGHV"
-            width={28}
-            height={28}
+            width={56}
+            height={56}
             className="text-text-muted opacity-40 transition-opacity duration-300 hover:opacity-70 dark:invert"
           />
 
