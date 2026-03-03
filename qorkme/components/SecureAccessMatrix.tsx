@@ -216,6 +216,7 @@ export function SecureAccessMatrix() {
           ariaLabel="Secure Access animated title"
           cascadeDelay={8}
           cascadeStartDelay={200}
+          enablePhysics={false}
         />
       </div>
 
@@ -241,6 +242,7 @@ export function SecureAccessMatrix() {
           ariaLabel="Secure Access animated title"
           cascadeDelay={8}
           cascadeStartDelay={200}
+          enablePhysics={false}
         />
       </div>
     </div>

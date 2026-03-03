@@ -6,35 +6,14 @@ import { createAdminClient, createServerClientInstance } from '@/lib/supabase/se
 import { ADMIN_GITHUB_USERNAME, ADMIN_GITHUB_USERNAME_DISPLAY } from '@/lib/config/admin';
 import { AdminSignOutButton } from '@/components/admin/AdminSignOutButton';
 import { ClearDatabaseButton } from '@/components/admin/ClearDatabaseButton';
+import { DatabaseHealthCard } from '@/components/admin/DatabaseHealthCard';
+import { AdminLinksTable } from '@/components/admin/AdminLinksTable';
 import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
 import { SecureAccessMatrix } from '@/components/SecureAccessMatrix';
-import { Matrix, pulse } from '@/components/ui/matrix';
 import { Toaster } from 'react-hot-toast';
-import {
-  Activity,
-  Database,
-  RefreshCcw,
-  Shield,
-  BarChart3,
-  AlertTriangle,
-  Zap,
-} from 'lucide-react';
+import { Activity, AlertTriangle, BarChart3 } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
-
-function formatDate(value: string | null) {
-  if (!value) {
-    return '—';
-  }
-
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(new Date(value));
-}
 
 export default async function AdminPage() {
   const supabase = await createServerClientInstance();
@@ -42,7 +21,6 @@ export default async function AdminPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Redirect unauthenticated users to login page
   if (!user) {
     redirect('/admin/login');
   }
@@ -50,59 +28,29 @@ export default async function AdminPage() {
   const resolvedGithubUsername = extractGithubUsername(user);
   const isAuthorized = Boolean(user) && resolvedGithubUsername === ADMIN_GITHUB_USERNAME;
 
-  // Redirect unauthorized users to login page with error
   if (!isAuthorized) {
     redirect('/admin/login?error=unauthorized');
   }
 
-  let metrics: {
-    totalUrls: number;
-    activeUrls: number;
-    totalClicks: number;
-    lastCreatedAt: string | null;
-    databaseHealth: {
-      status: string;
-      detail: string;
-    };
-  } | null = null;
+  // Server-side summary stats (render instantly, no loading state)
+  const adminClient = await createAdminClient();
 
-  if (isAuthorized) {
-    const adminClient = await createAdminClient();
+  const [urlCountResponse, activeUrlResponse, clickCountResponse] = await Promise.all([
+    adminClient.from('urls').select('id', { count: 'exact', head: true }),
+    adminClient.from('urls').select('id', { count: 'exact', head: true }).eq('is_active', true),
+    adminClient.from('clicks').select('id', { count: 'exact', head: true }),
+  ]);
 
-    const [urlCountResponse, activeUrlResponse, clickCountResponse, latestUrlResponse] =
-      await Promise.all([
-        adminClient.from('urls').select('id', { count: 'exact', head: true }),
-        adminClient.from('urls').select('id', { count: 'exact', head: true }).eq('is_active', true),
-        adminClient.from('clicks').select('id', { count: 'exact', head: true }),
-        adminClient
-          .from('urls')
-          .select('created_at')
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-      ]);
+  const totalUrls = urlCountResponse.count ?? 0;
+  const activeUrls = activeUrlResponse.count ?? 0;
+  const totalClicks = clickCountResponse.count ?? 0;
+  const activeRatio = totalUrls > 0 ? Math.round((activeUrls / totalUrls) * 100) : 0;
 
-    const { error: healthError } = await adminClient.from('urls').select('id', { head: true });
-
-    const latestCreatedAt =
-      (latestUrlResponse.data as { created_at: string } | null)?.created_at ?? null;
-
-    metrics = {
-      totalUrls: urlCountResponse.count ?? 0,
-      activeUrls: activeUrlResponse.count ?? 0,
-      totalClicks: clickCountResponse.count ?? 0,
-      lastCreatedAt: latestCreatedAt,
-      databaseHealth: healthError
-        ? {
-            status: 'Attention needed',
-            detail: healthError.message,
-          }
-        : {
-            status: 'Operational',
-            detail: 'Supabase responded successfully to the admin health check query.',
-          },
-    };
-  }
+  const summaryCardStyle = {
+    background: 'var(--color-surface)',
+    borderColor: 'var(--color-border)',
+    boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
+  };
 
   return (
     <>
@@ -124,7 +72,6 @@ export default async function AdminPage() {
         id="admin-dashboard-wrapper"
         className="page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
       >
-        {/* Interactive Grid Background */}
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
 
         <main
@@ -136,7 +83,7 @@ export default async function AdminPage() {
             className="content-container relative z-10 flex w-full max-w-[1200px] flex-col gap-12 mx-auto pointer-events-auto"
             style={{ paddingLeft: '24px', paddingRight: '24px' }}
           >
-            {/* Header Section */}
+            {/* 1. Header Section */}
             <div className="flex flex-col gap-6 animate-fadeIn-delay-200 opacity-0">
               <SecureAccessMatrix />
 
@@ -151,223 +98,141 @@ export default async function AdminPage() {
               </div>
             </div>
 
-            {metrics && (
-              <div className="flex flex-col gap-10 animate-fadeIn-delay-400 opacity-0">
-                {/* Metrics Grid */}
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-                  <Card
-                    style={{
-                      background: 'var(--color-surface)',
-                      borderColor: 'var(--color-border)',
-                      boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-                    }}
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between">
-                      <div>
-                        <CardTitle>Total short links</CardTitle>
-                        <CardDescription>Includes auto and custom aliases.</CardDescription>
-                      </div>
-                      <BarChart3
-                        size={22}
-                        className="text-[color:var(--color-accent)]"
-                        aria-hidden="true"
-                      />
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-3xl font-semibold text-[color:var(--color-text-primary)]">
-                        {metrics.totalUrls.toLocaleString()}
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    style={{
-                      background: 'var(--color-surface)',
-                      borderColor: 'var(--color-border)',
-                      boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-                    }}
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between">
-                      <div>
-                        <CardTitle>Active redirects</CardTitle>
-                        <CardDescription>Currently available short links.</CardDescription>
-                      </div>
-                      <Activity
-                        size={22}
-                        className="text-[color:var(--color-accent)]"
-                        aria-hidden="true"
-                      />
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-3xl font-semibold text-[color:var(--color-text-primary)]">
-                        {metrics.activeUrls.toLocaleString()}
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    style={{
-                      background: 'var(--color-surface)',
-                      borderColor: 'var(--color-border)',
-                      boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-                    }}
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between">
-                      <div>
-                        <CardTitle>Total recorded clicks</CardTitle>
-                        <CardDescription>Aggregated across every short link.</CardDescription>
-                      </div>
-                      <RefreshCcw
-                        size={22}
-                        className="text-[color:var(--color-accent)]"
-                        aria-hidden="true"
-                      />
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-3xl font-semibold text-[color:var(--color-text-primary)]">
-                        {metrics.totalClicks.toLocaleString()}
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    style={{
-                      background: 'var(--color-surface)',
-                      borderColor: 'var(--color-border)',
-                      boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-                    }}
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between">
-                      <div>
-                        <CardTitle>Database health</CardTitle>
-                        <CardDescription>{metrics.databaseHealth.detail}</CardDescription>
-                      </div>
-                      <Shield
-                        size={22}
-                        className={
-                          metrics.databaseHealth.status === 'Operational'
-                            ? 'text-[color:var(--color-success)]'
-                            : 'text-[color:var(--color-warning)]'
-                        }
-                        aria-hidden="true"
-                      />
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-lg font-semibold text-[color:var(--color-text-primary)]">
-                        {metrics.databaseHealth.status}
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    style={{
-                      background: 'var(--color-surface)',
-                      borderColor: 'var(--color-border)',
-                      boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-                    }}
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between">
-                      <div>
-                        <CardTitle>Most recent URL</CardTitle>
-                        <CardDescription>Timestamp of the latest entry.</CardDescription>
-                      </div>
-                      <Database
-                        size={22}
-                        className="text-[color:var(--color-accent)]"
-                        aria-hidden="true"
-                      />
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-lg font-semibold text-[color:var(--color-text-primary)]">
-                        {formatDate(metrics.lastCreatedAt)}
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    style={{
-                      background: 'var(--color-surface)',
-                      borderColor: 'var(--color-border)',
-                      boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-                    }}
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between">
-                      <div>
-                        <CardTitle>System Status</CardTitle>
-                        <CardDescription>Live system heartbeat monitor.</CardDescription>
-                      </div>
-                      <Zap
-                        size={22}
-                        className="text-[color:var(--color-accent)]"
-                        aria-hidden="true"
-                      />
-                    </CardHeader>
-                    <CardContent className="flex items-center justify-center pt-2">
-                      <Matrix
-                        rows={7}
-                        cols={7}
-                        frames={pulse}
-                        fps={20}
-                        size={10}
-                        gap={2}
-                        palette={{
-                          on: 'var(--color-primary)',
-                          off: 'color-mix(in srgb, var(--color-primary) 12%, transparent)',
-                        }}
-                        ariaLabel="System status pulse animation"
-                      />
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Danger Zone */}
-                <Card
-                  style={{
-                    background: 'color-mix(in srgb, var(--color-error) 5%, var(--color-surface))',
-                    borderColor: 'color-mix(in srgb, var(--color-error) 40%, transparent)',
-                    boxShadow: '0 12px 30px -18px rgba(192, 77, 60, 0.25)',
-                  }}
-                >
-                  <CardHeader>
-                    <div className="flex items-center gap-3 mb-2">
-                      <AlertTriangle
-                        size={24}
-                        className="text-[color:var(--color-error)]"
-                        aria-hidden="true"
-                      />
-                      <CardTitle className="text-[color:var(--color-error)]">Danger Zone</CardTitle>
+            <div className="flex flex-col gap-10 animate-fadeIn-delay-400 opacity-0">
+              {/* 2. Summary Stats Row */}
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                <Card style={summaryCardStyle}>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                      <CardTitle>Total Links</CardTitle>
+                      <CardDescription>Auto and custom aliases</CardDescription>
                     </div>
-                    <CardDescription>
-                      Permanently remove every stored URL along with associated click analytics.
-                      Supabase tables remain intact.
-                    </CardDescription>
+                    <BarChart3
+                      size={22}
+                      className="text-[color:var(--color-accent)]"
+                      aria-hidden="true"
+                    />
                   </CardHeader>
-                  <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="text-sm text-[color:var(--color-text-secondary)]">
-                      Only use this when you need a clean slate. The action cannot be undone and
-                      cascades to related click records.
+                  <CardContent>
+                    <p className="text-3xl font-semibold text-[color:var(--color-text-primary)]">
+                      {totalUrls.toLocaleString()}
                     </p>
-                    <ClearDatabaseButton />
                   </CardContent>
                 </Card>
 
-                {/* Sign Out Section */}
-                <div className="flex flex-col gap-4 items-start">
-                  <div className="w-full h-px" style={{ background: 'var(--color-border)' }} />
-                  <div className="flex items-center justify-between w-full">
+                <Card style={summaryCardStyle}>
+                  <CardHeader className="flex flex-row items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-[color:var(--color-text-primary)]">
-                        Session Management
-                      </p>
-                      <p className="text-xs text-[color:var(--color-text-muted)] mt-1">
-                        Sign out to end your admin session
-                      </p>
+                      <CardTitle>Total Clicks</CardTitle>
+                      <CardDescription>Aggregated across all links</CardDescription>
                     </div>
-                    <AdminSignOutButton />
+                    <Activity
+                      size={22}
+                      className="text-[color:var(--color-accent)]"
+                      aria-hidden="true"
+                    />
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-3xl font-semibold text-[color:var(--color-text-primary)]">
+                      {totalClicks.toLocaleString()}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card style={summaryCardStyle}>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                      <CardTitle>Active Ratio</CardTitle>
+                      <CardDescription>
+                        {activeUrls} of {totalUrls} links active
+                      </CardDescription>
+                    </div>
+                    <div
+                      className="flex items-center justify-center rounded-full"
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        background: 'color-mix(in srgb, var(--color-success) 12%, transparent)',
+                      }}
+                    >
+                      <span
+                        className="text-xs font-semibold"
+                        style={{ color: 'var(--color-success)' }}
+                      >
+                        {activeRatio}%
+                      </span>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div
+                      className="h-2 w-full overflow-hidden rounded-full"
+                      style={{ background: 'var(--color-border)' }}
+                    >
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${activeRatio}%`,
+                          background: 'var(--color-success)',
+                        }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* 3. Database Health (client component, loads progressively) */}
+              <DatabaseHealthCard />
+
+              {/* 4. All Short Links (client component, loads progressively) */}
+              <AdminLinksTable />
+
+              {/* 5. Danger Zone */}
+              <Card
+                style={{
+                  background: 'color-mix(in srgb, var(--color-error) 5%, var(--color-surface))',
+                  borderColor: 'color-mix(in srgb, var(--color-error) 40%, transparent)',
+                  boxShadow: '0 12px 30px -18px rgba(192, 77, 60, 0.25)',
+                }}
+              >
+                <CardHeader>
+                  <div className="flex items-center gap-3 mb-2">
+                    <AlertTriangle
+                      size={24}
+                      className="text-[color:var(--color-error)]"
+                      aria-hidden="true"
+                    />
+                    <CardTitle className="text-[color:var(--color-error)]">Danger Zone</CardTitle>
                   </div>
+                  <CardDescription>
+                    Permanently remove every stored URL along with associated click analytics.
+                    Supabase tables remain intact.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm text-[color:var(--color-text-secondary)]">
+                    Only use this when you need a clean slate. The action cannot be undone and
+                    cascades to related click records.
+                  </p>
+                  <ClearDatabaseButton />
+                </CardContent>
+              </Card>
+
+              {/* 6. Session Management */}
+              <div className="flex flex-col gap-4 items-start">
+                <div className="w-full h-px" style={{ background: 'var(--color-border)' }} />
+                <div className="flex items-center justify-between w-full">
+                  <div>
+                    <p className="text-sm font-medium text-[color:var(--color-text-primary)]">
+                      Session Management
+                    </p>
+                    <p className="text-xs text-[color:var(--color-text-muted)] mt-1">
+                      Sign out to end your admin session
+                    </p>
+                  </div>
+                  <AdminSignOutButton />
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </main>
 

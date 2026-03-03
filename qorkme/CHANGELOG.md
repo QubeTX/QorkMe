@@ -1,5 +1,43 @@
 # Changelog
 
+## [3.1.0] - 2026-03-02
+
+### Changed
+
+- **Admin Dashboard Overhaul** — Replaced the 6-card metrics grid with a richer hybrid layout
+  - Server-rendered summary stats row (Total Links, Total Clicks, Active Ratio) renders instantly with no loading state
+  - New `DatabaseHealthCard` client component with connection latency bar, table-level row counts, active/inactive ratio visualization, and data freshness timestamps
+  - New `AdminLinksTable` client component with sortable columns, pagination, per-row delete, and responsive mobile card layout
+  - Removed System Status pulse Matrix, Database health, and Most recent URL cards (consolidated into DatabaseHealthCard)
+- **Admin Auth Refactor** — Extracted duplicated auth pattern from `purge/route.ts` into shared `verifyAdminAuth()` helper in `lib/admin/auth.ts`
+
+### Added
+
+- **`GET /api/admin/health`** — Enhanced database health endpoint with parallel queries for latency, row counts (urls/clicks/reserved_words), active/inactive ratio, freshness timestamps, and status determination (operational/degraded/error)
+- **`GET /api/admin/links`** — Paginated link listing with `page`, `pageSize`, `sort`, `order` query params and `{ count: 'exact' }` for total
+- **`DELETE /api/admin/links/[id]`** — Single link deletion by UUID with cascade via FK constraint
+- **`DatabaseHealthCard`** — Client component with status indicator, latency bar, table row counts grid, active/inactive ratio bar, data freshness relative timestamps, and manual refresh button
+- **`AdminLinksTable`** — Client component with sortable table (Code, Destination, Clicks, Created, Status), pagination controls, per-row delete with `window.confirm()` + toast feedback, and mobile stacked card layout
+
+### Fixed
+
+- **SecureAccessMatrix Performance** — Added `enablePhysics={false}` to both Matrix instances in SecureAccessMatrix, eliminating ~60 unnecessary state updates/second across 1,584 DOM spans (shimmer continues at 10fps via existing `setInterval`)
+
+### Files Added
+
+- `lib/admin/auth.ts`
+- `app/api/admin/health/route.ts`
+- `app/api/admin/links/route.ts`
+- `app/api/admin/links/[id]/route.ts`
+- `components/admin/DatabaseHealthCard.tsx`
+- `components/admin/AdminLinksTable.tsx`
+
+### Files Modified
+
+- `components/SecureAccessMatrix.tsx`
+- `app/api/admin/purge/route.ts`
+- `app/admin/page.tsx`
+
 ## [3.0.52] - 2026-03-02
 
 ### Fixed

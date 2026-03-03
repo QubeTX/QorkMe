@@ -1,28 +1,11 @@
 import { NextResponse } from 'next/server';
-import { createAdminClient, createServerClientInstance } from '@/lib/supabase/server';
-import { ADMIN_GITHUB_USERNAME } from '@/lib/config/admin';
+import { createAdminClient } from '@/lib/supabase/server';
+import { verifyAdminAuth } from '@/lib/admin/auth';
 import { revalidatePath } from 'next/cache';
 
 export async function POST() {
-  const supabase = await createServerClientInstance();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (error || !user) {
-    return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
-  }
-
-  const githubUsername = (
-    user.user_metadata?.user_name ||
-    user.user_metadata?.preferred_username ||
-    ''
-  ).toLowerCase();
-
-  if (githubUsername !== ADMIN_GITHUB_USERNAME.toLowerCase()) {
-    return NextResponse.json({ success: false, message: 'Forbidden' }, { status: 403 });
-  }
+  const auth = await verifyAdminAuth();
+  if (!auth.authorized) return auth.response;
 
   try {
     const adminClient = await createAdminClient();

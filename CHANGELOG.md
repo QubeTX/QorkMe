@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-03-02 (Admin Dashboard Overhaul)
+
+### Changed
+
+- **Admin Dashboard Overhaul** — Replaced 6-card metrics grid with hybrid server/client layout: instant summary stats row, progressive DatabaseHealthCard with latency/row counts/freshness/active ratio, AdminLinksTable with sortable columns + pagination + per-row delete + mobile cards, plus Danger Zone and Session Management
+- **Admin Auth Refactor** — Extracted shared `verifyAdminAuth()` helper into `qorkme/lib/admin/auth.ts`, refactored purge route to use it
+
+### Added
+
+- `GET /api/admin/health` — Enhanced health endpoint with latency, table row counts, active/inactive ratio, freshness timestamps
+- `GET /api/admin/links` — Paginated, sortable link listing
+- `DELETE /api/admin/links/[id]` — Per-link deletion with cascade
+- `qorkme/components/admin/DatabaseHealthCard.tsx` — Rich health visualization component
+- `qorkme/components/admin/AdminLinksTable.tsx` — Full link management table with mobile layout
+
+### Fixed
+
+- **SecureAccessMatrix Performance** — Added `enablePhysics={false}` to both Matrix instances, eliminating ~60 unnecessary 60fps state updates across 1,584 DOM spans
+
+### Files Added
+
+- `qorkme/lib/admin/auth.ts`
+- `qorkme/app/api/admin/health/route.ts`
+- `qorkme/app/api/admin/links/route.ts`
+- `qorkme/app/api/admin/links/[id]/route.ts`
+- `qorkme/components/admin/DatabaseHealthCard.tsx`
+- `qorkme/components/admin/AdminLinksTable.tsx`
+
+### Files Modified
+
+- `qorkme/components/SecureAccessMatrix.tsx`
+- `qorkme/app/api/admin/purge/route.ts`
+- `qorkme/app/admin/page.tsx`
+
 ## 2026-03-02 (Grid Background Position Fix)
 
 ### Fixed
