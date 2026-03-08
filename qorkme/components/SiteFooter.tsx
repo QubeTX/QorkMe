@@ -4,9 +4,14 @@ import { cn } from '@/lib/utils';
 interface SiteFooterProps {
   subtitle?: string;
   className?: string;
+  showLogo?: boolean;
 }
 
-export function SiteFooter({ subtitle = 'A Service By QubeTX.', className }: SiteFooterProps) {
+export function SiteFooter({
+  subtitle = 'A Service By QubeTX.',
+  className,
+  showLogo = true,
+}: SiteFooterProps) {
   return (
     <footer
       className={cn(
@@ -18,15 +23,17 @@ export function SiteFooter({ subtitle = 'A Service By QubeTX.', className }: Sit
       <div className="container" style={{ paddingLeft: '32px', paddingRight: '32px' }}>
         {/* Mobile layout: logo centered above name + admin row */}
         <div className="flex flex-col items-center gap-4 md:hidden">
-          <Link href="/">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/qork-logo.svg"
-              alt="Qork logo — return home"
-              className="opacity-40 transition-all duration-300 hover:opacity-70 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
-              style={{ width: '44px', height: '44px' }}
-            />
-          </Link>
+          {showLogo && (
+            <Link href="/">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/qork-logo.svg"
+                alt="Qork logo — return home"
+                className="opacity-40 transition-all duration-300 hover:opacity-70 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
+                style={{ width: '44px', height: '44px' }}
+              />
+            </Link>
+          )}
           <div className="flex items-center justify-between w-full">
             <div className="flex flex-col gap-0.5">
               <span className="font-display text-lg font-normal uppercase tracking-[0.16em] text-text-primary leading-none">
@@ -52,15 +59,17 @@ export function SiteFooter({ subtitle = 'A Service By QubeTX.', className }: Sit
             <span className="text-sm text-text-muted leading-none">{subtitle}</span>
           </div>
 
-          <Link href="/">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/qork-logo.svg"
-              alt="Qork logo — return home"
-              className="opacity-40 transition-all duration-300 hover:opacity-70 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
-              style={{ width: '56px', height: '56px' }}
-            />
-          </Link>
+          {showLogo && (
+            <Link href="/">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/qork-logo.svg"
+                alt="Qork logo — return home"
+                className="opacity-40 transition-all duration-300 hover:opacity-70 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
+                style={{ width: '56px', height: '56px' }}
+              />
+            </Link>
+          )}
 
           <Link
             href="/admin"

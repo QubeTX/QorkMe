@@ -71,7 +71,7 @@ export default function Home() {
           </div>
         </main>
 
-        <SiteFooter />
+        <SiteFooter showLogo={false} />
       </div>
     </>
   );

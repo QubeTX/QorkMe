@@ -249,7 +249,7 @@ export default async function AdminPage() {
           </div>
         </main>
 
-        <SiteFooter />
+        <SiteFooter showLogo={false} />
       </div>
     </>
   );
