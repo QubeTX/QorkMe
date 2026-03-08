@@ -1,5 +1,40 @@
 # Changelog
 
+## 2026-03-08 (Admin Dashboard Redesign)
+
+### Added
+
+- **Personal Vogue on Admin Pages** — Applied Personal Vogue font to admin login and dashboard pages via `font-personal-vogue` wrapper class, with `font-data` override keeping numbers, URLs, and dates in Inter for readability.
+- **Metric Glow Animation** — New `@keyframes metric-glow` CSS animation with terracotta text-shadow pulse on metric card numbers.
+- **Admin Table Styling** — New `.admin-table` CSS class with even-row striping, hover row highlight with left terracotta border accent.
+- **Last Active Column** — Added relative-time "Last Active" column to links table (e.g. "2d ago", "5h ago", "Never") with sortable header.
+- **Click Count Bars** — Proportional mini bar chart in the Clicks column showing relative engagement per link.
+
+### Changed
+
+- **Metric Cards Redesign** — Numbers are now large (text-6xl for small values), centered, and animated with the metric-glow effect.
+- **Avg. Clicks / Link** — Replaced the "Active Ratio" card (always 100%) with "Avg. Clicks / Link" showing mean engagement per short URL, colored with terracotta primary.
+- **Removed Status Column** — Removed the redundant Status column and badge from both desktop table and mobile card layout.
+- **Bold Short Codes** — Short code links in the table are now `font-semibold text-sm` with a slightly larger external link icon (11px).
+- **Table Header** — Thicker bottom border (`border-b-2`) with subtle background tint on header row.
+
+### Files Modified
+
+- `qorkme/app/globals.css` (`.font-data`, `@keyframes metric-glow`, `.admin-table` rules)
+- `qorkme/app/admin/login/page.tsx` (Personal Vogue wrapper, font-data on username)
+- `qorkme/app/admin/page.tsx` (Personal Vogue wrapper, redesigned metric cards, TrendingUp import, removed activeRatio/activeUrls query)
+- `qorkme/components/admin/AdminLinksTable.tsx` (removed Status column, added Last Active column, admin-table class, click bars, font-data wrapper)
+
+## 2026-03-08 (Dim Seconds in Matrix Clock)
+
+### Changed
+
+- **Dimmed Seconds Display** — The seconds digits and preceding colon (`:SS`) in the desktop matrix clock now render at 40% brightness, creating a visual hierarchy that makes hours and minutes easier to read at a glance. Mobile clock (no seconds) is unchanged.
+
+### Files Modified
+
+- `qorkme/components/MatrixDisplay.tsx` (`createTimeFrame()` — added `brightnessMap` for dimmed seconds)
+
 ## 2026-03-08 (Personal Vogue Font & Hero Logo Reorder)
 
 ### Added

@@ -1,5 +1,39 @@
 # Changelog
 
+## [3.4.0] - 2026-03-08
+
+### Added
+
+- **Personal Vogue on Admin Pages** — Admin login and dashboard now use Personal Vogue font with `font-data` override for Inter on data elements.
+- **Metric Glow Animation** — Terracotta text-shadow pulse on metric card numbers.
+- **Admin Table Styling** — Even-row striping, hover highlight with left terracotta border accent.
+- **Last Active Column** — Relative-time column replacing the removed Status column.
+- **Click Count Bars** — Proportional mini bars in the Clicks column.
+
+### Changed
+
+- **Metric Cards** — Numbers enlarged (text-6xl), centered, animated with glow.
+- **Avg. Clicks / Link** — Replaced "Active Ratio" with mean engagement metric.
+- **Removed Status Column** — Removed from desktop table and mobile cards.
+- **Bold Short Codes** — `font-semibold text-sm` with 11px external link icon.
+
+### Files Modified
+
+- `app/globals.css`
+- `app/admin/login/page.tsx`
+- `app/admin/page.tsx`
+- `components/admin/AdminLinksTable.tsx`
+
+## [3.3.1] - 2026-03-08
+
+### Changed
+
+- **Dimmed Seconds Display** — Desktop matrix clock seconds (`:SS`) now render at 40% brightness, improving visual hierarchy between hours/minutes and seconds. Mobile clock unchanged.
+
+### Files Modified
+
+- `components/MatrixDisplay.tsx`
+
 ## [3.3.0] - 2026-03-08
 
 ### Added

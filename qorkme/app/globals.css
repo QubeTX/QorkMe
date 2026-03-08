@@ -462,6 +462,46 @@ pre {
   font-family: 'Personal Vogue', serif !important;
 }
 
+/* Data override — forces Inter on numbers, URLs, dates inside Personal Vogue areas */
+.font-data,
+.font-data *,
+.font-data input,
+.font-data button,
+.font-data a {
+  font-family: 'Inter', sans-serif !important;
+}
+
+@keyframes metric-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 0 transparent;
+  }
+  50% {
+    text-shadow: 0 0 18px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+}
+
+.animate-metric-glow {
+  animation: metric-glow 3s ease-in-out infinite;
+}
+
+/* Admin table styling — striping and hover accent */
+.admin-table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--color-surface-muted) 25%, transparent);
+}
+
+.admin-table tbody tr {
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+  border-left: 3px solid transparent;
+}
+
+.admin-table tbody tr:hover {
+  background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+  border-left-color: var(--color-primary);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

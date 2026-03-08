@@ -11,7 +11,7 @@ import { AdminLinksTable } from '@/components/admin/AdminLinksTable';
 import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
 import { SecureAccessMatrix } from '@/components/SecureAccessMatrix';
 import { Toaster } from 'react-hot-toast';
-import { Activity, AlertTriangle, BarChart3 } from 'lucide-react';
+import { Activity, AlertTriangle, BarChart3, TrendingUp } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -36,16 +36,20 @@ export default async function AdminPage() {
   // Server-side summary stats (render instantly, no loading state)
   const adminClient = await createAdminClient();
 
-  const [urlCountResponse, activeUrlResponse, clickCountResponse] = await Promise.all([
+  const [urlCountResponse, clickCountResponse] = await Promise.all([
     adminClient.from('urls').select('id', { count: 'exact', head: true }),
-    adminClient.from('urls').select('id', { count: 'exact', head: true }).eq('is_active', true),
     adminClient.from('clicks').select('id', { count: 'exact', head: true }),
   ]);
 
   const totalUrls = urlCountResponse.count ?? 0;
-  const activeUrls = activeUrlResponse.count ?? 0;
   const totalClicks = clickCountResponse.count ?? 0;
-  const activeRatio = totalUrls > 0 ? Math.round((activeUrls / totalUrls) * 100) : 0;
+  const avgClicksPerLink = totalUrls > 0 ? (totalClicks / totalUrls).toFixed(1) : '0';
+
+  const metricSizeClass = (value: number) => {
+    if (value < 1000) return 'text-6xl';
+    if (value < 100000) return 'text-4xl';
+    return 'text-3xl';
+  };
 
   const summaryCardStyle = {
     background: 'var(--color-surface)',
@@ -71,7 +75,7 @@ export default async function AdminPage() {
 
       <div
         id="admin-dashboard-wrapper"
-        className="page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
+        className="font-personal-vogue page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
       >
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
 
@@ -103,7 +107,7 @@ export default async function AdminPage() {
               <div className="flex flex-col gap-4 text-center">
                 <p className="max-w-2xl mx-auto text-[color:var(--color-text-secondary)] text-base">
                   Authenticated as{' '}
-                  <span className="font-mono text-[color:var(--color-primary)]">
+                  <span className="font-data font-mono text-[color:var(--color-primary)]">
                     {ADMIN_GITHUB_USERNAME_DISPLAY}
                   </span>{' '}
                   • Review aggregate metrics and manage stored URLs
@@ -126,8 +130,10 @@ export default async function AdminPage() {
                       aria-hidden="true"
                     />
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-3xl font-semibold text-[color:var(--color-text-primary)]">
+                  <CardContent className="flex items-center justify-center pt-3 pb-3">
+                    <p
+                      className={`${metricSizeClass(totalUrls)} font-semibold font-data animate-metric-glow text-[color:var(--color-text-primary)]`}
+                    >
                       {totalUrls.toLocaleString()}
                     </p>
                   </CardContent>
@@ -145,8 +151,10 @@ export default async function AdminPage() {
                       aria-hidden="true"
                     />
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-3xl font-semibold text-[color:var(--color-text-primary)]">
+                  <CardContent className="flex items-center justify-center pt-3 pb-3">
+                    <p
+                      className={`${metricSizeClass(totalClicks)} font-semibold font-data animate-metric-glow text-[color:var(--color-text-primary)]`}
+                    >
                       {totalClicks.toLocaleString()}
                     </p>
                   </CardContent>
@@ -155,40 +163,19 @@ export default async function AdminPage() {
                 <Card style={summaryCardStyle}>
                   <CardHeader className="flex flex-row items-center justify-between">
                     <div>
-                      <CardTitle>Active Ratio</CardTitle>
-                      <CardDescription>
-                        {activeUrls} of {totalUrls} links active
-                      </CardDescription>
+                      <CardTitle>Avg. Clicks / Link</CardTitle>
+                      <CardDescription>Mean engagement per short URL</CardDescription>
                     </div>
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: '36px',
-                        height: '36px',
-                        background: 'color-mix(in srgb, var(--color-success) 12%, transparent)',
-                      }}
-                    >
-                      <span
-                        className="text-xs font-semibold"
-                        style={{ color: 'var(--color-success)' }}
-                      >
-                        {activeRatio}%
-                      </span>
-                    </div>
+                    <TrendingUp
+                      size={22}
+                      className="text-[color:var(--color-accent)]"
+                      aria-hidden="true"
+                    />
                   </CardHeader>
-                  <CardContent>
-                    <div
-                      className="h-2 w-full overflow-hidden rounded-full"
-                      style={{ background: 'var(--color-border)' }}
-                    >
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${activeRatio}%`,
-                          background: 'var(--color-success)',
-                        }}
-                      />
-                    </div>
+                  <CardContent className="flex items-center justify-center pt-3 pb-3">
+                    <p className="text-6xl font-semibold font-data animate-metric-glow text-[color:var(--color-primary)]">
+                      {avgClicksPerLink}
+                    </p>
                   </CardContent>
                 </Card>
               </div>

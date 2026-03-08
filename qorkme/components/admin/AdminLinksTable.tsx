@@ -33,7 +33,7 @@ interface LinksResponse {
   totalPages: number;
 }
 
-type SortColumn = 'created_at' | 'short_code' | 'click_count' | 'is_active';
+type SortColumn = 'created_at' | 'short_code' | 'click_count' | 'last_accessed_at';
 
 const SHORT_DOMAIN =
   typeof window !== 'undefined' ? process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me' : 'qork.me';
@@ -49,6 +49,20 @@ function formatDate(iso: string): string {
     day: 'numeric',
     year: 'numeric',
   }).format(new Date(iso));
+}
+
+function formatRelativeTime(iso: string | null): string {
+  if (!iso) return 'Never';
+  const diff = Date.now() - new Date(iso).getTime();
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 1) return 'Just now';
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  return `${months}mo ago`;
 }
 
 function DeleteLinkButton({
@@ -157,7 +171,7 @@ export function AdminLinksTable() {
   );
 
   return (
-    <Card style={cardStyle} hoverable={false}>
+    <Card className="font-data" style={cardStyle} hoverable={false}>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>All Short Links</CardTitle>
         <LinkIcon size={22} className="text-[color:var(--color-accent)]" aria-hidden="true" />
@@ -176,97 +190,100 @@ export function AdminLinksTable() {
           <>
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="admin-table w-full text-sm">
                 <thead>
-                  <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                    <th className="pb-3 text-left">
+                  <tr
+                    className="border-b-2"
+                    style={{
+                      borderColor: 'var(--color-border)',
+                      background: 'color-mix(in srgb, var(--color-surface-muted) 30%, transparent)',
+                    }}
+                  >
+                    <th className="pb-3 pt-2 text-left">
                       <SortButton col="short_code">Code</SortButton>
                     </th>
-                    <th className="pb-3 text-left">
+                    <th className="pb-3 pt-2 text-left">
                       <span className="text-xs font-medium uppercase tracking-wider text-[color:var(--color-text-muted)]">
                         Destination
                       </span>
                     </th>
-                    <th className="pb-3 text-right">
+                    <th className="pb-3 pt-2 text-right">
                       <SortButton col="click_count">Clicks</SortButton>
                     </th>
-                    <th className="pb-3 pl-4 text-left">
+                    <th className="pb-3 pt-2 pl-4 text-left">
                       <SortButton col="created_at">Created</SortButton>
                     </th>
-                    <th className="pb-3 text-center">
-                      <SortButton col="is_active">Status</SortButton>
+                    <th className="pb-3 pt-2 pl-4 text-left">
+                      <SortButton col="last_accessed_at">Last Active</SortButton>
                     </th>
-                    <th className="pb-3 text-right">
+                    <th className="pb-3 pt-2 text-right">
                       <span className="sr-only">Actions</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {links.data.map((link) => (
-                    <tr
-                      key={link.id}
-                      className="border-b transition-colors hover:bg-[color:var(--color-surface-muted)]/30"
-                      style={{
-                        borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
-                      }}
-                    >
-                      <td className="py-3 pr-4">
-                        <a
-                          href={`https://${SHORT_DOMAIN}/${link.short_code}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-mono text-[color:var(--color-primary)] hover:underline"
-                        >
-                          /{link.short_code}
-                          <ExternalLink size={10} className="opacity-50" />
-                        </a>
-                      </td>
-                      <td className="py-3 pr-4">
-                        <span
-                          className="text-[color:var(--color-text-secondary)]"
-                          title={link.long_url}
-                        >
-                          {truncateUrl(link.long_url)}
-                        </span>
-                      </td>
-                      <td className="py-3 pr-4 text-right font-mono text-[color:var(--color-text-primary)]">
-                        {link.click_count.toLocaleString()}
-                      </td>
-                      <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
-                        {formatDate(link.created_at)}
-                      </td>
-                      <td className="py-3 pr-4 text-center">
-                        <span
-                          className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
-                          style={{
-                            background: link.is_active
-                              ? 'color-mix(in srgb, var(--color-success) 12%, transparent)'
-                              : 'color-mix(in srgb, var(--color-text-muted) 12%, transparent)',
-                            color: link.is_active
-                              ? 'var(--color-success)'
-                              : 'var(--color-text-muted)',
-                          }}
-                        >
+                  {links.data.map((link) => {
+                    const maxClicks = Math.max(...links.data.map((l) => l.click_count), 1);
+                    const barWidth = (link.click_count / maxClicks) * 100;
+                    return (
+                      <tr
+                        key={link.id}
+                        className="border-b"
+                        style={{
+                          borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+                        }}
+                      >
+                        <td className="py-3 pr-4">
+                          <a
+                            href={`https://${SHORT_DOMAIN}/${link.short_code}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 font-semibold text-sm font-mono text-[color:var(--color-primary)] hover:underline"
+                          >
+                            /{link.short_code}
+                            <ExternalLink size={11} className="opacity-50" />
+                          </a>
+                        </td>
+                        <td className="py-3 pr-4">
                           <span
-                            className="inline-block h-2 w-2 rounded-full"
-                            style={{
-                              background: link.is_active
-                                ? 'var(--color-success)'
-                                : 'var(--color-text-muted)',
-                            }}
+                            className="text-[color:var(--color-text-secondary)]"
+                            title={link.long_url}
+                          >
+                            {truncateUrl(link.long_url)}
+                          </span>
+                        </td>
+                        <td className="py-3 pr-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <div
+                              className="h-1.5 rounded-full"
+                              style={{
+                                width: `${Math.max(barWidth, 4)}%`,
+                                maxWidth: '60px',
+                                background: 'var(--color-primary)',
+                                opacity: 0.35,
+                              }}
+                            />
+                            <span className="font-mono text-[color:var(--color-text-primary)]">
+                              {link.click_count.toLocaleString()}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
+                          {formatDate(link.created_at)}
+                        </td>
+                        <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
+                          {formatRelativeTime(link.last_accessed_at)}
+                        </td>
+                        <td className="py-3 text-right">
+                          <DeleteLinkButton
+                            id={link.id}
+                            shortCode={link.short_code}
+                            onDeleted={fetchLinks}
                           />
-                          {link.is_active ? 'Active' : 'Inactive'}
-                        </span>
-                      </td>
-                      <td className="py-3 text-right">
-                        <DeleteLinkButton
-                          id={link.id}
-                          shortCode={link.short_code}
-                          onDeleted={fetchLinks}
-                        />
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -309,25 +326,7 @@ export function AdminLinksTable() {
                   <div className="mt-3 flex items-center gap-4 text-xs text-[color:var(--color-text-muted)]">
                     <span className="font-mono">{link.click_count} clicks</span>
                     <span>{formatDate(link.created_at)}</span>
-                    <span
-                      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1"
-                      style={{
-                        background: link.is_active
-                          ? 'color-mix(in srgb, var(--color-success) 12%, transparent)'
-                          : 'color-mix(in srgb, var(--color-text-muted) 12%, transparent)',
-                        color: link.is_active ? 'var(--color-success)' : 'var(--color-text-muted)',
-                      }}
-                    >
-                      <span
-                        className="inline-block h-1.5 w-1.5 rounded-full"
-                        style={{
-                          background: link.is_active
-                            ? 'var(--color-success)'
-                            : 'var(--color-text-muted)',
-                        }}
-                      />
-                      {link.is_active ? 'Active' : 'Inactive'}
-                    </span>
+                    <span>{formatRelativeTime(link.last_accessed_at)}</span>
                   </div>
                 </div>
               ))}
