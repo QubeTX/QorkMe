@@ -25,7 +25,7 @@ export default function Home() {
 
       <div
         id="page-wrapper"
-        className="page-wrapper relative flex min-h-screen flex-col transition-colors duration-300 overflow-hidden"
+        className="page-wrapper font-personal-vogue relative flex min-h-screen flex-col transition-colors duration-300 overflow-hidden"
       >
         {/* Interactive Grid Background (Bottom Layer) */}
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
@@ -42,11 +42,6 @@ export default function Home() {
             className="content-container flex w-full max-w-[700px] flex-col gap-12"
             style={{ paddingLeft: '24px', paddingRight: '24px' }}
           >
-            {/* Matrix Display with Title and Clock */}
-            <div id="matrix-display-wrapper" className="matrix-display-wrapper text-center">
-              <MatrixDisplay />
-            </div>
-
             {/* Qork Logo */}
             <div className="flex justify-center pointer-events-auto">
               <Link href="/">
@@ -58,6 +53,11 @@ export default function Home() {
                   style={{ opacity: 0.85 }}
                 />
               </Link>
+            </div>
+
+            {/* Matrix Display with Title and Clock */}
+            <div id="matrix-display-wrapper" className="matrix-display-wrapper text-center">
+              <MatrixDisplay />
             </div>
 
             {/* Main Card with URL Shortener */}

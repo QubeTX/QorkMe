@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-03-08 (Personal Vogue Font & Hero Logo Reorder)
+
+### Added
+
+- **Personal Vogue Font** — Added Personal Vogue (Regular + Italic) as the homepage typeface. All text on the main page — input field, button, footer subtitle, admin link — now renders in Personal Vogue. Admin dashboard pages remain unchanged.
+
+### Changed
+
+- **Hero Logo Position** — Moved the Qork SVG logo above the dot-matrix title/clock display on the homepage for stronger brand visibility at the top of the hero.
+
+### Files Added
+
+- `qorkme/public/fonts/PersonalVogue-Regular.woff2`
+- `qorkme/public/fonts/PersonalVogue-Italic.woff2`
+
+### Files Modified
+
+- `qorkme/app/globals.css` (font-face declarations + `.font-personal-vogue` scoped class)
+- `qorkme/app/page.tsx` (font class on wrapper + logo reorder)
+
 ## 2026-03-08 (Qork Logo Links & Footer Rebrand)
 
 ### Changed

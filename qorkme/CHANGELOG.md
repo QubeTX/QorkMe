@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.3.0] - 2026-03-08
+
+### Added
+
+- **Personal Vogue Font** — Homepage now uses Personal Vogue (Regular + Italic) for all text: input, button, footer, admin link. Admin dashboard unchanged.
+
+### Changed
+
+- **Hero Logo Position** — Qork SVG logo moved above the dot-matrix title/clock display.
+
+### Files Added
+
+- `public/fonts/PersonalVogue-Regular.woff2`
+- `public/fonts/PersonalVogue-Italic.woff2`
+
+### Files Modified
+
+- `app/globals.css`
+- `app/page.tsx`
+
 ## [3.2.1] - 2026-03-08
 
 ### Changed

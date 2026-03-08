@@ -64,6 +64,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Personal Vogue';
+  src: url('/fonts/PersonalVogue-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Personal Vogue';
+  src: url('/fonts/PersonalVogue-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,900;1,14..32,300;1,14..32,500;1,14..32,700;1,14..32,900&display=swap');
 
 :root {
@@ -435,6 +451,15 @@ pre {
   font-family: 'Inter', sans-serif;
   font-weight: var(--weight-inter-heavy);
   letter-spacing: 0.01em;
+}
+
+/* Personal Vogue scope — apply to a page wrapper to override all text */
+.font-personal-vogue,
+.font-personal-vogue *,
+.font-personal-vogue input,
+.font-personal-vogue button,
+.font-personal-vogue a {
+  font-family: 'Personal Vogue', serif !important;
 }
 
 @keyframes fadeIn {
