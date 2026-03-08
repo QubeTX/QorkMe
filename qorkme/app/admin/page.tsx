@@ -84,7 +84,7 @@ export default async function AdminPage() {
             style={{ paddingLeft: '24px', paddingRight: '24px' }}
           >
             {/* 1. Header Section */}
-            <div className="flex flex-col gap-6 animate-fadeIn-delay-200 opacity-0">
+            <div className="flex flex-col gap-6 animate-fadeIn-delay-200 opacity-0" style={{ marginTop: '32px' }}>
               <SecureAccessMatrix />
 
               <div className="flex flex-col gap-4 text-center">

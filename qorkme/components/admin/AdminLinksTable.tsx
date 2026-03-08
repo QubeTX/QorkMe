@@ -190,7 +190,7 @@ export function AdminLinksTable() {
                     <th className="pb-3 text-right">
                       <SortButton col="click_count">Clicks</SortButton>
                     </th>
-                    <th className="pb-3 text-left">
+                    <th className="pb-3 pl-4 text-left">
                       <SortButton col="created_at">Created</SortButton>
                     </th>
                     <th className="pb-3 text-center">
@@ -232,12 +232,12 @@ export function AdminLinksTable() {
                       <td className="py-3 pr-4 text-right font-mono text-[color:var(--color-text-primary)]">
                         {link.click_count.toLocaleString()}
                       </td>
-                      <td className="py-3 pr-4 text-[color:var(--color-text-muted)]">
+                      <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
                         {formatDate(link.created_at)}
                       </td>
                       <td className="py-3 pr-4 text-center">
                         <span
-                          className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium"
+                          className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
                           style={{
                             background: link.is_active
                               ? 'color-mix(in srgb, var(--color-success) 12%, transparent)'
@@ -248,7 +248,7 @@ export function AdminLinksTable() {
                           }}
                         >
                           <span
-                            className="inline-block h-1.5 w-1.5 rounded-full"
+                            className="inline-block h-2 w-2 rounded-full"
                             style={{
                               background: link.is_active
                                 ? 'var(--color-success)'
@@ -310,7 +310,7 @@ export function AdminLinksTable() {
                     <span className="font-mono">{link.click_count} clicks</span>
                     <span>{formatDate(link.created_at)}</span>
                     <span
-                      className="inline-flex items-center gap-1 rounded-full px-1.5 py-0.5"
+                      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1"
                       style={{
                         background: link.is_active
                           ? 'color-mix(in srgb, var(--color-success) 12%, transparent)'
@@ -319,7 +319,7 @@ export function AdminLinksTable() {
                       }}
                     >
                       <span
-                        className="inline-block h-1 w-1 rounded-full"
+                        className="inline-block h-1.5 w-1.5 rounded-full"
                         style={{
                           background: link.is_active
                             ? 'var(--color-success)'

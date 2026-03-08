@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.1.1] - 2026-03-08
+
+### Fixed
+
+- **Table Column Spacing** — Added left padding to the Created column header and cells so click counts and dates no longer render as one concatenated string
+- **Status Badge Sizing** — Normalized Active/Inactive pills in the links table (desktop: `px-3 py-1 gap-2`, dot `h-2 w-2`; mobile: `px-2.5 py-1 gap-1.5`, dot `h-1.5 w-1.5`) to match the well-spaced Operational badge in DatabaseHealthCard
+- **SECURE ACCESS Top Margin** — Added 32px top margin above the SECURE ACCESS matrix on the admin dashboard for better breathing room when logged in
+
+### Files Modified
+
+- `components/admin/AdminLinksTable.tsx`
+- `app/admin/page.tsx`
+
 ## [3.1.0] - 2026-03-02
 
 ### Changed
