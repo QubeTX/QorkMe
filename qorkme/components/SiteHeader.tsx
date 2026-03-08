@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ReactNode, useId, useState } from 'react';
 import clsx from 'clsx';
 import { ClientThemeToggle } from '@/components/ClientThemeToggle';
-import { Link2, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 type NavItem = {
   label: string;
@@ -75,9 +75,11 @@ export function SiteHeader({ navItems = [], status, action }: SiteHeaderProps) {
               href="/"
               className="flex items-center gap-3 text-[color:var(--color-text-primary)]"
             >
-              <span className="flex h-11 w-11 items-center justify-center text-[color:var(--color-primary)]">
-                <Link2 size={20} aria-hidden />
-              </span>
+              <img
+                src="/qork-logo.svg"
+                alt="QorkMe logo"
+                className="h-8 w-8 dark:brightness-0 dark:invert"
+              />
               <span className="flex flex-col leading-tight">
                 <span className="font-ui text-[0.7rem] font-semibold uppercase tracking-[0.38em] text-[color:var(--color-secondary)]">
                   QorkMe

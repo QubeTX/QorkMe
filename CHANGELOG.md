@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-03-08 (Qork Brand Logo Integration)
+
+### Added
+
+- **Qork Brand Logo** — Integrated the new Qork logo (`https://shaughv.s3.us-east-1.amazonaws.com/brandmark/QORK/qork-logo.svg`) across the entire site:
+  - **Homepage hero**: Centered between the matrix display and URL shortener (80px mobile, 112px desktop)
+  - **Site header**: Replaces the generic Link2 icon in the navigation bar
+  - **404 page**: Replaces the Compass icon in the error card
+  - **Admin dashboard**: Added above the SECURE ACCESS matrix header
+  - **Site footer**: Replaces the SHAUGHV brandmark (44px mobile, 56px desktop)
+  - **Favicon**: All favicon variants (SVG, PNG 16/32/48px, ICO, apple-touch-icon, PWA icons) regenerated from the new logo
+- **Brand Logo with Background variant** documented: `https://shaughv.s3.us-east-1.amazonaws.com/brandmark/QORK/qork-logo-background.svg`
+
+### Files Added
+
+- `qorkme/public/qork-logo.svg`
+
+### Files Modified
+
+- `qorkme/components/SiteHeader.tsx`
+- `qorkme/components/SiteFooter.tsx`
+- `qorkme/app/page.tsx`
+- `qorkme/app/not-found.tsx`
+- `qorkme/app/admin/page.tsx`
+- `qorkme/app/layout.tsx` (favicon references unchanged, files replaced in-place)
+- `qorkme/public/favicon.svg`
+- `qorkme/public/favicon-16x16.png`
+- `qorkme/public/favicon-32x32.png`
+- `qorkme/public/favicon-48x48.png`
+- `qorkme/public/apple-touch-icon.png`
+- `qorkme/public/icon-192.png`
+- `qorkme/public/icon-512.png`
+- `qorkme/app/favicon.ico`
+
 ## 2026-03-08 (Admin Visual Refinements)
 
 ### Fixed

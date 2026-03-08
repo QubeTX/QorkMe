@@ -195,7 +195,8 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 │   ├── favicon-16x16.png      # Browser tab icon
 │   ├── favicon-32x32.png      # Retina browser tab icon
 │   ├── favicon-48x48.png      # Windows taskbar icon
-│   ├── favicon.svg            # Vector dot-matrix favicon
+│   ├── favicon.svg            # Vector Qork logo favicon
+│   ├── qork-logo.svg          # Qork brand logo (hero, header, footer)
 │   ├── file.svg
 │   ├── globe.svg
 │   ├── icon-192.png           # PWA icon (192×192)
@@ -285,6 +286,13 @@ QorkMe delivers a relaxed yet polished experience:
 - **Typography Balance**: ZT Bros Oskon leads hero moments while Inter Regular (400) provides comfortable body copy; buttons use Inter Black (900) for maximum contrast
 - **Dark and Light Harmony**: Espresso dark mode shares the same palette tokens as the light theme
 - **Measured Motion**: Calm transitions and focus rings favor clarity over spectacle
+
+### Brand Logo Assets
+
+- **Qork Logo (transparent)**: `https://shaughv.s3.us-east-1.amazonaws.com/brandmark/QORK/qork-logo.svg`
+- **Qork Logo (with background)**: `https://shaughv.s3.us-east-1.amazonaws.com/brandmark/QORK/qork-logo-background.svg`
+
+The Qork logo appears in the homepage hero, site header, 404 page, admin dashboard, site footer, and as the favicon.
 
 See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete earthy modern design specifications.
 

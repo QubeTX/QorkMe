@@ -1,5 +1,40 @@
 # Changelog
 
+## [3.2.0] - 2026-03-08
+
+### Added
+
+- **Qork Brand Logo** — Integrated the new Qork logo across the entire site:
+  - Homepage hero (centered between matrix display and URL shortener, 80px mobile / 112px desktop)
+  - Site header navigation bar (replaces Link2 icon)
+  - 404 error page (replaces Compass icon)
+  - Admin dashboard header (above SECURE ACCESS matrix)
+  - Site footer (replaces SHAUGHV brandmark, 44px mobile / 56px desktop)
+  - Favicon (all variants regenerated: SVG, PNG 16/32/48, ICO, apple-touch-icon, PWA icons 192/512)
+- **Brand Assets**:
+  - Logo (transparent): `https://shaughv.s3.us-east-1.amazonaws.com/brandmark/QORK/qork-logo.svg`
+  - Logo (with background): `https://shaughv.s3.us-east-1.amazonaws.com/brandmark/QORK/qork-logo-background.svg`
+
+### Files Added
+
+- `public/qork-logo.svg`
+
+### Files Modified
+
+- `components/SiteHeader.tsx`
+- `components/SiteFooter.tsx`
+- `app/page.tsx`
+- `app/not-found.tsx`
+- `app/admin/page.tsx`
+- `public/favicon.svg`
+- `public/favicon-16x16.png`
+- `public/favicon-32x32.png`
+- `public/favicon-48x48.png`
+- `public/apple-touch-icon.png`
+- `public/icon-192.png`
+- `public/icon-512.png`
+- `app/favicon.ico`
+
 ## [3.1.1] - 2026-03-08
 
 ### Fixed

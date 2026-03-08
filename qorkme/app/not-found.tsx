@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { NavigationHeader } from '@/components/NavigationHeader';
 import { Card, CardContent } from '@/components/cards/Card';
 import { Button } from '@/components/ui/Button';
-import { Compass } from 'lucide-react';
 
 export default function NotFound() {
   return (
@@ -17,9 +16,13 @@ export default function NotFound() {
             <Card hoverable={false} className="relative w-full max-w-3xl text-center">
               <CardContent className="gap-8 py-14">
                 <div className="flex flex-col items-center gap-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[color:var(--color-primary)]/12 text-[color:var(--color-primary)]">
-                    <Compass size={28} aria-hidden="true" />
-                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/qork-logo.svg"
+                    alt="Qork logo"
+                    className="h-16 w-16 dark:brightness-0 dark:invert"
+                    style={{ opacity: 0.85 }}
+                  />
                   <span className="text-sm font-semibold text-text-muted">Error 404</span>
                 </div>
                 <h1 className="font-display text-4xl leading-tight md:text-5xl font-semibold text-text-primary">

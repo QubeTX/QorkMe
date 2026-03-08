@@ -46,6 +46,17 @@ export default function Home() {
               <MatrixDisplay />
             </div>
 
+            {/* Qork Logo */}
+            <div className="flex justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/qork-logo.svg"
+                alt="Qork logo"
+                className="h-20 w-20 md:h-28 md:w-28 dark:brightness-0 dark:invert"
+                style={{ opacity: 0.85 }}
+              />
+            </div>
+
             {/* Main Card with URL Shortener */}
             <div
               id="url-shortener-wrapper"

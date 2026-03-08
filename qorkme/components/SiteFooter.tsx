@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -19,12 +18,12 @@ export function SiteFooter({ subtitle = 'Thoughtful short links', className }: S
       <div className="container" style={{ paddingLeft: '32px', paddingRight: '32px' }}>
         {/* Mobile layout: logo centered above name + admin row */}
         <div className="flex flex-col items-center gap-4 md:hidden">
-          <Image
-            src="/shaughv-brandmark.svg"
-            alt="SHAUGHV"
-            width={44}
-            height={44}
-            className="text-text-muted opacity-40 transition-opacity duration-300 hover:opacity-70 dark:invert"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/qork-logo.svg"
+            alt="Qork logo"
+            className="opacity-40 transition-opacity duration-300 hover:opacity-70 dark:brightness-0 dark:invert"
+            style={{ width: '44px', height: '44px' }}
           />
           <div className="flex items-center justify-between w-full">
             <div className="flex flex-col gap-0.5">
@@ -51,12 +50,12 @@ export function SiteFooter({ subtitle = 'Thoughtful short links', className }: S
             <span className="text-sm text-text-muted leading-none">{subtitle}</span>
           </div>
 
-          <Image
-            src="/shaughv-brandmark.svg"
-            alt="SHAUGHV"
-            width={56}
-            height={56}
-            className="text-text-muted opacity-40 transition-opacity duration-300 hover:opacity-70 dark:invert"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/qork-logo.svg"
+            alt="Qork logo"
+            className="opacity-40 transition-opacity duration-300 hover:opacity-70 dark:brightness-0 dark:invert"
+            style={{ width: '56px', height: '56px' }}
           />
 
           <Link

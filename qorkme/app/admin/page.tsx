@@ -85,9 +85,16 @@ export default async function AdminPage() {
           >
             {/* 1. Header Section */}
             <div
-              className="flex flex-col gap-6 animate-fadeIn-delay-200 opacity-0"
+              className="flex flex-col items-center gap-6 animate-fadeIn-delay-200 opacity-0"
               style={{ marginTop: '32px' }}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/qork-logo.svg"
+                alt="Qork logo"
+                className="h-16 w-16 md:h-20 md:w-20 dark:brightness-0 dark:invert"
+                style={{ opacity: 0.85 }}
+              />
               <SecureAccessMatrix />
 
               <div className="flex flex-col gap-4 text-center">
