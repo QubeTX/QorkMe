@@ -176,7 +176,7 @@ export default async function AdminLoginPage({
           </div>
         </main>
 
-        <SiteFooter subtitle="Secure authentication • Private access" />
+        <SiteFooter />
       </div>
     </>
   );

@@ -16,13 +16,15 @@ export default function NotFound() {
             <Card hoverable={false} className="relative w-full max-w-3xl text-center">
               <CardContent className="gap-8 py-14">
                 <div className="flex flex-col items-center gap-4">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/qork-logo.svg"
-                    alt="Qork logo"
-                    className="h-16 w-16 dark:brightness-0 dark:invert"
-                    style={{ opacity: 0.85 }}
-                  />
+                  <Link href="/">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/qork-logo.svg"
+                      alt="Qork logo — return home"
+                      className="h-16 w-16 transition-opacity hover:opacity-70"
+                      style={{ opacity: 0.85 }}
+                    />
+                  </Link>
                   <span className="text-sm font-semibold text-text-muted">Error 404</span>
                 </div>
                 <h1 className="font-display text-4xl leading-tight md:text-5xl font-semibold text-text-primary">

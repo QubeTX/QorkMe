@@ -13,6 +13,7 @@ import { SecureAccessMatrix } from '@/components/SecureAccessMatrix';
 import { Toaster } from 'react-hot-toast';
 import { Activity, AlertTriangle, BarChart3 } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function AdminPage() {
@@ -88,13 +89,15 @@ export default async function AdminPage() {
               className="flex flex-col items-center gap-6 animate-fadeIn-delay-200 opacity-0"
               style={{ marginTop: '32px' }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/qork-logo.svg"
-                alt="Qork logo"
-                className="h-16 w-16 md:h-20 md:w-20 dark:brightness-0 dark:invert"
-                style={{ opacity: 0.85 }}
-              />
+              <Link href="/">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/qork-logo.svg"
+                  alt="Qork logo — return home"
+                  className="h-16 w-16 md:h-20 md:w-20 transition-opacity hover:opacity-70"
+                  style={{ opacity: 0.85 }}
+                />
+              </Link>
               <SecureAccessMatrix />
 
               <div className="flex flex-col gap-4 text-center">
@@ -246,7 +249,7 @@ export default async function AdminPage() {
           </div>
         </main>
 
-        <SiteFooter subtitle="Admin dashboard • Secure workspace" />
+        <SiteFooter />
       </div>
     </>
   );

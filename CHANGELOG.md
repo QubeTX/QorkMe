@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-03-08 (Qork Logo Links & Footer Rebrand)
+
+### Changed
+
+- **Clickable Qork Logo** — All Qork logo instances across the site now link back to the homepage (`/`):
+  - Homepage hero logo
+  - 404 page logo
+  - Admin dashboard logo
+  - Site footer logo (mobile and desktop)
+  - Site header logo (already linked)
+- **Footer Subtitle** — Changed default footer text from "Thoughtful short links" to "A Service By QubeTX." across all pages. Removed per-page custom subtitles (admin, login, result) in favor of the unified default.
+- **Terracotta Logo Color** — Hero logos (homepage, 404, admin) and header logo now retain the native terracotta `rgb(191,103,71)` in dark mode instead of inverting to white. Footer logo stays white in dark mode but reveals terracotta on hover.
+
+### Files Modified
+
+- `qorkme/app/page.tsx`
+- `qorkme/app/not-found.tsx`
+- `qorkme/app/admin/page.tsx`
+- `qorkme/app/admin/login/page.tsx`
+- `qorkme/app/result/[id]/page.tsx`
+- `qorkme/components/SiteFooter.tsx`
+- `qorkme/components/SiteHeader.tsx`
+
 ## 2026-03-08 (Qork Brand Logo Integration)
 
 ### Added

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { UrlShortener } from '@/components/UrlShortener';
 import { SiteFooter } from '@/components/SiteFooter';
 import { MatrixDisplay } from '@/components/MatrixDisplay';
@@ -47,14 +48,16 @@ export default function Home() {
             </div>
 
             {/* Qork Logo */}
-            <div className="flex justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/qork-logo.svg"
-                alt="Qork logo"
-                className="h-20 w-20 md:h-28 md:w-28 dark:brightness-0 dark:invert"
-                style={{ opacity: 0.85 }}
-              />
+            <div className="flex justify-center pointer-events-auto">
+              <Link href="/">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/qork-logo.svg"
+                  alt="Qork logo"
+                  className="h-20 w-20 md:h-28 md:w-28 transition-opacity hover:opacity-70"
+                  style={{ opacity: 0.85 }}
+                />
+              </Link>
             </div>
 
             {/* Main Card with URL Shortener */}

@@ -6,7 +6,7 @@ interface SiteFooterProps {
   className?: string;
 }
 
-export function SiteFooter({ subtitle = 'Thoughtful short links', className }: SiteFooterProps) {
+export function SiteFooter({ subtitle = 'A Service By QubeTX.', className }: SiteFooterProps) {
   return (
     <footer
       className={cn(
@@ -18,13 +18,15 @@ export function SiteFooter({ subtitle = 'Thoughtful short links', className }: S
       <div className="container" style={{ paddingLeft: '32px', paddingRight: '32px' }}>
         {/* Mobile layout: logo centered above name + admin row */}
         <div className="flex flex-col items-center gap-4 md:hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/qork-logo.svg"
-            alt="Qork logo"
-            className="opacity-40 transition-opacity duration-300 hover:opacity-70 dark:brightness-0 dark:invert"
-            style={{ width: '44px', height: '44px' }}
-          />
+          <Link href="/">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/qork-logo.svg"
+              alt="Qork logo — return home"
+              className="opacity-40 transition-all duration-300 hover:opacity-70 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
+              style={{ width: '44px', height: '44px' }}
+            />
+          </Link>
           <div className="flex items-center justify-between w-full">
             <div className="flex flex-col gap-0.5">
               <span className="font-display text-lg font-normal uppercase tracking-[0.16em] text-text-primary leading-none">
@@ -50,13 +52,15 @@ export function SiteFooter({ subtitle = 'Thoughtful short links', className }: S
             <span className="text-sm text-text-muted leading-none">{subtitle}</span>
           </div>
 
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/qork-logo.svg"
-            alt="Qork logo"
-            className="opacity-40 transition-opacity duration-300 hover:opacity-70 dark:brightness-0 dark:invert"
-            style={{ width: '56px', height: '56px' }}
-          />
+          <Link href="/">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/qork-logo.svg"
+              alt="Qork logo — return home"
+              className="opacity-40 transition-all duration-300 hover:opacity-70 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
+              style={{ width: '56px', height: '56px' }}
+            />
+          </Link>
 
           <Link
             href="/admin"

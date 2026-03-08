@@ -71,7 +71,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
           </section>
         </main>
 
-        <SiteFooter subtitle="Links that feel friendly and intentional" />
+        <SiteFooter />
       </div>
     </>
   );
