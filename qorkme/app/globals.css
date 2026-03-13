@@ -609,6 +609,19 @@ pre {
   animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.2s both;
 }
 
+/* Disable entrance animations on mobile for performance */
+@media (max-width: 767px) {
+  .animate-fadeIn-delay-200,
+  .animate-fadeIn-delay-300,
+  .animate-fadeIn-delay-400,
+  .animate-fadeIn-delay-500,
+  .animate-fadeIn-delay-800,
+  .animate-fadeIn-delay-1200 {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
 .animate-slideIn {
   animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }

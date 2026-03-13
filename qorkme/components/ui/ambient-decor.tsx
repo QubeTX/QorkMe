@@ -13,7 +13,7 @@ export function AmbientDecor() {
   if (!mounted) return null;
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 hidden md:block">
       {/* Large Terracotta Orb - Top Left */}
       <motion.div
         className="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vw] rounded-full bg-[var(--color-primary)] opacity-[0.03] blur-[80px]"

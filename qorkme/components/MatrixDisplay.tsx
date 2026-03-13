@@ -388,8 +388,8 @@ export function MatrixDisplay() {
           palette={palette}
           brightness={1}
           ariaLabel="Qork animated title"
-          cascadeDelay={8}
-          cascadeStartDelay={200}
+          cascadeDelay={0}
+          cascadeStartDelay={0}
           enablePhysics={false}
         />
       </div>
@@ -440,8 +440,8 @@ export function MatrixDisplay() {
           palette={palette}
           brightness={1}
           ariaLabel="Current time in 12-hour format with AM/PM (without seconds)"
-          cascadeDelay={6}
-          cascadeStartDelay={500}
+          cascadeDelay={0}
+          cascadeStartDelay={0}
           enablePhysics={false}
         />
       </div>

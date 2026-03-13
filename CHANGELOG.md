@@ -2,6 +2,24 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-03-13 (Mobile Performance Optimization)
+
+### Changed
+
+- **Mobile Entrance Animations Disabled** — Removed all initial page load animations on mobile (<768px) to eliminate lag on phones. Matrix dot cascade (684 individual CSS animations), URL shortener card fade-in, and footer fade-in now render instantly on mobile.
+- **AmbientDecor Hidden on Mobile** — GPU-composited blur orbs and floating particles are no longer rendered on mobile viewports, reducing GPU memory and battery usage.
+
+### Unchanged
+
+- All desktop entrance animations (cascade, staggered fade-ins) remain intact.
+- All post-load interactive animations (hover effects, shimmer, grid ripple, card tilt, clock updates) preserved on both mobile and desktop.
+
+### Files Modified
+
+- `qorkme/components/MatrixDisplay.tsx` — Set `cascadeDelay={0}` on mobile Matrix instances
+- `qorkme/app/globals.css` — Added `@media (max-width: 767px)` override for `.animate-fadeIn-delay-*` classes
+- `qorkme/components/ui/ambient-decor.tsx` — Added `hidden md:block` to container
+
 ## 2026-03-13 (CI Fix)
 
 ### Fixed
