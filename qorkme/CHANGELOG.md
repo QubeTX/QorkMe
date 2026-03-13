@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.4.1] - 2026-03-13
+
+### Fixed
+
+- **CI Formatting Fix** — Resolved Prettier formatting issue in `MatrixDisplay.tsx` that caused the CI pipeline to fail.
+
+### Files Modified
+
+- `components/MatrixDisplay.tsx`
+
 ## [3.4.0] - 2026-03-08
 
 ### Added

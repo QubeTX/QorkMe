@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-03-13 (CI Fix)
+
+### Fixed
+
+- **Prettier Formatting** — Fixed code style issue in `qorkme/components/MatrixDisplay.tsx` that was failing the CI formatting check.
+
 ## 2026-03-08 (Admin Dashboard Redesign)
 
 ### Added

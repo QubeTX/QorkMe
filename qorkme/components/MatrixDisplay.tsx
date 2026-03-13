@@ -181,12 +181,17 @@ function createTimeFrame(time: Date, rows: number, cols: number): Frame {
   timeCharMapConverted['M'] = letters['M'];
 
   // Dim the seconds colon and digits (indices 5-7: ":SS") to 40% brightness
-  const brightnessMap = timeText
-    .split('')
-    .map((_, i) => (i === 5 || i === 6 || i === 7 ? 0.4 : 1));
+  const brightnessMap = timeText.split('').map((_, i) => (i === 5 || i === 6 || i === 7 ? 0.4 : 1));
 
   // Render time
-  renderTextToFrame(frame, timeText, timeStartRow, timeStartCol, timeCharMapConverted, brightnessMap);
+  renderTextToFrame(
+    frame,
+    timeText,
+    timeStartRow,
+    timeStartCol,
+    timeCharMapConverted,
+    brightnessMap
+  );
 
   return frame;
 }
