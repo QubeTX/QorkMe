@@ -1,5 +1,7 @@
 # Changelog
 
+<!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
+
 ## 2026-03-13 (CI Fix)
 
 ### Fixed
