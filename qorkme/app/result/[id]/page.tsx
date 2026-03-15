@@ -9,12 +9,10 @@ import { SiteFooter } from '@/components/SiteFooter';
 
 interface ResultPageProps {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ code?: string }>;
 }
 
 export default async function ResultPage({ params }: ResultPageProps) {
   const { id } = await params;
-  // const { code } = await searchParams;
 
   // Fetch URL data from database
   const supabase = await createServerClientInstance();
