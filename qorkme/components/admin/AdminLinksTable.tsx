@@ -222,68 +222,70 @@ export function AdminLinksTable() {
                   </tr>
                 </thead>
                 <tbody>
-                  {links.data.map((link) => {
+                  {(() => {
                     const maxClicks = Math.max(...links.data.map((l) => l.click_count), 1);
-                    const barWidth = (link.click_count / maxClicks) * 100;
-                    return (
-                      <tr
-                        key={link.id}
-                        className="border-b"
-                        style={{
-                          borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
-                        }}
-                      >
-                        <td className="py-3 pr-4">
-                          <a
-                            href={`https://${SHORT_DOMAIN}/${link.short_code}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 font-semibold text-sm font-mono text-[color:var(--color-primary)] hover:underline"
-                          >
-                            /{link.short_code}
-                            <ExternalLink size={11} className="opacity-50" />
-                          </a>
-                        </td>
-                        <td className="py-3 pr-4">
-                          <span
-                            className="text-[color:var(--color-text-secondary)]"
-                            title={link.long_url}
-                          >
-                            {truncateUrl(link.long_url)}
-                          </span>
-                        </td>
-                        <td className="py-3 pr-4 text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            <div
-                              className="h-1.5 rounded-full"
-                              style={{
-                                width: `${Math.max(barWidth, 4)}%`,
-                                maxWidth: '60px',
-                                background: 'var(--color-primary)',
-                                opacity: 0.35,
-                              }}
-                            />
-                            <span className="font-mono text-[color:var(--color-text-primary)]">
-                              {link.click_count.toLocaleString()}
+                    return links.data.map((link) => {
+                      const barWidth = (link.click_count / maxClicks) * 100;
+                      return (
+                        <tr
+                          key={link.id}
+                          className="border-b"
+                          style={{
+                            borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+                          }}
+                        >
+                          <td className="py-3 pr-4">
+                            <a
+                              href={`https://${SHORT_DOMAIN}/${link.short_code}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 font-semibold text-sm font-mono text-[color:var(--color-primary)] hover:underline"
+                            >
+                              /{link.short_code}
+                              <ExternalLink size={11} className="opacity-50" />
+                            </a>
+                          </td>
+                          <td className="py-3 pr-4">
+                            <span
+                              className="text-[color:var(--color-text-secondary)]"
+                              title={link.long_url}
+                            >
+                              {truncateUrl(link.long_url)}
                             </span>
-                          </div>
-                        </td>
-                        <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
-                          {formatDate(link.created_at)}
-                        </td>
-                        <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
-                          {formatRelativeTime(link.last_accessed_at)}
-                        </td>
-                        <td className="py-3 text-right">
-                          <DeleteLinkButton
-                            id={link.id}
-                            shortCode={link.short_code}
-                            onDeleted={fetchLinks}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          </td>
+                          <td className="py-3 pr-4 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <div
+                                className="h-1.5 rounded-full"
+                                style={{
+                                  width: `${Math.max(barWidth, 4)}%`,
+                                  maxWidth: '60px',
+                                  background: 'var(--color-primary)',
+                                  opacity: 0.35,
+                                }}
+                              />
+                              <span className="font-mono text-[color:var(--color-text-primary)]">
+                                {link.click_count.toLocaleString()}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
+                            {formatDate(link.created_at)}
+                          </td>
+                          <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
+                            {formatRelativeTime(link.last_accessed_at)}
+                          </td>
+                          <td className="py-3 text-right">
+                            <DeleteLinkButton
+                              id={link.id}
+                              shortCode={link.short_code}
+                              onDeleted={fetchLinks}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    });
+                  })()}
                 </tbody>
               </table>
             </div>
