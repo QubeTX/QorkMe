@@ -38,8 +38,13 @@ const defaultPalette: MatrixPalette = {
 
 const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
-const buildEmptyFrame = (rows: number, cols: number): Frame =>
-  Array.from({ length: rows }, () => Array(cols).fill(0));
+const buildEmptyFrame = (rows: number, cols: number): Frame => {
+  const frame = new Array(rows);
+  for (let r = 0; r < rows; r += 1) {
+    frame[r] = new Array(cols).fill(0);
+  }
+  return frame;
+};
 
 const normaliseFrame = (frame: Frame, rows: number, cols: number): Frame => {
   const matrix = buildEmptyFrame(rows, cols);
