@@ -1,5 +1,10 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { validateUrl, validateShortCode, sanitizeInput, extractDomain } from '@/lib/shortcode/validator';
+import {
+  validateUrl,
+  validateShortCode,
+  sanitizeInput,
+  extractDomain,
+} from '@/lib/shortcode/validator';
 
 describe('Validator', () => {
   const originalEnv = process.env;
@@ -21,7 +26,10 @@ describe('Validator', () => {
 
     it('returns error when url exceeds max length', () => {
       process.env.MAX_URL_LENGTH = '10';
-      expect(validateUrl('https://example.com')).toEqual({ valid: false, error: 'URL must be less than 10 characters' });
+      expect(validateUrl('https://example.com')).toEqual({
+        valid: false,
+        error: 'URL must be less than 10 characters',
+      });
     });
 
     it('adds https:// if protocol is missing', () => {
@@ -43,16 +51,25 @@ describe('Validator', () => {
     it('blocks localhost and internal IPs', () => {
       const blocked = ['localhost', '127.0.0.1', '0.0.0.0'];
       blocked.forEach((host) => {
-        expect(validateUrl(`http://${host}`)).toEqual({ valid: false, error: 'Cannot shorten local URLs' });
+        expect(validateUrl(`http://${host}`)).toEqual({
+          valid: false,
+          error: 'Cannot shorten local URLs',
+        });
       });
       // Test IPv6 specifically, the hostname returned by URL includes the brackets
-      expect(validateUrl('http://[::1]')).toEqual({ valid: false, error: 'Cannot shorten local URLs' });
+      expect(validateUrl('http://[::1]')).toEqual({
+        valid: false,
+        error: 'Cannot shorten local URLs',
+      });
     });
 
     it('blocks private IP ranges', () => {
       const privateIps = ['10.0.0.1', '192.168.1.1', '172.16.0.1', '172.31.255.255'];
       privateIps.forEach((ip) => {
-        expect(validateUrl(`http://${ip}`)).toEqual({ valid: false, error: 'Cannot shorten private network URLs' });
+        expect(validateUrl(`http://${ip}`)).toEqual({
+          valid: false,
+          error: 'Cannot shorten private network URLs',
+        });
       });
     });
 
@@ -63,8 +80,14 @@ describe('Validator', () => {
 
     it('blocks own domain', () => {
       process.env.NEXT_PUBLIC_SHORT_DOMAIN = 'qork.me';
-      expect(validateUrl('https://qork.me/abc')).toEqual({ valid: false, error: 'Cannot shorten URLs from this domain' });
-      expect(validateUrl('https://www.qork.me')).toEqual({ valid: false, error: 'Cannot shorten URLs from this domain' });
+      expect(validateUrl('https://qork.me/abc')).toEqual({
+        valid: false,
+        error: 'Cannot shorten URLs from this domain',
+      });
+      expect(validateUrl('https://www.qork.me')).toEqual({
+        valid: false,
+        error: 'Cannot shorten URLs from this domain',
+      });
     });
 
     it('returns valid and normalized url for valid inputs', () => {
@@ -82,33 +105,66 @@ describe('Validator', () => {
 
     it('returns error for short codes that are too short', () => {
       process.env.MIN_ALIAS_LENGTH = '3';
-      expect(validateShortCode('ab')).toEqual({ valid: false, error: 'Short code must be at least 3 characters' });
+      expect(validateShortCode('ab')).toEqual({
+        valid: false,
+        error: 'Short code must be at least 3 characters',
+      });
     });
 
     it('returns error for short codes that are too long', () => {
       process.env.MAX_ALIAS_LENGTH = '5';
-      expect(validateShortCode('abcdef')).toEqual({ valid: false, error: 'Short code must be less than 5 characters' });
+      expect(validateShortCode('abcdef')).toEqual({
+        valid: false,
+        error: 'Short code must be less than 5 characters',
+      });
     });
 
     it('returns error for invalid characters', () => {
-      expect(validateShortCode('abc_def')).toEqual({ valid: false, error: 'Short code can only contain letters, numbers, and hyphens' });
-      expect(validateShortCode('abc def')).toEqual({ valid: false, error: 'Short code can only contain letters, numbers, and hyphens' });
-      expect(validateShortCode('abc!def')).toEqual({ valid: false, error: 'Short code can only contain letters, numbers, and hyphens' });
+      expect(validateShortCode('abc_def')).toEqual({
+        valid: false,
+        error: 'Short code can only contain letters, numbers, and hyphens',
+      });
+      expect(validateShortCode('abc def')).toEqual({
+        valid: false,
+        error: 'Short code can only contain letters, numbers, and hyphens',
+      });
+      expect(validateShortCode('abc!def')).toEqual({
+        valid: false,
+        error: 'Short code can only contain letters, numbers, and hyphens',
+      });
     });
 
     it('returns error for consecutive hyphens', () => {
-      expect(validateShortCode('ab--cd')).toEqual({ valid: false, error: 'Short code cannot contain consecutive hyphens' });
+      expect(validateShortCode('ab--cd')).toEqual({
+        valid: false,
+        error: 'Short code cannot contain consecutive hyphens',
+      });
     });
 
     it('returns error for leading or trailing hyphens', () => {
-      expect(validateShortCode('-abc')).toEqual({ valid: false, error: 'Short code cannot start or end with a hyphen' });
-      expect(validateShortCode('abc-')).toEqual({ valid: false, error: 'Short code cannot start or end with a hyphen' });
+      expect(validateShortCode('-abc')).toEqual({
+        valid: false,
+        error: 'Short code cannot start or end with a hyphen',
+      });
+      expect(validateShortCode('abc-')).toEqual({
+        valid: false,
+        error: 'Short code cannot start or end with a hyphen',
+      });
     });
 
     it('returns error for reserved words', () => {
-      expect(validateShortCode('api')).toEqual({ valid: false, error: 'This short code is reserved and cannot be used' });
-      expect(validateShortCode('admin')).toEqual({ valid: false, error: 'This short code is reserved and cannot be used' });
-      expect(validateShortCode('API')).toEqual({ valid: false, error: 'This short code is reserved and cannot be used' }); // case insensitive
+      expect(validateShortCode('api')).toEqual({
+        valid: false,
+        error: 'This short code is reserved and cannot be used',
+      });
+      expect(validateShortCode('admin')).toEqual({
+        valid: false,
+        error: 'This short code is reserved and cannot be used',
+      });
+      expect(validateShortCode('API')).toEqual({
+        valid: false,
+        error: 'This short code is reserved and cannot be used',
+      }); // case insensitive
     });
 
     it('returns valid for acceptable short codes', () => {
