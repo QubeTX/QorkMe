@@ -7,10 +7,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClientInstance } from '@/lib/supabase/server';
 import { headers } from 'next/headers';
 import crypto from 'crypto';
+import { LRUCache } from 'lru-cache';
 
-// Cache for frequently accessed URLs (in production, use Redis)
-const urlCache = new Map<string, { url: string; id: string; expires: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+// Cache for frequently accessed URLs (in production, use Redis)
+const urlCache = new LRUCache<string, { url: string; id: string; expires: number }>({
+  max: 1000,
+  ttl: CACHE_TTL,
+});
 
 export async function GET(
   request: NextRequest,
@@ -53,16 +57,6 @@ export async function GET(
       id: urlData.id,
       expires: Date.now() + CACHE_TTL,
     });
-
-    // Clean old cache entries periodically
-    if (urlCache.size > 100) {
-      const now = Date.now();
-      for (const [key, value] of urlCache.entries()) {
-        if (value.expires < now) {
-          urlCache.delete(key);
-        }
-      }
-    }
 
     // Track analytics asynchronously
     trackClick(urlData.id, request).catch(console.error);
