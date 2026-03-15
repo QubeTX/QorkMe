@@ -2,6 +2,16 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [3.6.1] - 2026-03-14
+
+### Changed
+
+- **CLAUDE.md** — Complete rewrite: updated design system colors, added Tailwind v4 gotchas, admin console docs, matrix display details, testing setup, Prettier config, and removed stale content
+
+### Files Modified
+
+- `CLAUDE.md` — Full rewrite with current project state
+
 ## [3.6.0] - 2026-03-14
 
 ### Added

@@ -8,7 +8,7 @@ QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, an
 
 ## Technology Stack
 
-- **Framework**: Next.js 15.5.3 with App Router and React 19
+- **Framework**: Next.js 15.5.7 with App Router and React 19
 - **Language**: TypeScript 5 (strict mode)
 - **Database**: Supabase (PostgreSQL) with real-time capabilities
 - **Styling**: Tailwind CSS v4 with an earthy modern token palette defined in `qorkme/docs/DESIGN_SYSTEM.md`

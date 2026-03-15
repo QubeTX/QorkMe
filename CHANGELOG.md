@@ -2,6 +2,18 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-03-14 (CLAUDE.md Refresh)
+
+### Changed
+
+- **Root CLAUDE.md** — Fixed Next.js version from 15.5.3 to 15.5.7 to match package.json
+- **qorkme/CLAUDE.md** — Complete rewrite: updated design system colors (terracotta/sage/parchment), added Tailwind v4 gotchas, admin console docs, matrix display details, interactive grid pointer-events pattern, Vitest dual-environment setup, Prettier config, Personal Vogue font docs, and dual-changelog requirement. Removed stale sandstone palette, verbose file tree, and generic sections.
+
+### Files Modified
+
+- `CLAUDE.md` — Version number fix
+- `qorkme/CLAUDE.md` — Full rewrite
+
 ## 2026-03-14 (Footer QR Gen Link)
 
 ### Added
