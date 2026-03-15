@@ -2,6 +2,54 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-03-14 (PR Batch Review & Merge)
+
+### Added
+
+- **Validator test suite** — Comprehensive tests for `validateUrl`, `validateShortCode`, `sanitizeInput`, and `extractDomain` with 23 test cases (PR #20)
+- **cn utility tests** — Unit tests for the Tailwind class merging utility covering string merging, falsy values, conditional classes, arrays, and Tailwind overrides (PR #17)
+- **Reserved words tests** — Unit tests for `isReservedWord` and `getReservedWords` covering case sensitivity, negative cases, and array mutation safety (PR #18)
+
+### Changed
+
+- **Next.js Image refactor** — Replaced raw `<img>` tags with Next.js `Image` component across 6 files, removing ESLint `@next/next/no-img-element` disable comments (PR #25)
+- **Matrix allocation optimization** — Replaced `Array.from` with pre-allocated `for` loop in `buildEmptyFrame` for ~52% speedup (PR #22)
+- **AdminLinksTable O(N²) fix** — Extracted `maxClicks` calculation before `.map()` loop to eliminate redundant `Math.max()` computation on every row
+- **Bounded URL redirect cache** — Replaced unbounded periodic cleanup with FIFO eviction (max 1000 entries) to prevent memory growth under load
+
+### Fixed
+
+- **IPv6 loopback validation** — Added `[::1]` to blocked hosts list for proper bracketed IPv6 URL rejection (PR #20)
+- **Protocol detection** — Fixed regex to reject non-HTTP protocols (`ftp://`, `file://`, etc.) instead of silently prepending `https://` (PR #20)
+
+### Removed
+
+- **Dead code** — Removed unused `searchParams` interface and variable from ResultPage (PR #16)
+
+### Closed PRs
+
+- PR #19 — Superseded by #20 (same IPv6 fix, inferior test patterns using raw `process.env`)
+- PR #21 — Valid O(N²) finding, reimplemented without IIFE antipattern
+- PR #23 — Subset of #20's test coverage
+- PR #24 — Valid cache concern, reimplemented without `lru-cache` dependency (Node 18 incompatible)
+
+### Files Modified
+
+- `qorkme/app/[shortCode]/route.ts` — Bounded cache eviction
+- `qorkme/app/admin/page.tsx` — Next.js Image
+- `qorkme/app/not-found.tsx` — Next.js Image
+- `qorkme/app/page.tsx` — Next.js Image
+- `qorkme/app/result/[id]/page.tsx` — Removed unused searchParams
+- `qorkme/components/admin/AdminLinksTable.tsx` — maxClicks O(N²) fix
+- `qorkme/components/ShortUrlDisplay.tsx` — Next.js Image
+- `qorkme/components/SiteFooter.tsx` — Next.js Image
+- `qorkme/components/SiteHeader.tsx` — Next.js Image
+- `qorkme/components/ui/matrix.tsx` — buildEmptyFrame optimization
+- `qorkme/lib/shortcode/validator.ts` — IPv6 + protocol regex fixes
+- `qorkme/tests/shortcode/reserved.test.ts` — New test file
+- `qorkme/tests/shortcode/validator.test.ts` — New test file
+- `qorkme/tests/utils.test.ts` — New test file
+
 ## 2026-03-14 (CLAUDE.md Refresh)
 
 ### Changed

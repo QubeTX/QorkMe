@@ -151,6 +151,8 @@ export function AdminLinksTable() {
     setPage(1);
   };
 
+  const maxClicks = links?.data?.length ? Math.max(...links.data.map((l) => l.click_count), 1) : 1;
+
   const cardStyle = {
     background: 'var(--color-surface)',
     borderColor: 'var(--color-border)',
@@ -223,7 +225,6 @@ export function AdminLinksTable() {
                 </thead>
                 <tbody>
                   {links.data.map((link) => {
-                    const maxClicks = Math.max(...links.data.map((l) => l.click_count), 1);
                     const barWidth = (link.click_count / maxClicks) * 100;
                     return (
                       <tr

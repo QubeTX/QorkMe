@@ -54,14 +54,12 @@ export async function GET(
       expires: Date.now() + CACHE_TTL,
     });
 
-    // Clean old cache entries periodically
-    if (urlCache.size > 100) {
-      const now = Date.now();
-      for (const [key, value] of urlCache.entries()) {
-        if (value.expires < now) {
-          urlCache.delete(key);
-        }
-      }
+    // Bound cache size to prevent unbounded memory growth
+    const MAX_CACHE_SIZE = 1000;
+    if (urlCache.size > MAX_CACHE_SIZE) {
+      // Evict oldest entry (first key in Map insertion order)
+      const oldestKey = urlCache.keys().next().value;
+      if (oldestKey !== undefined) urlCache.delete(oldestKey);
     }
 
     // Track analytics asynchronously

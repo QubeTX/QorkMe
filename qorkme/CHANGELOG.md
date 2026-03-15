@@ -2,6 +2,41 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [3.7.0] - 2026-03-14
+
+### Added
+
+- **Validator test suite** — 23 test cases for `validateUrl`, `validateShortCode`, `sanitizeInput`, and `extractDomain` (PR #20)
+- **cn utility tests** — 6 tests for Tailwind class merging: string merging, falsy values, conditional classes, arrays, overrides (PR #17)
+- **Reserved words tests** — Tests for `isReservedWord` and `getReservedWords` covering case sensitivity and array mutation safety (PR #18)
+
+### Changed
+
+- **Next.js Image refactor** — Replaced `<img>` tags with Next.js `Image` across 6 files, removing ESLint disable comments (PR #25)
+- **Matrix allocation optimization** — Pre-allocated `for` loop in `buildEmptyFrame` replaces `Array.from` (~52% faster) (PR #22)
+- **AdminLinksTable O(N²) fix** — `maxClicks` extracted before `.map()` loop, eliminating redundant computation per row
+- **Bounded URL redirect cache** — FIFO eviction (max 1000 entries) replaces unbounded periodic cleanup
+
+### Fixed
+
+- **IPv6 loopback validation** — `[::1]` added to blocked hosts for proper bracketed IPv6 rejection (PR #20)
+- **Protocol detection** — Regex now rejects non-HTTP protocols instead of prepending `https://` (PR #20)
+
+### Removed
+
+- **Dead code** — Unused `searchParams` in ResultPage (PR #16)
+
+### Files Modified
+
+- `app/[shortCode]/route.ts` — Bounded cache eviction
+- `app/admin/page.tsx`, `app/not-found.tsx`, `app/page.tsx` — Next.js Image
+- `app/result/[id]/page.tsx` — Removed unused searchParams
+- `components/admin/AdminLinksTable.tsx` — maxClicks optimization
+- `components/ShortUrlDisplay.tsx`, `components/SiteFooter.tsx`, `components/SiteHeader.tsx` — Next.js Image
+- `components/ui/matrix.tsx` — buildEmptyFrame optimization
+- `lib/shortcode/validator.ts` — IPv6 + protocol fixes
+- `tests/shortcode/reserved.test.ts`, `tests/shortcode/validator.test.ts`, `tests/utils.test.ts` — New test files
+
 ## [3.6.1] - 2026-03-14
 
 ### Changed
