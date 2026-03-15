@@ -42,7 +42,7 @@ export function validateUrl(url: string): {
 
     // Check for localhost/internal IPs (optional security)
     const hostname = urlObj.hostname.toLowerCase();
-    const blockedHosts = ['localhost', '127.0.0.1', '0.0.0.0', '::1'];
+    const blockedHosts = ['localhost', '127.0.0.1', '0.0.0.0', '::1', '[::1]'];
     if (blockedHosts.includes(hostname)) {
       return { valid: false, error: 'Cannot shorten local URLs' };
     }
