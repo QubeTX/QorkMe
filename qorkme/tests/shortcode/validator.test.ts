@@ -28,7 +28,9 @@ describe('sanitizeInput', () => {
 
   it('handles normal input without modifications', () => {
     expect(sanitizeInput('Just a normal description')).toBe('Just a normal description');
-    expect(sanitizeInput('This has numbers 123 and symbols !@#$%^&*()')).toBe('This has numbers 123 and symbols !@#$%^&*()');
+    expect(sanitizeInput('This has numbers 123 and symbols !@#$%^&*()')).toBe(
+      'This has numbers 123 and symbols !@#$%^&*()'
+    );
   });
 
   it('applies all sanitizations correctly together', () => {
