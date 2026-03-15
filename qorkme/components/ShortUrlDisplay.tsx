@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Copy, QrCode, ExternalLink, CheckCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import QRCode from 'qrcode';
+import Image from 'next/image';
 
 interface ShortUrlDisplayProps {
   shortCode: string;
@@ -115,8 +116,14 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
 
           {showQr && qrCodeUrl && (
             <div className="flex flex-col items-center gap-4 rounded-[var(--radius-lg)] border border-border/60 bg-[color:var(--color-background-accent)]/40 p-6 text-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={qrCodeUrl} alt="QR Code" className="h-36 w-36" />
+              <Image
+                src={qrCodeUrl}
+                alt="QR Code"
+                className="h-36 w-36"
+                width={144}
+                height={144}
+                unoptimized
+              />
               <p className="text-xs text-text-muted">
                 Scan or download to share offline moments just as fast.
               </p>

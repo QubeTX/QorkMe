@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast';
 import { Activity, AlertTriangle, BarChart3, TrendingUp } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import Link from 'next/link';
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 export default async function AdminPage() {
@@ -94,10 +95,11 @@ export default async function AdminPage() {
               style={{ marginTop: '32px' }}
             >
               <Link href="/">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src="/qork-logo.svg"
                   alt="Qork logo — return home"
+                  width={80}
+                  height={80}
                   className="h-16 w-16 md:h-20 md:w-20 transition-opacity hover:opacity-70"
                   style={{ opacity: 0.85 }}
                 />

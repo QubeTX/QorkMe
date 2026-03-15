@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { NavigationHeader } from '@/components/NavigationHeader';
 import { Card, CardContent } from '@/components/cards/Card';
 import { Button } from '@/components/ui/Button';
@@ -17,10 +18,11 @@ export default function NotFound() {
               <CardContent className="gap-8 py-14">
                 <div className="flex flex-col items-center gap-4">
                   <Link href="/">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src="/qork-logo.svg"
                       alt="Qork logo — return home"
+                      width={64}
+                      height={64}
                       className="h-16 w-16 transition-opacity hover:opacity-70"
                       style={{ opacity: 0.85 }}
                     />

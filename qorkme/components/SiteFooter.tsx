@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface SiteFooterProps {
@@ -25,12 +26,12 @@ export function SiteFooter({
         <div className="flex flex-col items-center gap-4 md:hidden">
           {showLogo && (
             <Link href="/">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/qork-logo.svg"
                 alt="Qork logo — return home"
+                width={44}
+                height={44}
                 className="opacity-40 transition-all duration-300 hover:opacity-70 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
-                style={{ width: '44px', height: '44px' }}
               />
             </Link>
           )}
@@ -72,12 +73,12 @@ export function SiteFooter({
 
           {showLogo && (
             <Link href="/">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/qork-logo.svg"
                 alt="Qork logo — return home"
+                width={56}
+                height={56}
                 className="opacity-40 transition-all duration-300 hover:opacity-70 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
-                style={{ width: '56px', height: '56px' }}
               />
             </Link>
           )}
