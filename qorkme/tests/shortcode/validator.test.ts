@@ -1,15 +1,18 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { validateUrl, validateShortCode, sanitizeInput, extractDomain } from '@/lib/shortcode/validator';
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
+import {
+  validateUrl,
+  validateShortCode,
+  sanitizeInput,
+  extractDomain,
+} from '@/lib/shortcode/validator';
 
 describe('Validator', () => {
-  const originalEnv = process.env;
-
   beforeEach(() => {
-    process.env = { ...originalEnv };
+    vi.unstubAllEnvs();
   });
 
   afterEach(() => {
-    process.env = originalEnv;
+    vi.unstubAllEnvs();
   });
 
   describe('validateUrl', () => {
@@ -19,7 +22,7 @@ describe('Validator', () => {
     });
 
     it('rejects URLs exceeding max length', () => {
-      process.env.MAX_URL_LENGTH = '20';
+      vi.stubEnv('MAX_URL_LENGTH', '20');
       const longUrl = 'https://example.com/very/long/url';
       const result = validateUrl(longUrl);
       expect(result.valid).toBe(false);
@@ -63,11 +66,11 @@ describe('Validator', () => {
     });
 
     it('rejects shortening own domain', () => {
-      process.env.NEXT_PUBLIC_SHORT_DOMAIN = 'qork.me';
+      vi.stubEnv('NEXT_PUBLIC_SHORT_DOMAIN', 'qork.me');
       expect(validateUrl('https://qork.me/abc').valid).toBe(false);
       expect(validateUrl('https://www.qork.me/abc').valid).toBe(false);
 
-      process.env.NEXT_PUBLIC_SHORT_DOMAIN = 'custom.link';
+      vi.stubEnv('NEXT_PUBLIC_SHORT_DOMAIN', 'custom.link');
       expect(validateUrl('https://custom.link/abc').valid).toBe(false);
     });
 
@@ -85,14 +88,14 @@ describe('Validator', () => {
     });
 
     it('rejects codes below minimum length', () => {
-      process.env.MIN_ALIAS_LENGTH = '3';
+      vi.stubEnv('MIN_ALIAS_LENGTH', '3');
       const result = validateShortCode('ab');
       expect(result.valid).toBe(false);
       expect(result.error).toBe('Short code must be at least 3 characters');
     });
 
     it('rejects codes above maximum length', () => {
-      process.env.MAX_ALIAS_LENGTH = '10';
+      vi.stubEnv('MAX_ALIAS_LENGTH', '10');
       const result = validateShortCode('thisiswaytoolong');
       expect(result.valid).toBe(false);
       expect(result.error).toBe('Short code must be less than 10 characters');
