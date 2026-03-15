@@ -41,12 +41,23 @@ export function SiteFooter({
               </span>
               <span className="text-xs text-text-muted leading-snug">{subtitle}</span>
             </div>
-            <Link
-              href="/admin"
-              className="text-sm font-semibold uppercase tracking-[0.12em] text-text-muted transition-colors hover:text-[color:var(--color-primary)] leading-none"
-            >
-              Admin
-            </Link>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://qr.qork.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold uppercase tracking-[0.12em] text-text-muted transition-colors hover:text-[color:var(--color-primary)] leading-none"
+              >
+                QR Gen
+              </a>
+              <Link
+                href="/admin"
+                className="text-sm font-semibold uppercase tracking-[0.12em] text-text-muted transition-colors hover:text-text-muted leading-none"
+                style={{ opacity: 0.45 }}
+              >
+                Admin
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -71,12 +82,23 @@ export function SiteFooter({
             </Link>
           )}
 
-          <Link
-            href="/admin"
-            className="text-sm font-semibold uppercase tracking-[0.12em] text-text-muted transition-colors hover:text-[color:var(--color-primary)] leading-none"
-          >
-            Admin
-          </Link>
+          <div className="flex items-center gap-6">
+            <a
+              href="https://qr.qork.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold uppercase tracking-[0.12em] text-text-muted transition-colors hover:text-[color:var(--color-primary)] leading-none"
+            >
+              QR Gen
+            </a>
+            <Link
+              href="/admin"
+              className="text-sm font-semibold uppercase tracking-[0.12em] text-text-muted transition-colors hover:text-text-muted leading-none"
+              style={{ opacity: 0.45 }}
+            >
+              Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

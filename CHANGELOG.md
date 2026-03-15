@@ -2,6 +2,20 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-03-14 (Footer QR Gen Link)
+
+### Added
+
+- **QR Gen Footer Link** — Added "QR Gen" link to `https://qr.qork.me` in the site footer, positioned left of the Admin button. Opens in a new tab.
+
+### Changed
+
+- **Admin Button Dimmed** — Reduced Admin link opacity to 45% so the new QR Gen link is more visually prominent. Admin hover restores full visibility.
+
+### Files Modified
+
+- `qorkme/components/SiteFooter.tsx` — Added QR Gen link and dimmed Admin in both mobile and desktop footer layouts
+
 ## 2026-03-13 (Mobile Performance Optimization)
 
 ### Changed
