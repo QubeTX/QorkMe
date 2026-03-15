@@ -76,7 +76,13 @@ export function SiteHeader({ navItems = [], status, action }: SiteHeaderProps) {
               href="/"
               className="flex items-center gap-3 text-[color:var(--color-text-primary)]"
             >
-              <Image src="/qork-logo.svg" alt="QorkMe logo" width={32} height={32} className="h-8 w-8" />
+              <Image
+                src="/qork-logo.svg"
+                alt="QorkMe logo"
+                width={32}
+                height={32}
+                className="h-8 w-8"
+              />
               <span className="flex flex-col leading-tight">
                 <span className="font-ui text-[0.7rem] font-semibold uppercase tracking-[0.38em] text-[color:var(--color-secondary)]">
                   QorkMe
