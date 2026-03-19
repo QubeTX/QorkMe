@@ -2,6 +2,11 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-03-19 (SHAUGHV Logo Attribution)
+
+### Added
+- SHAUGHV logo attribution comments in `qorkme/public/shaughv-brandmark.svg` for cross-repo searchability
+
 ## 2026-03-14 (PR Batch Review & Merge)
 
 ### Added
