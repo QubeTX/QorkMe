@@ -54,7 +54,7 @@ export default async function AdminLoginPage({
 
       <div
         id="admin-login-wrapper"
-        className="font-personal-vogue page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
+        className="font-makira page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
       >
         {/* Interactive Grid Background */}
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
@@ -128,7 +128,7 @@ export default async function AdminLoginPage({
                     </div>
                     <CardDescription>
                       Sign in with your GitHub account to verify access. Only the designated admin{' '}
-                      <span className="font-data font-mono text-[color:var(--color-primary)]">
+                      <span className="font-mono text-[color:var(--color-primary)]">
                         {ADMIN_GITHUB_USERNAME_DISPLAY}
                       </span>{' '}
                       can access this console.

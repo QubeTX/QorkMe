@@ -26,7 +26,7 @@ export default function Home() {
 
       <div
         id="page-wrapper"
-        className="page-wrapper font-personal-vogue relative flex min-h-screen flex-col transition-colors duration-300 overflow-hidden"
+        className="page-wrapper font-makira relative flex min-h-screen flex-col transition-colors duration-300 overflow-hidden"
       >
         {/* Interactive Grid Background (Bottom Layer) */}
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />

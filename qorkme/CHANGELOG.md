@@ -2,6 +2,19 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [3.8.0] - 2026-03-20
+
+### Changed
+
+- **Typography overhaul** — Replaced Personal Vogue (serif) with Makira Sans Serif across all pages
+- **Removed `.font-data` override** — Makira renders universally including admin tables, metrics, and data elements
+- **Font weights** — Makira Regular (400), Medium (500), SemiBold (600), Bold (700) added
+
+### Removed
+
+- `PersonalVogue-Regular.woff2` and `PersonalVogue-Italic.woff2`
+- `.font-data` CSS class and all component references
+
 ## [3.7.0] - 2026-03-14
 
 ### Added

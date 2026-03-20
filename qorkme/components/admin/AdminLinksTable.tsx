@@ -173,7 +173,7 @@ export function AdminLinksTable() {
   );
 
   return (
-    <Card className="font-data" style={cardStyle} hoverable={false}>
+    <Card style={cardStyle} hoverable={false}>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>All Short Links</CardTitle>
         <LinkIcon size={22} className="text-[color:var(--color-accent)]" aria-hidden="true" />

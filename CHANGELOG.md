@@ -2,6 +2,17 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-03-20 (Font Swap: Personal Vogue → Makira)
+
+### Changed
+- **Typography overhaul** — Replaced Personal Vogue (serif) with Makira Sans Serif across all pages (homepage, admin dashboard, admin login)
+- **Removed `.font-data` override** — Makira now renders universally including admin tables, metrics, charts, and data elements (no more Inter fallback)
+- **Font weights** — Added Makira Regular (400), Medium (500), SemiBold (600), Bold (700)
+
+### Removed
+- `PersonalVogue-Regular.woff2` and `PersonalVogue-Italic.woff2` font files
+- `.font-data` CSS class and all component references
+
 ## 2026-03-19 (SHAUGHV Logo Attribution)
 
 ### Added

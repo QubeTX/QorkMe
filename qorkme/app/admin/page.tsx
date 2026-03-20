@@ -76,7 +76,7 @@ export default async function AdminPage() {
 
       <div
         id="admin-dashboard-wrapper"
-        className="font-personal-vogue page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
+        className="font-makira page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
       >
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
 
@@ -109,7 +109,7 @@ export default async function AdminPage() {
               <div className="flex flex-col gap-4 text-center">
                 <p className="max-w-2xl mx-auto text-[color:var(--color-text-secondary)] text-base">
                   Authenticated as{' '}
-                  <span className="font-data font-mono text-[color:var(--color-primary)]">
+                  <span className="font-mono text-[color:var(--color-primary)]">
                     {ADMIN_GITHUB_USERNAME_DISPLAY}
                   </span>{' '}
                   • Review aggregate metrics and manage stored URLs
@@ -134,7 +134,7 @@ export default async function AdminPage() {
                   </CardHeader>
                   <CardContent className="flex items-center justify-center pt-3 pb-3">
                     <p
-                      className={`${metricSizeClass(totalUrls)} font-semibold font-data animate-metric-glow text-[color:var(--color-text-primary)]`}
+                      className={`${metricSizeClass(totalUrls)} font-semibold animate-metric-glow text-[color:var(--color-text-primary)]`}
                     >
                       {totalUrls.toLocaleString()}
                     </p>
@@ -155,7 +155,7 @@ export default async function AdminPage() {
                   </CardHeader>
                   <CardContent className="flex items-center justify-center pt-3 pb-3">
                     <p
-                      className={`${metricSizeClass(totalClicks)} font-semibold font-data animate-metric-glow text-[color:var(--color-text-primary)]`}
+                      className={`${metricSizeClass(totalClicks)} font-semibold animate-metric-glow text-[color:var(--color-text-primary)]`}
                     >
                       {totalClicks.toLocaleString()}
                     </p>
@@ -175,7 +175,7 @@ export default async function AdminPage() {
                     />
                   </CardHeader>
                   <CardContent className="flex items-center justify-center pt-3 pb-3">
-                    <p className="text-6xl font-semibold font-data animate-metric-glow text-[color:var(--color-primary)]">
+                    <p className="text-6xl font-semibold animate-metric-glow text-[color:var(--color-primary)]">
                       {avgClicksPerLink}
                     </p>
                   </CardContent>

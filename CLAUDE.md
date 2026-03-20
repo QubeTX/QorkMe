@@ -12,7 +12,7 @@ QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, an
 - **Language**: TypeScript 5 (strict mode)
 - **Database**: Supabase (PostgreSQL) with real-time capabilities
 - **Styling**: Tailwind CSS v4 with an earthy modern token palette defined in `qorkme/docs/DESIGN_SYSTEM.md`
-- **Typography**: ZT Bros Oskon 90s for display and Inter Regular (400) for body/UI text, with Inter Black (900) for buttons and rare title fallbacks
+- **Typography**: ZT Bros Oskon 90s for display, Makira Sans Serif for body/UI text, and Inter Black (900) for buttons
 - **Deployment**: Vercel with automated GitHub Actions CI/CD
 - **Testing**: Vitest with Testing Library
 
@@ -261,7 +261,7 @@ Configure in repository Settings -> Secrets and variables -> Actions:
 QorkMe now leans into an earthy modern aesthetic that pairs warm parchment neutrals with terracotta and sage accents:
 
 - **Color palette**: Soft sand surfaces (`#f6f1e8`, `#f2e7d6`) contrasted with terracotta primary (`#c4724f`) and sage accent (`#5f7d58`).
-- **Typography**: **ZT Bros Oskon 90s** for display/hero moments ONLY. Inter Regular (400) for ALL body text, UI labels, and numeric content. Buttons use Inter Black (900) via `--weight-ui-button` CSS variable for maximum contrast. If Inter must be used for a section headline, apply `.font-inter-heavy` helper class (weight 900). **No other font families permitted.**
+- **Typography**: **ZT Bros Oskon 90s** for display/hero moments ONLY. **Makira** (400-700) for ALL body text, UI labels, and data elements — scoped via `.font-makira` on page wrappers. Buttons use Inter Black (900) via `--weight-ui-button` CSS variable for maximum contrast.
 - **Surfaces & depth**: Rounded cards (`12px-28px` radii) with diffused warm shadows; blur is subtle and used sparingly.
 - **Theme**: Light theme focused, dark mode swaps to espresso tones via the same tokens. Tokens live in `qorkme/app/globals.css`.
 - **Interaction**: Calm transitions (140-420ms), faint gradient overlays, and focus rings using the primary terracotta.

@@ -77,7 +77,7 @@ Earthy modern aesthetic. Full spec in `docs/DESIGN_SYSTEM.md`. Tokens live in `a
 - **ZT Bros Oskon 90s** — display/hero text ONLY (never for body)
 - **Inter Regular (400)** — all body text, UI labels, numbers
 - **Inter Black (900)** — buttons only, via `--weight-ui-button` CSS variable
-- **Personal Vogue** — scoped via `.font-personal-vogue` class; use `.font-data` inside it to force Inter for numbers/dates/URLs
+- **Makira** — scoped via `.font-makira` class on page wrappers; used universally for all text including admin data elements
 
 **Transitions:** 140ms (fast), 240ms (base), 420ms (slow). Spacing: 8px grid.
 
