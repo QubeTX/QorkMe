@@ -48,7 +48,7 @@ QorkMe delivers branded short links, QR codes, server-side analytics logging, an
 - `qorkme/lib/supabase/` — Client/server helpers and typed responses.
 - `qorkme/docs/` — Deployment, design system, and Vercel setup guides.
 - `qorkme/supabase/` — SQL schema and setup walkthrough.
-- `ZT Bros Oskon 90s/` — Font family bundle used by the UI; mirrored copies exist in `qorkme/public/fonts/` as woff2 assets.
+- `ZT Bros Oskon 90s/` — Legacy font files (no longer used; Makira Sans Serif is the sole font, deployed from `qorkme/public/fonts/`).
 - `LEARNED.md` — Implementation notes for the interactive grid background and dot-matrix display learnings.
 - `vercel.json` — Root-level headers and install instructions for deployments.
 
@@ -71,7 +71,7 @@ QorkMe/
 │   ├── MATRIX_DOCS.md
 │   ├── SHIMMERING_TEXT_DOCS.md
 │   └── qorkme.html
-├── ZT Bros Oskon 90s/         # font source files (OTF/TTF/WEB variants)
+├── ZT Bros Oskon 90s/         # legacy font files (no longer used)
 └── qorkme/                    # main Next.js application
     ├── CHANGELOG.md           # application changelog
     ├── CLAUDE.md              # application-specific guidance
@@ -135,7 +135,7 @@ QorkMe/
     │   ├── theme.tsx          # theme context provider
     │   └── utils.ts           # utility functions
     ├── public/                # static assets
-    │   ├── fonts/             # ZT Bros Oskon woff2 files
+    │   ├── fonts/             # Makira Sans Serif woff2 files
     │   │   ├── ZTBrosOskon90s-Bold.woff2
     │   │   ├── ZTBrosOskon90s-BoldItalic.woff2
     │   │   ├── ZTBrosOskon90s-Italic.woff2
@@ -177,7 +177,7 @@ QorkMe/
 
 ## Known Risks & TODOs
 - Expand automated testing beyond current unit/UI suites to cover redirect edge cases, analytics persistence, and Supabase RPC behaviors.
-- Keep font licensing notes aligned between `ZT Bros Oskon 90s/` and `public/fonts/README.md`.
+- Keep font licensing notes aligned in `public/fonts/README.md`.
 - Monitor Supabase rate limits; redirect handler currently uses a simple in-memory cache.
 
 ## References

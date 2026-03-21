@@ -2,6 +2,20 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [3.9.0] - 2026-03-21
+
+### Changed
+
+- **Site-wide font consolidation** — Removed ZT Bros Oskon and Inter; Makira Sans Serif is the sole font site-wide
+- **404 page refresh** — Added InteractiveGridPattern background, `.font-makira` scoping, refined copy with updated CTA ("Qork a New Link"); removed NavigationHeader
+- **New Makira weights** — ExtraBold (800) and Black (900) added for display text and buttons
+- **CSS cleanup** — Remapped `--font-display`, `--font-body`, `--font-ui`, `--font-mono` to Makira; replaced `.font-inter-heavy` with `.font-makira-black`
+
+### Removed
+
+- ZT Bros Oskon @font-face declarations and Inter Google Fonts @import
+- All documentation references to non-Makira fonts (CLAUDE.md, AGENTS.md, CODEX_PROJECT.md, DESIGN_SYSTEM.md, fonts README)
+
 ## [3.8.0] - 2026-03-20
 
 ### Changed

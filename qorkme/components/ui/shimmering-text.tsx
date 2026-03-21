@@ -75,7 +75,7 @@ export function ShimmeringText({
       ref={ref}
       className={cn(
         'relative inline-block bg-clip-text text-transparent',
-        'bg-[length:200%_100%] font-inter-heavy tracking-[0.08em]',
+        'bg-[length:200%_100%] font-makira-black tracking-[0.08em]',
         className
       )}
       style={style}

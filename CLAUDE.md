@@ -12,7 +12,7 @@ QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, an
 - **Language**: TypeScript 5 (strict mode)
 - **Database**: Supabase (PostgreSQL) with real-time capabilities
 - **Styling**: Tailwind CSS v4 with an earthy modern token palette defined in `qorkme/docs/DESIGN_SYSTEM.md`
-- **Typography**: ZT Bros Oskon 90s for display, Makira Sans Serif for body/UI text, and Inter Black (900) for buttons
+- **Typography**: Makira Sans Serif exclusively — Regular (400) for body, SemiBold (600) for headings, Black (900) for buttons and display
 - **Deployment**: Vercel with automated GitHub Actions CI/CD
 - **Testing**: Vitest with Testing Library
 
@@ -29,8 +29,8 @@ QorkMe/
 |   |-- tests/                 # Vitest test suites
 |   |-- docs/                  # Documentation
 |   |-- supabase/              # Database schema and setup
-|   \-- public/fonts/          # ZT Bros Oskon font files (woff2)
-|-- ZT Bros Oskon 90s/         # Source font files (OTF/TTF/WEB)
+|   \-- public/fonts/          # Makira Sans Serif font files (woff2)
+|-- ZT Bros Oskon 90s/         # Legacy font files (no longer used)
 |-- vercel.json                # Root deployment config (points to qorkme/)
 |-- .github/workflows/         # CI/CD automation
 |-- AGENTS.md                  # Agent-specific guidelines
@@ -261,7 +261,7 @@ Configure in repository Settings -> Secrets and variables -> Actions:
 QorkMe now leans into an earthy modern aesthetic that pairs warm parchment neutrals with terracotta and sage accents:
 
 - **Color palette**: Soft sand surfaces (`#f6f1e8`, `#f2e7d6`) contrasted with terracotta primary (`#c4724f`) and sage accent (`#5f7d58`).
-- **Typography**: **ZT Bros Oskon 90s** for display/hero moments ONLY. **Makira** (400-700) for ALL body text, UI labels, and data elements — scoped via `.font-makira` on page wrappers. Buttons use Inter Black (900) via `--weight-ui-button` CSS variable for maximum contrast.
+- **Typography**: **Makira Sans Serif** exclusively site-wide (400-900). Regular (400) for body, SemiBold (600) for headings, Bold (700) for smaller buttons, Black (900) for display text and prominent CTAs. Scoped via `.font-makira` on page wrappers.
 - **Surfaces & depth**: Rounded cards (`12px-28px` radii) with diffused warm shadows; blur is subtle and used sparingly.
 - **Theme**: Light theme focused, dark mode swaps to espresso tones via the same tokens. Tokens live in `qorkme/app/globals.css`.
 - **Interaction**: Calm transitions (140-420ms), faint gradient overlays, and focus rings using the primary terracotta.
@@ -509,12 +509,13 @@ Update both files before committing changes to maintain accurate version history
 
 ## Font Asset Management
 
-ZT Bros Oskon 90s font family:
+Makira Sans Serif font family:
 
-- **Source files**: `ZT Bros Oskon 90s/` (OTF/TTF/WEB formats)
-- **Production files**: `qorkme/public/fonts/` (woff2 only)
-- Keep font licensing notes aligned between source README and `qorkme/public/fonts/README.md`
+- **Production files**: `qorkme/public/fonts/` (woff2 only — Regular, Medium, SemiBold, Bold, ExtraBold, Black)
+- **Source files**: `C:\Users\hey\Documents\NEWFONTS2026\Makira-Sans-Serif\` (OTF/TTF/Variable/Web)
+- Keep font licensing notes aligned in `qorkme/public/fonts/README.md`
 - Never commit font files to version control outside designated directories
+- Legacy `ZT Bros Oskon 90s/` directory at repo root is no longer used
 
 ## Security Considerations
 

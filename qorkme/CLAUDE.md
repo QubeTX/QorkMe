@@ -74,10 +74,13 @@ Earthy modern aesthetic. Full spec in `docs/DESIGN_SYSTEM.md`. Tokens live in `a
 
 **Typography:**
 
-- **ZT Bros Oskon 90s** — display/hero text ONLY (never for body)
-- **Inter Regular (400)** — all body text, UI labels, numbers
-- **Inter Black (900)** — buttons only, via `--weight-ui-button` CSS variable
-- **Makira** — scoped via `.font-makira` class on page wrappers; used universally for all text including admin data elements
+- **Makira Sans Serif** — sole font site-wide, scoped via `.font-makira` class on page wrappers
+  - Regular (400) — body text, UI labels, numbers
+  - Medium (500) — emphasized text, form labels
+  - SemiBold (600) — headings, strong UI elements
+  - Bold (700) — bold headings, smaller buttons
+  - ExtraBold (800) — heavy emphasis
+  - Black (900) — display text, prominent CTAs, via `--weight-ui-button` CSS variable
 
 **Transitions:** 140ms (fast), 240ms (base), 420ms (slow). Spacing: 8px grid.
 

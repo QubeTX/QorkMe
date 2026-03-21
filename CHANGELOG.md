@@ -2,6 +2,18 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-03-21 (Makira-Only + 404 Page Refresh)
+
+### Changed
+- **Site-wide font consolidation** — Removed all ZT Bros Oskon and Inter font references; Makira Sans Serif is now the sole font across CSS, components, and documentation
+- **404 page refresh** — Added InteractiveGridPattern background, Makira font scoping, and refined copy; removed NavigationHeader for a cleaner look
+- **New Makira weights** — Added ExtraBold (800) and Black (900) for display text and buttons
+
+### Removed
+- ZT Bros Oskon @font-face declarations (8 variants) and Inter Google Fonts import from globals.css
+- `.font-inter-heavy` CSS class (replaced with `.font-makira-black`)
+- All documentation references to ZT Bros Oskon and Inter fonts
+
 ## 2026-03-20 (Font Swap: Personal Vogue → Makira)
 
 ### Changed

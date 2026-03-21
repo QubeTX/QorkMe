@@ -1,70 +1,6 @@
 @import 'tailwindcss';
 
 @font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-Italic.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-MediumItalic.woff2') format('woff2');
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-SemiBoldItalic.woff2') format('woff2');
-  font-weight: 600;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-BoldItalic.woff2') format('woff2');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'Makira';
   src: url('/fonts/Makira-Regular.woff2') format('woff2');
   font-weight: 400;
@@ -96,7 +32,21 @@
   font-display: swap;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,900;1,14..32,300;1,14..32,500;1,14..32,700;1,14..32,900&display=swap');
+@font-face {
+  font-family: 'Makira';
+  src: url('/fonts/Makira-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Makira';
+  src: url('/fonts/Makira-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --color-background: #f6f1e8;
@@ -138,10 +88,10 @@
   --radius-xl: 28px;
   --radius-full: 9999px;
 
-  --font-display: 'ZT Bros Oskon', serif;
-  --font-body: 'Inter', sans-serif;
-  --font-ui: 'Inter', sans-serif;
-  --font-mono: 'Inter', sans-serif;
+  --font-display: 'Makira', sans-serif;
+  --font-body: 'Makira', sans-serif;
+  --font-ui: 'Makira', sans-serif;
+  --font-mono: 'Makira', sans-serif;
 
   --weight-body-regular: 400;
   --weight-body-strong: 500;
@@ -444,8 +394,8 @@ pre {
 }
 
 .font-display {
-  font-family: var(--font-display);
-  font-weight: var(--weight-display-strong);
+  font-family: 'Makira', sans-serif;
+  font-weight: 900;
 }
 
 .font-body {
@@ -463,9 +413,9 @@ pre {
   font-weight: var(--weight-body-regular);
 }
 
-.font-inter-heavy {
-  font-family: 'Inter', sans-serif;
-  font-weight: var(--weight-inter-heavy);
+.font-makira-black {
+  font-family: 'Makira', sans-serif;
+  font-weight: 900;
   letter-spacing: 0.01em;
 }
 

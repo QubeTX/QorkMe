@@ -198,78 +198,44 @@ All text/background combinations meet **WCAG 2.1 Level AA** (4.5:1 minimum):
 
 ## Typography
 
-QorkMe uses **two font families exclusively**: ZT Bros Oskon for display moments and Inter for everything else.
+QorkMe uses **Makira Sans Serif exclusively** across the entire site — headings, body, UI, buttons, and display text.
 
-### Font Families
+### Font Family
 
-#### ZT Bros Oskon (Display Font)
+#### Makira (All Text)
 
 ```css
---font-display: 'ZT Bros Oskon', serif;
+--font-display: 'Makira', sans-serif;
+--font-body: 'Makira', sans-serif;
+--font-ui: 'Makira', sans-serif;
+--font-mono: 'Makira', sans-serif;
 ```
-
-**When to Use:**
-
-- Hero titles and main headings (h1-h3)
-- Brand name displays
-- Prominent section headers
-- Large decorative text
-
-**When NOT to Use:**
-
-- Body text or paragraphs
-- Form inputs or labels
-- UI chrome (nav, footer links)
-- **Buttons** (common mistake!)
 
 **Available Weights:**
 
-- 400 (Regular)
-- 500 (Medium)
-- 600 (SemiBold) ← Primary display weight
-- 700 (Bold)
+- 400 (Regular) — **Default for body text, paragraphs**
+- 500 (Medium) — Emphasized text, form labels
+- 600 (SemiBold) — Headings, strong UI elements
+- 700 (Bold) — Bold headings, buttons for smaller text
+- 800 (ExtraBold) — Heavy emphasis
+- 900 (Black) — **Display text, large headings, buttons**
 
-**Characteristics:**
+**Usage Guide:**
 
-- Geometric, modern, slightly condensed
-- Tight letter-spacing (`0.008em`)
-- Line height: `1.15` (tight for visual impact)
-- Best for short, impactful statements
-
-#### Inter (Body & UI Font)
-
-```css
---font-body: 'Inter', sans-serif;
---font-ui: 'Inter', sans-serif; /* Alias for UI elements */
---font-mono: 'Inter', sans-serif; /* Alias for numeric content */
-```
-
-**When to Use:**
-
-- **All body text** (paragraphs, descriptions)
-- **All UI elements** (navigation, labels, badges)
-- **All buttons** (Inter Black 900 required!)
-- Form inputs and placeholder text
-- Numeric content (enable `tabular-nums`)
-- Footer text and links
-
-**Available Weights:**
-
-- 300 (Light) - rarely used
-- 400 (Regular) - **Default for body text**
-- 500 (Medium) - Emphasized text, labels
-- 600 (SemiBold) - Strong UI elements
-- 700 (Bold) - Headings when ZT unavailable
-- 900 (Black) - **All button text**
+- **Body text & paragraphs:** Regular (400)
+- **UI labels, navigation, form inputs:** Regular (400) or Medium (500)
+- **Headings (h1-h6):** SemiBold (600)
+- **Buttons:** Bold (700) for smaller buttons, Black (900) for prominent CTAs
+- **Hero/display text:** Black (900)
+- **Footer brand:** Regular (400) with wide tracking
 
 ### Font Weight System
 
 ```css
 --weight-body-regular: 400 /* Default body text, paragraphs */ --weight-body-strong: 500
-  /* Emphasized text, form labels */ --weight-ui-strong: 600 /* Strong UI elements */
-  --weight-display-strong: 600 /* ZT Bros Oskon display weight */ --weight-ui-button: 900
-  /* ALL buttons (Inter Black) */ --weight-inter-heavy: 900
-  /* Heavy Inter for headings if ZT unavailable */;
+  /* Emphasized text, form labels */ --weight-ui-strong: 600 /* Strong UI elements, headings */
+  --weight-display-strong: 600 /* Display heading weight */ --weight-ui-button: 900
+  /* ALL buttons (Makira Black) */;
 ```
 
 ### Type Scale
@@ -277,7 +243,7 @@ QorkMe uses **two font families exclusively**: ZT Bros Oskon for display moments
 Responsive typography using `clamp()` for fluid scaling:
 
 ```css
-/* Headings (ZT Bros Oskon) */
+/* Headings (Makira SemiBold 600) */
 h1: clamp(2.75rem, 4vw + 1rem, 4.5rem)   /* 44px → 72px */
 h2: clamp(2.25rem, 3vw + 1rem, 3.5rem)   /* 36px → 56px */
 h3: clamp(1.75rem, 2vw + 1rem, 2.5rem)   /* 28px → 40px */
@@ -285,7 +251,7 @@ h4: 1.5rem                                /* 24px fixed */
 h5: 1.25rem                               /* 20px fixed */
 h6: 1.125rem                              /* 18px fixed */
 
-/* Body text (Inter) */
+/* Body text (Makira Regular 400) */
 body: 1rem (16px base)
 small: 0.875rem (14px)
 
@@ -298,7 +264,7 @@ Small: 1.4        /* Balanced for captions */
 ### Letter Spacing Patterns
 
 ```css
-ZT Bros Oskon headings: 0.008em    /* Subtle tightening */
+Makira headings: 0.008em           /* Subtle tightening */
 Buttons: 0.02em                     /* Slight expansion for clarity */
 Footer brand: 0.16em                /* Ultra-wide with uppercase */
 Admin links: 0.12em                 /* Medium tracking with uppercase */
@@ -338,13 +304,13 @@ Admin links: 0.12em                 /* Medium tracking with uppercase */
 
 ### Common Typography Mistakes
 
-❌ **WRONG: Button with display font**
+❌ **WRONG: Button with light weight**
 
 ```tsx
-<button className="font-display">Click Me</button>
+<button className="font-body">Click Me</button>
 ```
 
-✅ **CORRECT: Button with Inter Black**
+✅ **CORRECT: Button with Makira Black**
 
 ```tsx
 <button className="font-ui [font-weight:var(--weight-ui-button)]">Click Me</button>
@@ -1977,16 +1943,18 @@ p {
 
 ```bash
 npm install tailwindcss@next @tailwindcss/typography
-npm install @fontsource/inter  # or use Google Fonts CDN
 ```
 
 **2. Configure Fonts**
 
-Place ZT Bros Oskon woff2 files in `public/fonts/`:
+Place Makira woff2 files in `public/fonts/`:
 
-- `ZTBrosOskon90s-Regular.woff2`
-- `ZTBrosOskon90s-SemiBold.woff2`
-- etc.
+- `Makira-Regular.woff2` (400)
+- `Makira-Medium.woff2` (500)
+- `Makira-SemiBold.woff2` (600)
+- `Makira-Bold.woff2` (700)
+- `Makira-ExtraBold.woff2` (800)
+- `Makira-Black.woff2` (900)
 
 **3. Create globals.css**
 
@@ -1995,14 +1963,13 @@ Place ZT Bros Oskon woff2 files in `public/fonts/`:
 
 /* Font faces */
 @font-face {
-  font-family: 'ZT Bros Oskon';
-  src: url('/fonts/ZTBrosOskon90s-SemiBold.woff2') format('woff2');
-  font-weight: 600;
+  font-family: 'Makira';
+  src: url('/fonts/Makira-Regular.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+/* ... repeat for each weight ... */
 
 /* CSS Custom Properties */
 :root {
@@ -2016,9 +1983,9 @@ Place ZT Bros Oskon woff2 files in `public/fonts/`:
   --color-border: rgba(108, 96, 81, 0.18);
   --color-border-strong: rgba(79, 69, 58, 0.32);
 
-  --font-display: 'ZT Bros Oskon', serif;
-  --font-body: 'Inter', sans-serif;
-  --font-ui: 'Inter', sans-serif;
+  --font-display: 'Makira', sans-serif;
+  --font-body: 'Makira', sans-serif;
+  --font-ui: 'Makira', sans-serif;
 
   --weight-body-regular: 400;
   --weight-body-strong: 500;
@@ -2122,7 +2089,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 ### Quick Start Checklist
 
-- [ ] Install ZT Bros Oskon font files
+- [ ] Install Makira font files (all 6 weights)
 - [ ] Configure CSS custom properties
 - [ ] Set up Tailwind CSS v4
 - [ ] Copy InteractiveGridPattern component

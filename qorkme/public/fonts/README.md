@@ -1,31 +1,27 @@
 # Font Files
 
-This directory contains the ZT Bros Oskon 90s font family files in WOFF2 format.
+This directory contains the Makira Sans Serif font family files in WOFF2 format.
 
 ## Current Font Family
 
-**ZT Bros Oskon 90s** - Display and heading font with multiple weights and italic variants:
+**Makira Sans Serif** — The sole font used across the entire QorkMe site:
 
-- `ZTBrosOskon90s-Regular.woff2` - Regular (400)
-- `ZTBrosOskon90s-Italic.woff2` - Regular Italic
-- `ZTBrosOskon90s-Medium.woff2` - Medium (500)
-- `ZTBrosOskon90s-MediumItalic.woff2` - Medium Italic
-- `ZTBrosOskon90s-SemiBold.woff2` - SemiBold (600)
-- `ZTBrosOskon90s-SemiBoldItalic.woff2` - SemiBold Italic
-- `ZTBrosOskon90s-Bold.woff2` - Bold (700)
-- `ZTBrosOskon90s-BoldItalic.woff2` - Bold Italic
+- `Makira-Regular.woff2` - Regular (400)
+- `Makira-Medium.woff2` - Medium (500)
+- `Makira-SemiBold.woff2` - SemiBold (600)
+- `Makira-Bold.woff2` - Bold (700)
+- `Makira-ExtraBold.woff2` - ExtraBold (800)
+- `Makira-Black.woff2` - Black (900)
 
 ## Typography System
 
-QorkMe's earthy modern design system uses:
+QorkMe uses Makira Sans Serif exclusively:
 
-- **Display/Headings**: ZT Bros Oskon 90s (weight 600 default)
-- **Body/UI Text**: Inter Regular (400) from Google Fonts
-- **Button Text**: Inter Black (900) for maximum contrast
-- **Fallback Headlines**: Inter Heavy (900) when ZT Bros Oskon cannot be used
+- **Body text & UI:** Regular (400)
+- **Emphasized text:** Medium (500)
+- **Headings:** SemiBold (600)
+- **Bold headings & smaller buttons:** Bold (700)
+- **Heavy emphasis:** ExtraBold (800)
+- **Display text & prominent buttons:** Black (900)
 
-See `app/globals.css` for font-face declarations and `docs/DESIGN_SYSTEM.md` for complete typography specifications.
-
-## Source Files
-
-Full font family source files (OTF/TTF/WEB) are available in the repository root at `/ZT Bros Oskon 90s/` directory.
+See `app/globals.css` for @font-face declarations and `docs/DESIGN_SYSTEM.md` for complete typography specifications.
