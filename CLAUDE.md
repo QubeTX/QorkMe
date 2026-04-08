@@ -8,13 +8,16 @@ QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, an
 
 ## Technology Stack
 
-- **Framework**: Next.js 15.5.7 with App Router and React 19
-- **Language**: TypeScript 5 (strict mode)
-- **Database**: Supabase (PostgreSQL) with real-time capabilities
-- **Styling**: Tailwind CSS v4 with an earthy modern token palette defined in `qorkme/docs/DESIGN_SYSTEM.md`
+- **Framework**: Next.js 15.5.7 with App Router and React 19.1.0
+- **Language**: TypeScript 5.5.3 (strict mode)
+- **Database**: Supabase (PostgreSQL) with real-time capabilities — Project ID: `gzsdakrkbirevpxcadrg`
+- **Supabase SDK**: @supabase/supabase-js 2.57.4, @supabase/ssr 0.7.0
+- **Styling**: Tailwind CSS 4.0.21 via @tailwindcss/postcss (no tailwind.config — tokens inline via `@theme` in `globals.css`)
 - **Typography**: Makira Sans Serif exclusively — Regular (400) for body, SemiBold (600) for headings, Black (900) for buttons and display
+- **Animation**: motion 12.23.24, react-hot-toast 2.6.0
+- **Icons**: lucide-react 0.544.0
 - **Deployment**: Vercel with automated GitHub Actions CI/CD
-- **Testing**: Vitest with Testing Library
+- **Testing**: Vitest 1.6.1 with @testing-library/react
 
 ## Repository Structure
 
@@ -30,7 +33,6 @@ QorkMe/
 |   |-- docs/                  # Documentation
 |   |-- supabase/              # Database schema and setup
 |   \-- public/fonts/          # Makira Sans Serif font files (woff2)
-|-- ZT Bros Oskon 90s/         # Legacy font files (no longer used)
 |-- vercel.json                # Root deployment config (points to qorkme/)
 |-- .github/workflows/         # CI/CD automation
 |-- AGENTS.md                  # Agent-specific guidelines
@@ -53,30 +55,42 @@ npm test             # Run Vitest test suite
 npm run test:watch   # Watch mode for tests
 npm run format       # Format code with Prettier
 npm run format:check # Verify formatting (used in CI)
+npm run ci           # Full local CI: lint + type-check + format:check + test + build
 ```
+
+**Always run `npm run ci` before committing or pushing** to catch issues locally before they hit GitHub Actions.
 
 ## Architecture Overview
 
 ### Application Structure
 
 - **`app/`**: Next.js 15 App Router with file-based routing
+  - `app/layout.tsx`: Root layout with Makira Sans Serif font loading
   - `app/page.tsx`: Homepage with URL shortener form
+  - `app/not-found.tsx`: Custom 404 page (matrix-themed)
   - `app/[shortCode]/route.ts`: Dynamic redirect handler for short URLs
   - `app/api/shorten/route.ts`: URL shortening API endpoint (POST/GET)
   - `app/result/[id]/page.tsx`: Success page after URL creation
   - `app/admin/page.tsx`: Admin dashboard (GitHub OAuth gated)
+  - `app/admin/login/page.tsx`: Admin login entry point
+  - `app/auth/callback/route.ts`: OAuth callback handler for Supabase GitHub auth
   - `app/api/admin/purge/route.ts`: Admin database purge endpoint
+  - `app/api/admin/health/route.ts`: Database health check endpoint
+  - `app/api/admin/links/route.ts`: Paginated URL listing with sort/filter
+  - `app/api/admin/links/[id]/route.ts`: Individual link management
 
-- **`components/`**: Modular React components organized by function
+- **`components/`**: 27 React components organized by function
   - `ui/`: Base components and core UI primitives
-    - `Button.tsx`: Reusable button component
-    - `Input.tsx`: Reusable input component
+    - `Button.tsx`, `Input.tsx`: Reusable form components
     - `matrix.tsx`: Matrix display core logic with dot-matrix rendering
-    - `shimmering-text.tsx`: Shimmering text animation effect
+    - `shimmering-text.tsx`: Shimmer animation effect
+    - `tilt-wrapper.tsx`: 3D perspective tilt wrapper
+    - `ambient-decor.tsx`: Ambient decoration effects
+    - `interactive-grid-pattern.tsx`: SVG grid with noise-masked opacity and hover glow
   - `cards/`: Card-based components (Card, FeatureCard, MetricCard)
-  - `admin/`: Admin console components (sign-in/out, database operations)
-  - `bauhaus/`: Decorative geometric elements
-  - Root-level: Main features (UrlShortener, MatrixDisplay, MatrixBackground, NavigationHeader, ThemeToggle)
+  - `admin/`: Admin console components (AdminSignInButton, AdminSignOutButton, ClearDatabaseButton, DatabaseHealthCard, AdminLinksTable)
+  - `bauhaus/`: Decorative geometric elements (GeometricDecor)
+  - Root-level: UrlShortener, MatrixDisplay, MatrixBackground, ShortUrlDisplay, SecureAccessMatrix, SiteHeader, SiteFooter, NavigationHeader, ResultNavigationHeader, ThemeToggle, ClientThemeToggle
 
 - **`lib/`**: Business logic and utilities
   - `shortcode/`: Intelligent short code generation with consonant-vowel patterns
@@ -84,21 +98,73 @@ npm run format:check # Verify formatting (used in CI)
     - `validator.ts`: Custom alias validation
     - `reserved.ts`: Protected word list
   - `supabase/`: Database client wrappers
-    - `client.ts`: Browser client
-    - `server.ts`: Server-side client with service role
+    - `client.ts`: Browser client (@supabase/ssr `createBrowserClient`)
+    - `server.ts`: Server-side client (`createServerClientInstance` for cookie-based auth, `createAdminClient` for service_role operations)
     - `types.ts`: TypeScript type definitions
+  - `admin/`: Admin authorization
+    - `auth.ts`: `verifyAdminAuth()` — checks GitHub OAuth session against admin username
+  - `config/`: Application configuration
+    - `admin.ts`: Admin username from `NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB` env var
   - `theme.tsx`: Theme context provider for light/dark mode
   - `utils.ts`: Shared utility functions
 
 ### Database Schema
 
-Supabase PostgreSQL with optimized schema for 200,000+ URLs:
+Supabase PostgreSQL (Project ID: `gzsdakrkbirevpxcadrg`) with optimized schema for 200,000+ URLs. Claude Code has full MCP access to this database via the Supabase MCP server (execute SQL, apply migrations, list tables, deploy edge functions, view logs, generate TypeScript types).
 
-- **`urls` table**: Primary storage with UUID keys, case-insensitive lookups via generated columns
-- **`clicks` table**: Analytics tracking (device, browser, OS, geography, timestamps)
-- **`reserved_words` table**: Protected short codes
-- Comprehensive indexes for fast lookups and analytics queries
-- Row Level Security (RLS) policies for access control
+#### Tables
+
+- **`urls`** (RLS enabled, 13 rows) — Primary URL storage
+  - `id` (UUID PK, auto-generated), `short_code` (varchar, 3-50 chars), `short_code_lower` (generated, unique), `long_url` (text)
+  - `title`, `description`, `favicon_url` (nullable text metadata)
+  - `custom_alias` (bool, default false), `is_active` (bool, default true), `click_count` (int, default 0)
+  - `expires_at`, `last_accessed_at`, `created_at`, `updated_at` (timestamptz)
+  - `user_id` (UUID FK → auth.users, nullable — null = anonymous/public URL)
+
+- **`clicks`** (RLS enabled) — Analytics per redirect
+  - `id` (UUID PK), `url_id` (UUID FK → urls), `clicked_at` (timestamptz)
+  - `ip_hash`, `country`, `city`, `region`, `device_type`, `browser`, `os` (varchar)
+  - `referrer` (text), `utm_source`, `utm_medium`, `utm_campaign` (varchar)
+
+- **`reserved_words`** (RLS enabled, SELECT-only, 25 rows) — Protected short codes, PK on `word` (varchar)
+
+- **`tags`** (RLS enabled) — URL categorization: `id` (UUID PK), `name` (varchar, unique), `color` (varchar), `created_at`
+
+- **`url_tags`** (RLS enabled) — Many-to-many join: composite PK (`url_id`, `tag_id`), FKs to both `urls` and `tags`
+
+#### Indexes
+
+| Table | Index | Type |
+|-------|-------|------|
+| `urls` | `unique_short_code_lower` | UNIQUE btree on `short_code_lower` |
+| `urls` | `idx_short_code_lower` | btree on `short_code_lower` |
+| `urls` | `idx_long_url_hash` | btree on `md5(long_url)` |
+| `urls` | `idx_active_urls` | partial btree on `is_active` WHERE true |
+| `urls` | `idx_click_count` | btree on `click_count` DESC |
+| `urls` | `idx_created_at` | btree on `created_at` DESC |
+| `urls` | `idx_user_id` | partial btree on `user_id` WHERE NOT NULL |
+| `clicks` | `idx_clicks_url_id` | btree on `url_id` |
+| `clicks` | `idx_clicks_url_date` | btree on `(url_id, clicked_at DESC)` |
+| `clicks` | `idx_clicks_clicked_at` | btree on `clicked_at` DESC |
+
+#### RLS Policies
+
+- **urls**: Public SELECT for all; INSERT allows `auth.uid() = user_id OR user_id IS NULL` (anonymous URL creation); UPDATE/DELETE restricted to `authenticated` role with `auth.uid() = user_id` only (no anonymous modification)
+- **clicks**: SELECT allowed when user owns the parent URL or the URL is anonymous; INSERT allowed for all (enables analytics tracking)
+- **reserved_words**: RLS enabled, SELECT-only for all (admin writes via service_role)
+- **tags / url_tags**: RLS enabled (no custom policies — default deny for non-service-role)
+- **Grants**: anon/authenticated have SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER — **no TRUNCATE**
+
+#### Custom Database Functions
+
+- `increment_click_count(p_short_code text)` — **SECURITY DEFINER**, atomically increments `click_count` + updates `last_accessed_at`, returns `(id, long_url, title)`, checks `is_active` and expiry. Used by `app/[shortCode]/route.ts` for redirects.
+- `check_short_code_available(code text)` — checks availability against both `urls` and `reserved_words` tables
+- `get_or_create_short_url(p_long_url, p_short_code, p_custom_alias, p_user_id)` — duplicate detection + insert in one call
+- `update_updated_at_column()` — trigger function on `urls` table, fires BEFORE UPDATE
+
+#### Installed Extensions
+
+`uuid-ossp`, `pgcrypto`, `pg_graphql`, `pg_trgm`, `pg_stat_statements`, `supabase_vault`, `plpgsql`
 
 Schema file: `qorkme/supabase/schema.sql`
 Setup guide: `qorkme/supabase/SETUP_INSTRUCTIONS.md`
@@ -322,15 +388,21 @@ Test files mirror source structure (e.g., `lib/shortcode/generator.ts` → `test
 
 ## Admin Console
 
-- **Route**: `/admin` (linked from footer)
-- **Authentication**: GitHub OAuth via Supabase
-- **Access control**: Restricted to `NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB` username
+- **Route**: `/admin` (linked from footer), login at `/admin/login`
+- **Authentication**: GitHub OAuth via Supabase, callback at `/auth/callback`
+- **Authorization**: `lib/admin/auth.ts` (`verifyAdminAuth()`) checks session against `NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB` (default: `REALEMMETTS`)
+- **Components**: `admin/AdminSignInButton`, `AdminSignOutButton`, `ClearDatabaseButton`, `DatabaseHealthCard`, `AdminLinksTable`
+- **API routes** (all use `createAdminClient()` with service_role key, bypassing RLS):
+  - `GET /api/admin/health`: Database status, table counts, latency, freshness timestamps
+  - `GET /api/admin/links`: Paginated URL listing with sort/order params (page, pageSize, sort, order)
+  - `PATCH/DELETE /api/admin/links/[id]`: Individual link toggle/delete
+  - `POST /api/admin/purge`: Wipes all clicks and urls (keeps schema)
 - **Features**:
-  - Total URL count
-  - Active redirects
+  - Total URL count (active + inactive breakdown)
   - Aggregate click metrics
   - Latest activity timestamps
-  - Database health check
+  - Database health check with latency monitoring
+  - Paginated links table with sorting
   - Danger zone: Purge all data (keeps schema intact)
 
 ## Key Implementation Details
@@ -515,7 +587,6 @@ Makira Sans Serif font family:
 - **Source files**: `C:\Users\hey\Documents\NEWFONTS2026\Makira-Sans-Serif\` (OTF/TTF/Variable/Web)
 - Keep font licensing notes aligned in `qorkme/public/fonts/README.md`
 - Never commit font files to version control outside designated directories
-- Legacy `ZT Bros Oskon 90s/` directory at repo root is no longer used
 
 ## Security Considerations
 

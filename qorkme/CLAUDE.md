@@ -15,7 +15,10 @@ npm test             # Vitest suite (single run)
 npm run test:watch   # Vitest watch mode
 npm run format       # Prettier write
 npm run format:check # Prettier verify (CI enforces this)
+npm run ci           # Full local CI: lint + type-check + format:check + test + build
 ```
+
+**Always run `npm run ci` before committing or pushing** to catch issues locally before they hit GitHub Actions.
 
 Run a single test file: `npx vitest run tests/shortcode/generator.test.ts`
 
@@ -90,14 +93,24 @@ Earthy modern aesthetic. Full spec in `docs/DESIGN_SYSTEM.md`. Tokens live in `a
 
 `@/` maps to `qorkme/` root (configured in `tsconfig.json` and `vitest.config.ts`).
 
+### Supabase
+
+- **Project ID**: `gzsdakrkbirevpxcadrg`
+- **MCP access**: Full database access via Supabase MCP server (execute SQL, apply migrations, view logs, etc.)
+- **Clients**: `lib/supabase/server.ts` (`createServerClientInstance` for cookie auth, `createAdminClient` for service_role); `lib/supabase/client.ts` (browser)
+
 ### Admin console
 
-- Route: `/admin` (linked from footer)
-- Auth: GitHub OAuth via Supabase, gated to `NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB` username
-- `lib/admin/auth.ts` — authorization logic
+- Route: `/admin` (linked from footer), login at `/admin/login`
+- Auth: GitHub OAuth via Supabase, gated to `NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB` username (default: `REALEMMETTS`)
+- `lib/admin/auth.ts` — `verifyAdminAuth()` authorization logic
 - `lib/config/admin.ts` — admin username config
 - `app/auth/callback/route.ts` — OAuth callback handler
-- Admin API routes: `api/admin/purge`, `api/admin/health`, `api/admin/links/[id]`
+- Admin API routes (all use service_role, bypassing RLS):
+  - `api/admin/health` — database status, counts, latency
+  - `api/admin/links` — paginated URL listing with sort/order
+  - `api/admin/links/[id]` — individual link toggle/delete
+  - `api/admin/purge` — wipe all data (keeps schema)
 
 ### Matrix display
 

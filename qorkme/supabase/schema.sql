@@ -114,12 +114,17 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Function to increment click count (atomic operation)
+-- SECURITY DEFINER so anonymous visitors can trigger redirects on user-owned URLs
 CREATE OR REPLACE FUNCTION increment_click_count(p_short_code TEXT)
 RETURNS TABLE (
   id UUID,
   long_url TEXT,
   title TEXT
-) AS $$
+)
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
   RETURN QUERY
   UPDATE urls
@@ -131,7 +136,7 @@ BEGIN
     AND (expires_at IS NULL OR expires_at > NOW())
   RETURNING urls.id, urls.long_url, urls.title;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to get or create URL (for duplicate detection)
 CREATE OR REPLACE FUNCTION get_or_create_short_url(
@@ -191,29 +196,27 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER update_urls_updated_at BEFORE UPDATE ON urls
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Row Level Security Policies (optional, for multi-user support)
+-- Row Level Security Policies
 ALTER TABLE urls ENABLE ROW LEVEL SECURITY;
 ALTER TABLE clicks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reserved_words ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tags ENABLE ROW LEVEL SECURITY;
 ALTER TABLE url_tags ENABLE ROW LEVEL SECURITY;
 
--- Public URLs are viewable by everyone
+-- urls policies
 CREATE POLICY "Public URLs are viewable by everyone" ON urls
   FOR SELECT USING (true);
 
--- Users can insert their own URLs
 CREATE POLICY "Users can insert their own URLs" ON urls
   FOR INSERT WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
 
--- Users can update their own URLs
-CREATE POLICY "Users can update their own URLs" ON urls
-  FOR UPDATE USING (auth.uid() = user_id OR user_id IS NULL);
+CREATE POLICY "Authenticated users can update their own URLs" ON urls
+  FOR UPDATE TO authenticated USING (auth.uid() = user_id);
 
--- Users can delete their own URLs
-CREATE POLICY "Users can delete their own URLs" ON urls
-  FOR DELETE USING (auth.uid() = user_id OR user_id IS NULL);
+CREATE POLICY "Authenticated users can delete their own URLs" ON urls
+  FOR DELETE TO authenticated USING (auth.uid() = user_id);
 
--- Analytics are viewable by URL owner
+-- clicks policies
 CREATE POLICY "Users can view analytics for their URLs" ON clicks
   FOR SELECT USING (
     EXISTS (
@@ -223,8 +226,15 @@ CREATE POLICY "Users can view analytics for their URLs" ON clicks
     )
   );
 
--- Grant necessary permissions
+CREATE POLICY "Anyone can insert click analytics" ON clicks
+  FOR INSERT WITH CHECK (true);
+
+-- reserved_words policies
+CREATE POLICY "Anyone can read reserved words" ON reserved_words
+  FOR SELECT USING (true);
+
+-- Grant necessary permissions (no TRUNCATE for anon/authenticated)
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
-GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO anon, authenticated;

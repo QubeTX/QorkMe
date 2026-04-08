@@ -2,6 +2,31 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [4.0.0] - 2026-04-08
+
+### Security
+
+- **Fixed broken click analytics** — Added INSERT RLS policy on `clicks` table; `trackClick()` was silently failing, resulting in 0 analytics rows
+- **Fixed redirect for user-owned URLs** — `increment_click_count` changed to SECURITY DEFINER; anonymous visitors can now redirect user-owned URLs
+- **Hardened `reserved_words`** — Enabled RLS with SELECT-only policy; previously fully writable by anonymous users
+- **Tightened `urls` UPDATE/DELETE** — Removed `user_id IS NULL` loophole; only authenticated URL owners can modify/delete
+- **Revoked TRUNCATE** — Removed from `anon` and `authenticated` roles across all public tables
+
+### Added
+
+- **`npm run ci` script** — Full local CI pipeline (lint + type-check + format:check + test + build) matching GitHub Actions
+- **Supabase project ID** in CLAUDE.md for MCP access reference
+- **Database functions documentation** — `increment_click_count`, `check_short_code_available`, `get_or_create_short_url`, `update_updated_at_column`
+
+### Changed
+
+- **`supabase/schema.sql`** — Updated RLS policies, SECURITY DEFINER on `increment_click_count`, RLS on `reserved_words`, explicit grant list (no TRUNCATE)
+- **CLAUDE.md** — Added Supabase section, expanded admin console with API route details
+
+### Removed
+
+- **8 legacy ZT Bros Oskon 90s woff2 files** from `public/fonts/`
+
 ## [3.9.0] - 2026-03-21
 
 ### Changed

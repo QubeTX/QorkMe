@@ -2,6 +2,27 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-04-08 (RLS Security Hardening + Documentation Refresh)
+
+### Security — Supabase RLS Migration
+- **Fixed broken click analytics** — Added INSERT policy on `clicks` table; analytics tracking was silently failing (0 rows recorded despite 13 URLs)
+- **Fixed redirect bug for user-owned URLs** — Changed `increment_click_count` function to SECURITY DEFINER so anonymous visitors can trigger redirects on authenticated users' URLs
+- **Enabled RLS on `reserved_words`** — Added SELECT-only policy; previously fully open (INSERT/UPDATE/DELETE) to anonymous users
+- **Tightened `urls` UPDATE/DELETE policies** — Removed `user_id IS NULL` loophole that allowed anyone to modify or delete anonymous URLs; now restricted to authenticated owners only
+- **Revoked TRUNCATE** — Removed TRUNCATE privilege from `anon` and `authenticated` roles on all 5 public tables
+
+### Added
+- **`npm run ci` script** — Local CI pipeline (lint + type-check + format:check + test + build) matching GitHub Actions; run before every commit/push
+- **Database functions documentation** — Added `increment_click_count`, `check_short_code_available`, `get_or_create_short_url`, `update_updated_at_column` to CLAUDE.md
+
+### Changed
+- **CLAUDE.md comprehensive refresh** — Updated Technology Stack with exact dependency versions, expanded App Router from 7 to 13 routes, updated component inventory (27 components), added `lib/admin/` and `lib/config/` modules, expanded Admin Console with API route details
+- **`qorkme/CLAUDE.md` update** — Added Supabase project ID, expanded admin console section with API route details
+- **`qorkme/supabase/schema.sql`** — Updated to reflect new RLS policies, SECURITY DEFINER function, and `reserved_words` RLS
+
+### Removed
+- **Legacy ZT Bros Oskon 90s font files** — Deleted 8 unused woff2 files from `qorkme/public/fonts/` and removed the legacy font directory from repo root
+
 ## 2026-03-21 (Makira-Only + 404 Page Refresh)
 
 ### Changed
