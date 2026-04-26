@@ -2,6 +2,11 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-04-26 (Theme Hook Testing)
+
+### Added
+- **`useTheme` unit tests** — Added comprehensive test suite for the `useTheme` hook and `ThemeProvider` covering error handling, initial state, toggling, and persistence.
+
 ## 2026-04-08 (RLS Security Hardening + Documentation Refresh)
 
 ### Security — Supabase RLS Migration

@@ -2,6 +2,12 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [4.1.0] - 2026-04-26
+
+### Added
+
+- **`useTheme` hook tests** — Comprehensive Vitest suite for theme management logic.
+
 ## [4.0.0] - 2026-04-08
 
 ### Security
