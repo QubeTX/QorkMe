@@ -4,7 +4,6 @@ import { UrlShortener } from '@/components/UrlShortener';
 import { SiteFooter } from '@/components/SiteFooter';
 import { MatrixDisplay } from '@/components/MatrixDisplay';
 import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
-import { AmbientDecor } from '@/components/ui/ambient-decor';
 import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
@@ -30,9 +29,6 @@ export default function Home() {
       >
         {/* Interactive Grid Background (Bottom Layer) */}
         <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
-
-        {/* Ambient Decor (Middle Layer - Floating Orbs) */}
-        <AmbientDecor />
 
         <main
           id="main-content"

@@ -290,8 +290,8 @@ export function MatrixDisplay() {
   }, [time, timeRows, timeColsMobile]);
 
   const palette = {
-    on: 'rgba(196, 114, 79, 1)', // Bright terracotta
-    off: 'rgba(196, 114, 79, 0.08)', // Very subtle off state
+    on: 'rgba(91, 138, 91, 1)', // Sage primary
+    off: 'rgba(91, 138, 91, 0.08)', // Very subtle off state
   };
 
   // Return placeholder during SSR to prevent hydration mismatch

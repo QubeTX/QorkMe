@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. The interface follows an earthy-modern aesthetic that pairs warm parchment neutrals, terracotta accents, and sage highlights with intelligent short code generation and comprehensive analytics tracking. Licensed under Apache License 2.0.
+QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. The interface follows the SHAUGHV vintage aesthetic — cream surfaces, sage as the single action color, olive body text, and bamboo as the warm secondary accent — paired with intelligent short code generation and comprehensive analytics tracking. Licensed under Apache License 2.0.
 
 ## Technology Stack
 
@@ -13,7 +13,7 @@ QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, an
 - **Database**: Supabase (PostgreSQL) with real-time capabilities — Project ID: `gzsdakrkbirevpxcadrg`
 - **Supabase SDK**: @supabase/supabase-js 2.57.4, @supabase/ssr 0.7.0
 - **Styling**: Tailwind CSS 4.0.21 via @tailwindcss/postcss (no tailwind.config — tokens inline via `@theme` in `globals.css`)
-- **Typography**: Makira Sans Serif exclusively — Regular (400) for body, SemiBold (600) for headings, Black (900) for buttons and display
+- **Typography**: Makira Sans Serif for all visible type — Regular (400) for body, SemiBold (600) for headings, Black (900) for buttons and display. IBM Plex Mono (Regular/Medium/SemiBold/Bold) for the mono slot — code blocks, short-URL display, and any element using `var(--font-mono)` or the `.font-mono` utility
 - **Animation**: motion 12.23.24, react-hot-toast 2.6.0
 - **Icons**: lucide-react 0.544.0
 - **Deployment**: Vercel with automated GitHub Actions CI/CD
@@ -32,7 +32,7 @@ QorkMe/
 |   |-- tests/                 # Vitest test suites
 |   |-- docs/                  # Documentation
 |   |-- supabase/              # Database schema and setup
-|   \-- public/fonts/          # Makira Sans Serif font files (woff2)
+|   \-- public/fonts/          # Makira Sans Serif + IBM Plex Mono font files (woff2)
 |-- vercel.json                # Root deployment config (points to qorkme/)
 |-- .github/workflows/         # CI/CD automation
 |-- AGENTS.md                  # Agent-specific guidelines
@@ -79,13 +79,11 @@ npm run ci           # Full local CI: lint + type-check + format:check + test + 
   - `app/api/admin/links/route.ts`: Paginated URL listing with sort/filter
   - `app/api/admin/links/[id]/route.ts`: Individual link management
 
-- **`components/`**: 27 React components organized by function
+- **`components/`**: 25 React components organized by function
   - `ui/`: Base components and core UI primitives
     - `Button.tsx`, `Input.tsx`: Reusable form components
     - `matrix.tsx`: Matrix display core logic with dot-matrix rendering
     - `shimmering-text.tsx`: Shimmer animation effect
-    - `tilt-wrapper.tsx`: 3D perspective tilt wrapper
-    - `ambient-decor.tsx`: Ambient decoration effects
     - `interactive-grid-pattern.tsx`: SVG grid with noise-masked opacity and hover glow
   - `cards/`: Card-based components (Card, FeatureCard, MetricCard)
   - `admin/`: Admin console components (AdminSignInButton, AdminSignOutButton, ClearDatabaseButton, DatabaseHealthCard, AdminLinksTable)
@@ -134,18 +132,18 @@ Supabase PostgreSQL (Project ID: `gzsdakrkbirevpxcadrg`) with optimized schema f
 
 #### Indexes
 
-| Table | Index | Type |
-|-------|-------|------|
-| `urls` | `unique_short_code_lower` | UNIQUE btree on `short_code_lower` |
-| `urls` | `idx_short_code_lower` | btree on `short_code_lower` |
-| `urls` | `idx_long_url_hash` | btree on `md5(long_url)` |
-| `urls` | `idx_active_urls` | partial btree on `is_active` WHERE true |
-| `urls` | `idx_click_count` | btree on `click_count` DESC |
-| `urls` | `idx_created_at` | btree on `created_at` DESC |
-| `urls` | `idx_user_id` | partial btree on `user_id` WHERE NOT NULL |
-| `clicks` | `idx_clicks_url_id` | btree on `url_id` |
-| `clicks` | `idx_clicks_url_date` | btree on `(url_id, clicked_at DESC)` |
-| `clicks` | `idx_clicks_clicked_at` | btree on `clicked_at` DESC |
+| Table    | Index                     | Type                                      |
+| -------- | ------------------------- | ----------------------------------------- |
+| `urls`   | `unique_short_code_lower` | UNIQUE btree on `short_code_lower`        |
+| `urls`   | `idx_short_code_lower`    | btree on `short_code_lower`               |
+| `urls`   | `idx_long_url_hash`       | btree on `md5(long_url)`                  |
+| `urls`   | `idx_active_urls`         | partial btree on `is_active` WHERE true   |
+| `urls`   | `idx_click_count`         | btree on `click_count` DESC               |
+| `urls`   | `idx_created_at`          | btree on `created_at` DESC                |
+| `urls`   | `idx_user_id`             | partial btree on `user_id` WHERE NOT NULL |
+| `clicks` | `idx_clicks_url_id`       | btree on `url_id`                         |
+| `clicks` | `idx_clicks_url_date`     | btree on `(url_id, clicked_at DESC)`      |
+| `clicks` | `idx_clicks_clicked_at`   | btree on `clicked_at` DESC                |
 
 #### RLS Policies
 
@@ -246,7 +244,7 @@ QorkMe features a subtle interactive grid background that creates visual depth a
 - **Grid specs**: Dynamic sizing based on viewport dimensions (40px cells with 2-cell buffer)
 - **Visual effects**:
   - Base grid: Earthy border lines with noise-based opacity variation for organic texture
-  - Hover interaction: Terracotta glow (`--color-primary` at 12% opacity) on cell hover
+  - Hover interaction: Sage glow (`--color-primary` at 12% opacity) on cell hover
   - Noise filter: SVG fractal noise modulates grid line opacity (0.4-1.0 range) for subtle, paper-like inconsistency
 - **Z-index**: Grid at z-0, content at z-10
 - **Performance**: Minimal DOM manipulation, CSS transitions, pointer events isolated to interactive cells only
@@ -271,6 +269,7 @@ QorkMe features a subtle interactive grid background that creates visual depth a
 **Pointer Events Pattern** (critical for grid interactivity):
 
 To allow the grid to receive hover/click events in empty space while keeping UI elements interactive:
+
 - Container elements (`main`, content wrappers): `pointer-events-none`
 - Interactive elements (cards, forms, buttons, links): `pointer-events-auto`
 - Decorative elements (MatrixDisplay): `pointer-events-none`
@@ -324,13 +323,14 @@ Configure in repository Settings -> Secrets and variables -> Actions:
 
 ## Design System
 
-QorkMe now leans into an earthy modern aesthetic that pairs warm parchment neutrals with terracotta and sage accents:
+QorkMe uses the SHAUGHV vintage palette — cream-dominant surfaces with sage as the single action color:
 
-- **Color palette**: Soft sand surfaces (`#f6f1e8`, `#f2e7d6`) contrasted with terracotta primary (`#c4724f`) and sage accent (`#5f7d58`).
-- **Typography**: **Makira Sans Serif** exclusively site-wide (400-900). Regular (400) for body, SemiBold (600) for headings, Bold (700) for smaller buttons, Black (900) for display text and prominent CTAs. Scoped via `.font-makira` on page wrappers.
-- **Surfaces & depth**: Rounded cards (`12px-28px` radii) with diffused warm shadows; blur is subtle and used sparingly.
-- **Theme**: Light theme focused, dark mode swaps to espresso tones via the same tokens. Tokens live in `qorkme/app/globals.css`.
-- **Interaction**: Calm transitions (140-420ms), faint gradient overlays, and focus rings using the primary terracotta.
+- **Color palette (light mode)**: Cream surfaces (`#FAFAF8`, `#F5F5F0`, `#EEEEE8`); sage primary/action color (`#5B8A5B`, hover `#4A7A4A`); olive body text (`#5C5446`, secondary `#6C6456`); bamboo warm accent (`#C4A876`). Semantic tones: success = sage `#5B8A5B`, warning = ochre `#D6A52E`, error = bauhaus terracotta `#B05545`, info = slate `#345670`.
+- **Color palette (dark mode)**: Olive-tinted espresso surfaces (`#2A2620` → `#1C1814` gradient); sage-light action color (`#6B9A6B`); cream foreground (`#F5F5F0`); bamboo-light accent (`#D4B896`).
+- **Typography**: **Makira Sans Serif** (400-900) for all visible type — Regular (400) body, SemiBold (600) headings, Bold (700) smaller buttons, Black (900) display/CTAs. **IBM Plex Mono** (400-700) for the mono slot — code blocks, the short-URL display, and any `font-mono` element. Makira is scoped via `.font-makira` on page wrappers; the wrapper rule excludes `code`/`pre`/`.font-mono` so the mono face surfaces.
+- **Surfaces & depth**: Rounded cards (`12px-28px` radii) with soft olive-tinted shadows (`rgba(92, 84, 70, 0.08-0.16)`); blur subtle and used sparingly.
+- **Theme**: Light by default, dark mode swaps to espresso surfaces via the same `--color-*` tokens. Tokens live in `qorkme/app/globals.css`.
+- **Interaction**: Calm transitions (140-420ms), faint gradient overlays, focus rings using sage (`rgba(91, 138, 91, 0.32)`).
 - **Spacing**: 8px grid with responsive clamps for sections, stacks, and grids.
 
 Complete specification: `qorkme/docs/DESIGN_SYSTEM.md`
@@ -471,7 +471,6 @@ Implementation: `qorkme/components/MatrixDisplay.tsx`, `qorkme/components/ui/mat
 
 ### URL Shortener Card Interactions
 
-- Subtle 3D tilt effect on mouse movement (rotation divisor: /80 for refined feel)
 - **Mobile-optimized padding** (updated 2025-10-18):
   - Fixed 24px padding on all viewports using inline styles
   - Tailwind v4 compatibility: Uses `style={{ padding: '24px' }}` instead of Tailwind classes
@@ -562,7 +561,7 @@ Matrix rendering logic is split between:
 ## Documentation
 
 - **Setup guide**: `qorkme/README.md` - Complete installation and configuration
-- **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - Earthy modern palette, typography, and component tokens
+- **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - SHAUGHV vintage palette (cream/sage/olive), typography, and component tokens
 - **UI/Layout guide**: `qorkme/docs/UI_LAYOUT_GUIDE.md` - Critical Tailwind v4 gotchas, flexbox patterns, troubleshooting
 - **Vercel deployment**: `qorkme/docs/VERCEL_SETUP.md` - CI/CD configuration
 - **General deployment**: `qorkme/docs/DEPLOYMENT.md` - Multi-platform options
@@ -581,10 +580,11 @@ Update both files before committing changes to maintain accurate version history
 
 ## Font Asset Management
 
-Makira Sans Serif font family:
+Two font families ship in `qorkme/public/fonts/` (woff2 only):
 
-- **Production files**: `qorkme/public/fonts/` (woff2 only — Regular, Medium, SemiBold, Bold, ExtraBold, Black)
-- **Source files**: `C:\Users\hey\Documents\NEWFONTS2026\Makira-Sans-Serif\` (OTF/TTF/Variable/Web)
+- **Makira Sans Serif** (proprietary, self-hosted): Regular, Medium, SemiBold, Bold, ExtraBold, Black. Source: `C:\Users\hey\Documents\NEWFONTS2026\Makira-Sans-Serif\` (OTF/TTF/Variable/Web)
+- **IBM Plex Mono** (IBM open source, SIL OFL 1.1): Regular, Medium, SemiBold, Bold. Used for the `--font-mono` slot
+
 - Keep font licensing notes aligned in `qorkme/public/fonts/README.md`
 - Never commit font files to version control outside designated directories
 

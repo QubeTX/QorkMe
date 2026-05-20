@@ -2,9 +2,23 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-05-20 (SHAUGHV Vintage Palette + Decor Cleanup)
+
+### Changed
+
+- **Color tokens reskinned to SHAUGHV vintage** — Light and dark mode `:root` palettes in `qorkme/app/globals.css` now use cream surfaces (`#FAFAF8`/`#F5F5F0`/`#EEEEE8`), sage as the action color (`#5B8A5B`), olive for body text (`#5C5446`), and bamboo as the warm secondary. Dark mode keeps sage as the action color (lifted to sage-light `#6B9A6B`) over olive-tinted espresso surfaces with cream foreground.
+- **Hardcoded terracotta tones swapped to sage** — `UrlShortener.tsx` button gradient and focus shadows now use sage (`#4A7A4A` / `rgba(91, 138, 91, ...)`); `MatrixDisplay.tsx`, `MatrixBackground.tsx`, and `SecureAccessMatrix.tsx` matrix dot palettes recolored to sage.
+- **IBM Plex Mono added** — `--font-mono` now resolves to IBM Plex Mono (replacing Makira); fonts self-hosted in `qorkme/public/fonts/`. `.font-makira` wrapper updated to exclude `code`/`pre`/`.font-mono` so the mono face surfaces on the short-URL display and code blocks.
+
+### Removed
+
+- **Floating background decor (`AmbientDecor`)** — Three drifting particles and two large blurred terracotta/sage orbs removed from the home page; component file deleted.
+- **URL shortener card 3D tilt + glare (`TiltWrapper`)** — Perspective rotation and mouse-following glare overlay removed from the URL shortener card; component file deleted. Card now sits flat; internal shimmer beam preserved.
+
 ## 2026-04-08 (RLS Security Hardening + Documentation Refresh)
 
 ### Security — Supabase RLS Migration
+
 - **Fixed broken click analytics** — Added INSERT policy on `clicks` table; analytics tracking was silently failing (0 rows recorded despite 13 URLs)
 - **Fixed redirect bug for user-owned URLs** — Changed `increment_click_count` function to SECURITY DEFINER so anonymous visitors can trigger redirects on authenticated users' URLs
 - **Enabled RLS on `reserved_words`** — Added SELECT-only policy; previously fully open (INSERT/UPDATE/DELETE) to anonymous users
@@ -12,25 +26,30 @@
 - **Revoked TRUNCATE** — Removed TRUNCATE privilege from `anon` and `authenticated` roles on all 5 public tables
 
 ### Added
+
 - **`npm run ci` script** — Local CI pipeline (lint + type-check + format:check + test + build) matching GitHub Actions; run before every commit/push
 - **Database functions documentation** — Added `increment_click_count`, `check_short_code_available`, `get_or_create_short_url`, `update_updated_at_column` to CLAUDE.md
 
 ### Changed
+
 - **CLAUDE.md comprehensive refresh** — Updated Technology Stack with exact dependency versions, expanded App Router from 7 to 13 routes, updated component inventory (27 components), added `lib/admin/` and `lib/config/` modules, expanded Admin Console with API route details
 - **`qorkme/CLAUDE.md` update** — Added Supabase project ID, expanded admin console section with API route details
 - **`qorkme/supabase/schema.sql`** — Updated to reflect new RLS policies, SECURITY DEFINER function, and `reserved_words` RLS
 
 ### Removed
+
 - **Legacy ZT Bros Oskon 90s font files** — Deleted 8 unused woff2 files from `qorkme/public/fonts/` and removed the legacy font directory from repo root
 
 ## 2026-03-21 (Makira-Only + 404 Page Refresh)
 
 ### Changed
+
 - **Site-wide font consolidation** — Removed all ZT Bros Oskon and Inter font references; Makira Sans Serif is now the sole font across CSS, components, and documentation
 - **404 page refresh** — Added InteractiveGridPattern background, Makira font scoping, and refined copy; removed NavigationHeader for a cleaner look
 - **New Makira weights** — Added ExtraBold (800) and Black (900) for display text and buttons
 
 ### Removed
+
 - ZT Bros Oskon @font-face declarations (8 variants) and Inter Google Fonts import from globals.css
 - `.font-inter-heavy` CSS class (replaced with `.font-makira-black`)
 - All documentation references to ZT Bros Oskon and Inter fonts
@@ -38,17 +57,20 @@
 ## 2026-03-20 (Font Swap: Personal Vogue → Makira)
 
 ### Changed
+
 - **Typography overhaul** — Replaced Personal Vogue (serif) with Makira Sans Serif across all pages (homepage, admin dashboard, admin login)
 - **Removed `.font-data` override** — Makira now renders universally including admin tables, metrics, charts, and data elements (no more Inter fallback)
 - **Font weights** — Added Makira Regular (400), Medium (500), SemiBold (600), Bold (700)
 
 ### Removed
+
 - `PersonalVogue-Regular.woff2` and `PersonalVogue-Italic.woff2` font files
 - `.font-data` CSS class and all component references
 
 ## 2026-03-19 (SHAUGHV Logo Attribution)
 
 ### Added
+
 - SHAUGHV logo attribution comments in `qorkme/public/shaughv-brandmark.svg` for cross-repo searchability
 
 ## 2026-03-14 (PR Batch Review & Merge)

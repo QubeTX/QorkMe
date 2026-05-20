@@ -66,24 +66,34 @@ For components needing different props at different breakpoints, render separate
 
 ## Design System
 
-Earthy modern aesthetic. Full spec in `docs/DESIGN_SYSTEM.md`. Tokens live in `app/globals.css` as CSS custom properties.
+SHAUGHV vintage palette — cream-dominant surfaces, sage as the single action color. Full spec in `docs/DESIGN_SYSTEM.md`. Tokens live in `app/globals.css` as CSS custom properties.
 
-**Palette:**
+**Palette (light mode):**
 
-- Parchment surfaces: `#f6f1e8`, `#f2e7d6`
-- Terracotta primary: `#c4724f`
-- Sage accent: `#5f7d58`
-- Dark mode swaps to espresso tones via same token names
+- Cream surfaces: `#FAFAF8` (surface), `#F5F5F0` (background), `#EEEEE8` (sunken), `#FDFDFB` (elevated)
+- Sage primary / action color: `#5B8A5B` (hover `#4A7A4A`) — buttons, focus rings, links
+- Olive body text: `#5C5446` (secondary `#6C6456`, muted at 60% alpha)
+- Bamboo warm accent: `#C4A876` (hover `#A48856`)
+- Semantic: success = sage `#5B8A5B`, warning = ochre `#D6A52E`, error = bauhaus terracotta `#B05545`, info = slate `#345670`
+
+**Palette (dark mode):**
+
+- Surfaces: olive-tinted espresso gradient `#2A2620 → #1C1814`
+- Sage-light action color: `#6B9A6B` (hover `#5B8A5B`)
+- Cream foreground: `#F5F5F0`
+- Bamboo-light accent: `#D4B896`
 
 **Typography:**
 
-- **Makira Sans Serif** — sole font site-wide, scoped via `.font-makira` class on page wrappers
+- **Makira Sans Serif** — all visible type, scoped via `.font-makira` class on page wrappers. The wrapper rule excludes `code`/`pre`/`.font-mono` so the mono face surfaces.
   - Regular (400) — body text, UI labels, numbers
   - Medium (500) — emphasized text, form labels
   - SemiBold (600) — headings, strong UI elements
   - Bold (700) — bold headings, smaller buttons
   - ExtraBold (800) — heavy emphasis
   - Black (900) — display text, prominent CTAs, via `--weight-ui-button` CSS variable
+- **IBM Plex Mono** — mono slot (`var(--font-mono)`, `.font-mono`, `<code>`, `<pre>`). Used for the short-URL display and code blocks.
+  - Regular (400), Medium (500), SemiBold (600), Bold (700)
 
 **Transitions:** 140ms (fast), 240ms (base), 420ms (slow). Spacing: 8px grid.
 

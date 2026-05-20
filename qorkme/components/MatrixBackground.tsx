@@ -109,8 +109,8 @@ function ClockOverlay() {
               size={7}
               gap={2}
               palette={{
-                on: 'rgba(196, 114, 79, 1)',
-                off: 'rgba(196, 114, 79, 0)',
+                on: 'rgba(91, 138, 91, 1)',
+                off: 'rgba(91, 138, 91, 0)',
               }}
               brightness={1}
               ariaLabel={index === 0 ? `${hours} hours` : undefined}
@@ -129,8 +129,8 @@ function ClockOverlay() {
               size={7}
               gap={2}
               palette={{
-                on: 'rgba(196, 114, 79, 1)',
-                off: 'rgba(196, 114, 79, 0)',
+                on: 'rgba(91, 138, 91, 1)',
+                off: 'rgba(91, 138, 91, 0)',
               }}
               brightness={1}
               ariaLabel={index === 0 ? `${minutes} minutes` : undefined}
@@ -149,8 +149,8 @@ function ClockOverlay() {
               size={7}
               gap={2}
               palette={{
-                on: 'rgba(196, 114, 79, 1)',
-                off: 'rgba(196, 114, 79, 0)',
+                on: 'rgba(91, 138, 91, 1)',
+                off: 'rgba(91, 138, 91, 0)',
               }}
               brightness={1}
               ariaLabel={index === 0 ? `${seconds} seconds` : undefined}
@@ -237,8 +237,8 @@ export function MatrixBackground() {
                 size={6}
                 gap={2}
                 palette={{
-                  on: 'rgba(196, 114, 79, 0.9)',
-                  off: 'rgba(196, 114, 79, 0.05)',
+                  on: 'rgba(91, 138, 91, 0.9)',
+                  off: 'rgba(91, 138, 91, 0.05)',
                 }}
                 brightness={0.75}
               />

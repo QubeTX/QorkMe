@@ -2,6 +2,20 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [4.1.0] - 2026-05-20
+
+### Changed
+
+- **SHAUGHV vintage palette** — Recolored `:root` and `[data-theme='dark']` tokens in `app/globals.css`. Light mode: cream surfaces (`#FAFAF8`/`#F5F5F0`/`#EEEEE8`), sage action color (`#5B8A5B`), olive text (`#5C5446`), bamboo warm accent (`#C4A876`). Dark mode: olive-tinted espresso surfaces, sage-light action color (`#6B9A6B`), cream foreground.
+- **Hardcoded terracotta tones swapped to sage** — `components/UrlShortener.tsx` button gradient stops and focus shadows now sage; `components/MatrixDisplay.tsx`, `components/MatrixBackground.tsx`, `components/SecureAccessMatrix.tsx` matrix dot palettes recolored.
+- **`--font-mono` now resolves to IBM Plex Mono** — Self-hosted woff2 files (Regular/Medium/SemiBold/Bold) added to `public/fonts/`. `@font-face` declarations added in `globals.css`. `.font-makira` wrapper rule tightened with `:not(code):not(pre):not(.font-mono)` so the mono face surfaces on `<code>`, `<pre>`, and `font-mono` elements (including the short-URL display).
+- **`public/fonts/README.md`** — Documented IBM Plex Mono bundle alongside Makira.
+
+### Removed
+
+- **`components/ui/ambient-decor.tsx`** — Floating particles and drifting blurred orbs removed from the home page background; component file deleted.
+- **`components/ui/tilt-wrapper.tsx`** — 3D perspective tilt and glare overlay removed from the URL shortener card; component file deleted. Outer `<TiltWrapper>` replaced with a plain `<div>` in `components/UrlShortener.tsx`. Internal shimmer border beam on the card preserved.
+
 ## [4.0.0] - 2026-04-08
 
 ### Security

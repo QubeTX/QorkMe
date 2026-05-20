@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { TiltWrapper } from '@/components/ui/tilt-wrapper';
 import toast from 'react-hot-toast';
 
 export function UrlShortener() {
@@ -93,7 +92,7 @@ export function UrlShortener() {
   };
 
   return (
-    <TiltWrapper className="w-full max-w-[700px] mx-auto perspective-1000" rotationFactor={5}>
+    <div className="w-full max-w-[700px] mx-auto">
       <div
         id="url-shortener-card"
         className="url-shortener-card relative flex flex-col gap-6 rounded-[30px] border border-white/10 bg-[color:var(--color-surface)]/[0.03] shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1),0_0_0_1px_rgba(255,255,255,0.05)] backdrop-blur-xl overflow-hidden"
@@ -169,7 +168,7 @@ export function UrlShortener() {
 
             <Button
               onClick={handleReset}
-              className="w-full rounded-2xl border-none bg-gradient-to-br from-[color:var(--color-primary)] to-[#c56647] px-5 py-6 font-ui text-lg font-semibold text-text-inverse shadow-[0_4px_20px_rgba(196,114,79,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] relative overflow-hidden group"
+              className="w-full rounded-2xl border-none bg-gradient-to-br from-[color:var(--color-primary)] to-[#4A7A4A] px-5 py-6 font-ui text-lg font-semibold text-text-inverse shadow-[0_4px_20px_rgba(91,138,91,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] relative overflow-hidden group"
             >
               <span className="relative z-10">Shorten Another URL</span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
@@ -193,14 +192,14 @@ export function UrlShortener() {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="url-input w-full rounded-2xl border-2 border-white/10 bg-[rgba(20,20,19,0.4)] px-6 py-5 text-lg text-text-primary backdrop-blur-sm placeholder:text-text-muted focus:border-[color:var(--color-primary)] focus:bg-[rgba(20,20,19,0.6)] focus:shadow-[0_0_0_4px_rgba(196,114,79,0.1)] focus:outline-none transition-all duration-300"
+                className="url-input w-full rounded-2xl border-2 border-white/10 bg-[rgba(20,20,19,0.4)] px-6 py-5 text-lg text-text-primary backdrop-blur-sm placeholder:text-text-muted focus:border-[color:var(--color-primary)] focus:bg-[rgba(20,20,19,0.6)] focus:shadow-[0_0_0_4px_rgba(91,138,91,0.1)] focus:outline-none transition-all duration-300"
                 required
               />
             </div>
             <Button
               id="shorten-button"
               onClick={handleSubmit}
-              className="shorten-button w-full rounded-2xl border-none bg-gradient-to-br from-[color:var(--color-primary)] to-[#c56647] px-5 py-6 font-ui text-lg font-semibold text-text-inverse shadow-[0_4px_20px_rgba(196,114,79,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] relative overflow-hidden group transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              className="shorten-button w-full rounded-2xl border-none bg-gradient-to-br from-[color:var(--color-primary)] to-[#4A7A4A] px-5 py-6 font-ui text-lg font-semibold text-text-inverse shadow-[0_4px_20px_rgba(91,138,91,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] relative overflow-hidden group transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
             >
               <span className="relative z-10">Shorten URL</span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
@@ -208,6 +207,6 @@ export function UrlShortener() {
           </div>
         )}
       </div>
-    </TiltWrapper>
+    </div>
   );
 }

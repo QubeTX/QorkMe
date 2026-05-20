@@ -48,34 +48,67 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('/fonts/IBMPlexMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('/fonts/IBMPlexMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('/fonts/IBMPlexMono-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('/fonts/IBMPlexMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --color-background: #f6f1e8;
-  --color-background-accent: #ece3d2;
-  --color-surface: #ffffff;
-  --color-surface-elevated: #f2e7d6;
-  --color-surface-muted: #e5dac5;
-  --color-primary: #c4724f;
-  --color-primary-hover: #b46444;
-  --color-secondary: #2f2a26;
-  --color-secondary-hover: #26211f;
-  --color-accent: #5f7d58;
-  --color-accent-hover: #4f6a49;
+  /* SHAUGHV vintage palette — cream surfaces, sage action color, olive text */
+  --color-background: #f5f5f0;
+  --color-background-accent: #eeeee8;
+  --color-surface: #fafaf8;
+  --color-surface-elevated: #fdfdfb;
+  --color-surface-muted: #e5e5df;
+  --color-primary: #5b8a5b;
+  --color-primary-hover: #4a7a4a;
+  --color-secondary: #5c5446;
+  --color-secondary-hover: #4c4436;
+  --color-accent: #c4a876;
+  --color-accent-hover: #a48856;
 
-  --color-text-primary: #2f2a26;
-  --color-text-secondary: #49413a;
-  --color-text-muted: #6b6159;
-  --color-text-inverse: #f6f1e8;
+  --color-text-primary: #5c5446;
+  --color-text-secondary: #6c6456;
+  --color-text-muted: rgba(92, 84, 70, 0.6);
+  --color-text-inverse: #fafaf8;
 
-  --color-border: rgba(108, 96, 81, 0.18);
-  --color-border-strong: rgba(79, 69, 58, 0.32);
-  --color-ring: rgba(196, 114, 79, 0.32);
-  --color-shadow: rgba(40, 32, 26, 0.08);
-  --color-shadow-hover: rgba(40, 32, 26, 0.16);
+  --color-border: rgba(92, 84, 70, 0.18);
+  --color-border-strong: rgba(92, 84, 70, 0.32);
+  --color-ring: rgba(91, 138, 91, 0.32);
+  --color-shadow: rgba(92, 84, 70, 0.08);
+  --color-shadow-hover: rgba(92, 84, 70, 0.16);
 
-  --color-success: #4f7c5a;
-  --color-warning: #d08a3b;
-  --color-error: #c04d3c;
-  --color-info: #5f7d58;
+  --color-success: #5b8a5b;
+  --color-warning: #d6a52e;
+  --color-error: #b05545;
+  --color-info: #345670;
 
   --container-max: 1200px;
   --container-padding: clamp(1.25rem, 6vw, 3.5rem);
@@ -91,7 +124,7 @@
   --font-display: 'Makira', sans-serif;
   --font-body: 'Makira', sans-serif;
   --font-ui: 'Makira', sans-serif;
-  --font-mono: 'Makira', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   --weight-body-regular: 400;
   --weight-body-strong: 500;
@@ -106,33 +139,34 @@
 }
 
 [data-theme='dark'] {
-  --color-background: linear-gradient(180deg, #1f1c18 0%, #171410 100%);
-  --color-background-accent: #26221e;
-  --color-surface: rgba(33, 29, 26, 0.94);
-  --color-surface-elevated: rgba(46, 40, 36, 0.92);
-  --color-surface-muted: rgba(64, 56, 50, 0.65);
-  --color-primary: #e08b61;
-  --color-primary-hover: #c4724f;
-  --color-secondary: #f4ede2;
-  --color-secondary-hover: #e4d9c8;
-  --color-accent: #84a782;
-  --color-accent-hover: #6e8d6a;
+  /* SHAUGHV vintage palette (dark variant) — olive-tinted espresso surfaces, sage action, cream text */
+  --color-background: linear-gradient(180deg, #2a2620 0%, #1c1814 100%);
+  --color-background-accent: #2f2a24;
+  --color-surface: rgba(44, 39, 33, 0.94);
+  --color-surface-elevated: rgba(58, 52, 44, 0.92);
+  --color-surface-muted: rgba(76, 68, 54, 0.65);
+  --color-primary: #6b9a6b;
+  --color-primary-hover: #5b8a5b;
+  --color-secondary: #f5f5f0;
+  --color-secondary-hover: #eeeee8;
+  --color-accent: #d4b896;
+  --color-accent-hover: #c4a876;
 
-  --color-text-primary: #f4ede2;
-  --color-text-secondary: #d9cfc0;
-  --color-text-muted: rgba(236, 229, 217, 0.72);
-  --color-text-inverse: #201c18;
+  --color-text-primary: #f5f5f0;
+  --color-text-secondary: #e5e5df;
+  --color-text-muted: rgba(245, 245, 240, 0.72);
+  --color-text-inverse: #2c2720;
 
-  --color-border: rgba(226, 216, 201, 0.14);
-  --color-border-strong: rgba(241, 232, 220, 0.3);
-  --color-ring: rgba(224, 139, 97, 0.4);
+  --color-border: rgba(245, 245, 240, 0.14);
+  --color-border-strong: rgba(245, 245, 240, 0.3);
+  --color-ring: rgba(107, 154, 107, 0.4);
   --color-shadow: rgba(0, 0, 0, 0.45);
   --color-shadow-hover: rgba(0, 0, 0, 0.6);
 
-  --color-success: #88c09a;
-  --color-warning: #e0a165;
-  --color-error: #e17462;
-  --color-info: #84a782;
+  --color-success: #6b9a6b;
+  --color-warning: #d6a52e;
+  --color-error: #b05545;
+  --color-info: #345670;
 }
 
 @theme inline {
@@ -419,13 +453,21 @@ pre {
   letter-spacing: 0.01em;
 }
 
-/* Makira scope — apply to a page wrapper to override all text */
+/* Makira scope — apply to a page wrapper to override all text.
+   Excludes code/pre and .font-mono elements so IBM Plex Mono still surfaces. */
 .font-makira,
-.font-makira *,
+.font-makira *:not(code):not(pre):not(.font-mono):not(.font-mono *),
 .font-makira input,
 .font-makira button,
 .font-makira a {
   font-family: 'Makira', sans-serif !important;
+}
+
+.font-makira code,
+.font-makira pre,
+.font-makira .font-mono,
+.font-makira .font-mono * {
+  font-family: var(--font-mono) !important;
 }
 
 @keyframes metric-glow {
