@@ -2,6 +2,16 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-12 (Database Optimization — Scalability Pass)
+
+### Performance
+
+- **Shorten path collapsed to one DB round trip** — `get_or_create_short_url` v2 RPC handles duplicate detection (existing URLs return their existing short link, never a duplicate row), reserved-word filtering, candidate availability, and the insert atomically. Replaces an unindexed full-table duplicate scan + up-to-100 sequential collision queries.
+- **Click tracking made loss-proof** — analytics inserts moved from fire-and-forget to Next 15 `after()` with a cookie-free anon client.
+- **Admin health check consolidated** — 8 parallel count/scan queries → single `admin_health_stats()` RPC (service-role only). Admin links pagination switched to estimated counts.
+- **RLS initplan optimization** — `auth.uid()` calls wrapped in scalar subselects across urls/clicks policies; function `search_path`s pinned; `urls.user_id` FK now `ON DELETE SET NULL`; DB reserved-words table synced with the app list.
+- Six migrations added under `qorkme/supabase/migrations/`; `.gitattributes` now enforces LF checkouts (fixes Prettier failures on Windows clones).
+
 ## 2026-05-20 (SHAUGHV Vintage Palette + Decor Cleanup)
 
 ### Changed

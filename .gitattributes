@@ -1,2 +1,13 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Auto detect text files and perform LF normalization.
+# eol=lf keeps checkouts LF on every platform — Prettier enforces LF
+# (endOfLine), so Windows clones with core.autocrlf=true would otherwise fail
+# format:check on every file.
+* text=auto eol=lf
+
+# Binary assets
+*.woff2 binary
+*.png binary
+*.jpg binary
+*.ico binary
+*.otf binary
+*.ttf binary

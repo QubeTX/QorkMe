@@ -3,9 +3,8 @@
  * Handles short URL redirects and analytics tracking
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createServerClientInstance } from '@/lib/supabase/server';
-import { headers } from 'next/headers';
+import { NextRequest, NextResponse, after } from 'next/server';
+import { createServerClientInstance, createAnonClient } from '@/lib/supabase/server';
 import crypto from 'crypto';
 
 // Cache for frequently accessed URLs (in production, use Redis)
@@ -24,10 +23,15 @@ export async function GET(
     }
 
     // Check cache first
+    // Click payload must be captured before the response — request-bound APIs
+    // are unavailable inside after()
+    const clickPayload = buildClickPayload(request);
+
     const cached = urlCache.get(shortCode.toLowerCase());
     if (cached && cached.expires > Date.now()) {
-      // Track analytics asynchronously
-      trackClick(cached.id, request).catch(console.error);
+      // Track analytics after the response — after() keeps the function alive
+      // until the insert lands (fire-and-forget loses clicks on Vercel)
+      after(() => trackClick(cached.id, clickPayload));
       return NextResponse.redirect(new URL(cached.url));
     }
 
@@ -62,8 +66,8 @@ export async function GET(
       if (oldestKey !== undefined) urlCache.delete(oldestKey);
     }
 
-    // Track analytics asynchronously
-    trackClick(urlData.id, request).catch(console.error);
+    // Track analytics after the response (see note above)
+    after(() => trackClick(urlData.id, clickPayload));
 
     // Perform redirect
     return NextResponse.redirect(new URL(urlData.long_url));
@@ -73,45 +77,64 @@ export async function GET(
   }
 }
 
+interface ClickPayload {
+  ipHash: string;
+  deviceType: string;
+  browser: string;
+  os: string;
+  referrer: string | null;
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+}
+
+/**
+ * Capture everything the analytics insert needs from the live request.
+ * Must run before the response is returned — after() callbacks cannot touch
+ * request-bound APIs.
+ */
+function buildClickPayload(request: NextRequest): ClickPayload {
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  const ip = forwardedFor ? forwardedFor.split(',')[0] : 'unknown';
+  const ipHash = crypto.createHash('sha256').update(ip).digest('hex');
+
+  const userAgent = request.headers.get('user-agent') || '';
+  const deviceInfo = parseUserAgent(userAgent);
+
+  const searchParams = request.nextUrl.searchParams;
+
+  return {
+    ipHash,
+    ...deviceInfo,
+    referrer: request.headers.get('referer') || null,
+    utmSource: searchParams.get('utm_source'),
+    utmMedium: searchParams.get('utm_medium'),
+    utmCampaign: searchParams.get('utm_campaign'),
+  };
+}
+
 /**
  * Track click analytics
- * Runs asynchronously to not block the redirect
+ * Runs after the response via after() so it never blocks the redirect but
+ * still completes before the serverless function is suspended
  */
-async function trackClick(urlId: string, request: NextRequest) {
+async function trackClick(urlId: string, payload: ClickPayload) {
   try {
-    const supabase = await createServerClientInstance();
-    const headersList = await headers();
+    // Cookie-free client — after() runs outside the request context, where
+    // cookies()/headers() throw
+    const supabase = await createAnonClient();
 
-    // Get IP address (hashed for privacy)
-    const forwardedFor = headersList.get('x-forwarded-for');
-    const ip = forwardedFor ? forwardedFor.split(',')[0] : 'unknown';
-    const ipHash = crypto.createHash('sha256').update(ip).digest('hex');
-
-    // Get user agent info
-    const userAgent = headersList.get('user-agent') || '';
-    const deviceInfo = parseUserAgent(userAgent);
-
-    // Get referrer
-    const referrer = headersList.get('referer') || null;
-
-    // Get UTM parameters
-    const searchParams = request.nextUrl.searchParams;
-    const utmSource = searchParams.get('utm_source');
-    const utmMedium = searchParams.get('utm_medium');
-    const utmCampaign = searchParams.get('utm_campaign');
-
-    // Insert click record
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await (supabase as any).from('clicks').insert({
       url_id: urlId,
-      ip_hash: ipHash,
-      device_type: deviceInfo.deviceType,
-      browser: deviceInfo.browser,
-      os: deviceInfo.os,
-      referrer,
-      utm_source: utmSource,
-      utm_medium: utmMedium,
-      utm_campaign: utmCampaign,
+      ip_hash: payload.ipHash,
+      device_type: payload.deviceType,
+      browser: payload.browser,
+      os: payload.os,
+      referrer: payload.referrer,
+      utm_source: payload.utmSource,
+      utm_medium: payload.utmMedium,
+      utm_campaign: payload.utmCampaign,
     });
   } catch (error) {
     console.error('Analytics tracking error:', error);

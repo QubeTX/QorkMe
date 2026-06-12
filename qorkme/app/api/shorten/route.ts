@@ -1,13 +1,27 @@
 /**
  * URL Shortening API Endpoint
  * POST /api/shorten
+ *
+ * The whole shorten path is one database round trip: the
+ * get_or_create_short_url RPC performs duplicate detection (an already
+ * shortened URL returns its existing code instead of a new row), reserved
+ * word filtering, availability selection across the candidate batch, and the
+ * insert atomically — concurrent-insert races advance to the next candidate
+ * inside the function.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClientInstance } from '@/lib/supabase/server';
 import { ShortCodeGenerator } from '@/lib/shortcode/generator';
 import { validateUrl, validateShortCode } from '@/lib/shortcode/validator';
-import { isReservedWord } from '@/lib/shortcode/reserved';
+
+interface ShortUrlRow {
+  id: string;
+  short_code: string;
+  long_url: string;
+  created_at: string;
+  is_new: boolean;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,107 +37,84 @@ export async function POST(request: NextRequest) {
     const normalizedUrl = urlValidation.normalizedUrl!;
     const supabase = await createServerClientInstance();
 
-    let shortCode: string;
-    let isCustom = false;
-
-    // Handle custom alias if provided
-    if (customAlias && customAlias.trim()) {
-      const aliasValidation = validateShortCode(customAlias);
-      if (!aliasValidation.valid) {
-        return NextResponse.json({ error: aliasValidation.error }, { status: 400 });
-      }
-
-      shortCode = customAlias.toLowerCase();
-      isCustom = true;
-
-      // Check if custom alias is available
-      const { data: existing } = await supabase
-        .from('urls')
-        .select('id')
-        .eq('short_code_lower', shortCode)
-        .single();
-
-      if (existing) {
-        return NextResponse.json({ error: 'This custom alias is already taken' }, { status: 409 });
-      }
-    } else {
-      // Check if URL already exists (for non-custom aliases)
-      // const urlHash = btoa(normalizedUrl).substring(0, 50); // Simple hash for duplicate detection
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: existing } = await (supabase as any)
-        .from('urls')
-        .select('short_code')
-        .eq('long_url', normalizedUrl)
-        .eq('custom_alias', false)
-        .eq('is_active', true)
-        .single();
-
-      if (existing) {
-        // Return existing short code
-        return NextResponse.json({
-          shortCode: existing.short_code,
-          shortUrl: `${process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me'}/${existing.short_code}`,
-          isNew: false,
-        });
-      }
-
-      // Generate new short code
-      shortCode = await ShortCodeGenerator.generateUniqueCode(
-        async (code) => {
-          // Check if code is reserved
-          if (isReservedWord(code)) {
-            return false;
-          }
-
-          // Check database
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const { data } = await (supabase as any)
-            .from('urls')
-            .select('id')
-            .eq('short_code_lower', code.toLowerCase())
-            .single();
-
-          return !data;
-        },
-        true // Prefer memorable patterns
-      );
-    }
-
-    // Get current user (if authenticated)
+    // Get current user (if authenticated) — cookie read, no DB round trip
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
-    // Insert new URL
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: newUrl, error: insertError } = await (supabase as any)
-      .from('urls')
-      .insert({
-        short_code: shortCode,
-        long_url: normalizedUrl,
-        custom_alias: isCustom,
-        user_id: user?.id || null,
-      })
-      .select()
-      .single();
+    const isCustom = Boolean(customAlias && customAlias.trim());
+    let candidates: string[];
 
-    if (insertError) {
-      console.error('Insert error:', insertError);
+    if (isCustom) {
+      const aliasValidation = validateShortCode(customAlias);
+      if (!aliasValidation.valid) {
+        return NextResponse.json({ error: aliasValidation.error }, { status: 400 });
+      }
+      candidates = [customAlias.toLowerCase()];
+    } else {
+      candidates = ShortCodeGenerator.generateCandidates();
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any).rpc('get_or_create_short_url', {
+      p_long_url: normalizedUrl,
+      p_candidates: candidates,
+      p_custom_alias: isCustom,
+      p_user_id: user?.id || null,
+    });
+
+    let row: ShortUrlRow | undefined = data?.[0];
+
+    // Auto-generated batch fully taken (crowded namespace) — retry once with
+    // a longer batch before giving up
+    if (!error && !row && !isCustom) {
+      const retryCandidates = ShortCodeGenerator.generateCandidates(12, 5);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const retry = await (supabase as any).rpc('get_or_create_short_url', {
+        p_long_url: normalizedUrl,
+        p_candidates: retryCandidates,
+        p_custom_alias: false,
+        p_user_id: user?.id || null,
+      });
+      row = retry.data?.[0];
+      if (retry.error) {
+        console.error('Shorten retry error:', retry.error);
+      }
+    }
+
+    if (error) {
+      console.error('Shorten RPC error:', error);
       return NextResponse.json({ error: 'Failed to create short URL' }, { status: 500 });
     }
 
-    // Extract domain for metadata (can be enhanced later)
+    if (!row) {
+      if (isCustom) {
+        return NextResponse.json({ error: 'This custom alias is already taken' }, { status: 409 });
+      }
+      return NextResponse.json({ error: 'Failed to create short URL' }, { status: 500 });
+    }
+
+    const shortDomain = process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me';
+
+    if (!row.is_new) {
+      // URL was already shortened — return the existing link, no new row
+      return NextResponse.json({
+        shortCode: row.short_code,
+        shortUrl: `${shortDomain}/${row.short_code}`,
+        isNew: false,
+      });
+    }
+
     const domain = new URL(normalizedUrl).hostname;
 
     return NextResponse.json({
-      id: newUrl.id,
-      shortCode: newUrl.short_code,
-      shortUrl: `${process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me'}/${newUrl.short_code}`,
-      longUrl: newUrl.long_url,
+      id: row.id,
+      shortCode: row.short_code,
+      shortUrl: `${shortDomain}/${row.short_code}`,
+      longUrl: row.long_url,
       isNew: true,
       domain,
-      createdAt: newUrl.created_at,
+      createdAt: row.created_at,
     });
   } catch (error) {
     console.error('Shorten API error:', error);

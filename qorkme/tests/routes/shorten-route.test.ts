@@ -8,12 +8,8 @@ vi.mock('@/lib/supabase/server', () => ({
 
 vi.mock('@/lib/shortcode/generator', () => ({
   ShortCodeGenerator: {
-    generateUniqueCode: vi.fn(),
+    generateCandidates: vi.fn(),
   },
-}));
-
-vi.mock('@/lib/shortcode/reserved', () => ({
-  isReservedWord: vi.fn().mockReturnValue(false),
 }));
 
 import { POST, GET } from '@/app/api/shorten/route';
@@ -25,27 +21,17 @@ type SupabaseClientInstance = Awaited<ReturnType<typeof createServerClientInstan
 
 type MockQueryBuilder = {
   selectArg?: string;
-  insertPayload?: unknown;
   eqCalls: Array<[string, unknown]>;
   select: Mock<[string?], MockQueryBuilder>;
-  insert: Mock<[unknown], MockQueryBuilder>;
   eq: Mock<[string, unknown], MockQueryBuilder>;
   single: Mock<[], Promise<QueryResult>>;
 };
 
-function createQueryBuilder({
-  singleResult,
-  insertResult,
-}: {
-  singleResult?: QueryResult;
-  insertResult?: QueryResult;
-}): MockQueryBuilder {
+function createQueryBuilder({ singleResult }: { singleResult?: QueryResult }): MockQueryBuilder {
   const builder: MockQueryBuilder = {
     selectArg: undefined,
-    insertPayload: undefined,
     eqCalls: [],
     select: undefined as unknown as Mock<[string?], MockQueryBuilder>,
-    insert: undefined as unknown as Mock<[unknown], MockQueryBuilder>,
     eq: undefined as unknown as Mock<[string, unknown], MockQueryBuilder>,
     single: undefined as unknown as Mock<[], Promise<QueryResult>>,
   };
@@ -55,30 +41,12 @@ function createQueryBuilder({
     return builder;
   }) as Mock<[string?], MockQueryBuilder>;
 
-  builder.insert = vi.fn((payload: unknown) => {
-    builder.insertPayload = payload;
-    return builder;
-  }) as Mock<[unknown], MockQueryBuilder>;
-
   builder.eq = vi.fn((column: string, value: unknown) => {
     builder.eqCalls.push([column, value]);
     return builder;
   }) as Mock<[string, unknown], MockQueryBuilder>;
 
   builder.single = vi.fn(async () => {
-    if (builder.insertPayload !== undefined) {
-      return (
-        insertResult ?? {
-          data: {
-            ...(builder.insertPayload as Record<string, unknown>),
-            id: 'generated-id',
-            created_at: '2025-09-22T00:00:00.000Z',
-          },
-          error: undefined,
-        }
-      );
-    }
-
     return singleResult ?? { data: null, error: undefined };
   }) as Mock<[], Promise<QueryResult>>;
 
@@ -86,25 +54,42 @@ function createQueryBuilder({
 }
 
 function createSupabaseStub(
-  builders: Array<ReturnType<typeof createQueryBuilder>>,
   options: {
+    rpcResults?: QueryResult[];
+    builders?: MockQueryBuilder[];
     userId?: string | null;
   } = {}
-): SupabaseClientInstance {
-  let callIndex = 0;
+): { client: SupabaseClientInstance; rpc: Mock } {
+  let builderIndex = 0;
+  let rpcIndex = 0;
+  const rpcResults = options.rpcResults ?? [{ data: [] }];
 
-  return {
-    from: vi.fn(() => builders[callIndex++] ?? builders[builders.length - 1]),
+  const rpc = vi.fn(async () => {
+    const result = rpcResults[rpcIndex] ?? rpcResults[rpcResults.length - 1];
+    rpcIndex++;
+    return result;
+  });
+
+  const client = {
+    from: vi.fn(
+      () =>
+        options.builders?.[builderIndex++] ??
+        options.builders?.[options.builders.length - 1] ??
+        createQueryBuilder({})
+    ),
+    rpc,
     auth: {
       getUser: vi.fn(async () => ({
         data: { user: options.userId ? { id: options.userId } : null },
       })),
     },
   } as unknown as SupabaseClientInstance;
+
+  return { client, rpc };
 }
 
 const mockedCreateServerClientInstance = vi.mocked(createServerClientInstance);
-const generateUniqueCodeMock = vi.mocked(ShortCodeGenerator.generateUniqueCode);
+const generateCandidatesMock = vi.mocked(ShortCodeGenerator.generateCandidates);
 
 beforeEach(() => {
   vi.resetAllMocks();
@@ -115,8 +100,8 @@ beforeEach(() => {
 
 describe('POST /api/shorten', () => {
   it('returns a 400 response when the URL uses an unsupported protocol', async () => {
-    const supabase = createSupabaseStub([createQueryBuilder({ singleResult: { data: null } })]);
-    mockedCreateServerClientInstance.mockResolvedValueOnce(supabase);
+    const { client } = createSupabaseStub();
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
     const request = {
       json: async () => ({ url: 'http://localhost/internal' }),
@@ -131,12 +116,23 @@ describe('POST /api/shorten', () => {
   });
 
   it('reuses an existing short code when the URL was already shortened', async () => {
-    const duplicateBuilder = createQueryBuilder({
-      singleResult: { data: { short_code: 'rsvp' } },
+    generateCandidatesMock.mockReturnValue(['ka9m', 'pu3n']);
+    const { client, rpc } = createSupabaseStub({
+      rpcResults: [
+        {
+          data: [
+            {
+              id: 'existing-id',
+              short_code: 'rsvp',
+              long_url: 'https://scalable.example',
+              created_at: '2025-09-22T00:00:00.000Z',
+              is_new: false,
+            },
+          ],
+        },
+      ],
     });
-
-    const supabase = createSupabaseStub([duplicateBuilder]);
-    mockedCreateServerClientInstance.mockResolvedValueOnce(supabase);
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
     const request = {
       json: async () => ({ url: 'https://scalable.example' }),
@@ -146,51 +142,39 @@ describe('POST /api/shorten', () => {
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body).toMatchObject({
+    expect(body).toEqual({
       shortCode: 'rsvp',
       shortUrl: 'links.qork.me/rsvp',
       isNew: false,
     });
-    expect(generateUniqueCodeMock).not.toHaveBeenCalled();
-    expect(duplicateBuilder.select).toHaveBeenCalledWith('short_code');
-    expect(duplicateBuilder.eq).toHaveBeenCalledWith('long_url', 'https://scalable.example');
+    expect(rpc).toHaveBeenCalledTimes(1);
+    expect(rpc).toHaveBeenCalledWith('get_or_create_short_url', {
+      p_long_url: 'https://scalable.example',
+      p_candidates: ['ka9m', 'pu3n'],
+      p_custom_alias: false,
+      p_user_id: null,
+    });
   });
 
   it('creates a brand new short code and stores the URL when none exists', async () => {
-    const duplicateCheckBuilder = createQueryBuilder({
-      singleResult: { data: null },
-    });
-    const availabilityBuilder = createQueryBuilder({
-      singleResult: { data: null },
-    });
-    const insertBuilder = createQueryBuilder({
-      insertResult: {
-        data: {
-          id: 'url-id-123',
-          short_code: 'fresh',
-          long_url: 'https://amazing.example',
-          custom_alias: false,
-          created_at: '2025-09-22T12:00:00.000Z',
+    generateCandidatesMock.mockReturnValue(['fresh']);
+    const { client, rpc } = createSupabaseStub({
+      userId: 'user-42',
+      rpcResults: [
+        {
+          data: [
+            {
+              id: 'url-id-123',
+              short_code: 'fresh',
+              long_url: 'https://amazing.example',
+              created_at: '2025-09-22T12:00:00.000Z',
+              is_new: true,
+            },
+          ],
         },
-      },
+      ],
     });
-
-    const supabase = createSupabaseStub(
-      [duplicateCheckBuilder, availabilityBuilder, insertBuilder],
-      {
-        userId: 'user-42',
-      }
-    );
-
-    mockedCreateServerClientInstance.mockResolvedValueOnce(supabase);
-
-    generateUniqueCodeMock.mockImplementation(
-      async (checkAvailability: (code: string) => Promise<boolean>) => {
-        const available = await checkAvailability('fresh');
-        expect(available).toBe(true);
-        return 'fresh';
-      }
-    );
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
     const request = {
       json: async () => ({ url: 'https://amazing.example' }),
@@ -207,14 +191,128 @@ describe('POST /api/shorten', () => {
       longUrl: 'https://amazing.example',
       isNew: true,
       domain: 'amazing.example',
+      createdAt: '2025-09-22T12:00:00.000Z',
     });
+    expect(rpc).toHaveBeenCalledWith('get_or_create_short_url', {
+      p_long_url: 'https://amazing.example',
+      p_candidates: ['fresh'],
+      p_custom_alias: false,
+      p_user_id: 'user-42',
+    });
+  });
 
-    expect(insertBuilder.insert).toHaveBeenCalledWith({
-      short_code: 'fresh',
-      long_url: 'https://amazing.example',
-      custom_alias: false,
-      user_id: 'user-42',
+  it('retries with a longer candidate batch when the first batch is exhausted', async () => {
+    generateCandidatesMock.mockReturnValueOnce(['ka9m']).mockReturnValueOnce(['longer']);
+    const { client, rpc } = createSupabaseStub({
+      rpcResults: [
+        { data: [] },
+        {
+          data: [
+            {
+              id: 'url-id-456',
+              short_code: 'longer',
+              long_url: 'https://crowded.example',
+              created_at: '2025-09-22T12:00:00.000Z',
+              is_new: true,
+            },
+          ],
+        },
+      ],
     });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
+
+    const request = {
+      json: async () => ({ url: 'https://crowded.example' }),
+    } as unknown as NextRequest;
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.shortCode).toBe('longer');
+    expect(rpc).toHaveBeenCalledTimes(2);
+    expect(generateCandidatesMock).toHaveBeenNthCalledWith(2, 12, 5);
+  });
+
+  it('returns 409 when a custom alias is already taken', async () => {
+    const { client, rpc } = createSupabaseStub({
+      rpcResults: [{ data: [] }],
+    });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
+
+    const request = {
+      json: async () => ({ url: 'https://taken.example', customAlias: 'mylink' }),
+    } as unknown as NextRequest;
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(409);
+    expect(body.error).toMatch(/already taken/);
+    expect(rpc).toHaveBeenCalledTimes(1);
+    expect(rpc).toHaveBeenCalledWith('get_or_create_short_url', {
+      p_long_url: 'https://taken.example',
+      p_candidates: ['mylink'],
+      p_custom_alias: true,
+      p_user_id: null,
+    });
+    expect(generateCandidatesMock).not.toHaveBeenCalled();
+  });
+
+  it('creates a short URL with a custom alias', async () => {
+    const { client, rpc } = createSupabaseStub({
+      rpcResults: [
+        {
+          data: [
+            {
+              id: 'url-id-789',
+              short_code: 'mylink',
+              long_url: 'https://custom.example',
+              created_at: '2025-09-22T12:00:00.000Z',
+              is_new: true,
+            },
+          ],
+        },
+      ],
+    });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
+
+    const request = {
+      json: async () => ({ url: 'https://custom.example', customAlias: 'MyLink' }),
+    } as unknown as NextRequest;
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body).toMatchObject({
+      shortCode: 'mylink',
+      isNew: true,
+    });
+    expect(rpc).toHaveBeenCalledWith('get_or_create_short_url', {
+      p_long_url: 'https://custom.example',
+      p_candidates: ['mylink'],
+      p_custom_alias: true,
+      p_user_id: null,
+    });
+  });
+
+  it('returns 500 when the RPC reports an error', async () => {
+    generateCandidatesMock.mockReturnValue(['ka9m']);
+    const { client } = createSupabaseStub({
+      rpcResults: [{ data: null, error: { message: 'boom' } }],
+    });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
+
+    const request = {
+      json: async () => ({ url: 'https://broken.example' }),
+    } as unknown as NextRequest;
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(500);
+    expect(body.error).toMatch(/Failed to create short URL/);
   });
 });
 
@@ -235,8 +333,8 @@ describe('GET /api/shorten', () => {
     const availabilityBuilder = createQueryBuilder({
       singleResult: { data: { id: 'existing-id' } },
     });
-    const supabase = createSupabaseStub([availabilityBuilder]);
-    mockedCreateServerClientInstance.mockResolvedValueOnce(supabase);
+    const { client } = createSupabaseStub({ builders: [availabilityBuilder] });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
     const request = {
       nextUrl: new URL('https://links.qork.me/api/shorten?alias=reserved'),
@@ -253,8 +351,8 @@ describe('GET /api/shorten', () => {
     const availabilityBuilder = createQueryBuilder({
       singleResult: { data: null },
     });
-    const supabase = createSupabaseStub([availabilityBuilder]);
-    mockedCreateServerClientInstance.mockResolvedValueOnce(supabase);
+    const { client } = createSupabaseStub({ builders: [availabilityBuilder] });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
     const request = {
       nextUrl: new URL('https://links.qork.me/api/shorten?alias=open'),

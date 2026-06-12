@@ -2,6 +2,30 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [4.2.0] - 2026-06-12
+
+### Performance — Database Optimization
+
+- **Single-round-trip shorten path** — `POST /api/shorten` now makes ONE database call: the rewritten `get_or_create_short_url(p_long_url, p_candidates[], p_custom_alias, p_user_id)` RPC performs duplicate detection (an already-shortened URL returns its existing short link — no duplicate rows), reserved-word filtering, availability selection across a candidate batch, and the insert atomically, absorbing concurrent-insert races by advancing to the next candidate. Previously: an unindexed full-table duplicate scan plus up to 100 sequential availability queries.
+- **Index-backed duplicate detection** — Duplicate matching now goes through `MD5(long_url)` (hits `idx_long_url_hash`) with an equality re-check, replacing the unindexed `long_url =` scan.
+- **Candidate batch generator** — `ShortCodeGenerator.generateCandidates(count, minLength)` emits a shortest-first batch (memorable + random, escalating length) so codes stay at 4 chars while that namespace has room and grow one character at a time as it fills; timestamp-based last-resort candidate guarantees success.
+- **Reliable click tracking** — Redirect analytics inserts now run via Next 15 `after()` instead of fire-and-forget, so the serverless function isn't suspended before the row lands. Click payload is captured before the response (request APIs are unavailable inside `after()`); the insert uses a new cookie-free `createAnonClient()`.
+- **Admin health check: 8 queries → 1 RPC** — `GET /api/admin/health` calls the new `admin_health_stats()` function (service-role only) instead of eight parallel PostgREST count/order queries.
+- **Admin links pagination** — `count: 'exact'` → `count: 'estimated'` (planner estimate instead of a full scan per page load).
+
+### Database Migrations (`supabase/migrations/`)
+
+- `20260612090001_get_or_create_short_url_v2` — atomic candidates-based shorten function, `SET search_path`
+- `20260612090002_rls_initplan_optimization` — `auth.uid()` wrapped as `(SELECT auth.uid())` in urls/clicks policies (per-statement InitPlan instead of per-row evaluation)
+- `20260612090003_harden_function_search_paths` — pins `search_path` on `check_short_code_available`, `update_updated_at_column`
+- `20260612090004_admin_health_stats` — consolidated health RPC, EXECUTE revoked from anon/authenticated
+- `20260612090005_urls_user_fk_set_null` — `urls.user_id` FK becomes `ON DELETE SET NULL` (auth user deletion no longer blocked)
+- `20260612090006_sync_reserved_words` — DB `reserved_words` table synced with the canonical in-app list (`lib/shortcode/reserved.ts`)
+
+### Fixed
+
+- **`.gitattributes` now enforces LF checkouts** — Windows clones with `core.autocrlf=true` previously failed `format:check` on every file.
+
 ## [4.1.0] - 2026-05-20
 
 ### Changed

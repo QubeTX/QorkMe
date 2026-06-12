@@ -33,6 +33,27 @@ export async function createServerClientInstance() {
 }
 
 /**
+ * Create a cookie-free anon client.
+ * For work that runs outside the request context (e.g. inside after()
+ * callbacks, where cookies()/headers() throw) and doesn't need a user
+ * session — like click analytics inserts, which RLS allows anonymously.
+ */
+export async function createAnonClient() {
+  const { createClient } = await import('@supabase/supabase-js');
+
+  return createClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
+}
+
+/**
  * Create admin client with service role key (for admin operations)
  */
 export async function createAdminClient() {

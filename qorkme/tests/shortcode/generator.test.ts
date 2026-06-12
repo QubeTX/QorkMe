@@ -50,4 +50,39 @@ describe('ShortCodeGenerator', () => {
     expect(ShortCodeGenerator.getOptimalLength(200_000)).toBeGreaterThanOrEqual(4);
     expect(ShortCodeGenerator.getOptimalLength(1_000_000)).toBeGreaterThanOrEqual(5);
   });
+
+  describe('generateCandidates', () => {
+    it('produces a deduplicated batch ordered shortest-first with a timestamp fallback', () => {
+      const candidates = ShortCodeGenerator.generateCandidates(12);
+
+      expect(candidates.length).toBeGreaterThanOrEqual(2);
+      expect(new Set(candidates).size).toBe(candidates.length);
+
+      // Lengths never shrink across the batch (shortest candidates lead, so
+      // the RPC prefers short codes while the namespace has room)
+      const generated = candidates.slice(0, -1);
+      for (let i = 1; i < generated.length; i++) {
+        expect(generated[i].length).toBeGreaterThanOrEqual(generated[i - 1].length);
+      }
+      expect(generated[0]).toHaveLength(4);
+
+      // Guaranteed-unique last resort
+      expect(candidates[candidates.length - 1]).toMatch(/^q[0-9a-z]+$/);
+    });
+
+    it('starts at the requested minimum length for retry escalation', () => {
+      const candidates = ShortCodeGenerator.generateCandidates(6, 5);
+      expect(candidates[0]).toHaveLength(5);
+    });
+
+    it('never emits reserved words', () => {
+      for (let run = 0; run < 20; run++) {
+        const candidates = ShortCodeGenerator.generateCandidates(12);
+        for (const code of candidates) {
+          expect(code).not.toBe('test');
+          expect(code).not.toBe('demo');
+        }
+      }
+    });
+  });
 });

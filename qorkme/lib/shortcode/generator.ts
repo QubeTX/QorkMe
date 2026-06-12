@@ -5,6 +5,7 @@
  */
 
 import { customAlphabet } from 'nanoid';
+import { isReservedWord } from './reserved';
 
 // Readable character set (excludes confusing characters: 0, 1, i, l, o)
 const READABLE_CHARS = '23456789abcdefghjkmnpqrstuvwxyz';
@@ -42,6 +43,43 @@ export class ShortCodeGenerator {
    */
   static generateRandomCode(length: number = 4): string {
     return generateRandom(length);
+  }
+
+  /**
+   * Generate a batch of candidate codes for a single-round-trip availability
+   * check (get_or_create_short_url RPC walks these in order).
+   *
+   * Candidates are ordered shortest-first, so codes stay at the minimum
+   * length while that namespace has room and only grow one character at a
+   * time as it fills: the RPC takes the FIRST available candidate, and a
+   * caller retry escalates minLength. Memorable codes lead each tier but
+   * their space is small (~7k at 4 chars vs ~923k random / ~28.6M at 5), so
+   * each tier is padded with random codes. A timestamp-based code is
+   * appended as a guaranteed-unique last resort.
+   */
+  static generateCandidates(count: number = 12, minLength: number = 4): string[] {
+    const codes = new Set<string>();
+    const perTier = Math.max(1, Math.ceil(count / 3));
+    let attempts = 0;
+
+    while (codes.size < count && attempts < count * 10) {
+      attempts++;
+      // Escalating tiers: minLength, minLength+1, minLength+2 (unbounded via retries)
+      const tier = Math.floor(codes.size / perTier);
+      const length = minLength + tier;
+      // Memorable codes lead each tier, random codes pad it out
+      const code =
+        codes.size % perTier < Math.ceil(perTier / 2)
+          ? this.generateMemorableCode(length)
+          : this.generateRandomCode(length);
+
+      if (!isReservedWord(code)) {
+        codes.add(code);
+      }
+    }
+
+    codes.add(`q${Date.now().toString(36)}`);
+    return Array.from(codes);
   }
 
   /**

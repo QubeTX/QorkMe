@@ -28,11 +28,13 @@ export async function GET(request: NextRequest) {
   try {
     const adminClient = await createAdminClient();
 
+    // count: 'estimated' reads pg_class.reltuples instead of scanning the
+    // table on every page load — close enough for admin pagination at scale
     const { data, error, count } = await adminClient
       .from('urls')
       .select(
         'id, short_code, long_url, click_count, created_at, is_active, custom_alias, last_accessed_at',
-        { count: 'exact' }
+        { count: 'estimated' }
       )
       .order(sortColumn, { ascending: order })
       .range(offset, offset + pageSize - 1);

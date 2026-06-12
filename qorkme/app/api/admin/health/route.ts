@@ -4,6 +4,17 @@ import { verifyAdminAuth } from '@/lib/admin/auth';
 
 export const dynamic = 'force-dynamic';
 
+interface HealthStats {
+  url_count: number;
+  active_url_count: number;
+  inactive_url_count: number;
+  click_count: number;
+  reserved_word_count: number;
+  newest_url_at: string | null;
+  newest_click_at: string | null;
+  latest_access_at: string | null;
+}
+
 export async function GET() {
   const auth = await verifyAdminAuth();
   if (!auth.authorized) return auth.response;
@@ -12,69 +23,42 @@ export async function GET() {
     const adminClient = await createAdminClient();
     const start = Date.now();
 
-    const [
-      urlCount,
-      activeUrlCount,
-      inactiveUrlCount,
-      clickCount,
-      reservedCount,
-      newestUrl,
-      newestClick,
-      latestAccess,
-    ] = await Promise.all([
-      adminClient.from('urls').select('id', { count: 'exact', head: true }),
-      adminClient.from('urls').select('id', { count: 'exact', head: true }).eq('is_active', true),
-      adminClient.from('urls').select('id', { count: 'exact', head: true }).eq('is_active', false),
-      adminClient.from('clicks').select('id', { count: 'exact', head: true }),
-      adminClient.from('reserved_words').select('word', { count: 'exact', head: true }),
-      adminClient
-        .from('urls')
-        .select('created_at')
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle(),
-      adminClient
-        .from('clicks')
-        .select('clicked_at')
-        .order('clicked_at', { ascending: false })
-        .limit(1)
-        .maybeSingle(),
-      adminClient
-        .from('urls')
-        .select('last_accessed_at')
-        .not('last_accessed_at', 'is', null)
-        .order('last_accessed_at', { ascending: false })
-        .limit(1)
-        .maybeSingle(),
-    ]);
+    // Single round trip — admin_health_stats aggregates everything server-side
+    // (service-role only; EXECUTE is revoked from anon/authenticated)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (adminClient as any).rpc('admin_health_stats');
 
     const latencyMs = Date.now() - start;
 
-    const hasError = urlCount.error || clickCount.error || reservedCount.error;
+    if (error || !data) {
+      return NextResponse.json({
+        status: 'error',
+        latencyMs,
+        error: error?.message ?? 'Health stats unavailable',
+      });
+    }
+
+    const stats = data as HealthStats;
 
     let status: 'operational' | 'degraded' | 'error' = 'operational';
-    if (hasError) status = 'error';
-    else if (latencyMs > 2000) status = 'degraded';
+    if (latencyMs > 2000) status = 'degraded';
 
     return NextResponse.json({
       status,
       latencyMs,
       tables: {
-        urls: urlCount.count ?? 0,
-        clicks: clickCount.count ?? 0,
-        reserved_words: reservedCount.count ?? 0,
+        urls: stats.url_count ?? 0,
+        clicks: stats.click_count ?? 0,
+        reserved_words: stats.reserved_word_count ?? 0,
       },
-      activeUrls: activeUrlCount.count ?? 0,
-      inactiveUrls: inactiveUrlCount.count ?? 0,
+      activeUrls: stats.active_url_count ?? 0,
+      inactiveUrls: stats.inactive_url_count ?? 0,
       freshness: {
-        newestUrl: (newestUrl.data as { created_at: string } | null)?.created_at ?? null,
-        newestClick: (newestClick.data as { clicked_at: string } | null)?.clicked_at ?? null,
-        latestAccess:
-          (latestAccess.data as { last_accessed_at: string } | null)?.last_accessed_at ?? null,
+        newestUrl: stats.newest_url_at ?? null,
+        newestClick: stats.newest_click_at ?? null,
+        latestAccess: stats.latest_access_at ?? null,
       },
-      error: hasError
-        ? urlCount.error?.message || clickCount.error?.message || reservedCount.error?.message
-        : null,
+      error: null,
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Health check failed';

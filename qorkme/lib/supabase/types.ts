@@ -174,15 +174,30 @@ export interface Database {
       get_or_create_short_url: {
         Args: {
           p_long_url: string;
-          p_short_code?: string;
+          p_candidates: string[];
           p_custom_alias?: boolean;
-          p_user_id?: string;
+          p_user_id?: string | null;
         };
         Returns: {
           id: string;
           short_code: string;
+          long_url: string;
+          created_at: string;
           is_new: boolean;
         }[];
+      };
+      admin_health_stats: {
+        Args: Record<string, never>;
+        Returns: {
+          url_count: number;
+          active_url_count: number;
+          inactive_url_count: number;
+          click_count: number;
+          reserved_word_count: number;
+          newest_url_at: string | null;
+          newest_click_at: string | null;
+          latest_access_at: string | null;
+        };
       };
     };
     Enums: {
