@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS urls (
   is_active BOOLEAN DEFAULT true,
   click_count INTEGER DEFAULT 0,
 
-  -- User tracking (optional)
-  user_id UUID REFERENCES auth.users(id),
+  -- User tracking (optional; SET NULL so auth-user deletion degrades to anonymous)
+  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
 
   -- Constraints
   CONSTRAINT unique_short_code_lower UNIQUE (short_code_lower),
@@ -78,13 +78,22 @@ CREATE TABLE IF NOT EXISTS reserved_words (
   word VARCHAR(50) PRIMARY KEY
 );
 
--- Insert common reserved words
+-- Insert reserved words (canonical list lives in lib/shortcode/reserved.ts —
+-- keep both in lockstep)
 INSERT INTO reserved_words (word) VALUES
-  ('api'), ('admin'), ('dashboard'), ('login'), ('logout'),
-  ('register'), ('about'), ('contact'), ('help'), ('terms'),
-  ('privacy'), ('settings'), ('profile'), ('404'), ('500'),
-  ('app'), ('auth'), ('callback'), ('result'), ('analytics'),
-  ('stats'), ('qr'), ('export'), ('import'), ('bulk')
+  ('api'), ('app'), ('admin'), ('auth'), ('callback'), ('dashboard'),
+  ('login'), ('logout'), ('register'), ('signup'), ('signin'),
+  ('about'), ('contact'), ('help'), ('support'), ('terms'), ('privacy'),
+  ('policy'), ('settings'), ('profile'), ('account'), ('home'),
+  ('result'), ('results'), ('analytics'), ('stats'), ('statistics'),
+  ('qr'), ('qrcode'), ('export'), ('import'), ('bulk'), ('batch'),
+  ('404'), ('500'), ('403'), ('401'),
+  ('css'), ('js'), ('json'), ('xml'), ('html'), ('txt'), ('pdf'),
+  ('test'), ('demo'), ('example'), ('sample'), ('docs'), ('documentation'), ('guide'),
+  ('qork'), ('qorkme'), ('geeksquad'), ('geek'),
+  ('hack'), ('hacked'), ('security'), ('exploit'),
+  ('undefined'), ('null'), ('void'), ('new'), ('delete'), ('edit'),
+  ('update'), ('create'), ('list'), ('view'), ('show')
 ON CONFLICT DO NOTHING;
 
 -- Tags for organization (optional feature)
@@ -103,7 +112,10 @@ CREATE TABLE IF NOT EXISTS url_tags (
 
 -- Function for case-insensitive short code availability check
 CREATE OR REPLACE FUNCTION check_short_code_available(code TEXT)
-RETURNS BOOLEAN AS $$
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
 BEGIN
   RETURN NOT EXISTS (
     SELECT 1 FROM urls WHERE short_code_lower = LOWER(code)
@@ -111,7 +123,7 @@ BEGIN
     SELECT 1 FROM reserved_words WHERE word = LOWER(code)
   );
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to increment click count (atomic operation)
 -- SECURITY DEFINER so anonymous visitors can trigger redirects on user-owned URLs
@@ -138,60 +150,113 @@ BEGIN
 END;
 $$;
 
--- Function to get or create URL (for duplicate detection)
+-- get_or_create_short_url v2 — the whole shorten path in ONE round trip:
+-- duplicate detection (an already-shortened URL returns its existing code,
+-- never a duplicate row), reserved-word filtering, first-available-candidate
+-- selection, and the insert. Unique-violation races advance to the next
+-- candidate inside the function. Candidates arrive shortest-first from
+-- ShortCodeGenerator.generateCandidates(), so codes stay short while the
+-- namespace has room and grow one character at a time as it fills.
 CREATE OR REPLACE FUNCTION get_or_create_short_url(
   p_long_url TEXT,
-  p_short_code TEXT DEFAULT NULL,
+  p_candidates TEXT[],
   p_custom_alias BOOLEAN DEFAULT false,
   p_user_id UUID DEFAULT NULL
 )
 RETURNS TABLE (
   id UUID,
   short_code VARCHAR(50),
+  long_url TEXT,
+  created_at TIMESTAMPTZ,
   is_new BOOLEAN
-) AS $$
+)
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
 DECLARE
-  v_existing_id UUID;
-  v_existing_code VARCHAR(50);
-  v_new_id UUID;
-  v_final_code VARCHAR(50);
+  v_existing RECORD;
+  v_candidate TEXT;
+  v_row RECORD;
 BEGIN
-  -- Check if URL already exists (only for auto-generated codes)
+  -- Duplicate detection (auto-generated codes only). The MD5 predicate hits
+  -- idx_long_url_hash; the equality predicate guards hash collisions.
   IF p_custom_alias = false THEN
-    SELECT u.id, u.short_code INTO v_existing_id, v_existing_code
-    FROM urls u
-    WHERE MD5(u.long_url) = MD5(p_long_url)
-      AND u.custom_alias = false
-      AND u.is_active = true
-      AND (u.expires_at IS NULL OR u.expires_at > NOW())
-    LIMIT 1;
+    SELECT u.id, u.short_code, u.long_url, u.created_at
+      INTO v_existing
+      FROM urls u
+     WHERE MD5(u.long_url) = MD5(p_long_url)
+       AND u.long_url = p_long_url
+       AND u.custom_alias = false
+       AND u.is_active = true
+       AND (u.expires_at IS NULL OR u.expires_at > NOW())
+     LIMIT 1;
 
-    IF v_existing_id IS NOT NULL THEN
-      RETURN QUERY SELECT v_existing_id, v_existing_code, false;
+    IF v_existing.id IS NOT NULL THEN
+      RETURN QUERY SELECT v_existing.id, v_existing.short_code,
+                          v_existing.long_url, v_existing.created_at, false;
       RETURN;
     END IF;
   END IF;
 
-  -- Use provided code or it will be generated in application
-  v_final_code := p_short_code;
+  -- Try candidates in order; skip reserved/taken; absorb insert races.
+  FOREACH v_candidate IN ARRAY p_candidates LOOP
+    CONTINUE WHEN v_candidate IS NULL OR LENGTH(v_candidate) < 3 OR LENGTH(v_candidate) > 50;
+    CONTINUE WHEN EXISTS (SELECT 1 FROM reserved_words rw WHERE rw.word = LOWER(v_candidate));
+    CONTINUE WHEN EXISTS (SELECT 1 FROM urls u WHERE u.short_code_lower = LOWER(v_candidate));
 
-  -- Insert new URL
-  INSERT INTO urls (short_code, long_url, custom_alias, user_id)
-  VALUES (v_final_code, p_long_url, p_custom_alias, p_user_id)
-  RETURNING urls.id INTO v_new_id;
+    BEGIN
+      INSERT INTO urls (short_code, long_url, custom_alias, user_id)
+      VALUES (v_candidate, p_long_url, p_custom_alias, p_user_id)
+      RETURNING urls.id, urls.short_code, urls.long_url, urls.created_at
+        INTO v_row;
 
-  RETURN QUERY SELECT v_new_id, v_final_code, true;
+      RETURN QUERY SELECT v_row.id, v_row.short_code, v_row.long_url, v_row.created_at, true;
+      RETURN;
+    EXCEPTION WHEN unique_violation THEN
+      CONTINUE;
+    END;
+  END LOOP;
+
+  -- No candidate available — empty result; the app retries with a fresh batch.
+  RETURN;
 END;
-$$ LANGUAGE plpgsql;
+$$;
+
+-- admin_health_stats — consolidated admin health check (one RPC instead of 8
+-- parallel queries). Service-role only.
+CREATE OR REPLACE FUNCTION admin_health_stats()
+RETURNS JSONB
+LANGUAGE sql
+STABLE
+SET search_path = public
+AS $$
+  SELECT jsonb_build_object(
+    'url_count',           (SELECT COUNT(*) FROM urls),
+    'active_url_count',    (SELECT COUNT(*) FROM urls WHERE is_active),
+    'inactive_url_count',  (SELECT COUNT(*) FROM urls WHERE NOT is_active),
+    'click_count',         (SELECT COUNT(*) FROM clicks),
+    'reserved_word_count', (SELECT COUNT(*) FROM reserved_words),
+    'newest_url_at',       (SELECT MAX(created_at) FROM urls),
+    'newest_click_at',     (SELECT MAX(clicked_at) FROM clicks),
+    'latest_access_at',    (SELECT MAX(last_accessed_at) FROM urls)
+  );
+$$;
+
+REVOKE EXECUTE ON FUNCTION admin_health_stats() FROM PUBLIC;
+REVOKE EXECUTE ON FUNCTION admin_health_stats() FROM anon;
+REVOKE EXECUTE ON FUNCTION admin_health_stats() FROM authenticated;
 
 -- Trigger to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 CREATE TRIGGER update_urls_updated_at BEFORE UPDATE ON urls
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -207,14 +272,16 @@ ALTER TABLE url_tags ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Public URLs are viewable by everyone" ON urls
   FOR SELECT USING (true);
 
+-- auth.uid() is wrapped in scalar subselects so Postgres evaluates it once
+-- per statement (InitPlan) instead of per row
 CREATE POLICY "Users can insert their own URLs" ON urls
-  FOR INSERT WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
+  FOR INSERT WITH CHECK ((SELECT auth.uid()) = user_id OR user_id IS NULL);
 
 CREATE POLICY "Authenticated users can update their own URLs" ON urls
-  FOR UPDATE TO authenticated USING (auth.uid() = user_id);
+  FOR UPDATE TO authenticated USING ((SELECT auth.uid()) = user_id);
 
 CREATE POLICY "Authenticated users can delete their own URLs" ON urls
-  FOR DELETE TO authenticated USING (auth.uid() = user_id);
+  FOR DELETE TO authenticated USING ((SELECT auth.uid()) = user_id);
 
 -- clicks policies
 CREATE POLICY "Users can view analytics for their URLs" ON clicks
@@ -222,7 +289,7 @@ CREATE POLICY "Users can view analytics for their URLs" ON clicks
     EXISTS (
       SELECT 1 FROM urls
       WHERE urls.id = clicks.url_id
-      AND (urls.user_id = auth.uid() OR urls.user_id IS NULL)
+      AND (urls.user_id = (SELECT auth.uid()) OR urls.user_id IS NULL)
     )
   );
 
