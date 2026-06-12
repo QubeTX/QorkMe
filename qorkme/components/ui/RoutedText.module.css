@@ -1,0 +1,13 @@
+.obstacle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.line {
+  display: block;
+  white-space: pre;
+}

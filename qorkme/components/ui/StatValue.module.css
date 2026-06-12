@@ -1,0 +1,115 @@
+.stat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: clamp(24px, 3vw, 36px);
+  background: var(--color-void);
+  overflow: hidden;
+  transition: background-color 0.3s var(--ease-out);
+}
+
+.stat:hover {
+  background: var(--color-surface-raised);
+}
+
+/* Blueprint corner mark — fades/spins in on hover */
+.stat::after {
+  content: '+';
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--primary-blue);
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.4s var(--ease-out);
+  pointer-events: none;
+}
+
+.stat:hover::after {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Scan sweep across the cell on hover */
+.stat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(0, 102, 255, 0.07) 50%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  background-position: 120% 0;
+  transition: background-position 0.7s var(--ease-out);
+  pointer-events: none;
+}
+
+.stat:hover::before {
+  background-position: -40% 0;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background-image: var(--gradient-brand);
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+  transition: background-position 0.6s var(--ease-out);
+}
+
+.stat:hover .value {
+  background-position: 100% 0;
+}
+
+/* Slot-roll cells: Chrome does NOT clip the container's background to
+   absolutely-positioned face glyphs, so without this chain the numeral is
+   invisible (transparent color, empty clip). Each cell/face inherits the
+   gradient and clips to its own glyph — the gradient restarts per glyph
+   (browser-judged acceptable on 2–4 char numerals; the hover sweep still
+   propagates through the inherit chain). */
+.value [data-slot-cell] {
+  background: inherit;
+}
+
+.value [data-slot-face] {
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  transition: color 0.3s var(--ease-out);
+}
+
+.stat:hover .label {
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat::before,
+  .stat::after,
+  .value {
+    transition: none;
+  }
+}

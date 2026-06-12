@@ -34,7 +34,7 @@ describe('ShortCodeGenerator', () => {
 
   it('returns unique codes when availability eventually resolves true', async () => {
     const availability = vi
-      .fn<[string], Promise<boolean>>()
+      .fn<(code: string) => Promise<boolean>>()
       .mockResolvedValueOnce(false)
       .mockResolvedValueOnce(false)
       .mockResolvedValueOnce(true);

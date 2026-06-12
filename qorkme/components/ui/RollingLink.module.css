@@ -1,0 +1,20 @@
+.label {
+  display: inline-flex;
+}
+
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.3em;
+}
+
+.stack {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.char {
+  display: inline-block;
+  height: 1.3em;
+  line-height: 1.3em;
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import type { CSSProperties } from 'react';
-import { motion, useInView } from 'motion/react';
+import { motion, useInView } from 'framer-motion';
 import { useMemo, useRef } from 'react';
 import { cn } from '@/lib/utils';
 

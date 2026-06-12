@@ -22,33 +22,33 @@ type SupabaseClientInstance = Awaited<ReturnType<typeof createServerClientInstan
 type MockQueryBuilder = {
   selectArg?: string;
   eqCalls: Array<[string, unknown]>;
-  select: Mock<[string?], MockQueryBuilder>;
-  eq: Mock<[string, unknown], MockQueryBuilder>;
-  single: Mock<[], Promise<QueryResult>>;
+  select: Mock<(arg?: string) => MockQueryBuilder>;
+  eq: Mock<(column: string, value: unknown) => MockQueryBuilder>;
+  single: Mock<() => Promise<QueryResult>>;
 };
 
 function createQueryBuilder({ singleResult }: { singleResult?: QueryResult }): MockQueryBuilder {
   const builder: MockQueryBuilder = {
     selectArg: undefined,
     eqCalls: [],
-    select: undefined as unknown as Mock<[string?], MockQueryBuilder>,
-    eq: undefined as unknown as Mock<[string, unknown], MockQueryBuilder>,
-    single: undefined as unknown as Mock<[], Promise<QueryResult>>,
+    select: undefined as unknown as Mock<(arg?: string) => MockQueryBuilder>,
+    eq: undefined as unknown as Mock<(column: string, value: unknown) => MockQueryBuilder>,
+    single: undefined as unknown as Mock<() => Promise<QueryResult>>,
   };
 
   builder.select = vi.fn((arg?: string) => {
     builder.selectArg = arg;
     return builder;
-  }) as Mock<[string?], MockQueryBuilder>;
+  });
 
   builder.eq = vi.fn((column: string, value: unknown) => {
     builder.eqCalls.push([column, value]);
     return builder;
-  }) as Mock<[string, unknown], MockQueryBuilder>;
+  });
 
   builder.single = vi.fn(async () => {
     return singleResult ?? { data: null, error: undefined };
-  }) as Mock<[], Promise<QueryResult>>;
+  });
 
   return builder;
 }

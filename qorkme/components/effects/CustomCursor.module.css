@@ -1,0 +1,86 @@
+/* Same visual identity as v2 (dot / ring / bloom), engineered properly:
+   - transforms only (the engine writes translate3d + scale; no width/height)
+   - NO backdrop-filter on the ring (was resampling the backdrop every frame)
+   - the bloom's blur is STATIC; only opacity animates (was animating filter)
+   - will-change on exactly these three layers */
+
+.cursorBloom,
+.cursorDot,
+.cursorRing {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+  mix-blend-mode: screen;
+}
+
+.cursorBloom {
+  width: 140px;
+  height: 140px;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(124, 58, 237, 0.55), transparent 70%),
+    radial-gradient(circle at 65% 60%, rgba(37, 99, 235, 0.45), transparent 75%);
+  /* static blur — never animated; opacity belongs to the engine */
+  filter: blur(80px) saturate(140%);
+}
+
+.cursorDot {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(
+    circle,
+    rgba(147, 70, 255, 0.95) 0%,
+    rgba(89, 104, 255, 0.8) 45%,
+    rgba(37, 99, 235, 0.2) 100%
+  );
+  box-shadow:
+    0 0 18px rgba(137, 89, 255, 0.9),
+    0 0 36px rgba(43, 123, 255, 0.6);
+}
+
+.cursorRing {
+  width: 42px;
+  height: 42px;
+  border: 2px solid rgba(180, 198, 255, 0.45);
+  background: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.28) 0%,
+    rgba(37, 99, 235, 0.08) 55%,
+    transparent 85%
+  );
+  box-shadow: 0 0 28px rgba(67, 130, 255, 0.45);
+  transition:
+    opacity 0.4s ease,
+    border-color 0.3s ease,
+    border-radius 0.3s ease;
+}
+
+/* Mode looks (size comes from the engine's transform scale) */
+.cursorRing[data-mode='interactive'] {
+  border-color: rgba(199, 142, 255, 0.55);
+  box-shadow: 0 0 42px rgba(140, 130, 255, 0.55);
+}
+
+.cursorRing[data-mode='magnetic'] {
+  border-color: rgba(0, 102, 255, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 0 42px rgba(0, 102, 255, 0.5);
+}
+
+.cursorRing[data-mode='text'] {
+  border-color: rgba(180, 198, 255, 0.25);
+  box-shadow: none;
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .cursorBloom,
+  .cursorDot,
+  .cursorRing {
+    display: none;
+  }
+}

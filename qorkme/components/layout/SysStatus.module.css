@@ -1,0 +1,26 @@
+.sysStatus {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6em;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  cursor: default;
+}
+
+/* The rolling word and its invisible sizers share one grid cell, so the
+   line is always as wide as the widest status (zero layout shift). */
+.stack {
+  display: inline-grid;
+  justify-items: start;
+}
+
+.stack > * {
+  grid-area: 1 / 1;
+}
+
+.sizer {
+  visibility: hidden;
+}

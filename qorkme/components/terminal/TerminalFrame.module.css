@@ -1,0 +1,99 @@
+.frame {
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-void);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.meta {
+  color: var(--color-arrival);
+  font-weight: 500;
+}
+
+.body {
+  padding: 16px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-bright) transparent;
+  white-space: pre-wrap;
+}
+
+.body::-webkit-scrollbar {
+  height: 6px;
+}
+
+.body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.body::-webkit-scrollbar-thumb {
+  background: var(--color-border-bright);
+  border-radius: 3px;
+}
+
+.line {
+  min-height: 1.7em;
+}
+
+.accent {
+  color: var(--color-arrival);
+}
+
+.prompt {
+  color: var(--color-arrival);
+  font-weight: 600;
+}
+
+.timestamp {
+  color: var(--color-text-dim);
+  margin-right: 0.75ch;
+}
+
+/* Blink cursor — occupies layout permanently (visibility, not display:
+   toggling display shifted the body when printing started — CLS) */
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  background: var(--primary-blue);
+  vertical-align: text-bottom;
+  visibility: hidden;
+}
+
+[data-printing] .cursor {
+  visibility: visible;
+  animation: term-blink 0.85s steps(1) infinite;
+}
+
+@keyframes term-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none !important;
+  }
+}

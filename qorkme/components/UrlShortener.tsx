@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import toast from 'react-hot-toast';
 
 export function UrlShortener() {
   const [url, setUrl] = useState('');
@@ -11,14 +10,13 @@ export function UrlShortener() {
   const [shortUrl, setShortUrl] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [fadeState, setFadeState] = useState<'in' | 'out'>('in');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      toast.success('Copied to clipboard!');
     } catch (error) {
       console.error('Failed to copy:', error);
-      toast.error('Failed to copy to clipboard');
     }
   };
 
@@ -26,9 +24,10 @@ export function UrlShortener() {
     e.preventDefault();
 
     if (!url.trim()) {
-      toast.error('Please enter a URL');
+      setErrorMessage('Please enter a URL');
       return;
     }
+    setErrorMessage(null);
 
     // Start fade out
     setFadeState('out');
@@ -67,7 +66,7 @@ export function UrlShortener() {
         setUrl('');
       } catch (error) {
         console.error('Error shortening URL:', error);
-        toast.error(error instanceof Error ? error.message : 'Failed to shorten URL');
+        setErrorMessage(error instanceof Error ? error.message : 'Failed to shorten URL');
 
         // Reset to input view on error
         setIsLoading(false);
@@ -190,12 +189,20 @@ export function UrlShortener() {
                 type="url"
                 placeholder="Enter Your URL — https://example.com/your/very/long/url/here..."
                 value={url}
-                onChange={(e) => setUrl(e.target.value)}
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                  setErrorMessage(null);
+                }}
                 onKeyPress={handleKeyPress}
                 className="url-input w-full rounded-2xl border-2 border-white/10 bg-[rgba(20,20,19,0.4)] px-6 py-5 text-lg text-text-primary backdrop-blur-sm placeholder:text-text-muted focus:border-[color:var(--color-primary)] focus:bg-[rgba(20,20,19,0.6)] focus:shadow-[0_0_0_4px_rgba(91,138,91,0.1)] focus:outline-none transition-all duration-300"
                 required
               />
             </div>
+            {errorMessage && (
+              <p role="alert" className="font-mono text-sm text-[color:var(--color-error)]">
+                {errorMessage}
+              </p>
+            )}
             <Button
               id="shorten-button"
               onClick={handleSubmit}

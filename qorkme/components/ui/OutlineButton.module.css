@@ -1,0 +1,96 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 28px;
+  min-height: 48px;
+  border: 1px solid rgba(0, 102, 255, 0.55);
+  border-radius: 6px;
+  background: transparent;
+  overflow: hidden;
+  isolation: isolate;
+
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition:
+    border-color 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out),
+    transform 0.2s var(--ease-out);
+}
+
+/* Gradient sweep layer — revealed by sliding background-position */
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #2563eb, #7c3aed, #2563eb);
+  background-size: 220% 100%;
+  background-position: 100% 0;
+  opacity: 0;
+  transition:
+    opacity 0.35s var(--ease-out),
+    background-position 0.5s var(--ease-out);
+}
+
+.button:hover,
+.button:focus-visible {
+  border-color: transparent;
+  box-shadow: 0 8px 32px -8px var(--glow-blue);
+}
+
+.button:hover::before,
+.button:focus-visible::before {
+  opacity: 1;
+  background-position: 0 0;
+}
+
+.sm {
+  padding: 10px 18px;
+  min-height: 40px;
+  font-size: 0.75rem;
+  gap: 8px;
+}
+
+/* Label stack: the rolling label and its invisible sizers share one grid
+   cell, so the button is always as wide as the widest label and a slot roll
+   never shifts layout. */
+.labelText {
+  display: inline-grid;
+  justify-items: center;
+}
+
+.labelText > * {
+  grid-area: 1 / 1;
+}
+
+.labelSizer {
+  visibility: hidden;
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.button:hover .arrow,
+.button:focus-visible .arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 480px) {
+  .button {
+    width: 100%;
+    padding: 14px 20px;
+  }
+}
