@@ -1,5 +1,13 @@
 # UI/Layout Troubleshooting & Best Practices Guide
 
+> **2026-06 QubeTX redesign note:** visual styling is now **CSS modules + design
+> tokens first** (the QubeTX kit convention) — Tailwind is retained for layout
+> utilities only (flex/grid/gap/visibility/responsive). New components should
+> use a `.module.css` with token variables instead of Tailwind arbitrary-value
+> classes. The Tailwind v4 gotchas below still apply wherever layout utilities
+> are used. Canvas components (DotGrid/MatrixDisplay/MatrixClock) size from
+> their containers — give wrappers explicit clamp()-based dimensions.
+
 ## Overview
 
 This guide documents critical lessons learned about QorkMe's UI layout system, Tailwind CSS v4 integration, and common pitfalls when working with spacing and flexbox. Follow these patterns to avoid hours of debugging.

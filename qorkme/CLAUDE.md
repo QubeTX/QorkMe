@@ -64,38 +64,19 @@ For components needing different props at different breakpoints, render separate
 </div>
 ```
 
-## Design System
+## Design System — QubeTX v3.2.1 + QorkMe sub-brand
 
-SHAUGHV vintage palette — cream-dominant surfaces, sage as the single action color. Full spec in `docs/DESIGN_SYSTEM.md`. Tokens live in `app/globals.css` as CSS custom properties.
+QorkMe runs on the **QubeTX design system** (dark-only, void `#05070f`) with a QorkMe sage/bamboo accent layer. Full spec + measured WCAG ratios in `docs/DESIGN_SYSTEM.md`. The vendored kit (tokens, motion library, components, agent docs) lives at `docs/qubetx-design-system/`; **live spec: https://www.qubetx.com/design-system ; stable kit permalink: https://www.qubetx.com/qubetx-design-system.zip** — cross-check against the live version, re-download the zip to refresh the vendored kit.
 
-**Palette (light mode):**
+**Key facts:**
 
-- Cream surfaces: `#FAFAF8` (surface), `#F5F5F0` (background), `#EEEEE8` (sunken), `#FDFDFB` (elevated)
-- Sage primary / action color: `#5B8A5B` (hover `#4A7A4A`) — buttons, focus rings, links
-- Olive body text: `#5C5446` (secondary `#6C6456`, muted at 60% alpha)
-- Bamboo warm accent: `#C4A876` (hover `#A48856`)
-- Semantic: success = sage `#5B8A5B`, warning = ochre `#D6A52E`, error = bauhaus terracotta `#B05545`, info = slate `#345670`
-
-**Palette (dark mode):**
-
-- Surfaces: olive-tinted espresso gradient `#2A2620 → #1C1814`
-- Sage-light action color: `#6B9A6B` (hover `#5B8A5B`)
-- Cream foreground: `#F5F5F0`
-- Bamboo-light accent: `#D4B896`
-
-**Typography:**
-
-- **Makira Sans Serif** — all visible type, scoped via `.font-makira` class on page wrappers. The wrapper rule excludes `code`/`pre`/`.font-mono` so the mono face surfaces.
-  - Regular (400) — body text, UI labels, numbers
-  - Medium (500) — emphasized text, form labels
-  - SemiBold (600) — headings, strong UI elements
-  - Bold (700) — bold headings, smaller buttons
-  - ExtraBold (800) — heavy emphasis
-  - Black (900) — display text, prominent CTAs, via `--weight-ui-button` CSS variable
-- **IBM Plex Mono** — mono slot (`var(--font-mono)`, `.font-mono`, `<code>`, `<pre>`). Used for the short-URL display and code blocks.
-  - Regular (400), Medium (500), SemiBold (600), Bold (700)
-
-**Transitions:** 140ms (fast), 240ms (base), 420ms (slow). Spacing: 8px grid.
+- **Dark only** — no light mode, no theme toggle.
+- Structural tokens (surfaces `#0d1117`/`#111827`, hairline borders `#1a2236`/`#2c3a5c`, text `#fff`/`#94a3b8`/`#76869f`) are QubeTX verbatim — never fork. Borders do elevation work; no large shadows.
+- QorkMe accent: sage `#5b8a5b` action (5.01:1 AA on void), arrival flash `#7dc87d`, gradient/LED ramp `#4a9e5c → #c4a876` (sage→bamboo), bamboo accent `#c4a876`. Semantics: warning `#d6a52e`, error `#d07a66`, info `#7aa3d0` (void-tuned).
+- **Typography**: Makira (400–900, Black 900 uppercase for headings/wordmarks) + IBM Plex Mono (the technical register: labels, statuses, buttons via `.btn`, short URLs, `.mono-label` utility). Sentence case in storage, UPPERCASE via CSS.
+- **Motion doctrine** (see `docs/qubetx-design-system/MOTION_GUIDE.md` + `SKILL.md`): one owner per animated property; anime.js only via `lib/motion/anime.ts`; **no ResizeObserver** (use `lib/pretext/resizeCoordinator`); IO triggers, Lenis scrubbing; reduced motion = final state instantly; label changes ride the slot roll (`lib/motion/SlotRoll`); copy confirmation = `COPIED` flash, **never toasts**.
+- **Pretext**: wrapping body copy uses `PretextBlock` (min-height reservation); `shrinkwrap` only on left-aligned blocks; never measure letter-spaced mono labels. `@chenglou/pretext` is transpiled via `next.config.ts`.
+- Entrances: `LoadSequence` choreography from first paint (`html[data-loading]` FOUC guard, 3s failsafe). BootScreen is vendored but unmounted.
 
 ## Architecture Notes
 
@@ -107,7 +88,9 @@ SHAUGHV vintage palette — cream-dominant surfaces, sage as the single action c
 
 - **Project ID**: `gzsdakrkbirevpxcadrg`
 - **MCP access**: Full database access via Supabase MCP server (execute SQL, apply migrations, view logs, etc.)
-- **Clients**: `lib/supabase/server.ts` (`createServerClientInstance` for cookie auth, `createAdminClient` for service_role); `lib/supabase/client.ts` (browser)
+- **Clients**: `lib/supabase/server.ts` (`createServerClientInstance` for cookie auth, `createAdminClient` for service_role, `createAnonClient` for cookie-free work inside `after()` callbacks); `lib/supabase/client.ts` (browser)
+- **Migrations**: `supabase/migrations/` (applied via MCP; `supabase/schema.sql` is the consolidated mirror)
+- **Hot paths**: shorten = 1 RPC (`get_or_create_short_url` v2 — candidates array, atomic duplicate-return-or-insert); redirect = 1 RPC (`increment_click_count`) + click insert via Next 15 `after()`; admin health = 1 RPC (`admin_health_stats`, service-role only)
 
 ### Admin console
 
@@ -122,32 +105,29 @@ SHAUGHV vintage palette — cream-dominant surfaces, sage as the single action c
   - `api/admin/links/[id]` — individual link toggle/delete
   - `api/admin/purge` — wipe all data (keeps schema)
 
-### Matrix display
+### Matrix / LED surfaces (canvas, kit architecture)
 
-- `components/MatrixDisplay.tsx` — main component with title + real-time 12-hour clock
-- `components/ui/matrix.tsx` — dot-matrix rendering engine
-- **Deterministic rendering** — no `Math.random()` to avoid hydration mismatches
-- Dual render paths: desktop (`createTitleFrame`, `createTimeFrame`) and mobile (`createTitleFrameMobile`, `createTimeFrameMobile`)
-- Mobile: "Qork" at 5px cells/26 cols, time without seconds at 3px/50 cols
-- Desktop: "Qork.Me" at 8px cells/50 cols, time with seconds at 6px/66 cols
+- `components/effects/MatrixDisplay.tsx` — kit LED word board (anime.js sweeps, sage→bamboo LUT). Home wordmark `QORK.ME`, 404 `404/NOT.FOUND`, login `SECURE/ACCESS`.
+- `components/effects/MatrixClock.tsx` — QorkMe live 12-hour LED clock on the kit dotFont/canvas architecture; only changed dots animate per tick. `seconds` prop; dual instance for mobile (no seconds).
+- `lib/motion/dotFont.ts` — 5×7 bitmap font (QorkMe divergence: digits + colon added).
+- Canvas components size from their **container** (give wrappers explicit width/height) via `resizeCoordinator`; IO-paused offscreen; reduced motion renders static; client-only (no hydration surface).
 
-### Interactive grid background
+### Dot-field background
 
-- `components/ui/interactive-grid-pattern.tsx` — SVG grid with noise-masked opacity and hover glow
-- **Pointer events pattern** (critical): container elements use `pointer-events-none`, interactive elements (cards, forms, buttons, links, footer) use `pointer-events-auto`
+- `components/effects/DotGrid.tsx` — canvas dot field (sage→bamboo ramp), listens on **window** for pointer swells, so it never blocks clicks and the old pointer-events dance is unnecessary. `firePulse({x, y, strength})` fires a field-wide ripple — the shortener fires one when a link is created.
 
 ### Short code algorithm
 
-`lib/shortcode/generator.ts` — consonant-vowel alternating patterns for memorable 4-char codes. Collision detection with retry, reserved word filtering (`lib/shortcode/reserved.ts`), case-insensitive via database generated columns.
+`lib/shortcode/generator.ts` — consonant-vowel alternating patterns for memorable 4-char codes. `generateCandidates(count, minLength)` emits a shortest-first batch (4 chars while the namespace has room, +1 char as it fills, timestamp last resort); the `get_or_create_short_url` RPC walks the batch atomically (duplicate detection + reserved filtering + availability + insert in ONE round trip). Reserved words: `lib/shortcode/reserved.ts` is canonical, mirrored in the DB `reserved_words` table.
 
 ## Testing
 
-Vitest with two environments configured in `vitest.config.ts`:
+Vitest 4 with two projects configured in `vitest.config.ts`:
 
-- **Node** (default) — API routes, shortcode logic, Supabase clients
-- **jsdom** — UI component tests (auto-selected for `tests/ui/` via `environmentMatchGlobs`)
+- **node** — API routes, shortcode logic, Supabase clients (`tests/**`, excluding `tests/ui/`)
+- **jsdom** — UI tests (`tests/ui/**`) plus the vendored kit tests living next to their sources (`components/**`, `lib/**`, `hooks/**`); `globals: true`; setup = `tests/setup.ts` + `test/setup.ts` (kit mocks for anime/framer-motion/pretext/lenis + IO/matchMedia stubs)
 
-Shared setup: `tests/setup.ts`. Test files mirror source paths (e.g., `lib/shortcode/generator.ts` → `tests/shortcode/generator.test.ts`).
+Slot-roll assertions go through `[data-slot-sr]`. Test files mirror source paths (e.g., `lib/shortcode/generator.ts` → `tests/shortcode/generator.test.ts`); kit tests sit alongside their modules.
 
 ## Prettier
 
@@ -168,7 +148,7 @@ NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB=REALEMMETTS
 
 ## CI/CD
 
-GitHub Actions at root `.github/workflows/ci.yml` — multi-node (18.x, 20.x), lint, type-check, Prettier, build, npm audit, Trufflehog, bundle analysis. Production deploy on main branch pushes via Vercel CLI. Root `vercel.json` points builds to this `qorkme/` subdirectory.
+GitHub Actions at root `.github/workflows/ci.yml` — multi-node (20.x, 22.x; vitest 4 requires Node ≥ 20.19), lint, type-check, Prettier, build, npm audit, Trufflehog, bundle analysis. Production deploy on main branch pushes via Vercel CLI. Root `vercel.json` points builds to this `qorkme/` subdirectory.
 
 ## Changelogs
 

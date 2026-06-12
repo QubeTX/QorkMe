@@ -2,6 +2,20 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.0.0] - 2026-06-12
+
+### Changed — QubeTX Design System Redesign
+
+- **Entire site rebuilt on the QubeTX design system v3.2.1** (live spec: https://www.qubetx.com/design-system, kit permalink: https://www.qubetx.com/qubetx-design-system.zip). Dark-only void `#05070f`; hairline-border surfaces; IBM Plex Mono technical register; QorkMe sub-brand accent layer derived via a measured color analysis — sage `#5b8a5b` stays the action color (5.01:1 AA on void), arrival flash `#7dc87d`, sage→bamboo gradient/LED ramp `#4a9e5c → #c4a876`, void-tuned semantic tones. Full analysis in `docs/DESIGN_SYSTEM.md`.
+- **Kit vendored in-repo**: `lib/motion` (anime seam, slot-roll engine, RevealText/decode, dotFont, dotGridGeometry), `lib/pretext`, `hooks/`, `components/{ui,terminal,layout,effects}`, kit vitest mocks (`test/`), agent docs (`docs/qubetx-design-system/`). BootScreen vendored but unmounted — the site loads straight into LoadSequence entrance choreography.
+- **Home**: DotGrid canvas field (pointer swells; sage ripple fires on link creation), LED `QORK.ME` wordmark (masked rise), live LED MatrixClock, decode eyebrow, slot-roll shortener card — `SHORTEN → WORKING…`, corner status `IDLE → INPUT → READY → BUSY → DONE` while typing, custom-alias availability `CHECKING → AVAILABLE/TAKEN`, arrival-rolled result, `COPY → COPIED` flash.
+- **Result page**: fixed PageHeader (blur+compress past 24px), arrival-rolled short URL, slot-roll copy, void-on-white QR, PretextBlock copy (CLS-free font loading).
+- **Admin**: console register — StatValue count-up stats (single `admin_health_stats` round trip), restyled health card + links table with inline mono action feedback, danger zone, `SECURE/ACCESS` LED login page.
+- **404**: LED `404 / NOT.FOUND` sweep over the dot field; **fixed a redirect loop** (the catch-all route redirected misses to `/404`, which is itself a `[shortCode]` match — now renders `notFound()` properly).
+- **No toasts anywhere** — slot-roll flashes and inline mono `ERR //` lines per kit doctrine; `react-hot-toast` removed.
+- **Deleted**: theme toggle + light mode (`lib/theme.tsx`, ThemeToggle/ClientThemeToggle), SiteHeader/NavigationHeader/ResultNavigationHeader (→ PageHeader), SecureAccessMatrix, MatrixBackground, DOM matrix engine (`ui/matrix.tsx` + old MatrixDisplay), interactive-grid-pattern, shimmering-text, bauhaus decor, Feature/MetricCard.
+- **Dependencies**: + animejs 4.4, framer-motion 12, lenis, @chenglou/pretext (transpiled via `next.config.ts`); − motion (dead), − react-hot-toast. Test stack: vitest 4 + jsdom 28 with node/jsdom projects config (kit tests run alongside their sources). CI Node matrix: 18/20 → 20/22.
+
 ## [4.2.0] - 2026-06-12
 
 ### Performance — Database Optimization

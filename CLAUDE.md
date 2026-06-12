@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. The interface follows the SHAUGHV vintage aesthetic — cream surfaces, sage as the single action color, olive body text, and bamboo as the warm secondary accent — paired with intelligent short code generation and comprehensive analytics tracking. Licensed under Apache License 2.0.
+QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. It is a **QubeTX property**: the interface runs on the QubeTX design system v3.2.1 (dark-only void `#05070f`, hairline-border surfaces, IBM Plex Mono technical register, anime.js/Framer Motion doctrine) with a QorkMe sub-brand accent layer — sage `#5b8a5b` as the action color and a sage→bamboo LED ramp powering the signature dot-matrix surfaces. Paired with intelligent short code generation and comprehensive analytics tracking. Licensed under Apache License 2.0.
+
+**Design system of record:** live spec https://www.qubetx.com/design-system · stable kit permalink https://www.qubetx.com/qubetx-design-system.zip · vendored kit + agent docs at `qorkme/docs/qubetx-design-system/` · QorkMe layer documented in `qorkme/docs/DESIGN_SYSTEM.md` (with measured WCAG ratios). Cross-check changes against the live spec.
 
 ## Technology Stack
 
@@ -12,12 +14,13 @@ QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, an
 - **Language**: TypeScript 5.5.3 (strict mode)
 - **Database**: Supabase (PostgreSQL) with real-time capabilities — Project ID: `gzsdakrkbirevpxcadrg`
 - **Supabase SDK**: @supabase/supabase-js 2.57.4, @supabase/ssr 0.7.0
-- **Styling**: Tailwind CSS 4.0.21 via @tailwindcss/postcss (no tailwind.config — tokens inline via `@theme` in `globals.css`)
-- **Typography**: Makira Sans Serif for all visible type — Regular (400) for body, SemiBold (600) for headings, Black (900) for buttons and display. IBM Plex Mono (Regular/Medium/SemiBold/Bold) for the mono slot — code blocks, short-URL display, and any element using `var(--font-mono)` or the `.font-mono` utility
-- **Animation**: motion 12.23.24, react-hot-toast 2.6.0
-- **Icons**: lucide-react 0.544.0
+- **Styling**: QubeTX design tokens (CSS custom properties in `globals.css`) + CSS modules for component styling; Tailwind CSS 4 via @tailwindcss/postcss retained for layout utilities only (no tailwind.config — `@theme` inline)
+- **Typography**: Makira Sans Serif (400–900; Black 900 uppercase for headings/wordmarks) + IBM Plex Mono (400–700) for the technical register — labels, statuses, buttons, short URLs, `.mono-label`
+- **Animation**: animejs 4.4 (via the `lib/motion/anime.ts` seam only), framer-motion 12, lenis (smooth scroll), the kit slot-roll engine (`lib/motion/slotText.ts`); no toast library — slot-roll flashes and inline mono errors
+- **Text measurement**: @chenglou/pretext (PretextBlock min-height reservation; transpiled via `next.config.ts`)
+- **Icons**: lucide-react 0.544.0 (20px, strokeWidth 1.5, aria-hidden)
 - **Deployment**: Vercel with automated GitHub Actions CI/CD
-- **Testing**: Vitest 1.6.1 with @testing-library/react
+- **Testing**: Vitest 4 (node + jsdom projects) with @testing-library/react; kit tests vendored alongside their modules
 
 ## Repository Structure
 
@@ -79,16 +82,14 @@ npm run ci           # Full local CI: lint + type-check + format:check + test + 
   - `app/api/admin/links/route.ts`: Paginated URL listing with sort/filter
   - `app/api/admin/links/[id]/route.ts`: Individual link management
 
-- **`components/`**: 25 React components organized by function
-  - `ui/`: Base components and core UI primitives
-    - `Button.tsx`, `Input.tsx`: Reusable form components
-    - `matrix.tsx`: Matrix display core logic with dot-matrix rendering
-    - `shimmering-text.tsx`: Shimmer animation effect
-    - `interactive-grid-pattern.tsx`: SVG grid with noise-masked opacity and hover glow
-  - `cards/`: Card-based components (Card, FeatureCard, MetricCard)
-  - `admin/`: Admin console components (AdminSignInButton, AdminSignOutButton, ClearDatabaseButton, DatabaseHealthCard, AdminLinksTable)
-  - `bauhaus/`: Decorative geometric elements (GeometricDecor)
-  - Root-level: UrlShortener, MatrixDisplay, MatrixBackground, ShortUrlDisplay, SecureAccessMatrix, SiteHeader, SiteFooter, NavigationHeader, ResultNavigationHeader, ThemeToggle, ClientThemeToggle
+- **`components/`**: React components organized by function
+  - `ui/`: Form primitives (`Button.tsx`, `Input.tsx`) + vendored QubeTX kit components (OutlineButton, TextLink, LabelPill, SectionHeading, StatValue, RollingLink, RoutedText, Magnetic, QubeTXLogo, icons registry)
+  - `effects/`: Vendored kit canvas/motion surfaces — DotGrid (background field, sage→bamboo ramp, `firePulse()`), MatrixDisplay (LED word board), MatrixClock (QorkMe live LED clock), LoadSequence (entrance choreography), SmoothScroll (Lenis), CustomCursor, ScrollProgress, ScrollTrace (unused), BootScreen (vendored, unmounted)
+  - `terminal/`: Vendored technical-register kit (TerminalFrame, CommandTable, CapabilityRows, InstallBlock, DownloadCard)
+  - `layout/`: SysStatus (footer slot-roll heartbeat)
+  - `cards/`: Card primitives (Card/CardHeader/CardTitle/CardDescription/CardContent — QubeTX-restyled)
+  - `admin/`: Admin console components (AdminSignInButton, AdminSignOutButton, ClearDatabaseButton, DatabaseHealthCard, AdminLinksTable — inline mono feedback, no toasts)
+  - Root-level: UrlShortener (slot-roll showcase), ShortUrlDisplay, PageHeader (fixed, blur+compress), SiteFooter (SysStatus + QubeTX attribution)
 
 - **`lib/`**: Business logic and utilities
   - `shortcode/`: Intelligent short code generation with consonant-vowel patterns
@@ -156,9 +157,11 @@ Supabase PostgreSQL (Project ID: `gzsdakrkbirevpxcadrg`) with optimized schema f
 #### Custom Database Functions
 
 - `increment_click_count(p_short_code text)` — **SECURITY DEFINER**, atomically increments `click_count` + updates `last_accessed_at`, returns `(id, long_url, title)`, checks `is_active` and expiry. Used by `app/[shortCode]/route.ts` for redirects.
+- `get_or_create_short_url(p_long_url, p_candidates text[], p_custom_alias, p_user_id)` — **v2, the whole shorten path in one round trip**: MD5-indexed duplicate detection (an already-shortened URL returns its existing code, never a duplicate row), reserved-word filtering, first-available-candidate selection, and the insert; unique-violation races advance to the next candidate inside the function. Returns `(id, short_code, long_url, created_at, is_new)`.
+- `admin_health_stats()` — consolidated admin health/stat aggregates in one call (counts, active/inactive, freshness timestamps). **EXECUTE revoked from anon/authenticated** — service_role only.
 - `check_short_code_available(code text)` — checks availability against both `urls` and `reserved_words` tables
-- `get_or_create_short_url(p_long_url, p_short_code, p_custom_alias, p_user_id)` — duplicate detection + insert in one call
 - `update_updated_at_column()` — trigger function on `urls` table, fires BEFORE UPDATE
+- All functions pin `search_path = public`. Migrations live in `qorkme/supabase/migrations/`.
 
 #### Installed Extensions
 
@@ -235,47 +238,15 @@ Implementation: `qorkme/lib/shortcode/generator.ts`
 
 Complete troubleshooting guide: `qorkme/docs/UI_LAYOUT_GUIDE.md`
 
-### Interactive Grid Background
+### Dot-Field Background (DotGrid)
 
-QorkMe features a subtle interactive grid background that creates visual depth and user engagement:
+The home and 404 pages float on the QubeTX canvas dot field, recolored to the QorkMe sage→bamboo ramp:
 
-- **Component**: `qorkme/components/ui/interactive-grid-pattern.tsx`
-- **Implementation**: Single SVG element with 60fps performance
-- **Grid specs**: Dynamic sizing based on viewport dimensions (40px cells with 2-cell buffer)
-- **Visual effects**:
-  - Base grid: Earthy border lines with noise-based opacity variation for organic texture
-  - Hover interaction: Sage glow (`--color-primary` at 12% opacity) on cell hover
-  - Noise filter: SVG fractal noise modulates grid line opacity (0.4-1.0 range) for subtle, paper-like inconsistency
-- **Z-index**: Grid at z-0, content at z-10
-- **Performance**: Minimal DOM manipulation, CSS transitions, pointer events isolated to interactive cells only
-
-**Customization**:
-
-```tsx
-<InteractiveGridPattern
-  width={40} // Cell width in pixels
-  height={40} // Cell height in pixels
-  squares={[20, 20]} // [columns, rows]
-  className="..." // Additional styles
-/>
-```
-
-**Noise Filter Details** (in SVG `<defs>`):
-
-- `baseFrequency="0.6"`: Controls noise scale (higher = finer grain texture)
-- `numOctaves="4"`: Noise layer detail (more octaves = more complex texture)
-- `feColorMatrix` alpha values `0.4 0.5`: Opacity range (slope × input + intercept)
-
-**Pointer Events Pattern** (critical for grid interactivity):
-
-To allow the grid to receive hover/click events in empty space while keeping UI elements interactive:
-
-- Container elements (`main`, content wrappers): `pointer-events-none`
-- Interactive elements (cards, forms, buttons, links): `pointer-events-auto`
-- Decorative elements (MatrixDisplay): `pointer-events-none`
-- Footer: `pointer-events-auto` with `relative z-10`
-
-Implementation: `qorkme/app/page.tsx` (absolute positioned behind main content)
+- **Component**: `qorkme/components/effects/DotGrid.tsx` (vendored kit, LUT divergence documented in-file)
+- **Architecture**: anime.js animates plain dot objects (breathe/pulse channels); Canvas 2D only blits; feathered TL→BR ramp; ≤1400 dots; IO-paused offscreen; rebuilds via `resizeCoordinator` (no ResizeObserver)
+- **Interactions**: window-level pointer move/down → elastic swell around the cursor; `firePulse({x, y, strength})` / the `qubetx:pulse` CustomEvent → field-wide ripple. **The shortener fires a pulse when a link is created.**
+- **Layering**: the component's container is `pointer-events: none` and it listens on `window`, so content never needs the old pointer-events dance. Grid at z-0 (fixed), content at z-10.
+- Reduced motion: static ramp, no loops.
 
 ## Environment Variables
 
@@ -296,7 +267,7 @@ GitHub Actions workflows in `.github/workflows/`:
 
 ### `ci.yml` - Continuous Integration
 
-- **Multi-node testing**: Node.js 18.x and 20.x matrix
+- **Multi-node testing**: Node.js 20.x and 22.x matrix (vitest 4 requires Node ≥ 20.19)
 - **Code quality**: ESLint, Prettier, TypeScript checks
 - **Build verification**: Full production build with mock env vars
 - **Security scanning**:
@@ -323,15 +294,13 @@ Configure in repository Settings -> Secrets and variables -> Actions:
 
 ## Design System
 
-QorkMe uses the SHAUGHV vintage palette — cream-dominant surfaces with sage as the single action color:
+**QubeTX v3.2.1 base + QorkMe sub-brand accent.** Live spec: https://www.qubetx.com/design-system · kit permalink: https://www.qubetx.com/qubetx-design-system.zip · vendored kit at `qorkme/docs/qubetx-design-system/`.
 
-- **Color palette (light mode)**: Cream surfaces (`#FAFAF8`, `#F5F5F0`, `#EEEEE8`); sage primary/action color (`#5B8A5B`, hover `#4A7A4A`); olive body text (`#5C5446`, secondary `#6C6456`); bamboo warm accent (`#C4A876`). Semantic tones: success = sage `#5B8A5B`, warning = ochre `#D6A52E`, error = bauhaus terracotta `#B05545`, info = slate `#345670`.
-- **Color palette (dark mode)**: Olive-tinted espresso surfaces (`#2A2620` → `#1C1814` gradient); sage-light action color (`#6B9A6B`); cream foreground (`#F5F5F0`); bamboo-light accent (`#D4B896`).
-- **Typography**: **Makira Sans Serif** (400-900) for all visible type — Regular (400) body, SemiBold (600) headings, Bold (700) smaller buttons, Black (900) display/CTAs. **IBM Plex Mono** (400-700) for the mono slot — code blocks, the short-URL display, and any `font-mono` element. Makira is scoped via `.font-makira` on page wrappers; the wrapper rule excludes `code`/`pre`/`.font-mono` so the mono face surfaces.
-- **Surfaces & depth**: Rounded cards (`12px-28px` radii) with soft olive-tinted shadows (`rgba(92, 84, 70, 0.08-0.16)`); blur subtle and used sparingly.
-- **Theme**: Light by default, dark mode swaps to espresso surfaces via the same `--color-*` tokens. Tokens live in `qorkme/app/globals.css`.
-- **Interaction**: Calm transitions (140-420ms), faint gradient overlays, focus rings using sage (`rgba(91, 138, 91, 0.32)`).
-- **Spacing**: 8px grid with responsive clamps for sections, stacks, and grids.
+- **Dark only** — void `#05070f` page background, surfaces `#0d1117`/`#111827`, 1px hairline borders `#1a2236` (hover `#2c3a5c`) do the elevation work (no large shadows). Text: `#ffffff` / `#94a3b8` / `#76869f` dim (contrast-tuned — never adjust). No theme toggle.
+- **QorkMe accent (measured on void, see `qorkme/docs/DESIGN_SYSTEM.md`)**: sage `#5b8a5b` action (5.01:1 AA), hover `#69a169`, arrival flash `#7dc87d` (slot rolls, success), gradient/LED ramp `#4a9e5c → #c4a876`, bamboo `#c4a876`. Semantics: warning ochre `#d6a52e`, error `#d07a66`, info `#7aa3d0`.
+- **Typography**: Makira (Black 900 uppercase headings/wordmarks, −0.02em) + IBM Plex Mono technical register (labels, buttons, statuses, short URLs; `--text-mono-label` 0.7rem/0.12em). Sentence case in storage, UPPERCASE via CSS.
+- **Radii**: 2px chips · 4px pills · 6px panels/buttons · 999px pill tabs. **Spacing**: 8px ladder + clamp()-based page rhythm; `--container-max` 1440px (1800px ≥2560px).
+- **Motion**: house curve `cubic-bezier(0.25, 1, 0.5, 1)`; slot rolls for every label change; one owner per property; no ResizeObserver; IO triggers + Lenis scrubbing; reduced motion = instant final state. Playbook: `qorkme/docs/qubetx-design-system/MOTION_GUIDE.md`.
 
 Complete specification: `qorkme/docs/DESIGN_SYSTEM.md`
 
@@ -440,59 +409,23 @@ Every redirect logs:
 - Code splitting and lazy loading
 - Bundle optimization with Next.js 15
 
-### Matrix Display with Real-Time Clock and Mobile Optimization
+### LED Matrix Surfaces (Canvas, Kit Architecture)
 
-- Animated dot-matrix title using "QORKME" in stylized characters
-- Real-time clock in 12-hour format with AM/PM period (updated 2025-10-18)
-- **Mobile-Optimized Matrix Sizing** (updated 2025-10-19):
-  - **Desktop (md:768px+)**:
-    - Title matrix: "Qork.Me" (7 characters) at 8px cells with 50 columns
-    - Time matrix: "HH:MM:SS AM/PM" (14 characters including spaces) at 6px cells with 66 columns
-  - **Mobile (<768px)**:
-    - Title matrix: "Qork" only (4 characters, shortened from "Qork.Me") at 5px cells with 26 columns
-    - Time matrix: "HH:MM AM/PM" (11 characters without seconds) at 3px cells with 50 columns
-  - Prevents horizontal overflow on narrow viewports while maintaining readability
-  - Uses Tailwind `md:hidden` and `hidden md:block` utilities for separate render paths
-  - Mobile time format removes seconds to fit screen width constraints
-  - Mobile title uses shorter "Qork" for better visual balance on small screens
-- **Implementation Details**:
-  - `createTitleFrame()` and `createTimeFrame()` functions render full desktop versions
-  - `createTitleFrameMobile()` function renders shortened "Qork" title for mobile
-  - `createTimeFrameMobile()` function formats time without seconds for mobile display
-  - Separate `titleFrameMobile` and `timeFrameMobile` useMemo hooks for responsive rendering
-  - Mobile Matrix components use separate size props (5px for title, 3px for time) vs desktop (8px, 6px)
-- Character map includes digits 0-9, colon, space, and letters A, P, M
-- Shimmer effect on title letters (deterministic, no random values for hydration safety)
-- Server/client rendering consistency maintained for Next.js hydration
-- Responsive gap spacing: `gap-4` mobile, `md:gap-6` desktop
-- Edge feathering with 4-step gradient fade for smooth blending into background
+- **`qorkme/components/effects/MatrixDisplay.tsx`** — kit LED word board: anime.js sweeps words in/out left→right, sage→bamboo LUT, IO-paused, `resizeCoordinator` rebuilds, reduced motion renders the first word statically. Used for the home `QORK.ME` wordmark, 404 (`404`/`NOT.FOUND`), and admin login (`SECURE`/`ACCESS`).
+- **`qorkme/components/effects/MatrixClock.tsx`** — QorkMe's live 12-hour LED clock on the same dotFont/canvas architecture. Real wall-clock time ("the terminal is honest"); only changed dots animate per tick; `seconds` prop (home renders a seconds instance ≥768px and a no-seconds instance below via dual-instance pattern); client-only (canvas has no hydration surface).
+- **`qorkme/lib/motion/dotFont.ts`** — 5×7 bitmap font; QorkMe divergence adds digits 0-9 and `:`.
+- Canvas components size from their **containers** — wrappers must carry explicit width/height (clamp()-based), which is how responsiveness collapses the old dual cell-size render paths.
 
-Implementation: `qorkme/components/MatrixDisplay.tsx`, `qorkme/components/ui/matrix.tsx`
+### URL Shortener Card (Slot-Roll Showcase)
 
-### URL Shortener Card Interactions
+Implementation: `qorkme/components/UrlShortener.tsx` + `UrlShortener.module.css`
 
-- **Mobile-optimized padding** (updated 2025-10-18):
-  - Fixed 24px padding on all viewports using inline styles
-  - Tailwind v4 compatibility: Uses `style={{ padding: '24px' }}` instead of Tailwind classes
-  - Previous responsive padding (24px/32px/48px) simplified for consistency
-- Three states: Input form, Loading spinner, Success display
-- State-aware rendering (conditional, not absolute positioning overlays)
-- Proper focus ring display without clipping
-- Consistent spacing maintained via flexbox `gap` property
-
-Implementation: `qorkme/components/UrlShortener.tsx`
-
-### Homepage Layout Spacing
-
-- **Mobile breathing room** (added 2025-10-18):
-  - Content container: `paddingLeft: '24px', paddingRight: '24px'` for horizontal spacing
-  - Card wrapper: `marginLeft: '16px', marginRight: '16px'` to prevent edge touching
-  - Result: On 375px mobile viewport, card width is ~295px (375 - 48 - 32)
-  - Inline styles used for Tailwind v4 compatibility (classes like `px-6`, `mx-4` not generating)
-- Desktop layout unchanged and fully maintained
-- All spacing values use inline styles for guaranteed rendering
-
-Implementation: `qorkme/app/page.tsx`
+- Submit button label rolls `SHORTEN → WORKING…` (Enter submits via a real `<form>`)
+- Card corner status rolls while typing: `IDLE → INPUT → READY → BUSY → DONE`
+- Custom-alias availability rolls `CHECKING → AVAILABLE / TAKEN / INVALID` (debounced GET)
+- Result short URL arrival-rolls from a masked placeholder; `COPY → COPIED` flash (1.4s revert, `FAILED` on clipboard error)
+- Success fires a sage `firePulse` ripple through the DotGrid
+- Errors are inline mono `ERR //` lines (`role="alert"`) — no toasts anywhere in the app
 
 ## Development Troubleshooting
 
@@ -550,18 +483,15 @@ Create route handler in `qorkme/app/api/` following Next.js App Router conventio
 
 ### Modify matrix display or clock
 
-Matrix rendering logic is split between:
-
-- `qorkme/components/MatrixDisplay.tsx` - Main component with title and clock
-- `qorkme/components/ui/matrix.tsx` - Core matrix dot rendering engine
-- Matrix uses deterministic rendering (no `Math.random()`) to avoid hydration mismatches
-- Time format is 12-hour with AM/PM, updates in real-time
-- Character map: digits 0-9, colon, space, and letters A, P, M
+- `qorkme/components/effects/MatrixDisplay.tsx` - LED word board (kit, sage→bamboo LUT)
+- `qorkme/components/effects/MatrixClock.tsx` - live 12-hour LED clock (per-tick dot diffs)
+- `qorkme/lib/motion/dotFont.ts` - 5×7 glyph bitmaps (A-Z, 0-9, `.`, `-`, `:`, space)
+- Canvas-only rendering (client-side; no hydration surface); containers must have explicit dimensions
 
 ## Documentation
 
 - **Setup guide**: `qorkme/README.md` - Complete installation and configuration
-- **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - SHAUGHV vintage palette (cream/sage/olive), typography, and component tokens
+- **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - QubeTX base + QorkMe sub-brand (sage/bamboo on void) with measured WCAG ratios; vendored kit + agent docs at `qorkme/docs/qubetx-design-system/`; live spec https://www.qubetx.com/design-system
 - **UI/Layout guide**: `qorkme/docs/UI_LAYOUT_GUIDE.md` - Critical Tailwind v4 gotchas, flexbox patterns, troubleshooting
 - **Vercel deployment**: `qorkme/docs/VERCEL_SETUP.md` - CI/CD configuration
 - **General deployment**: `qorkme/docs/DEPLOYMENT.md` - Multi-platform options

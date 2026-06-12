@@ -2,6 +2,15 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-12 (QubeTX Design System Redesign)
+
+### Changed
+
+- **Full redesign onto the QubeTX design system v3.2.1** — dark-only void surfaces, hairline borders, mono technical register, with the QorkMe sub-brand carried by a contrast-verified sage accent (`#5b8a5b`, 5.01:1 AA on void) and a sage→bamboo LED ramp across the dot field, matrix wordmark, and live LED clock. Kit vendored at `qorkme/docs/qubetx-design-system/` + `qorkme/lib/motion|pretext` + `qorkme/components/{ui,terminal,layout,effects}`; live spec and stable zip permalink referenced for future agents.
+- Slot rolls drive every label change (shorten flow, typing status, alias availability, copy confirmation); the background dot field ripples when a link is created; toasts removed entirely.
+- Every page rebuilt: home, result, 404 (redirect-loop bug fixed), admin console + login. Light mode and the theme toggle removed.
+- Test stack upgraded to vitest 4 (143 vendored kit tests now run in-repo); CI Node matrix moved to 20.x/22.x.
+
 ## 2026-06-12 (Database Optimization — Scalability Pass)
 
 ### Performance
