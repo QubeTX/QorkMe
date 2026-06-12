@@ -19,16 +19,16 @@ below is QorkMe's.
 
 ### 1. QubeTX structural layer (verbatim — never fork)
 
-| Token | Value | Usage |
-| --- | --- | --- |
-| `--color-void` | `#05070f` | Page background |
-| `--color-surface` | `#0d1117` | Cards, panels, terminal chrome |
-| `--color-surface-raised` | `#111827` | Hovered cells, dropdowns |
-| `--color-border` | `#1a2236` | 1px hairlines (borders do elevation work — no big shadows) |
-| `--color-border-bright` | `#2c3a5c` | Hovered borders |
-| `--text-primary` | `#ffffff` | Primary text |
-| `--text-secondary` | `#94a3b8` | Body copy |
-| `--color-text-dim` | `#76869f` | Mono labels, metadata — contrast-tuned (5.44:1 on void), **never adjust** |
+| Token                    | Value     | Usage                                                                     |
+| ------------------------ | --------- | ------------------------------------------------------------------------- |
+| `--color-void`           | `#05070f` | Page background                                                           |
+| `--color-surface`        | `#0d1117` | Cards, panels, terminal chrome                                            |
+| `--color-surface-raised` | `#111827` | Hovered cells, dropdowns                                                  |
+| `--color-border`         | `#1a2236` | 1px hairlines (borders do elevation work — no big shadows)                |
+| `--color-border-bright`  | `#2c3a5c` | Hovered borders                                                           |
+| `--text-primary`         | `#ffffff` | Primary text                                                              |
+| `--text-secondary`       | `#94a3b8` | Body copy                                                                 |
+| `--color-text-dim`       | `#76869f` | Mono labels, metadata — contrast-tuned (5.44:1 on void), **never adjust** |
 
 Spacing: 8px ladder (`--space-xs…3xl`), `--container-max` 1440px (1800px at
 ≥2560px), `--container-padding-x: clamp(16px, 4vw, 32px)`,
@@ -44,23 +44,23 @@ QubeTX tuned `#3385ff` (5.69:1) as the AA arrival against `#0066FF` (4.16:1).
 Sage is perceptually bright, so **QorkMe's heritage sage passes AA unchanged**
 — the sub-brand keeps its exact identity hue.
 
-| Token | Hex | Contrast on void | Usage |
-| --- | --- | --- | --- |
-| `--color-primary` | `#5b8a5b` | **5.01:1** (AA) | The action color — focus rings, active accents, primary buttons |
-| `--color-primary-hover` | `#69a169` | 6.61:1 | Hover lift |
-| `--color-arrival` | `#7dc87d` | 9.99:1 | Slot-roll arrival flash, success moments |
-| `--gradient-brand` | `#4a9e5c → #c4a876` | 6.07 / 8.82 | Display gradients, LED color ramps (sage → bamboo) |
-| `--color-accent` | `#c4a876` | 8.82:1 | Bamboo warm accent (hover `#d4b896`) |
-| `--glow-primary` | `rgba(91,138,91,.25)` | — | Button hover glow |
+| Token                   | Hex                   | Contrast on void | Usage                                                           |
+| ----------------------- | --------------------- | ---------------- | --------------------------------------------------------------- |
+| `--color-primary`       | `#5b8a5b`             | **5.01:1** (AA)  | The action color — focus rings, active accents, primary buttons |
+| `--color-primary-hover` | `#69a169`             | 6.61:1           | Hover lift                                                      |
+| `--color-arrival`       | `#7dc87d`             | 9.99:1           | Slot-roll arrival flash, success moments                        |
+| `--gradient-brand`      | `#4a9e5c → #c4a876`   | 6.07 / 8.82      | Display gradients, LED color ramps (sage → bamboo)              |
+| `--color-accent`        | `#c4a876`             | 8.82:1           | Bamboo warm accent (hover `#d4b896`)                            |
+| `--glow-primary`        | `rgba(91,138,91,.25)` | —                | Button hover glow                                               |
 
 Semantic tones (void-tuned, all ≥4.5:1 as text):
 
-| Token | Hex | Contrast | Note |
-| --- | --- | --- | --- |
-| `--color-success` | `#7dc87d` | 9.99:1 | Same as arrival — "it worked" |
-| `--color-warning` | `#d6a52e` | 8.89:1 | Heritage ochre, unchanged |
-| `--color-error` | `#d07a66` | 6.38:1 | Heritage terracotta `#b05545` (4.05:1) lightened for the void |
-| `--color-info` | `#7aa3d0` | 7.64:1 | Heritage slate `#345670` (2.60:1) lightened for the void |
+| Token             | Hex       | Contrast | Note                                                          |
+| ----------------- | --------- | -------- | ------------------------------------------------------------- |
+| `--color-success` | `#7dc87d` | 9.99:1   | Same as arrival — "it worked"                                 |
+| `--color-warning` | `#d6a52e` | 8.89:1   | Heritage ochre, unchanged                                     |
+| `--color-error`   | `#d07a66` | 6.38:1   | Heritage terracotta `#b05545` (4.05:1) lightened for the void |
+| `--color-info`    | `#7aa3d0` | 7.64:1   | Heritage slate `#345670` (2.60:1) lightened for the void      |
 
 The canvas LED surfaces (`DotGrid`, `MatrixDisplay`, `MatrixClock`) use a
 `buildColorRamp('#4a9e5c', '#c4a876', 256)` LUT — the sub-brand's replacement
@@ -98,15 +98,15 @@ mono micro-labels. The `.font-makira` page-wrapper scope excludes
 
 ## QorkMe signature components
 
-| Component | File | Notes |
-| --- | --- | --- |
-| `MatrixDisplay` | `components/effects/MatrixDisplay.tsx` | Kit LED word board, sage→bamboo ramp. Home wordmark, 404, login |
-| `MatrixClock` | `components/effects/MatrixClock.tsx` | QorkMe-built on kit dotFont/canvas — live 12h clock, per-tick dot diffs |
-| `DotGrid` | `components/effects/DotGrid.tsx` | The background field; reacts to pointer + `firePulse()` (a sage ripple fires when a link is created) |
-| `UrlShortener` | `components/UrlShortener.tsx` | Slot rolls everywhere: SHORTEN→WORKING…, corner status IDLE→INPUT→READY→BUSY→DONE while typing, alias CHECKING→AVAILABLE/TAKEN, arrival-rolled result, COPY→COPIED |
-| `SysStatus` | `components/layout/SysStatus.tsx` | Footer heartbeat (NOMINAL/SCANNING/SECURE) |
-| `PageHeader` | `components/PageHeader.tsx` | Fixed header, blur+compress past 24px |
-| `SiteFooter` | `components/SiteFooter.tsx` | Wordmark + SysStatus + mono links + "A QubeTX Property" |
+| Component       | File                                   | Notes                                                                                                                                                              |
+| --------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `MatrixDisplay` | `components/effects/MatrixDisplay.tsx` | Kit LED word board, sage→bamboo ramp. Home wordmark, 404, login                                                                                                    |
+| `MatrixClock`   | `components/effects/MatrixClock.tsx`   | QorkMe-built on kit dotFont/canvas — live 12h clock, per-tick dot diffs                                                                                            |
+| `DotGrid`       | `components/effects/DotGrid.tsx`       | The background field; reacts to pointer + `firePulse()` (a sage ripple fires when a link is created)                                                               |
+| `UrlShortener`  | `components/UrlShortener.tsx`          | Slot rolls everywhere: SHORTEN→WORKING…, corner status IDLE→INPUT→READY→BUSY→DONE while typing, alias CHECKING→AVAILABLE/TAKEN, arrival-rolled result, COPY→COPIED |
+| `SysStatus`     | `components/layout/SysStatus.tsx`      | Footer heartbeat (NOMINAL/SCANNING/SECURE)                                                                                                                         |
+| `PageHeader`    | `components/PageHeader.tsx`            | Fixed header, blur+compress past 24px                                                                                                                              |
+| `SiteFooter`    | `components/SiteFooter.tsx`            | Wordmark + SysStatus + mono links + "A QubeTX Property"                                                                                                            |
 
 Kit components live in `components/ui` (OutlineButton, TextLink, LabelPill,
 SectionHeading, StatValue, RollingLink, Magnetic, QubeTXLogo, icons),
