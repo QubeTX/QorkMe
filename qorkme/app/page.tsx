@@ -1,76 +1,57 @@
-import Link from 'next/link';
-import Image from 'next/image';
 import { UrlShortener } from '@/components/UrlShortener';
 import { SiteFooter } from '@/components/SiteFooter';
-import { MatrixDisplay } from '@/components/MatrixDisplay';
-import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
-import { Toaster } from 'react-hot-toast';
+import DotGrid from '@/components/effects/DotGrid';
+import LoadSequence from '@/components/effects/LoadSequence';
+import MatrixDisplay from '@/components/effects/MatrixDisplay';
+import MatrixClock from '@/components/effects/MatrixClock';
 
 export default function Home() {
   return (
-    <>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: 'var(--color-surface)',
-            color: 'var(--color-text-primary)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius-md)',
-            fontFamily: 'var(--font-body)',
-            boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-          },
-        }}
-      />
+    <div className="font-makira relative flex min-h-screen flex-col overflow-hidden">
+      {/* The dot field — listens on window, never blocks clicks */}
+      <DotGrid className="fixed inset-0 z-0" />
+      <LoadSequence />
 
-      <div
-        id="page-wrapper"
-        className="page-wrapper font-makira relative flex min-h-screen flex-col transition-colors duration-300 overflow-hidden"
+      <main
+        id="main-content"
+        className="relative z-10 flex flex-1 items-center justify-center"
+        style={{ padding: 'var(--space-xl) var(--container-padding-x)' }}
       >
-        {/* Interactive Grid Background (Bottom Layer) */}
-        <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
+        <div className="flex w-full flex-col" style={{ maxWidth: '720px', gap: 'var(--space-lg)' }}>
+          {/* Eyebrow — decode on entrance */}
+          <div data-load="eyebrow" className="flex justify-center">
+            <span data-load-decode className="mono-label">
+              URL Shortener // A QubeTX Property
+            </span>
+          </div>
 
-        <main
-          id="main-content"
-          className="main-content flex flex-1 items-center justify-center py-8 relative z-10 pointer-events-none"
-        >
-          <div
-            id="content-container"
-            className="content-container flex w-full max-w-[700px] flex-col gap-12"
-            style={{ paddingLeft: '24px', paddingRight: '24px' }}
-          >
-            {/* Qork Logo */}
-            <div className="flex justify-center pointer-events-auto">
-              <Link href="/">
-                <Image
-                  src="/qork-logo.svg"
-                  alt="Qork logo"
-                  width={112}
-                  height={112}
-                  className="h-20 w-20 md:h-28 md:w-28 transition-opacity hover:opacity-70"
-                  style={{ opacity: 0.85 }}
-                />
-              </Link>
-            </div>
-
-            {/* Matrix Display with Title and Clock */}
-            <div id="matrix-display-wrapper" className="matrix-display-wrapper text-center">
-              <MatrixDisplay />
-            </div>
-
-            {/* Main Card with URL Shortener */}
-            <div
-              id="url-shortener-wrapper"
-              className="url-shortener-wrapper animate-fadeIn-delay-800 opacity-0 pointer-events-auto"
-              style={{ marginLeft: '16px', marginRight: '16px' }}
-            >
-              <UrlShortener />
+          {/* LED wordmark — masked rise (canvas is aria-hidden; the sr-only
+              h1 carries the page name) */}
+          <h1 className="sr-only">Qork.Me — URL Shortener</h1>
+          <div style={{ overflow: 'hidden' }}>
+            <div data-load="hl" style={{ height: 'clamp(72px, 16vw, 132px)' }}>
+              <MatrixDisplay words={['QORK.ME']} className="h-full w-full" />
             </div>
           </div>
-        </main>
 
-        <SiteFooter showLogo={false} />
-      </div>
-    </>
+          {/* Live LED clock — the terminal is honest */}
+          <div data-load="desc" className="flex justify-center">
+            <div className="hidden md:block" style={{ width: 'min(100%, 440px)', height: '44px' }}>
+              <MatrixClock seconds className="h-full w-full" />
+            </div>
+            <div className="md:hidden" style={{ width: 'min(100%, 260px)', height: '36px' }}>
+              <MatrixClock className="h-full w-full" />
+            </div>
+          </div>
+
+          {/* The shortener card */}
+          <div data-load="cta">
+            <UrlShortener />
+          </div>
+        </div>
+      </main>
+
+      <SiteFooter />
+    </div>
   );
 }

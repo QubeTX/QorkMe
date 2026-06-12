@@ -389,8 +389,11 @@ pre {
 }
 
 .btn {
-  font-family: var(--font-stack-sans);
-  font-weight: 700;
+  font-family: var(--font-stack-mono);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   border-radius: var(--radius-lg);
   display: inline-flex;
   align-items: center;
@@ -695,6 +698,14 @@ pre {
     min-height: var(--touch-target-min);
     min-width: var(--touch-target-min);
   }
+}
+
+/* Entrance FOUC guard — html[data-loading] is set by an inline script before
+   first paint and lifted by LoadSequence (3s failsafe). Without JS the
+   attribute never arms, so server HTML stays the visible final state. */
+html[data-loading] [data-load],
+html[data-loading] [data-load-decode] {
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { SiteFooter } from '@/components/SiteFooter';
+import { PageHeader } from '@/components/PageHeader';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/cards/Card';
 import { createAdminClient, createServerClientInstance } from '@/lib/supabase/server';
 import { ADMIN_GITHUB_USERNAME, ADMIN_GITHUB_USERNAME_DISPLAY } from '@/lib/config/admin';
@@ -8,13 +9,9 @@ import { AdminSignOutButton } from '@/components/admin/AdminSignOutButton';
 import { ClearDatabaseButton } from '@/components/admin/ClearDatabaseButton';
 import { DatabaseHealthCard } from '@/components/admin/DatabaseHealthCard';
 import { AdminLinksTable } from '@/components/admin/AdminLinksTable';
-import { InteractiveGridPattern } from '@/components/ui/interactive-grid-pattern';
-import { SecureAccessMatrix } from '@/components/SecureAccessMatrix';
-import { Toaster } from 'react-hot-toast';
-import { Activity, AlertTriangle, BarChart3, TrendingUp } from 'lucide-react';
+import StatValue from '@/components/ui/StatValue';
+import { AlertTriangle } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
-import Link from 'next/link';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 export default async function AdminPage() {
@@ -34,213 +31,110 @@ export default async function AdminPage() {
     redirect('/admin/login?error=unauthorized');
   }
 
-  // Server-side summary stats (render instantly, no loading state)
+  // Server-side summary stats — one round trip via the consolidated RPC
   const adminClient = await createAdminClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: stats } = await (adminClient as any).rpc('admin_health_stats');
 
-  const [urlCountResponse, clickCountResponse] = await Promise.all([
-    adminClient.from('urls').select('id', { count: 'exact', head: true }),
-    adminClient.from('clicks').select('id', { count: 'exact', head: true }),
-  ]);
-
-  const totalUrls = urlCountResponse.count ?? 0;
-  const totalClicks = clickCountResponse.count ?? 0;
-  const avgClicksPerLink = totalUrls > 0 ? (totalClicks / totalUrls).toFixed(1) : '0';
-
-  const metricSizeClass = (value: number) => {
-    if (value < 1000) return 'text-6xl';
-    if (value < 100000) return 'text-4xl';
-    return 'text-3xl';
-  };
-
-  const summaryCardStyle = {
-    background: 'var(--color-surface)',
-    borderColor: 'var(--color-border)',
-    boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-  };
+  const totalUrls: number = stats?.url_count ?? 0;
+  const totalClicks: number = stats?.click_count ?? 0;
+  const avgClicksPerLink = totalUrls > 0 ? (totalClicks / totalUrls).toFixed(1) : '0.0';
 
   return (
-    <>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: 'var(--color-surface)',
-            color: 'var(--color-text-primary)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius-md)',
-            fontFamily: 'var(--font-body)',
-            boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-          },
-        }}
-      />
+    <div
+      className="font-makira flex min-h-screen flex-col"
+      style={{ background: 'var(--color-void)' }}
+    >
+      <PageHeader right={<span>AUTH // {ADMIN_GITHUB_USERNAME_DISPLAY}</span>} />
 
-      <div
-        id="admin-dashboard-wrapper"
-        className="font-makira page-wrapper relative flex min-h-screen flex-col transition-colors duration-300"
-      >
-        <InteractiveGridPattern className="absolute inset-0 z-0" width={40} height={40} />
-
-        <main
-          id="main-content"
-          className="main-content flex flex-1 flex-col items-center justify-center pt-8 pb-16 pointer-events-none"
+      <main className="flex flex-1 flex-col" style={{ paddingTop: '112px' }}>
+        <div
+          className="mx-auto flex w-full flex-col"
+          style={{
+            maxWidth: '1200px',
+            paddingInline: 'var(--container-padding-x)',
+            paddingBottom: 'var(--section-spacing)',
+            gap: 'var(--space-xl)',
+          }}
         >
-          <div
-            id="content-container"
-            className="content-container relative z-10 flex w-full max-w-[1200px] flex-col gap-12 mx-auto pointer-events-auto"
-            style={{ paddingLeft: '24px', paddingRight: '24px' }}
-          >
-            {/* 1. Header Section */}
-            <div
-              className="flex flex-col items-center gap-6 animate-fadeIn-delay-200 opacity-0"
-              style={{ marginTop: '32px' }}
-            >
-              <Link href="/">
-                <Image
-                  src="/qork-logo.svg"
-                  alt="Qork logo — return home"
-                  width={80}
-                  height={80}
-                  className="h-16 w-16 md:h-20 md:w-20 transition-opacity hover:opacity-70"
-                  style={{ opacity: 0.85 }}
-                />
-              </Link>
-              <SecureAccessMatrix />
+          {/* Header */}
+          <div className="flex flex-col" style={{ gap: 'var(--space-xs)' }}>
+            <span className="mono-label">ADMIN CONSOLE // OPERATIONAL</span>
+            <h1 style={{ fontSize: 'var(--text-h2)' }}>Console</h1>
+            <p className="text-sm text-[color:var(--color-text-secondary)]">
+              Review aggregate metrics and manage stored URLs.
+            </p>
+          </div>
 
-              <div className="flex flex-col gap-4 text-center">
-                <p className="max-w-2xl mx-auto text-[color:var(--color-text-secondary)] text-base">
-                  Authenticated as{' '}
-                  <span className="font-mono text-[color:var(--color-primary)]">
-                    {ADMIN_GITHUB_USERNAME_DISPLAY}
-                  </span>{' '}
-                  • Review aggregate metrics and manage stored URLs
+          {/* Summary stats — Makira Black numerals count up on entrance */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <Card hoverable={false}>
+              <StatValue value={totalUrls.toLocaleString()} label="Total links" />
+            </Card>
+            <Card hoverable={false}>
+              <StatValue value={totalClicks.toLocaleString()} label="Total clicks" />
+            </Card>
+            <Card hoverable={false}>
+              <StatValue value={avgClicksPerLink} label="Avg clicks / link" />
+            </Card>
+          </div>
+
+          {/* Database health (client component, loads progressively) */}
+          <DatabaseHealthCard />
+
+          {/* All short links (client component, loads progressively) */}
+          <AdminLinksTable />
+
+          {/* Danger zone */}
+          <Card
+            hoverable={false}
+            style={{
+              borderColor: 'color-mix(in srgb, var(--color-error) 45%, var(--color-border))',
+            }}
+          >
+            <CardHeader>
+              <div className="mb-2 flex items-center gap-3">
+                <AlertTriangle
+                  size={20}
+                  className="text-[color:var(--color-error)]"
+                  aria-hidden="true"
+                />
+                <CardTitle className="text-[color:var(--color-error)]">Danger Zone</CardTitle>
+              </div>
+              <CardDescription>
+                Permanently remove every stored URL along with associated click analytics. Supabase
+                tables remain intact.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm text-[color:var(--color-text-secondary)]">
+                Only use this when you need a clean slate. The action cannot be undone and cascades
+                to related click records.
+              </p>
+              <ClearDatabaseButton />
+            </CardContent>
+          </Card>
+
+          {/* Session management */}
+          <div className="flex flex-col items-start gap-4">
+            <div className="h-px w-full" style={{ background: 'var(--color-border)' }} />
+            <div className="flex w-full items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-[color:var(--color-text-primary)]">
+                  Session Management
+                </p>
+                <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">
+                  Sign out to end your admin session
                 </p>
               </div>
-            </div>
-
-            <div className="flex flex-col gap-10 animate-fadeIn-delay-400 opacity-0">
-              {/* 2. Summary Stats Row */}
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                <Card style={summaryCardStyle}>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <div>
-                      <CardTitle>Total Links</CardTitle>
-                      <CardDescription>Auto and custom aliases</CardDescription>
-                    </div>
-                    <BarChart3
-                      size={22}
-                      className="text-[color:var(--color-accent)]"
-                      aria-hidden="true"
-                    />
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-center pt-3 pb-3">
-                    <p
-                      className={`${metricSizeClass(totalUrls)} font-semibold animate-metric-glow text-[color:var(--color-text-primary)]`}
-                    >
-                      {totalUrls.toLocaleString()}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card style={summaryCardStyle}>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <div>
-                      <CardTitle>Total Clicks</CardTitle>
-                      <CardDescription>Aggregated across all links</CardDescription>
-                    </div>
-                    <Activity
-                      size={22}
-                      className="text-[color:var(--color-accent)]"
-                      aria-hidden="true"
-                    />
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-center pt-3 pb-3">
-                    <p
-                      className={`${metricSizeClass(totalClicks)} font-semibold animate-metric-glow text-[color:var(--color-text-primary)]`}
-                    >
-                      {totalClicks.toLocaleString()}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card style={summaryCardStyle}>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <div>
-                      <CardTitle>Avg. Clicks / Link</CardTitle>
-                      <CardDescription>Mean engagement per short URL</CardDescription>
-                    </div>
-                    <TrendingUp
-                      size={22}
-                      className="text-[color:var(--color-accent)]"
-                      aria-hidden="true"
-                    />
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-center pt-3 pb-3">
-                    <p className="text-6xl font-semibold animate-metric-glow text-[color:var(--color-primary)]">
-                      {avgClicksPerLink}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* 3. Database Health (client component, loads progressively) */}
-              <DatabaseHealthCard />
-
-              {/* 4. All Short Links (client component, loads progressively) */}
-              <AdminLinksTable />
-
-              {/* 5. Danger Zone */}
-              <Card
-                style={{
-                  background: 'color-mix(in srgb, var(--color-error) 5%, var(--color-surface))',
-                  borderColor: 'color-mix(in srgb, var(--color-error) 40%, transparent)',
-                  boxShadow: '0 12px 30px -18px rgba(192, 77, 60, 0.25)',
-                }}
-              >
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-2">
-                    <AlertTriangle
-                      size={24}
-                      className="text-[color:var(--color-error)]"
-                      aria-hidden="true"
-                    />
-                    <CardTitle className="text-[color:var(--color-error)]">Danger Zone</CardTitle>
-                  </div>
-                  <CardDescription>
-                    Permanently remove every stored URL along with associated click analytics.
-                    Supabase tables remain intact.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm text-[color:var(--color-text-secondary)]">
-                    Only use this when you need a clean slate. The action cannot be undone and
-                    cascades to related click records.
-                  </p>
-                  <ClearDatabaseButton />
-                </CardContent>
-              </Card>
-
-              {/* 6. Session Management */}
-              <div className="flex flex-col gap-4 items-start">
-                <div className="w-full h-px" style={{ background: 'var(--color-border)' }} />
-                <div className="flex items-center justify-between w-full">
-                  <div>
-                    <p className="text-sm font-medium text-[color:var(--color-text-primary)]">
-                      Session Management
-                    </p>
-                    <p className="text-xs text-[color:var(--color-text-muted)] mt-1">
-                      Sign out to end your admin session
-                    </p>
-                  </div>
-                  <AdminSignOutButton />
-                </div>
-              </div>
+              <AdminSignOutButton />
             </div>
           </div>
-        </main>
+        </div>
+      </main>
 
-        <SiteFooter showLogo={false} />
-      </div>
-    </>
+      <SiteFooter />
+    </div>
   );
 }
 

@@ -1,219 +1,300 @@
 'use client';
 
-import { useState } from 'react';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { SlotRoll, useSlotRoll } from '@/lib/motion/SlotRoll';
+import { firePulse } from '@/components/effects/DotGrid';
+import styles from './UrlShortener.module.css';
+
+/**
+ * The shortener card — QorkMe's primary surface, technical register.
+ * Every label change rides the slot roll: the submit button rolls
+ * SHORTEN → WORKING… on Enter, the created link rolls in from a masked
+ * placeholder (arrival sage settling to ink), COPY flashes COPIED, and the
+ * custom-alias availability check rolls CHECKING → AVAILABLE / TAKEN.
+ * Errors are honest mono lines, never toasts.
+ */
+
+type Stage = 'input' | 'result';
+type AliasStatus = 'idle' | 'checking' | 'available' | 'taken' | 'invalid';
+
+const ALIAS_STATUS_TEXT: Record<AliasStatus, string> = {
+  idle: '·····',
+  checking: 'CHECKING',
+  available: 'AVAILABLE',
+  taken: 'TAKEN',
+  invalid: 'INVALID',
+};
+
+/** Same-length mask so the arrival roll animates every glyph. */
+function maskOf(text: string): string {
+  return text.replace(/[^./:]/g, '·');
+}
+
+function ArrivalUrl({ text }: { text: string }) {
+  const [mask] = useState(() => maskOf(text));
+  const [ref, handle] = useSlotRoll(mask, { direction: 'up' });
+
+  useEffect(() => {
+    handle.set(text);
+  }, [text, handle]);
+
+  return (
+    <span ref={ref} className={styles.resultUrl}>
+      {mask}
+    </span>
+  );
+}
 
 export function UrlShortener() {
+  const [stage, setStage] = useState<Stage>('input');
   const [url, setUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [alias, setAlias] = useState('');
+  const [aliasOpen, setAliasOpen] = useState(false);
+  const [aliasStatus, setAliasStatus] = useState<AliasStatus>('idle');
   const [shortUrl, setShortUrl] = useState('');
-  const [showResult, setShowResult] = useState(false);
-  const [fadeState, setFadeState] = useState<'in' | 'out'>('in');
+  const [isExisting, setIsExisting] = useState(false);
+  const [autoCopied, setAutoCopied] = useState(false);
+  const [working, setWorking] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch (error) {
-      console.error('Failed to copy:', error);
+  const [submitRef, submitLabel] = useSlotRoll('SHORTEN', { direction: 'up' });
+  const [copyRef, copyLabel] = useSlotRoll('COPY');
+  const aliasTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (aliasTimer.current) clearTimeout(aliasTimer.current);
+    };
+  }, []);
+
+  const checkAlias = useCallback((value: string) => {
+    if (aliasTimer.current) clearTimeout(aliasTimer.current);
+
+    const trimmed = value.trim();
+    if (!trimmed) {
+      setAliasStatus('idle');
+      return;
     }
-  };
+    if (trimmed.length < 3 || !/^[a-zA-Z0-9-]+$/.test(trimmed)) {
+      setAliasStatus('invalid');
+      return;
+    }
+
+    setAliasStatus('checking');
+    aliasTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/shorten?alias=${encodeURIComponent(trimmed)}`);
+        const data = await res.json();
+        setAliasStatus(data.available ? 'available' : 'taken');
+      } catch {
+        setAliasStatus('idle');
+      }
+    }, 450);
+  }, []);
+
+  const copyToClipboard = useCallback(
+    async (text: string, flash: boolean) => {
+      try {
+        await navigator.clipboard.writeText(text);
+        if (flash) copyLabel.flash('COPIED');
+        return true;
+      } catch {
+        if (flash) copyLabel.flash('FAILED');
+        return false;
+      }
+    },
+    [copyLabel]
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (working) return;
 
     if (!url.trim()) {
       setErrorMessage('Please enter a URL');
       return;
     }
+
     setErrorMessage(null);
+    setWorking(true);
+    submitLabel.set('WORKING…');
 
-    // Start fade out
-    setFadeState('out');
+    try {
+      const trimmedAlias = alias.trim();
+      const response = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(trimmedAlias ? { url, customAlias: trimmedAlias } : { url }),
+      });
 
-    // Wait for fade out animation
-    setTimeout(async () => {
-      setIsLoading(true);
+      const data = await response.json();
 
-      try {
-        const response = await fetch('/api/shorten', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ url }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error || 'Failed to shorten URL');
-        }
-
-        const generatedShortUrl = `https://${process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me'}/${data.shortCode}`;
-        setShortUrl(generatedShortUrl);
-
-        // Auto-copy to clipboard
-        await copyToClipboard(generatedShortUrl);
-
-        // Show result view
-        setIsLoading(false);
-        setShowResult(true);
-        setFadeState('in');
-
-        // Clear the input for next time
-        setUrl('');
-      } catch (error) {
-        console.error('Error shortening URL:', error);
-        setErrorMessage(error instanceof Error ? error.message : 'Failed to shorten URL');
-
-        // Reset to input view on error
-        setIsLoading(false);
-        setFadeState('in');
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to shorten URL');
       }
-    }, 200); // Match fadeOut duration
-  };
 
-  const handleReset = () => {
-    setFadeState('out');
-    setTimeout(() => {
-      setShowResult(false);
-      setShortUrl('');
-      setFadeState('in');
-    }, 200);
-  };
+      const generatedShortUrl = `https://${process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me'}/${data.shortCode}`;
+      setShortUrl(generatedShortUrl);
+      setIsExisting(data.isNew === false);
+      setStage('result');
+      setWorking(false);
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSubmit(e as unknown as React.FormEvent);
+      // The "link created" beat — one sage ripple through the dot field
+      firePulse({
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+        strength: 1.6,
+      });
+
+      // Auto-copy (best effort — the submit click is the user gesture).
+      // The result note only claims COPIED when the write actually landed.
+      copyToClipboard(generatedShortUrl, false).then(setAutoCopied);
+    } catch (error) {
+      console.error('Error shortening URL:', error);
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to shorten URL');
+      setWorking(false);
+      submitLabel.set('SHORTEN');
     }
   };
 
+  const handleReset = () => {
+    setStage('input');
+    setUrl('');
+    setAlias('');
+    setAliasOpen(false);
+    setAliasStatus('idle');
+    setShortUrl('');
+    setIsExisting(false);
+    setAutoCopied(false);
+    setErrorMessage(null);
+    submitLabel.set('SHORTEN');
+  };
+
+  // Corner status — rolls as you type: IDLE → INPUT → READY → BUSY → DONE
+  const cardStatus =
+    stage === 'result'
+      ? 'DONE'
+      : working
+        ? 'BUSY'
+        : /^https?:\/\/.+\..+/.test(url.trim())
+          ? 'READY'
+          : url.trim()
+            ? 'INPUT'
+            : 'IDLE';
+
   return (
-    <div className="w-full max-w-[700px] mx-auto">
-      <div
-        id="url-shortener-card"
-        className="url-shortener-card relative flex flex-col gap-6 rounded-[30px] border border-white/10 bg-[color:var(--color-surface)]/[0.03] shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1),0_0_0_1px_rgba(255,255,255,0.05)] backdrop-blur-xl overflow-hidden"
-        style={{ padding: '24px' }}
-      >
-        {/* Shimmering Border Beam */}
-        <div className="absolute inset-0 pointer-events-none rounded-[30px] overflow-hidden">
-          <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent rotate-45 animate-[shimmer_4s_infinite_linear] w-[200%]" />
-        </div>
+    <div className={styles.card}>
+      <div className={styles.cardMeta} aria-hidden="true">
+        <span className={styles.monoLabel}>QORK.ME // SHORTENER</span>
+        <span className={styles.monoLabel}>
+          <SlotRoll text={cardStatus} options={{ direction: 'up' }} />
+        </span>
+      </div>
 
-        {/* Loading State */}
-        {isLoading && (
-          <div className="flex min-h-[200px] items-center justify-center relative z-10">
-            <div className="flex flex-col items-center gap-4">
-              <div className="h-12 w-12 animate-spin rounded-full border-4 border-[color:var(--color-surface-muted)] border-t-[color:var(--color-primary)]" />
-              <p className="font-ui text-sm text-[color:var(--color-text-muted)]">
-                Creating your short link...
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Success State */}
-        {!isLoading && showResult && (
-          <div
-            className={`flex flex-col gap-6 transition-opacity duration-300 relative z-10 ${fadeState === 'in' ? 'opacity-100' : 'opacity-0'}`}
-          >
-            <div className="flex flex-col gap-4 rounded-[20px] bg-[color:var(--color-surface-elevated)]/[0.15] p-8 backdrop-blur-sm border border-white/5">
-              <div className="flex items-center gap-2">
-                <svg
-                  className="h-6 w-6 text-[color:var(--color-success)]"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <p className="font-ui text-sm font-medium text-[color:var(--color-success)]">
-                  Link created successfully!
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="font-ui text-xs text-[color:var(--color-text-muted)]">
-                  Your short link:
-                </p>
-                <div className="flex items-center gap-3 rounded-xl bg-[rgba(255,255,255,0.05)] p-4 border border-white/5">
-                  <p className="flex-1 font-mono text-lg text-[color:var(--color-text-primary)] break-all">
-                    {shortUrl}
-                  </p>
-                  <button
-                    onClick={() => copyToClipboard(shortUrl)}
-                    className="flex-shrink-0 rounded-lg bg-[color:var(--color-primary)]/20 p-2 text-[color:var(--color-primary)] transition-colors hover:bg-[color:var(--color-primary)]/30"
-                    aria-label="Copy to clipboard"
-                  >
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <Button
-              onClick={handleReset}
-              className="w-full rounded-2xl border-none bg-gradient-to-br from-[color:var(--color-primary)] to-[#4A7A4A] px-5 py-6 font-ui text-lg font-semibold text-text-inverse shadow-[0_4px_20px_rgba(91,138,91,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] relative overflow-hidden group"
-            >
-              <span className="relative z-10">Shorten Another URL</span>
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-            </Button>
-          </div>
-        )}
-
-        {/* Input State */}
-        {!isLoading && !showResult && (
-          <div
-            className={`flex flex-col gap-6 transition-opacity duration-200 relative z-10 ${fadeState === 'in' ? 'opacity-100' : 'opacity-0'}`}
-          >
-            <div id="input-wrapper" className="input-wrapper">
-              <label htmlFor="url-input" className="sr-only">
-                Enter Your URL
+      {stage === 'input' && (
+        <form onSubmit={handleSubmit} noValidate>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+            <div>
+              <label htmlFor="url-input" className={styles.fieldLabel}>
+                Enter your URL
               </label>
-              <Input
+              <input
                 id="url-input"
                 type="url"
-                placeholder="Enter Your URL — https://example.com/your/very/long/url/here..."
+                className={styles.input}
+                placeholder="https://example.com/your/very/long/url"
                 value={url}
                 onChange={(e) => {
                   setUrl(e.target.value);
                   setErrorMessage(null);
                 }}
-                onKeyPress={handleKeyPress}
-                className="url-input w-full rounded-2xl border-2 border-white/10 bg-[rgba(20,20,19,0.4)] px-6 py-5 text-lg text-text-primary backdrop-blur-sm placeholder:text-text-muted focus:border-[color:var(--color-primary)] focus:bg-[rgba(20,20,19,0.6)] focus:shadow-[0_0_0_4px_rgba(91,138,91,0.1)] focus:outline-none transition-all duration-300"
                 required
               />
             </div>
+
+            {!aliasOpen && (
+              <button
+                type="button"
+                className={styles.aliasToggle}
+                onClick={() => setAliasOpen(true)}
+              >
+                + custom alias
+              </button>
+            )}
+
+            {aliasOpen && (
+              <div>
+                <label htmlFor="alias-input" className={styles.fieldLabel}>
+                  Custom alias (optional)
+                </label>
+                <div className={styles.aliasRow}>
+                  <input
+                    id="alias-input"
+                    type="text"
+                    className={styles.input}
+                    placeholder="my-link"
+                    value={alias}
+                    maxLength={50}
+                    onChange={(e) => {
+                      setAlias(e.target.value);
+                      checkAlias(e.target.value);
+                    }}
+                  />
+                  {/* data-status on the wrapper drives the color (arrival sage / error) */}
+                  <span className={styles.aliasStatus} data-status={aliasStatus}>
+                    <SlotRoll text={ALIAS_STATUS_TEXT[aliasStatus]} options={{ direction: 'up' }} />
+                  </span>
+                </div>
+              </div>
+            )}
+
             {errorMessage && (
-              <p role="alert" className="font-mono text-sm text-[color:var(--color-error)]">
-                {errorMessage}
+              <p role="alert" className={styles.error}>
+                ERR // {errorMessage}
               </p>
             )}
-            <Button
-              id="shorten-button"
-              onClick={handleSubmit}
-              className="shorten-button w-full rounded-2xl border-none bg-gradient-to-br from-[color:var(--color-primary)] to-[#4A7A4A] px-5 py-6 font-ui text-lg font-semibold text-text-inverse shadow-[0_4px_20px_rgba(91,138,91,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] relative overflow-hidden group transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+
+            <button
+              type="submit"
+              className={styles.submit}
+              disabled={working}
+              aria-label="Shorten URL"
             >
-              <span className="relative z-10">Shorten URL</span>
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-            </Button>
+              <span ref={submitRef}>SHORTEN</span>
+            </button>
           </div>
-        )}
-      </div>
+        </form>
+      )}
+
+      {stage === 'result' && (
+        <div className={styles.resultBlock}>
+          <span className={styles.resultNote} data-existing={isExisting}>
+            {isExisting
+              ? 'KNOWN URL // EXISTING LINK RETURNED'
+              : autoCopied
+                ? 'LINK CREATED // COPIED'
+                : 'LINK CREATED'}
+          </span>
+
+          <div className={styles.resultUrlRow}>
+            <ArrivalUrl text={shortUrl.replace(/^https:\/\//, '')} />
+            <button
+              type="button"
+              className={styles.copyBtn}
+              onClick={() => copyToClipboard(shortUrl, true)}
+              aria-label="Copy short link to clipboard"
+            >
+              <span ref={copyRef}>COPY</span>
+            </button>
+          </div>
+
+          <button type="button" className={styles.submit} onClick={handleReset}>
+            SHORTEN ANOTHER
+          </button>
+        </div>
+      )}
     </div>
   );
 }

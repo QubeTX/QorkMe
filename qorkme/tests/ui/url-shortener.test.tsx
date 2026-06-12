@@ -54,7 +54,8 @@ describe('UrlShortener', () => {
     await user.click(screen.getByRole('button', { name: /shorten url/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/your short link/i)).toBeInTheDocument();
+      expect(screen.getByText(/link created/i)).toBeInTheDocument();
+      // The short URL lands in the slot roll's accessible-name node
       expect(screen.getByText(/qork\.me\/fresh/i)).toBeInTheDocument();
     });
 

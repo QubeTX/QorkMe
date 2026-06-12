@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/Card';
 import { Button } from '@/components/ui/Button';
-import toast from 'react-hot-toast';
 import {
   ArrowUpDown,
   ChevronLeft,
@@ -69,10 +68,12 @@ function DeleteLinkButton({
   id,
   shortCode,
   onDeleted,
+  onStatus,
 }: {
   id: string;
   shortCode: string;
   onDeleted: () => void;
+  onStatus: (message: string, tone: 'ok' | 'error') => void;
 }) {
   const [deleting, setDeleting] = useState(false);
 
@@ -86,13 +87,13 @@ function DeleteLinkButton({
       const res = await fetch(`/api/admin/links/${id}`, { method: 'DELETE' });
       const json = await res.json();
       if (res.ok && json.success) {
-        toast.success(`Deleted /${shortCode}`);
+        onStatus(`DELETED /${shortCode}`, 'ok');
         onDeleted();
       } else {
-        toast.error(json.message || 'Delete failed');
+        onStatus(json.message || 'Delete failed', 'error');
       }
     } catch {
-      toast.error('Network error');
+      onStatus('Network error', 'error');
     } finally {
       setDeleting(false);
     }
@@ -116,6 +117,10 @@ export function AdminLinksTable() {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<SortColumn>('created_at');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
+  const [actionStatus, setActionStatus] = useState<{
+    message: string;
+    tone: 'ok' | 'error';
+  } | null>(null);
 
   const fetchLinks = useCallback(async () => {
     setLoading(true);
@@ -179,6 +184,18 @@ export function AdminLinksTable() {
         <LinkIcon size={22} className="text-[color:var(--color-accent)]" aria-hidden="true" />
       </CardHeader>
       <CardContent className="pt-6">
+        {actionStatus && (
+          <p
+            role="status"
+            className="mb-2 font-mono text-xs"
+            style={{
+              color: actionStatus.tone === 'ok' ? 'var(--color-arrival)' : 'var(--color-error)',
+            }}
+          >
+            {actionStatus.tone === 'ok' ? '' : 'ERR // '}
+            {actionStatus.message}
+          </p>
+        )}
         {loading && !links ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 size={24} className="animate-spin text-[color:var(--color-text-muted)]" />
@@ -280,6 +297,7 @@ export function AdminLinksTable() {
                             id={link.id}
                             shortCode={link.short_code}
                             onDeleted={fetchLinks}
+                            onStatus={(message, tone) => setActionStatus({ message, tone })}
                           />
                         </td>
                       </tr>
@@ -322,6 +340,7 @@ export function AdminLinksTable() {
                       id={link.id}
                       shortCode={link.short_code}
                       onDeleted={fetchLinks}
+                      onStatus={(message, tone) => setActionStatus({ message, tone })}
                     />
                   </div>
                   <div className="mt-3 flex items-center gap-4 text-xs text-[color:var(--color-text-muted)]">

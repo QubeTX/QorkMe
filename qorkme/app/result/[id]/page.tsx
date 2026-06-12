@@ -1,11 +1,11 @@
 import { ShortUrlDisplay } from '@/components/ShortUrlDisplay';
-import { ResultNavigationHeader } from '@/components/ResultNavigationHeader';
+import { PageHeader } from '@/components/PageHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 import { createServerClientInstance } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { Toaster } from 'react-hot-toast';
-import { SiteFooter } from '@/components/SiteFooter';
+import { PretextBlock } from '@/lib/pretext/PretextBlock';
 
 interface ResultPageProps {
   params: Promise<{ id: string }>;
@@ -28,49 +28,46 @@ export default async function ResultPage({ params }: ResultPageProps) {
   }
 
   return (
-    <>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: 'var(--color-surface)',
-            color: 'var(--color-text-primary)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius-md)',
-            fontFamily: 'var(--font-body)',
-            boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-          },
-        }}
-      />
+    <div
+      className="font-makira flex min-h-screen flex-col"
+      style={{ background: 'var(--color-void)' }}
+    >
+      <PageHeader right={<span>LINK READY</span>} />
 
-      <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
-        <ResultNavigationHeader />
+      <main className="flex flex-1 flex-col" style={{ paddingTop: '120px' }}>
+        <section style={{ paddingBottom: 'var(--section-spacing)' }}>
+          <div
+            className="mx-auto flex w-full flex-col"
+            style={{
+              maxWidth: '768px',
+              paddingInline: 'var(--container-padding-x)',
+              gap: 'var(--space-xl)',
+            }}
+          >
+            <ShortUrlDisplay shortCode={url.short_code} />
 
-        <main className="flex flex-1 flex-col">
-          <section className="page-section pt-[calc(var(--section-spacing)+4rem)] md:pt-[calc(var(--section-spacing)+5rem)]">
-            <div className="container mx-auto max-w-3xl flex flex-col gap-16">
-              <ShortUrlDisplay shortCode={url.short_code} />
-
-              <div className="flex flex-col items-center gap-4 text-center">
-                <h3 className="font-display text-2xl text-text-primary">
-                  Link shared. Mission accomplished.
-                </h3>
-                <p className="max-w-xl text-base text-text-secondary">
-                  Keep the momentum rolling—when another idea pops up, QorkMe is here to give it a
-                  clean, confident link.
-                </p>
-                <Link href="/" className="inline-flex">
-                  <Button size="lg" className="justify-center px-8">
-                    Make another short link
-                  </Button>
-                </Link>
-              </div>
+            <div className="flex flex-col items-center gap-4 text-center">
+              <h2 style={{ fontSize: 'var(--text-h3)' }}>Link shared. Mission accomplished.</h2>
+              <PretextBlock
+                text="Keep the momentum rolling — when another idea pops up, QorkMe is here to give it a clean, confident link."
+                lineHeight={1.6}
+                as="p"
+                className="max-w-xl text-sm text-[color:var(--color-text-secondary)]"
+              >
+                Keep the momentum rolling — when another idea pops up, QorkMe is here to give it a
+                clean, confident link.
+              </PretextBlock>
+              <Link href="/" className="inline-flex">
+                <Button size="lg" className="justify-center px-8">
+                  Make another short link
+                </Button>
+              </Link>
             </div>
-          </section>
-        </main>
+          </div>
+        </section>
+      </main>
 
-        <SiteFooter />
-      </div>
-    </>
+      <SiteFooter />
+    </div>
   );
 }

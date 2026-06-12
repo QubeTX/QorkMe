@@ -1,0 +1,224 @@
+.card {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: clamp(20px, 4vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: border-color var(--transition-base);
+}
+
+.card:focus-within {
+  border-color: var(--color-border-bright);
+}
+
+.cardMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.monoLabel {
+  font-family: var(--font-stack-mono);
+  font-size: var(--text-mono-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.fieldLabel {
+  composes: monoLabel;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  background: #070a14;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: var(--font-stack-mono);
+  font-size: 0.95rem;
+  min-height: var(--button-height-min);
+  padding: 12px 14px;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.input::placeholder {
+  color: var(--color-text-dim);
+  opacity: 0.7;
+}
+
+.input:hover {
+  border-color: var(--color-border-bright);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-ring);
+  outline: none;
+}
+
+.submit {
+  width: 100%;
+  min-height: var(--button-height-min);
+  border: 1px solid var(--color-border-bright);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-stack-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.submit:hover:not(:disabled),
+.submit:focus-visible {
+  border-color: var(--color-primary);
+  background: rgba(91, 138, 91, 0.08);
+  box-shadow: 0 0 24px var(--glow-primary);
+}
+
+.submit:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.aliasToggle {
+  composes: monoLabel;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.aliasToggle:hover {
+  color: var(--color-primary-hover);
+}
+
+.aliasRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.aliasRow .input {
+  flex: 1;
+}
+
+.aliasStatus {
+  composes: monoLabel;
+  min-width: 9ch;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.aliasStatus[data-status='available'] {
+  color: var(--color-arrival);
+}
+
+.aliasStatus[data-status='taken'],
+.aliasStatus[data-status='invalid'] {
+  color: var(--color-error);
+}
+
+.error {
+  font-family: var(--font-stack-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--color-error);
+  margin: 0;
+}
+
+.resultBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.resultUrlRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: #070a14;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.resultUrl {
+  flex: 1;
+  font-family: var(--font-stack-mono);
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.copyBtn {
+  flex-shrink: 0;
+  min-height: var(--touch-target-min);
+  border: 1px solid var(--color-border-bright);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-stack-mono);
+  font-size: var(--text-mono-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.copyBtn:hover,
+.copyBtn:focus-visible {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 18px var(--glow-primary);
+}
+
+.resultNote {
+  composes: monoLabel;
+}
+
+.resultNote[data-existing='true'] {
+  color: var(--color-accent);
+}
+
+@media (max-width: 480px) {
+  .aliasRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .aliasStatus {
+    text-align: left;
+    min-width: 0;
+  }
+
+  .resultUrlRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .copyBtn {
+    width: 100%;
+  }
+}

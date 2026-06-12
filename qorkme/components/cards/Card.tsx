@@ -10,20 +10,15 @@ interface CardProps {
   style?: CSSProperties;
 }
 
-export function Card({
-  children,
-  className,
-  elevated = false,
-  hoverable = true,
-  onClick,
-  style,
-}: CardProps) {
+// `hoverable` is accepted for API compatibility but unused — QubeTX cards
+// elevate via border brighten (.card:hover), never lift
+export function Card({ children, className, elevated = false, onClick, style }: CardProps) {
   return (
     <div
       className={cn(
         'card flex flex-col gap-6',
         elevated && 'card-elevated',
-        hoverable && 'transition-transform hover:-translate-y-[6px] hover:shadow-medium',
+        // QubeTX register: elevation via border brighten (.card:hover), no lift
         onClick && 'cursor-pointer',
         className
       )}
@@ -55,7 +50,12 @@ interface CardTitleProps {
 
 export function CardTitle({ children, className }: CardTitleProps) {
   return (
-    <h3 className={cn('text-2xl font-display font-semibold text-text-primary', className)}>
+    <h3
+      className={cn(
+        'font-display text-base font-bold uppercase tracking-[0.06em] text-text-primary',
+        className
+      )}
+    >
       {children}
     </h3>
   );
@@ -67,7 +67,7 @@ interface CardDescriptionProps {
 }
 
 export function CardDescription({ children, className }: CardDescriptionProps) {
-  return <p className={cn('text-base text-text-muted', className)}>{children}</p>;
+  return <p className={cn('text-sm text-text-muted', className)}>{children}</p>;
 }
 
 interface CardContentProps {

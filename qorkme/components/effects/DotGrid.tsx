@@ -53,7 +53,9 @@ export function firePulse(detail: PulseDetail) {
   }
 }
 
-const LUT = buildColorRamp('#0066FF', '#7c3aed', 256);
+// QorkMe divergence from the upstream kit: the field ramp runs sage -> bamboo
+// (--gradient-brand) instead of QubeTX blue -> violet
+const LUT = buildColorRamp('#4a9e5c', '#c4a876', 256);
 const DPR_CAP = 1.5;
 /** ms of delay per px of distance from the ripple origin */
 const RIPPLE_SPEED = 0.35;

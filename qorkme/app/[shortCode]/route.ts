@@ -4,6 +4,7 @@
  */
 
 import { NextRequest, NextResponse, after } from 'next/server';
+import { notFound } from 'next/navigation';
 import { createServerClientInstance, createAnonClient } from '@/lib/supabase/server';
 import crypto from 'crypto';
 
@@ -45,8 +46,9 @@ export async function GET(
 
     if (error || !data || data.length === 0) {
       console.error('Redirect error:', error);
-      // Redirect to 404 page
-      return NextResponse.redirect(new URL('/404', request.url));
+      // Render the 404 page (redirecting to /404 would loop back into this
+      // dynamic route)
+      notFound();
     }
 
     const urlData = data[0];
@@ -72,6 +74,17 @@ export async function GET(
     // Perform redirect
     return NextResponse.redirect(new URL(urlData.long_url));
   } catch (error) {
+    // notFound() signals via a thrown control-flow error — let Next handle it
+    if (
+      error &&
+      typeof error === 'object' &&
+      'digest' in error &&
+      typeof (error as { digest?: unknown }).digest === 'string' &&
+      ((error as { digest: string }).digest === 'NEXT_NOT_FOUND' ||
+        (error as { digest: string }).digest.startsWith('NEXT_HTTP_ERROR_FALLBACK'))
+    ) {
+      throw error;
+    }
     console.error('Redirect handler error:', error);
     return NextResponse.redirect(new URL('/', request.url));
   }

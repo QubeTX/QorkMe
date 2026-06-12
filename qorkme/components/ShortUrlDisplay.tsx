@@ -1,11 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/cards/Card';
-import { Copy, QrCode, ExternalLink, CheckCircle } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { Button } from '@/components/ui/Button';
+import { QrCode, ExternalLink } from 'lucide-react';
+import { useSlotRoll } from '@/lib/motion/SlotRoll';
 import QRCode from 'qrcode';
 import Image from 'next/image';
 
@@ -13,10 +12,36 @@ interface ShortUrlDisplayProps {
   shortCode: string;
 }
 
+/** Same-length mask so the arrival roll animates every glyph. */
+function maskOf(text: string): string {
+  return text.replace(/[^./:]/g, '·');
+}
+
+function ArrivalUrl({ text }: { text: string }) {
+  const [mask] = useState(() => maskOf(text));
+  const [ref, handle] = useSlotRoll(mask, { direction: 'up' });
+
+  useEffect(() => {
+    handle.set(text);
+  }, [text, handle]);
+
+  return (
+    <span
+      ref={ref}
+      className="font-mono break-all text-[color:var(--color-text-primary)]"
+      style={{ fontSize: 'clamp(1rem, 2.5vw, 1.35rem)', fontWeight: 600 }}
+    >
+      {mask}
+    </span>
+  );
+}
+
 export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
-  const [copied, setCopied] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
   const [showQr, setShowQr] = useState(false);
+  const [qrError, setQrError] = useState(false);
+
+  const [copyRef, copyLabel] = useSlotRoll('COPY');
 
   const shortUrl = `${process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me'}/${shortCode}`;
   const fullShortUrl = `https://${shortUrl}`;
@@ -24,11 +49,9 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(fullShortUrl);
-      setCopied(true);
-      toast.success('Copied to clipboard!');
-      setTimeout(() => setCopied(false), 2000);
+      copyLabel.flash('COPIED');
     } catch {
-      toast.error('Failed to copy');
+      copyLabel.flash('FAILED');
     }
   };
 
@@ -39,62 +62,54 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
     }
 
     try {
+      // Void modules on white — maximum scanner contrast
       const url = await QRCode.toDataURL(fullShortUrl, {
         width: 300,
         margin: 2,
         color: {
-          dark: '#262623',
-          light: '#faf9f5',
+          dark: '#05070f',
+          light: '#ffffff',
         },
       });
       setQrCodeUrl(url);
       setShowQr(true);
+      setQrError(false);
     } catch {
-      toast.error('Failed to generate QR code');
+      setQrError(true);
     }
   };
 
   return (
-    <Card elevated hoverable={false} className="w-full animate-fadeIn">
+    <Card elevated hoverable={false} className="w-full">
       <CardHeader>
         <CardTitle>Your short link</CardTitle>
         <CardDescription>
-          Copy, share, or save it—your fresh redirect is ready whenever inspiration hits.
+          Copy, share, or save it — your fresh redirect is ready whenever inspiration hits.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Input
-              type="text"
-              value={fullShortUrl}
-              readOnly
-              aria-label="Shortened URL"
-              className="flex-1 font-mono text-lg"
-            />
+          <div
+            className="flex flex-col gap-4 sm:flex-row sm:items-center"
+            style={{
+              background: '#070a14',
+              border: '1px solid var(--color-border)',
+              borderRadius: '6px',
+              padding: '16px',
+            }}
+          >
+            <div className="flex-1">
+              <ArrivalUrl text={shortUrl} />
+            </div>
             <Button
-              variant={copied ? 'accent' : 'primary'}
+              variant="outline"
               onClick={copyToClipboard}
-              className="min-w-[120px] justify-center"
+              className="min-w-[110px] justify-center"
+              aria-label="Copy short link to clipboard"
             >
-              {copied ? (
-                <>
-                  <CheckCircle size={18} aria-hidden="true" />
-                  Copied!
-                </>
-              ) : (
-                <>
-                  <Copy size={18} aria-hidden="true" />
-                  Copy
-                </>
-              )}
+              <span ref={copyRef}>COPY</span>
             </Button>
           </div>
-
-          <p className="text-sm text-text-secondary">
-            Keep this tab open or drop the link into your favorite planner—QorkMe remembers so you
-            can focus on the message.
-          </p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button variant="outline" size="sm" onClick={generateQrCode}>
@@ -110,22 +125,37 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
               <Button variant="outline" size="sm">
                 <ExternalLink size={18} aria-hidden="true" />
                 Visit link
+                <span className="sr-only"> (opens in a new tab)</span>
               </Button>
             </a>
           </div>
 
+          {qrError && (
+            <p role="alert" className="font-mono text-xs text-[color:var(--color-error)]">
+              ERR // QR generation failed
+            </p>
+          )}
+
           {showQr && qrCodeUrl && (
-            <div className="flex flex-col items-center gap-4 rounded-[var(--radius-lg)] border border-border/60 bg-[color:var(--color-background-accent)]/40 p-6 text-center">
+            <div
+              className="flex flex-col items-center gap-4 p-6 text-center"
+              style={{
+                border: '1px solid var(--color-border)',
+                borderRadius: '6px',
+                background: '#070a14',
+              }}
+            >
               <Image
                 src={qrCodeUrl}
-                alt="QR Code"
+                alt={`QR code for ${shortUrl}`}
                 className="h-36 w-36"
                 width={144}
                 height={144}
                 unoptimized
+                style={{ borderRadius: '4px' }}
               />
-              <p className="text-xs text-text-muted">
-                Scan or download to share offline moments just as fast.
+              <p className="font-mono text-xs text-[color:var(--color-text-dim)]">
+                SCAN // SHARE OFFLINE
               </p>
             </div>
           )}

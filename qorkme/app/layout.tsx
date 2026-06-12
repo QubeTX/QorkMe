@@ -25,7 +25,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* FOUC guard for the entrance choreography: hide [data-load] targets
+            pre-paint; LoadSequence sets real transforms and lifts the
+            attribute. 3s failsafe + no-JS never arms (server HTML = final
+            state). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.setAttribute('data-loading','');setTimeout(function(){document.documentElement.removeAttribute('data-loading')},3000);`,
+          }}
+        />
+      </head>
       <body>
         <PretextProvider>
           <SmoothScroll>
