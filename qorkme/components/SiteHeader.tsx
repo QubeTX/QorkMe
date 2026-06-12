@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { ReactNode, useId, useState } from 'react';
 import clsx from 'clsx';
-import { ClientThemeToggle } from '@/components/ClientThemeToggle';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 
@@ -127,13 +126,7 @@ export function SiteHeader({ navItems = [], status, action }: SiteHeaderProps) {
                   </span>
                 )}
 
-                <ClientThemeToggle />
-
                 {renderAction()}
-              </div>
-
-              <div className="md:hidden">
-                <ClientThemeToggle />
               </div>
             </div>
           </div>

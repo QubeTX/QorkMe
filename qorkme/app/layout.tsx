@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { ThemeProvider } from '@/lib/theme';
+import { PretextProvider } from '@/lib/pretext/PretextProvider';
+import { SmoothScroll } from '@/components/effects/SmoothScroll';
+import CustomCursor from '@/components/effects/CustomCursor';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
@@ -25,7 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <PretextProvider>
+          <SmoothScroll>
+            <CustomCursor />
+            {children}
+          </SmoothScroll>
+        </PretextProvider>
         <SpeedInsights />
       </body>
     </html>

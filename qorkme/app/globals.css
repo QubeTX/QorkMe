@@ -81,101 +81,162 @@
 }
 
 :root {
-  /* SHAUGHV vintage palette — cream surfaces, sage action color, olive text */
-  --color-background: #f5f5f0;
-  --color-background-accent: #eeeee8;
-  --color-surface: #fafaf8;
-  --color-surface-elevated: #fdfdfb;
-  --color-surface-muted: #e5e5df;
-  --color-primary: #5b8a5b;
-  --color-primary-hover: #4a7a4a;
-  --color-secondary: #5c5446;
-  --color-secondary-hover: #4c4436;
-  --color-accent: #c4a876;
-  --color-accent-hover: #a48856;
+  /* =============================================================
+     QubeTX design tokens v3.2.1 — structural layer (kit verbatim).
+     Source: docs/qubetx-design-system/tokens/qubetx-tokens.css
+     Living spec: https://www.qubetx.com/design-system
+     Kit permalink: https://www.qubetx.com/qubetx-design-system.zip
+     `--color-text-dim` is contrast-tuned (≥4.5:1 AA on void) — never adjust.
+     ============================================================= */
+  --font-stack-sans: var(--font-makira), ui-sans-serif, system-ui, sans-serif;
+  --font-stack-mono: var(--font-plex-mono), ui-monospace, 'Cascadia Mono', monospace;
 
-  --color-text-primary: #5c5446;
-  --color-text-secondary: #6c6456;
-  --color-text-muted: rgba(92, 84, 70, 0.6);
-  --color-text-inverse: #fafaf8;
+  --color-void: #05070f; /* page/hero/header background */
+  --color-surface-raised: #111827; /* hovered cells, dropdown panels */
+  --color-border: #1a2236; /* 1px hairlines, grid-cell gaps, pills */
+  --color-border-bright: #2c3a5c; /* hovered borders */
+  --color-text-dim: #76869f; /* mono labels, corner metadata — 5.44:1 on void */
 
-  --color-border: rgba(92, 84, 70, 0.18);
-  --color-border-strong: rgba(92, 84, 70, 0.32);
-  --color-ring: rgba(91, 138, 91, 0.32);
-  --color-shadow: rgba(92, 84, 70, 0.08);
-  --color-shadow-hover: rgba(92, 84, 70, 0.16);
+  /* Motion — THE easing for all CSS transitions */
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
 
-  --color-success: #5b8a5b;
-  --color-warning: #d6a52e;
-  --color-error: #b05545;
-  --color-info: #345670;
+  /* Content container cap — widens for TV-class glass (≥2560px) */
+  --container-max: 1440px;
 
-  --container-max: 1200px;
-  --container-padding: clamp(1.25rem, 6vw, 3.5rem);
-  --section-spacing: clamp(4.5rem, 8vw, 7.5rem);
-  --card-padding: clamp(1.75rem, 1.2vw + 1.35rem, 2.75rem);
+  /* Typography scale */
+  --text-display: clamp(2.4rem, 1rem + 7.5vw, 6.75rem);
+  --text-h2: clamp(1.75rem, 1rem + 3vw, 3rem);
+  --text-h3: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-mono-label: 0.7rem;
+  --text-body: clamp(0.9375rem, 0.875rem + 0.35vw, 1.0625rem);
 
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 22px;
-  --radius-xl: 28px;
+  /* Spacing system — 8px grid */
+  --grid-unit: 8px;
+  --space-xs: calc(var(--grid-unit) * 1); /* 8px */
+  --space-sm: calc(var(--grid-unit) * 2); /* 16px */
+  --space-md: calc(var(--grid-unit) * 3); /* 24px */
+  --space-lg: calc(var(--grid-unit) * 4); /* 32px */
+  --space-xl: calc(var(--grid-unit) * 6); /* 48px */
+  --space-2xl: calc(var(--grid-unit) * 8); /* 64px */
+  --space-3xl: calc(var(--grid-unit) * 12); /* 96px */
+
+  /* Responsive layout */
+  --container-padding-x: clamp(16px, 4vw, 32px);
+  --container-padding-y: clamp(48px, 8vw, 64px);
+  --section-spacing: clamp(48px, 10vw, 96px);
+  --content-spacing: clamp(32px, 6vw, 48px);
+
+  /* Touch targets */
+  --touch-target-min: 44px;
+  --button-height-min: 48px;
+
+  /* Auxiliary type scale */
+  --text-base: clamp(14px, calc(0.875rem + 0.25vw), 16px);
+  --text-sm: clamp(12px, calc(0.75rem + 0.25vw), 14px);
+  --text-lg: clamp(16px, calc(1rem + 0.5vw), 20px);
+  --text-xl: clamp(20px, calc(1.25rem + 1vw), 28px);
+  --text-2xl: clamp(24px, calc(1.5rem + 1.5vw), 36px);
+  --text-3xl: clamp(32px, calc(2rem + 2vw), 48px);
+
+  /* QubeTX kit legacy aliases (vendored modules reference these) */
+  --dark-bg: #0a0f1c;
+  --card-bg: #0d1117;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+
+  /* =============================================================
+     QorkMe sub-brand accent — sage on the void.
+     Derived 2026-06-12; measured WCAG ratios documented in
+     docs/DESIGN_SYSTEM.md. Sage replaces QubeTX blue as the action
+     color; the bamboo-gold gradient replaces blue→violet.
+     ============================================================= */
+  --color-primary: #5b8a5b; /* QorkMe sage — 5.01:1 on void (AA) */
+  --color-primary-hover: #69a169; /* 6.61:1 */
+  --color-arrival: #7dc87d; /* slot-roll arrival flash — 9.99:1 */
+  --gradient-brand: linear-gradient(90deg, #4a9e5c, #c4a876); /* 6.07:1 → 8.82:1 */
+  --glow-primary: rgba(91, 138, 91, 0.25); /* button hover glow */
+  --glow-blue: var(--glow-primary); /* kit alias — QorkMe glow is sage */
+  --primary-blue: var(--color-primary); /* kit alias — QorkMe action color */
+  --color-accent: #c4a876; /* bamboo — 8.82:1 */
+  --color-accent-hover: #d4b896; /* 10.63:1 */
+
+  /* Semantic tones (void-tuned, all ≥4.5:1 as text) */
+  --color-success: #7dc87d; /* sage arrival — 9.99:1 */
+  --color-warning: #d6a52e; /* heritage ochre — 8.89:1 */
+  --color-error: #d07a66; /* terracotta, lightened for void — 6.38:1 */
+  --color-info: #7aa3d0; /* slate, lightened for void — 7.64:1 */
+
+  /* =============================================================
+     Legacy compat aliases — pre-QubeTX components reference these.
+     Mapped onto QubeTX structure; retire as pages migrate.
+     ============================================================= */
+  --color-background: var(--color-void);
+  --color-background-accent: #070a14; /* stripe alt */
+  --color-surface: #0d1117;
+  --color-surface-elevated: #111827;
+  --color-surface-muted: #1a2236;
+  --color-secondary: #94a3b8;
+  --color-secondary-hover: #cbd5e1;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #76869f;
+  --color-text-inverse: #05070f;
+  --color-border-strong: #2c3a5c;
+  --color-ring: rgba(125, 200, 125, 0.4);
+  --color-shadow: rgba(0, 0, 0, 0.5);
+  --color-shadow-hover: rgba(0, 0, 0, 0.65);
+
+  --container-padding: var(--container-padding-x);
+  --card-padding: clamp(20px, 2vw + 12px, 32px);
+
+  /* Radius scale — QubeTX: 2px chips · 4px pills/bars · 6px panels/buttons */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
   --radius-full: 9999px;
 
-  --font-display: 'Makira', sans-serif;
-  --font-body: 'Makira', sans-serif;
-  --font-ui: 'Makira', sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-display: var(--font-stack-sans);
+  --font-body: var(--font-stack-sans);
+  --font-ui: var(--font-stack-sans);
+  --font-mono: var(--font-stack-mono);
 
   --weight-body-regular: 400;
   --weight-body-strong: 500;
-  --weight-ui-strong: 600;
-  --weight-display-strong: 600;
+  --weight-ui-strong: 700;
+  --weight-display-strong: 900;
   --weight-ui-button: 900;
-  --weight-inter-heavy: 900;
 
-  --transition-fast: 140ms ease;
-  --transition-base: 240ms ease;
-  --transition-slow: 420ms ease;
+  --transition-fast: 140ms var(--ease-out);
+  --transition-base: 240ms var(--ease-out);
+  --transition-slow: 420ms var(--ease-out);
 }
 
-[data-theme='dark'] {
-  /* SHAUGHV vintage palette (dark variant) — olive-tinted espresso surfaces, sage action, cream text */
-  --color-background: linear-gradient(180deg, #2a2620 0%, #1c1814 100%);
-  --color-background-accent: #2f2a24;
-  --color-surface: rgba(44, 39, 33, 0.94);
-  --color-surface-elevated: rgba(58, 52, 44, 0.92);
-  --color-surface-muted: rgba(76, 68, 54, 0.65);
-  --color-primary: #6b9a6b;
-  --color-primary-hover: #5b8a5b;
-  --color-secondary: #f5f5f0;
-  --color-secondary-hover: #eeeee8;
-  --color-accent: #d4b896;
-  --color-accent-hover: #c4a876;
+/* TV tier — container widens on ≥2560px glass */
+@media (min-width: 2560px) {
+  :root {
+    --container-max: 1800px;
+  }
+}
 
-  --color-text-primary: #f5f5f0;
-  --color-text-secondary: #e5e5df;
-  --color-text-muted: rgba(245, 245, 240, 0.72);
-  --color-text-inverse: #2c2720;
-
-  --color-border: rgba(245, 245, 240, 0.14);
-  --color-border-strong: rgba(245, 245, 240, 0.3);
-  --color-ring: rgba(107, 154, 107, 0.4);
-  --color-shadow: rgba(0, 0, 0, 0.45);
-  --color-shadow-hover: rgba(0, 0, 0, 0.6);
-
-  --color-success: #6b9a6b;
-  --color-warning: #d6a52e;
-  --color-error: #b05545;
-  --color-info: #345670;
+/* Standalone font mapping (QorkMe self-hosts @font-face — no next/font, so
+   the literal families satisfy the stacks; this mirrors the kit's documented
+   standalone fallback) */
+:root {
+  --font-makira: 'Makira';
+  --font-plex-mono: 'IBM Plex Mono';
 }
 
 @theme inline {
+  --color-void: var(--color-void);
   --color-background: var(--color-background);
   --color-surface: var(--color-surface);
+  --color-surface-raised: var(--color-surface-raised);
   --color-surface-elevated: var(--color-surface-elevated);
   --color-surface-muted: var(--color-surface-muted);
   --color-primary: var(--color-primary);
   --color-primary-hover: var(--color-primary-hover);
+  --color-arrival: var(--color-arrival);
   --color-secondary: var(--color-secondary);
   --color-secondary-hover: var(--color-secondary-hover);
   --color-accent: var(--color-accent);
@@ -183,8 +244,10 @@
   --color-text-primary: var(--color-text-primary);
   --color-text-secondary: var(--color-text-secondary);
   --color-text-muted: var(--color-text-muted);
+  --color-text-dim: var(--color-text-dim);
   --color-text-inverse: var(--color-text-inverse);
   --color-border: var(--color-border);
+  --color-border-bright: var(--color-border-bright);
   --color-border-strong: var(--color-border-strong);
   --color-ring: var(--color-ring);
   --color-success: var(--color-success);
@@ -204,31 +267,22 @@
 }
 
 html {
-  color-scheme: light;
-  font-size: 16px;
-}
-
-html[data-theme='dark'] {
   color-scheme: dark;
+  font-size: 16px;
 }
 
 body {
   min-height: 100vh;
-  background: var(--color-background);
-  color: var(--color-text-primary);
-  font-family: var(--font-body);
-  font-size: 1rem;
+  background: var(--color-void);
+  color: var(--text-primary);
+  font-family: var(--font-stack-sans);
+  font-size: var(--text-body);
   font-weight: var(--weight-body-regular);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition:
-    background var(--transition-slow),
-    color var(--transition-base);
   position: relative;
 }
-
-/* Matrix background replaces body::before gradient */
 
 h1,
 h2,
@@ -236,39 +290,50 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: 0.008em;
-  line-height: 1.15;
-  color: var(--color-text-primary);
+  font-family: var(--font-stack-sans);
+  color: var(--text-primary);
+}
+
+/* QubeTX heading register: Makira Black, uppercase via CSS (storage stays
+   sentence case), tight leading */
+h1,
+h2 {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 
 h1 {
-  font-size: clamp(2.75rem, 4vw + 1rem, 4.5rem);
+  font-size: var(--text-h2);
 }
 
 h2 {
-  font-size: clamp(2.25rem, 3vw + 1rem, 3.5rem);
+  font-size: var(--text-h2);
+}
+
+h3,
+h4 {
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 h3 {
-  font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);
+  font-size: var(--text-h3);
 }
 
 h4 {
-  font-size: 1.5rem;
-}
-
-h5 {
-  font-size: 1.25rem;
-}
-
-h6 {
   font-size: 1.125rem;
 }
 
+h5,
+h6 {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
 p {
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);
   margin-bottom: 1.25rem;
 }
 
@@ -289,46 +354,58 @@ a:focus {
 
 code,
 pre {
-  font-family: var(--font-mono);
+  font-family: var(--font-stack-mono);
 }
 
+/* Mono micro-label — pills, nav, corner metadata (uppercase via CSS) */
+.mono-label {
+  font-family: var(--font-stack-mono);
+  font-size: var(--text-mono-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+/* Card surface — 1px hairline does the elevation work (QubeTX: borders over
+   shadows) */
 .card {
   background: var(--color-surface);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   padding: var(--card-padding);
-  border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
-  box-shadow: 0 20px 36px -26px var(--color-shadow);
+  border: 1px solid var(--color-border);
   transition:
-    transform var(--transition-base),
-    box-shadow var(--transition-base),
     border-color var(--transition-base),
     background-color var(--transition-base);
 }
 
 .card:hover {
-  box-shadow: 0 32px 52px -28px var(--color-shadow-hover);
+  border-color: var(--color-border-bright);
 }
 
 .card-elevated {
-  box-shadow:
-    0 32px 60px -36px var(--color-shadow),
-    0 0 0 1px color-mix(in srgb, var(--color-border) 68%, transparent);
-  background: color-mix(in srgb, var(--color-surface-elevated) 82%, var(--color-surface) 18%);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-bright);
 }
 
 .btn {
-  font-family: var(--font-display);
-  font-weight: 600;
+  font-family: var(--font-stack-sans);
+  font-weight: 700;
   border-radius: var(--radius-lg);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.625rem;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border-bright);
   transition: all var(--transition-base);
   position: relative;
-  min-height: 46px;
+  min-height: var(--button-height-min);
   padding-inline: 1.6rem;
+}
+
+.btn:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 24px var(--glow-primary);
 }
 
 .btn:disabled {
@@ -336,55 +413,41 @@ pre {
   cursor: not-allowed;
 }
 
-.btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.18));
-}
-
-.btn:hover::before {
-  opacity: 1;
-}
-
 .btn:focus-visible {
-  outline: 2px solid var(--color-ring);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
 .input {
   background: var(--color-surface);
-  border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
-  border-radius: var(--radius-md);
-  color: var(--color-text-primary);
-  font-family: var(--font-body);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-family: var(--font-stack-mono);
   transition:
     border-color var(--transition-base),
     box-shadow var(--transition-base),
     background-color var(--transition-base);
-  min-height: 48px;
+  min-height: var(--button-height-min);
   padding-inline: 1rem;
 }
 
 .input:hover {
-  border-color: color-mix(in srgb, var(--color-border-strong) 65%, transparent);
+  border-color: var(--color-border-bright);
 }
 
 .input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 18%, transparent);
+  box-shadow: 0 0 0 3px var(--color-ring);
   outline: none;
-  background: color-mix(in srgb, var(--color-surface-elevated) 90%, var(--color-surface) 10%);
+  background: var(--color-surface-raised);
 }
 
 .container {
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
-  padding-inline: var(--container-padding);
+  padding-inline: var(--container-padding-x);
 }
 
 .page-section {
@@ -394,67 +457,54 @@ pre {
 .page-stack {
   display: flex;
   flex-direction: column;
-  gap: clamp(2.75rem, 4vw, 4.5rem);
+  gap: var(--content-spacing);
 }
 
 .page-grid {
   display: grid;
-  gap: clamp(2rem, 3.5vw, 3rem);
+  gap: var(--space-lg);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-  background-size: 200% auto;
+  background: var(--gradient-brand);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .bg-gradient {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-}
-
-.shadow-soft {
-  box-shadow: 0 10px 30px -20px var(--color-shadow);
-}
-
-.shadow-medium {
-  box-shadow: 0 16px 35px -24px var(--color-shadow);
-}
-
-.shadow-large {
-  box-shadow: 0 28px 60px -30px var(--color-shadow);
+  background: var(--gradient-brand);
 }
 
 .font-display {
-  font-family: 'Makira', sans-serif;
+  font-family: var(--font-stack-sans);
   font-weight: 900;
 }
 
 .font-body {
-  font-family: var(--font-body);
+  font-family: var(--font-stack-sans);
   font-weight: var(--weight-body-regular);
 }
 
 .font-body-strong {
-  font-family: var(--font-body);
+  font-family: var(--font-stack-sans);
   font-weight: var(--weight-body-strong);
 }
 
 .font-ui {
-  font-family: var(--font-ui);
+  font-family: var(--font-stack-sans);
   font-weight: var(--weight-body-regular);
 }
 
 .font-makira-black {
-  font-family: 'Makira', sans-serif;
+  font-family: var(--font-stack-sans);
   font-weight: 900;
   letter-spacing: 0.01em;
 }
 
 /* Makira scope — apply to a page wrapper to override all text.
-   Excludes code/pre and .font-mono elements so IBM Plex Mono still surfaces. */
+   Excludes code/pre and .font-mono elements so IBM Plex Mono surfaces. */
 .font-makira,
 .font-makira *:not(code):not(pre):not(.font-mono):not(.font-mono *),
 .font-makira input,
@@ -467,37 +517,23 @@ pre {
 .font-makira pre,
 .font-makira .font-mono,
 .font-makira .font-mono * {
-  font-family: var(--font-mono) !important;
-}
-
-@keyframes metric-glow {
-  0%,
-  100% {
-    text-shadow: 0 0 0 transparent;
-  }
-  50% {
-    text-shadow: 0 0 18px color-mix(in srgb, var(--color-primary) 25%, transparent);
-  }
-}
-
-.animate-metric-glow {
-  animation: metric-glow 3s ease-in-out infinite;
+  font-family: var(--font-stack-mono) !important;
 }
 
 /* Admin table styling — striping and hover accent */
 .admin-table tbody tr:nth-child(even) {
-  background: color-mix(in srgb, var(--color-surface-muted) 25%, transparent);
+  background: #070a14;
 }
 
 .admin-table tbody tr {
   transition:
     background var(--transition-fast),
     border-color var(--transition-fast);
-  border-left: 3px solid transparent;
+  border-left: 2px solid transparent;
 }
 
 .admin-table tbody tr:hover {
-  background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+  background: var(--color-surface-raised);
   border-left-color: var(--color-primary);
 }
 
@@ -552,16 +588,6 @@ pre {
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
 @keyframes shimmer {
   0% {
     transform: translateX(-100%);
@@ -571,41 +597,32 @@ pre {
   }
 }
 
-@keyframes glow {
-  from {
-    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
-  }
-  to {
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
-  }
-}
-
 .animate-fadeIn {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeIn 0.55s var(--ease-out);
 }
 
 .animate-fadeIn-delay-200 {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+  animation: fadeIn 0.55s var(--ease-out) 0.2s both;
 }
 
 .animate-fadeIn-delay-300 {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+  animation: fadeIn 0.55s var(--ease-out) 0.3s both;
 }
 
 .animate-fadeIn-delay-400 {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+  animation: fadeIn 0.55s var(--ease-out) 0.4s both;
 }
 
 .animate-fadeIn-delay-500 {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+  animation: fadeIn 0.55s var(--ease-out) 0.5s both;
 }
 
 .animate-fadeIn-delay-800 {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
+  animation: fadeIn 0.55s var(--ease-out) 0.8s both;
 }
 
 .animate-fadeIn-delay-1200 {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.2s both;
+  animation: fadeIn 0.55s var(--ease-out) 1.2s both;
 }
 
 /* Disable entrance animations on mobile for performance */
@@ -622,32 +639,11 @@ pre {
 }
 
 .animate-slideIn {
-  animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideIn 0.55s var(--ease-out);
 }
 
 .animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-float {
-  animation: float 3.8s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.animate-shimmer::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
-  animation: shimmer 2s infinite;
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite alternate;
+  animation: pulse 2s var(--ease-out) infinite;
 }
 
 ::-webkit-scrollbar {
@@ -660,12 +656,12 @@ pre {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--color-border) 70%, transparent);
+  background: var(--color-border);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--color-border-strong) 60%, transparent);
+  background: var(--color-border-bright);
 }
 
 :focus-visible {
@@ -674,8 +670,8 @@ pre {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-primary) 35%, transparent);
-  color: var(--color-text-inverse);
+  background: rgba(91, 138, 91, 0.45);
+  color: #ffffff;
 }
 
 /* Screen reader only - visually hidden but accessible */
@@ -691,44 +687,13 @@ pre {
   border-width: 0;
 }
 
-/* Responsive adjustments for the redesign */
-@media (max-width: 768px) {
-  .container {
-    padding-inline: 1rem;
-  }
-
-  /* Adjust card padding on mobile */
-  .url-shortener-card {
-    padding: 2rem 1.5rem !important;
-  }
-}
-
-/* Grid click ripple — GPU-composited, no layout/paint */
-.grid-ripple {
-  width: 1600px;
-  height: 1600px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    transparent 55%,
-    var(--color-primary) 67%,
-    var(--color-primary) 72%,
-    transparent 85%
-  );
-  transform: translate(-50%, -50%) scale(0);
-  animation: grid-ripple-expand 2s ease-out forwards;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-
-@keyframes grid-ripple-expand {
-  0% {
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0.12;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
+/* Touch targets — enforced under coarse pointers only (QubeTX rule) */
+@media (pointer: coarse) {
+  button,
+  a[role='button'],
+  input[type='submit'] {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
   }
 }
 
