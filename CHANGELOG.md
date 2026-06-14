@@ -2,6 +2,14 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (qork native installers)
+
+### Added
+
+- **qork is now v1.0.1** (GitHub Releases **and** crates.io — `cargo install qork`), with a full **native-installer matrix** shipped on every release at `https://github.com/QubeTX/qork/releases/latest/download/<name>`: **4 Windows** (`*-pc-windows-msvc.msi` Global/per-machine + `*-corporate.msi` per-user/no-admin + `*-setup.exe` and `*-corporate-setup.exe` Inno EXEs — `qork update` re-runs the matching one via the `HKCU\Software\Qork\InstallSource` marker), **2 macOS** (`*-aarch64-apple-darwin.pkg` + `*-x86_64-apple-darwin.pkg`, unsigned → right-click → Open on first run), and **4 Linux** (`*-{x86_64,aarch64}-unknown-linux-gnu.{deb,rpm}`).
+- **`/install` download section reorganized** around the recommended path per OS — the command-line one-liner (`curl … | sh` / `cargo install qork`) for macOS/Linux, the MSI/EXE installer for Windows (MSIs work better on Windows).
+- **Three release workflows** build the matrix: cargo-dist `release.yml` (per-target archives + shell/PowerShell installers + Global MSI), `windows-installers.yml` (Corporate MSI + both Inno Setup EXEs), and `unix-installers.yml` (macOS `.pkg` + Linux `.deb`/`.rpm` via `nfpm`); all upload to the GitHub Release.
+
 ## 2026-06-14 (qork CLI + Public API + Source Attribution)
 
 ### Added
