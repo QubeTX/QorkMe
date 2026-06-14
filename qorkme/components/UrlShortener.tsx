@@ -9,7 +9,7 @@ import styles from './UrlShortener.module.css';
  * The shortener card — QorkMe's primary surface, technical register.
  * Every label change rides the slot roll: the submit button rolls
  * SHORTEN → WORKING… on Enter, the created link rolls in from a masked
- * placeholder (arrival sage settling to ink), COPY flashes COPIED, and the
+ * placeholder (arrival blue settling to ink), COPY flashes COPIED, and the
  * custom-alias availability check rolls CHECKING → AVAILABLE / TAKEN.
  * Errors are honest mono lines, never toasts.
  */
@@ -141,7 +141,7 @@ export function UrlShortener() {
       setStage('result');
       setWorking(false);
 
-      // The "link created" beat — one sage ripple through the dot field
+      // The "link created" beat — one blue ripple through the dot field
       firePulse({
         x: window.innerWidth / 2,
         y: window.innerHeight / 2,
@@ -242,7 +242,7 @@ export function UrlShortener() {
                       checkAlias(e.target.value);
                     }}
                   />
-                  {/* data-status on the wrapper drives the color (arrival sage / error) */}
+                  {/* data-status on the wrapper drives the color (arrival blue / error) */}
                   <span className={styles.aliasStatus} data-status={aliasStatus}>
                     <SlotRoll text={ALIAS_STATUS_TEXT[aliasStatus]} options={{ direction: 'up' }} />
                   </span>

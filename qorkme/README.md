@@ -1,6 +1,6 @@
 # QorkMe - Premium URL Shortener
 
-A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring an earthy modern interface with warm parchment neutrals, terracotta accents, sage highlights, and intelligent short code generation.
+A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring a dark-only QubeTX interface — void `#05070f` surfaces, a blue→violet (`#2563eb → #7c3aed`) brand gradient, hairline-border panels, and intelligent short code generation.
 
 ## Features
 
@@ -15,14 +15,14 @@ A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and S
 
 ### Design & User Experience
 
-- **Animated Matrix Background**: Viewport-filling retro dot-matrix display with real-time digital clock and radial wave animations in earthy terracotta tones
-- **Earthy Modern Surfaces**: Warm parchment backgrounds with terracotta primaries and sage accent colors
-- **Calm Depth**: Soft organic shadows and restrained blur deliver depth without heavy effects
-- **Accessible Typography**: ZT Bros Oskon for headings paired with Inter Regular (400) for improved readability
-- **Gentle Interactions**: Subtle motion, gradient overlays, and responsive feedback tuned for focus
-- **Responsive Excellence**: Mobile-first layouts optimized for quick scanning and comfortable reading
-- **Dual Theme Support**: Espresso-toned dark mode and parchment light mode share the same token palette
-- **Minimal Navigation Header**: Marketing and result views share a clean wordmark-only masthead
+- **Animated Dot-Grid Background**: Canvas dot field on the QubeTX blue→violet ramp with pointer-reactive swells and a `firePulse` ripple when a link is created
+- **LED Matrix Surfaces**: Canvas LED word board (404, login) and a live 12-hour LED clock, both on the blue→violet color ramp
+- **Terminal Hero**: A "terminal" home composition — a `$ qork "url"` mono line and a Makira Black blue→violet gradient `QORK.ME` wordmark
+- **Hairline Surfaces**: 1px borders do the elevation work on dark void surfaces — no heavy shadows
+- **Technical Typography**: Makira Sans Serif (Black 900 uppercase headings/wordmarks) paired with IBM Plex Mono for the technical register (labels, statuses, buttons, short URLs)
+- **Slot-Roll Interactions**: Every label change rides a slot roll; inline mono `ERR //` lines instead of toasts
+- **Responsive Excellence**: Mobile-first layouts optimized for quick scanning, scaling up to a TV tier and down to landscape phones
+- **Dark Only**: A single QubeTX palette — no light mode, no theme toggle
 
 ### Technical Excellence
 
@@ -181,16 +181,8 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 │   ├── theme.tsx           # Theme context provider
 │   └── utils.ts            # Utility functions
 ├── public/                  # Static assets
-│   ├── fonts/              # ZT Bros Oskon fonts (woff2)
-│   │   ├── README.md
-│   │   ├── ZTBrosOskon90s-Bold.woff2
-│   │   ├── ZTBrosOskon90s-BoldItalic.woff2
-│   │   ├── ZTBrosOskon90s-Italic.woff2
-│   │   ├── ZTBrosOskon90s-Medium.woff2
-│   │   ├── ZTBrosOskon90s-MediumItalic.woff2
-│   │   ├── ZTBrosOskon90s-Regular.woff2
-│   │   ├── ZTBrosOskon90s-SemiBold.woff2
-│   │   └── ZTBrosOskon90s-SemiBoldItalic.woff2
+│   ├── fonts/              # Makira Sans Serif + IBM Plex Mono (woff2)
+│   │   └── README.md       # font licensing notes
 │   ├── apple-touch-icon.png   # iOS home screen icon (180×180)
 │   ├── favicon-16x16.png      # Browser tab icon
 │   ├── favicon-32x32.png      # Retina browser tab icon
@@ -241,9 +233,9 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 - **Framework**: Next.js 15.5.3 with App Router
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
-- **Styling**: Tailwind CSS v4 with earthy modern design tokens and advanced CSS variables
-- **UI Components**: Card-based components with soft organic shadows and calm interactions
-- **Theme System**: Dynamic light/dark mode with parchment light and espresso dark variants
+- **Styling**: QubeTX design tokens (CSS custom properties) + CSS modules; Tailwind CSS v4 retained for layout utilities (no `tailwind.config` — `@theme` inline)
+- **Typography**: Makira Sans Serif (headings/wordmarks) + IBM Plex Mono (technical register), self-hosted woff2
+- **Theme System**: Dark only — a single QubeTX void palette, no light mode or theme toggle
 - **Icons**: Lucide React v0.544.0
 - **QR Codes**: qrcode v1.5.4 library
 - **Notifications**: React Hot Toast v2.6.0
@@ -277,15 +269,15 @@ Key performance features:
 - Comprehensive indexing strategy for 200,000+ URLs
 - Row-level security for multi-tenant support
 
-## Earthy Modern Design
+## QubeTX Design System
 
-QorkMe delivers a relaxed yet polished experience:
+QorkMe runs on the full QubeTX design system (dark only):
 
-- **Grounded Color Story**: Parchment backgrounds, terracotta primaries, and sage accents create warmth
-- **Soft Depth**: Layered shadows and minimal blur provide dimension without distraction
-- **Typography Balance**: ZT Bros Oskon leads hero moments while Inter Regular (400) provides comfortable body copy; buttons use Inter Black (900) for maximum contrast
-- **Dark and Light Harmony**: Espresso dark mode shares the same palette tokens as the light theme
-- **Measured Motion**: Calm transitions and focus rings favor clarity over spectacle
+- **Void Color Story**: Void `#05070f` background with hairline-border surfaces; the blue→violet (`#2563eb → #7c3aed`) brand gradient powers the wordmark, dot grid, and LED surfaces; QubeTX blue `#0066FF` is the action color
+- **Hairline Depth**: 1px borders do the elevation work — no heavy shadows
+- **Typography Balance**: Makira Sans Serif (Black 900 uppercase) leads hero moments and wordmarks while IBM Plex Mono carries the technical register — labels, statuses, buttons, and short URLs
+- **Dark Only**: A single QubeTX palette — no light mode, no theme toggle
+- **Measured Motion**: anime.js / Framer Motion under the QubeTX motion doctrine — one owner per property, slot-roll label changes, reduced motion = instant final state
 
 ### Brand Logo Assets
 
@@ -294,7 +286,7 @@ QorkMe delivers a relaxed yet polished experience:
 
 The Qork logo appears in the homepage hero, site header, 404 page, admin dashboard, site footer, and as the favicon.
 
-See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for complete earthy modern design specifications.
+See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for the complete QubeTX design system specification.
 
 ## Production Configuration
 
@@ -486,4 +478,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Built with calm confidence - Bringing earthy modern design and purposeful interactions to URL shortening.
+Built with calm confidence - Bringing the QubeTX design system and purposeful interactions to URL shortening.
