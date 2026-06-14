@@ -14,6 +14,16 @@ export async function GET(request: NextRequest) {
   const sort = searchParams.get('sort') || 'created_at';
   const order = searchParams.get('order') === 'asc' ? true : false;
 
+  // Filters
+  // Strip PostgREST-significant characters from the search term so it can't
+  // break the `.or()` filter grammar; cap the length.
+  const q = (searchParams.get('q') || '')
+    .replace(/[,()%*\\]/g, '')
+    .trim()
+    .slice(0, 100);
+  const status = searchParams.get('status'); // 'active' | 'inactive'
+  const alias = searchParams.get('alias'); // 'true'
+
   const allowedSortColumns = [
     'created_at',
     'short_code',
@@ -24,18 +34,26 @@ export async function GET(request: NextRequest) {
   const sortColumn = allowedSortColumns.includes(sort) ? sort : 'created_at';
 
   const offset = (page - 1) * pageSize;
+  const filtered = Boolean(q) || status === 'active' || status === 'inactive' || alias === 'true';
 
   try {
     const adminClient = await createAdminClient();
 
-    // count: 'estimated' reads pg_class.reltuples instead of scanning the
-    // table on every page load — close enough for admin pagination at scale
-    const { data, error, count } = await adminClient
+    // Exact count when filtered (so pagination is correct); estimated otherwise
+    // (reads pg_class.reltuples instead of scanning the table at scale).
+    let query = adminClient
       .from('urls')
       .select(
         'id, short_code, long_url, click_count, created_at, is_active, custom_alias, last_accessed_at',
-        { count: 'estimated' }
-      )
+        { count: filtered ? 'exact' : 'estimated' }
+      );
+
+    if (q) query = query.or(`short_code.ilike.%${q}%,long_url.ilike.%${q}%`);
+    if (status === 'active') query = query.eq('is_active', true);
+    else if (status === 'inactive') query = query.eq('is_active', false);
+    if (alias === 'true') query = query.eq('custom_alias', true);
+
+    const { data, error, count } = await query
       .order(sortColumn, { ascending: order })
       .range(offset, offset + pageSize - 1);
 
@@ -48,7 +66,7 @@ export async function GET(request: NextRequest) {
       total: count ?? 0,
       page,
       pageSize,
-      totalPages: Math.ceil((count ?? 0) / pageSize),
+      totalPages: Math.max(1, Math.ceil((count ?? 0) / pageSize)),
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to fetch links';

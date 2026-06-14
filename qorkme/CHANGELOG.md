@@ -2,6 +2,21 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.2.0] - 2026-06-14
+
+### Added — Admin Analytics + Filterable Links Table
+
+- **Admin dashboard visualizations** (`components/admin/AdminAnalytics.tsx`, `GET /api/admin/analytics`, new `admin_analytics()` RPC): a 14-day window panel with CLICKS and NEW LINKS bar charts, a TOP LINKS BY CLICKS ranking, and a CLICKS BY DEVICE breakdown — pure-CSS charts in the blue→violet register, delivered in one service-role round trip.
+- **Links table upgraded** (`components/admin/AdminLinksTable.tsx`, `GET /api/admin/links`): live debounced search (`q`, ilike on code/destination), ALL/ACTIVE/OFF/ALIAS status filters, sortable columns with direction arrows, a result count, and a bulk **Clear all** (double-confirm purge) in the toolbar. The standalone danger-zone panel is retired in favor of the in-table action; filtered queries use exact counts for correct pagination.
+
+### Changed — Home page fits the viewport
+
+- The home page is pinned to `100dvh` with the hero scaled to fit (height-aware wordmark cap, fluid padding/gaps), so the hero + footer show with **no scroll** on desktop/laptop/tablet/portrait — verified 360 → 2560 (incl. the TV tier). Very short viewports (landscape phones, < 560px tall) fall back to natural scroll so nothing is ever clipped.
+
+### Database (`supabase/migrations/`)
+
+- `20260614090001_admin_analytics.sql` — adds the service-role-only `admin_analytics()` aggregation function; mirrored in `schema.sql`.
+
 ## [5.1.0] - 2026-06-14
 
 ### Changed — Full QubeTX Design System (Canonical Blue→Violet)

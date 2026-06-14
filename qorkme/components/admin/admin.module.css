@@ -656,3 +656,256 @@
   flex-direction: column;
   gap: 4px;
 }
+
+/* ---------- Analytics / visualizations ---------- */
+.vizGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .vizGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vizCard {
+  background: var(--color-void);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.vizHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vizTotal {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+/* 14-day bar chart (pure CSS) */
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 84px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.barCol {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bar {
+  width: 100%;
+  border-radius: 2px 2px 0 0;
+  background: linear-gradient(180deg, #7c3aed, #2563eb);
+  transition: opacity 0.2s var(--ease-out);
+}
+
+.barCol:hover .bar {
+  opacity: 0.65;
+}
+
+.chartAxis {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-dim);
+  margin-top: -6px;
+}
+
+/* ranked horizontal bars (top links + devices) */
+.rankList {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.rankRow {
+  display: grid;
+  grid-template-columns: minmax(52px, 0.4fr) 1fr auto;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.rankCode {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--color-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a.rankRow:hover .rankCode {
+  color: var(--color-primary-hover);
+}
+
+.rankLabel {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--color-text-secondary);
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rankTrack {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.rankFill {
+  display: block;
+  height: 100%;
+  background: var(--gradient-brand);
+  border-radius: 3px;
+}
+
+.rankNum {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-primary);
+  min-width: 4ch;
+  text-align: right;
+}
+
+/* ---------- Links table toolbar ---------- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.searchInput {
+  width: 100%;
+  background: var(--color-void);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  transition:
+    border-color 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-ring);
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-dim);
+}
+
+.segGroup {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.segBtn {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--color-border);
+  padding: 7px 12px;
+  cursor: pointer;
+  transition:
+    color 0.2s var(--ease-out),
+    background-color 0.2s var(--ease-out);
+}
+
+.segBtn:last-child {
+  border-right: none;
+}
+
+.segBtn:hover {
+  color: var(--text-primary);
+}
+
+.segActive,
+.segActive:hover {
+  color: var(--color-void);
+  background: var(--color-primary);
+}
+
+.clearAllBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-error);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--color-error) 45%, var(--color-border));
+  border-radius: var(--radius-md);
+  padding: 7px 12px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out);
+}
+
+.clearAllBtn:hover:not(:disabled) {
+  background: var(--color-error);
+  color: var(--color-void);
+}
+
+.clearAllBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.resultCount {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-label);
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+}
