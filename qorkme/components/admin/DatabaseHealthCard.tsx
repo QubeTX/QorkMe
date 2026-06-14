@@ -122,7 +122,7 @@ export function DatabaseHealthCard() {
               {(
                 [
                   ['urls', data.tables.urls],
-                  ['clicks', data.tables.clicks],
+                  ['click events', data.tables.clicks],
                   ['reserved', data.tables.reserved_words],
                 ] as const
               ).map(([label, count]) => (

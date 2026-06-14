@@ -36,8 +36,10 @@ export default async function AdminPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: stats } = await (adminClient as any).rpc('admin_health_stats');
 
+  // total_click_count = sum of per-link lifetime counters (matches Top Links
+  // and the per-row Clicks); click_count is the clicks-table row count.
   const totalUrls: number = stats?.url_count ?? 0;
-  const totalClicks: number = stats?.click_count ?? 0;
+  const totalClicks: number = stats?.total_click_count ?? 0;
   const avgClicksPerLink = totalUrls > 0 ? (totalClicks / totalUrls).toFixed(1) : '0.0';
 
   return (

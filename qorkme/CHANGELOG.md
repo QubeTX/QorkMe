@@ -2,6 +2,17 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.2.1] - 2026-06-14
+
+### Fixed — Click metric reconciliation
+
+- **Admin headline TOTAL CLICKS (and AVG / LINK) now use the lifetime per-link counter** — `sum(urls.click_count)` via a new `total_click_count` field on `admin_health_stats()` — so the headline matches the per-link Clicks column and Top Links instead of the clicks-table row count. Investigation: the detailed `clicks` table is sparse only for historical reasons (redirects before the 2026-06-12 `after()` analytics path were fire-and-forget and lost their detail rows on Vercel); the logging code and RLS (`WITH CHECK (true)`) are correct, and new clicks record full detail.
+- Analytics charts relabeled **Tracked clicks** / **Tracked clicks by device** (with a clarifying note — they count detailed events with device + time); the health panel's clicks-table row count is relabeled **click events**.
+
+### Database (`supabase/migrations/`)
+
+- `20260614100001_admin_health_total_click_count.sql` — adds `total_click_count` to `admin_health_stats()`; mirrored in `schema.sql`.
+
 ## [5.2.0] - 2026-06-14
 
 ### Added — Admin Analytics + Filterable Links Table
