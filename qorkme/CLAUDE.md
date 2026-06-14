@@ -64,6 +64,10 @@ For components needing different props at different breakpoints, render separate
 </div>
 ```
 
+### CSS Modules beat Tailwind responsive utilities
+
+An unlayered `.module.css` rule that sets `display` overrides Tailwind's layered `hidden`/`md:hidden` regardless of source order. For an element that carries a CSS-module class **and** needs responsive show/hide, do it in the module (`@media { display }`), not Tailwind classes. (Bit the admin table: `.mList { display: flex }` ignored `md:hidden`, so the desktop table and mobile cards both rendered at once.)
+
 ## Design System — full QubeTX v3.2.1
 
 QorkMe runs on the **full QubeTX design system** (dark-only, void `#05070f`, canonical blue→violet). Full spec + measured WCAG ratios in `docs/DESIGN_SYSTEM.md`. The vendored kit (tokens, motion library, components, agent docs) lives at `docs/qubetx-design-system/`; **live spec: https://www.qubetx.com/design-system ; stable kit permalink: https://www.qubetx.com/qubetx-design-system.zip** — cross-check against the live version, re-download the zip to refresh the vendored kit.
@@ -90,7 +94,8 @@ QorkMe runs on the **full QubeTX design system** (dark-only, void `#05070f`, can
 - **MCP access**: Full database access via Supabase MCP server (execute SQL, apply migrations, view logs, etc.)
 - **Clients**: `lib/supabase/server.ts` (`createServerClientInstance` for cookie auth, `createAdminClient` for service_role, `createAnonClient` for cookie-free work inside `after()` callbacks); `lib/supabase/client.ts` (browser)
 - **Migrations**: `supabase/migrations/` (applied via MCP; `supabase/schema.sql` is the consolidated mirror)
-- **Hot paths**: shorten = 1 RPC (`get_or_create_short_url` v2 — candidates array, atomic duplicate-return-or-insert); redirect = 1 RPC (`increment_click_count`) + click insert via Next 15 `after()`; admin health = 1 RPC (`admin_health_stats`, service-role only)
+- **Hot paths**: shorten = 1 RPC (`get_or_create_short_url` v2 — candidates array, atomic duplicate-return-or-insert); redirect = 1 RPC (`increment_click_count`) + click insert via Next 15 `after()`; admin health = 1 RPC (`admin_health_stats`, service-role only); admin analytics = 1 RPC (`admin_analytics`, service-role only)
+- **Click metrics**: `urls.click_count` is a denormalized lifetime counter (bumped every redirect); the `clicks` table holds detailed per-event rows (device/time), sparse for pre-2026-06-12 redirects (fire-and-forget before the `after()` path). Admin distinguishes **total clicks** (`admin_health_stats().total_click_count` = `sum(click_count)`) from **tracked clicks** (clicks-table rows) — don't conflate them.
 
 ### Admin console
 
@@ -133,6 +138,10 @@ Slot-roll assertions go through `[data-slot-sr]`. Test files mirror source paths
 
 100-character line width, 2-space indent, single quotes, semicolons, Unix line endings. CI runs `format:check` — always run `npm run format` before committing.
 
+## Browser verification (Playwright MCP)
+
+The animated DotGrid canvas (home / 404 / admin) wedges Playwright MCP on **viewport resize** (calls time out). Size the viewport on a light page first (`/admin/login` has no DotGrid), then navigate to the heavy page; prefer viewport JPEG over `fullPage`; recover a hung browser by killing only the Playwright chromium (`Get-CimInstance Win32_Process` filtered on `ms-playwright|--remote-debugging-pipe`). The home page is pinned to `100dvh` to fit with no scroll (scroll fallback under 560px tall).
+
 ## Environment Variables
 
 Required in `.env.local`:
@@ -145,6 +154,8 @@ NEXT_PUBLIC_SITE_URL=https://qork.me
 NEXT_PUBLIC_SHORT_DOMAIN=qork.me
 NEXT_PUBLIC_SUPABASE_ADMIN_GITHUB=REALEMMETTS
 ```
+
+**Local gotcha:** a typical local `.env.local` has only the `NEXT_PUBLIC_*` vars — **no `SUPABASE_SERVICE_KEY`** — so `createAdminClient()` (admin page stats + every `/api/admin/*` route) throws `supabaseKey is required` and 500s locally; it works in prod (key set on Vercel). To preview the admin UI locally, temporarily mock the data behind an env flag and remove it before commit. Admin is GitHub-OAuth gated → verify it on the live site after deploy.
 
 ## CI/CD
 
