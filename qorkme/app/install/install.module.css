@@ -199,35 +199,44 @@
 
 .winBtns {
   display: flex;
-  gap: var(--space-xs);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
   justify-self: end;
 }
 
+/* Prominent blue-tinted download CTA — matches the DownloadCard action button
+   (`--glow-blue` lift on hover). The label inside is a RollingLabel, so the
+   letters slot-roll up on hover (kit letter-roll micro-interaction). */
 .winBtn {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 5px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  background: var(--color-surface);
+  justify-content: center;
+  min-height: 44px;
+  /* Holds steady when the label rolls between "↓ MSI"/"↓ EXE" and the version. */
+  min-width: 104px;
+  padding: 12px 22px;
+  border: 1px solid rgba(0, 102, 255, 0.55);
+  border-radius: 6px;
+  background: rgba(0, 102, 255, 0.08);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--text-primary);
   text-decoration: none;
   transition:
-    border-color var(--transition-fast),
-    color var(--transition-fast),
-    background var(--transition-fast);
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
-.winBtn:hover {
-  border-color: var(--color-border-bright);
-  color: var(--color-arrival);
+.winBtn:hover,
+.winBtn:focus-visible {
+  background: rgba(0, 102, 255, 0.2);
+  border-color: var(--color-arrival);
+  box-shadow: 0 8px 32px -8px var(--glow-blue);
 }
 
 @media (max-width: 560px) {

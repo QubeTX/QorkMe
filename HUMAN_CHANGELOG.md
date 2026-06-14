@@ -6,6 +6,13 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## June 14, 2026 — Bigger Windows download buttons that show the version on hover
+
+**Improved**
+- The Windows download buttons on the install page are now larger and stand out more — a blue-tinted style with a soft glow when you hover. When you hover (or tab to) a button, its label rolls over to reveal the exact release version you're about to download, then rolls back when you move away.
+
+---
+
 ## June 14, 2026 — Easier Windows installs + faster command-line updates
 
 **Added**
