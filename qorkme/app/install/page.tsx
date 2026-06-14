@@ -9,6 +9,7 @@ import TerminalFrame from '@/components/terminal/TerminalFrame';
 import CommandTable from '@/components/terminal/CommandTable';
 import DownloadCard from '@/components/terminal/DownloadCard';
 import LatestVersion from './LatestVersion';
+import LedeCycle from './LedeCycle';
 import styles from './install.module.css';
 
 export const metadata: Metadata = {
@@ -100,12 +101,7 @@ export default function InstallPage() {
               <span className={styles.gradientWord}>qork</span>
             </h1>
 
-            <p className={styles.lede}>
-              <span className={styles.ledeAccent} aria-hidden="true">
-                $
-              </span>
-              Shorten URLs from your terminal.
-            </p>
+            <LedeCycle />
           </div>
         </section>
 
@@ -170,6 +166,10 @@ export default function InstallPage() {
                 Quote URLs that contain spaces or shell metacharacters (<code>&amp;</code>,{' '}
                 <code>?</code>) so your shell hands the whole string to qork intact.
               </p>
+              <p className={styles.prose}>
+                Before shortening, qork checks the link is real — it won&apos;t shorten pasted text
+                or a dead (404) URL. Pass <code>--no-check</code> to skip that.
+              </p>
               <CommandTable
                 headers={['Command', 'Description']}
                 rows={[
@@ -179,8 +179,19 @@ export default function InstallPage() {
                     command: 'qork <url> --json',
                     description: 'Print the raw JSON (scripts/agents)',
                   },
-                  { command: 'qork update', description: 'Update to the latest release' },
-                  { command: 'qork uninstall', description: 'Remove qork' },
+                  {
+                    command: 'qork <url> --no-check',
+                    description: 'Skip the live-link safety check',
+                  },
+                  { command: 'qork help', description: 'Show help and documentation' },
+                  {
+                    command: 'qork update',
+                    description: 'Update to the latest release (per install method)',
+                  },
+                  {
+                    command: 'qork uninstall [--yes]',
+                    description: 'Fully remove qork from this system',
+                  },
                   { command: 'qork --version', description: 'Print the version' },
                 ]}
                 footnote="Run qork --help for the full command reference."

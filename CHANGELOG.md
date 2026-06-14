@@ -2,6 +2,15 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (qork CLI v1.1.0)
+
+### Changed
+
+- **qork is now v1.1.0** (GitHub Releases **and** crates.io — `cargo install qork`), adding a help command, a pre-shorten safety check, and full origin-aware uninstall.
+- **`qork help`** prints the CLI docs — `help`, `update`, and `uninstall` are now recognized as whole-word, case-insensitive commands (never mistaken for URLs; a real URL with a scheme or dotted host always routes to the shortener). **Man pages** ship too: `man qork` works on `.deb`/`.rpm`/`.pkg` installs.
+- **Pre-shorten safety check** — before shortening, qork verifies the argument is a real link: it rejects accidentally-pasted text offline and does a lightweight HEAD "ping" that refuses a live **404/410** or an unresolvable host (auth walls 401/403, 5xx, slow sites, and transient blips still shorten). Pass **`--no-check`** to skip it.
+- **Full uninstall on every platform incl. Windows** — `qork uninstall` now fully removes qork, aware of how it was installed (Global/Corporate MSI via Windows Installer, Inno EXE via its uninstaller, cargo/script via self-delete): binary, PATH entry, Add/Remove-Programs entry, and install marker. Add **`--yes`**/`-y` to skip the prompt (required for non-interactive use). (`qork update` was already install-method-aware — unchanged.)
+
 ## 2026-06-14 (qork native installers)
 
 ### Added

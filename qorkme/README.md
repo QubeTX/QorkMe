@@ -42,7 +42,14 @@ qork https://example.com/some/very/long/path     # → https://qork.me/ka9m
 qork "https://example.com/a b?x=1&y=2"            # quote URLs with spaces/specials
 qork https://example.com --alias launch            # custom short code
 qork --json https://example.com                     # raw JSON for scripts/agents
+qork help                                           # CLI docs (also `man qork`)
 ```
+
+Before shortening, `qork` runs a quick safety check — it rejects accidentally-pasted
+text offline and refuses a dead link (a live 404/410 or a host that won't resolve);
+auth walls (401/403), 5xx, and slow sites still shorten. Pass `--no-check` to skip it.
+`qork uninstall` fully removes qork on every platform, aware of how it was installed
+(MSI, Inno EXE, or cargo/script) — add `--yes` to skip the confirmation prompt.
 
 Install (no Rust toolchain required):
 
