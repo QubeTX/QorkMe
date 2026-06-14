@@ -22,8 +22,8 @@ import { subscribe as subscribeResize } from '@/lib/pretext/resizeCoordinator';
 
 type MatrixDot = { x: number; y: number; col: number; lit: number };
 
-// Sage -> bamboo, matching --gradient-brand and the MatrixDisplay ramp
-const LUT = buildColorRamp('#4a9e5c', '#c4a876', 256);
+// Blue -> violet, matching --gradient-brand and the MatrixDisplay ramp
+const LUT = buildColorRamp('#2563eb', '#7c3aed', 256);
 const DPR_CAP = 1.5;
 const TICK_SWEEP_MS = 220;
 

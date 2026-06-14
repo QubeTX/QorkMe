@@ -1,7 +1,8 @@
-# QorkMe Design System — QubeTX base, QorkMe sub-brand
+# QorkMe Design System — QorkMe on the full QubeTX system
 
-QorkMe is a **QubeTX property** and runs on the **QubeTX design system v3.2.1**
-with a QorkMe sub-brand accent layer (sage + bamboo on the void).
+QorkMe is a **QubeTX property** and runs on the **full QubeTX design system
+v3.2.1** — the canonical blue→violet palette on the void, adopted verbatim
+(no sub-brand accent fork).
 
 - **Living spec (live specimens):** https://www.qubetx.com/design-system
 - **Stable kit permalink:** https://www.qubetx.com/qubetx-design-system.zip —
@@ -11,13 +12,12 @@ with a QorkMe sub-brand accent layer (sage + bamboo on the void).
 - **Tokens in code:** `app/globals.css` (`:root` block)
 
 Future agents: cross-check this document against the live spec above. The
-QubeTX structural layer (surfaces, borders, text inks, spacing, motion
-doctrine) is adopted verbatim and must never fork; only the accent layer
-below is QorkMe's.
+entire QubeTX system (surfaces, borders, text inks, spacing, motion doctrine,
+and the blue→violet brand color) is adopted verbatim and must never fork.
 
-## The two layers
+## The palette
 
-### 1. QubeTX structural layer (verbatim — never fork)
+### 1. Structural layer (verbatim — never fork)
 
 | Token                    | Value     | Usage                                                                     |
 | ------------------------ | --------- | ------------------------------------------------------------------------- |
@@ -37,34 +37,36 @@ Spacing: 8px ladder (`--space-xs…3xl`), `--container-max` 1440px (1800px at
 `--text-mono-label` (0.7rem, 0.12em tracking, uppercase via CSS). Easing:
 `--ease-out: cubic-bezier(0.25, 1, 0.5, 1)` (the house curve).
 
-### 2. QorkMe sub-brand accent layer (the color analysis)
+### 2. Brand color layer (canonical QubeTX blue→violet)
 
-Derived 2026-06-12 by measuring WCAG contrast on `#05070f`, mirroring how
-QubeTX tuned `#3385ff` (5.69:1) as the AA arrival against `#0066FF` (4.16:1).
-Sage is perceptually bright, so **QorkMe's heritage sage passes AA unchanged**
-— the sub-brand keeps its exact identity hue.
+QorkMe uses QubeTX's canonical brand color verbatim. QubeTX blue `#0066FF` is
+~4.3:1 on the void — strong enough as a **UI accent** (borders, button fills,
+icons, focus rings) but below the 4.5:1 body-text floor, so it is never used
+for running text. For arrivals and any text-weight emphasis QubeTX tunes the
+lighter `#3385ff` (≈5.7:1, AA) — that is the color that flashes on slot-roll
+arrival.
 
-| Token                   | Hex                   | Contrast on void | Usage                                                           |
-| ----------------------- | --------------------- | ---------------- | --------------------------------------------------------------- |
-| `--color-primary`       | `#5b8a5b`             | **5.01:1** (AA)  | The action color — focus rings, active accents, primary buttons |
-| `--color-primary-hover` | `#69a169`             | 6.61:1           | Hover lift                                                      |
-| `--color-arrival`       | `#7dc87d`             | 9.99:1           | Slot-roll arrival flash, success moments                        |
-| `--gradient-brand`      | `#4a9e5c → #c4a876`   | 6.07 / 8.82      | Display gradients, LED color ramps (sage → bamboo)              |
-| `--color-accent`        | `#c4a876`             | 8.82:1           | Bamboo warm accent (hover `#d4b896`)                            |
-| `--glow-primary`        | `rgba(91,138,91,.25)` | —                | Button hover glow                                               |
+| Token                   | Hex                   | Contrast on void | Usage                                                                                             |
+| ----------------------- | --------------------- | ---------------- | ------------------------------------------------------------------------------------------------- |
+| `--color-primary`       | `#0066FF`             | ~4.3:1           | The action color — focus rings, active accents, primary buttons, icons (UI accent, not body text) |
+| `--color-primary-hover` | `#3385ff`             | ≈5.7:1           | Hover lift                                                                                        |
+| `--color-arrival`       | `#3385ff`             | ≈5.7:1 (AA)      | Slot-roll arrival flash, text-weight emphasis                                                     |
+| `--gradient-brand`      | `#2563eb → #7c3aed`   | —                | Display gradients, LED color ramps (blue → violet)                                                |
+| `--color-accent`        | `#7c3aed`             | —                | Violet accent — the gradient's far stop (hover `#9d5cf5`)                                         |
+| `--glow-primary`        | `rgba(37,99,235,.25)` | —                | Button hover glow                                                                                 |
 
-Semantic tones (void-tuned, all ≥4.5:1 as text):
+Semantic tones (void-tuned):
 
-| Token             | Hex       | Contrast | Note                                                          |
-| ----------------- | --------- | -------- | ------------------------------------------------------------- |
-| `--color-success` | `#7dc87d` | 9.99:1   | Same as arrival — "it worked"                                 |
-| `--color-warning` | `#d6a52e` | 8.89:1   | Heritage ochre, unchanged                                     |
-| `--color-error`   | `#d07a66` | 6.38:1   | Heritage terracotta `#b05545` (4.05:1) lightened for the void |
-| `--color-info`    | `#7aa3d0` | 7.64:1   | Heritage slate `#345670` (2.60:1) lightened for the void      |
+| Token             | Hex       | Contrast | Note                                                           |
+| ----------------- | --------- | -------- | -------------------------------------------------------------- |
+| `--color-success` | `#22c55e` | —        | QubeTX status green — "it worked"                              |
+| `--color-warning` | `#d6a52e` | 8.89:1   | Ochre, functional signal (void-tuned, on-brand alongside blue) |
+| `--color-error`   | `#d07a66` | 6.38:1   | Functional error signal, void-tuned                            |
+| `--color-info`    | `#7aa3d0` | 7.64:1   | Functional info signal, void-tuned                             |
 
-The canvas LED surfaces (`DotGrid`, `MatrixDisplay`, `MatrixClock`) use a
-`buildColorRamp('#4a9e5c', '#c4a876', 256)` LUT — the sub-brand's replacement
-for QubeTX's blue→violet ramp.
+The canvas LED surfaces (`DotGrid`, `MatrixDisplay`, `MatrixClock`) all use the
+`buildColorRamp('#2563eb', '#7c3aed', 256)` LUT — QubeTX's canonical
+blue→violet ramp.
 
 ## Theming
 
@@ -98,15 +100,16 @@ mono micro-labels. The `.font-makira` page-wrapper scope excludes
 
 ## QorkMe signature components
 
-| Component       | File                                   | Notes                                                                                                                                                              |
-| --------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `MatrixDisplay` | `components/effects/MatrixDisplay.tsx` | Kit LED word board, sage→bamboo ramp. Home wordmark, 404, login                                                                                                    |
-| `MatrixClock`   | `components/effects/MatrixClock.tsx`   | QorkMe-built on kit dotFont/canvas — live 12h clock, per-tick dot diffs                                                                                            |
-| `DotGrid`       | `components/effects/DotGrid.tsx`       | The background field; reacts to pointer + `firePulse()` (a sage ripple fires when a link is created)                                                               |
-| `UrlShortener`  | `components/UrlShortener.tsx`          | Slot rolls everywhere: SHORTEN→WORKING…, corner status IDLE→INPUT→READY→BUSY→DONE while typing, alias CHECKING→AVAILABLE/TAKEN, arrival-rolled result, COPY→COPIED |
-| `SysStatus`     | `components/layout/SysStatus.tsx`      | Footer heartbeat (NOMINAL/SCANNING/SECURE)                                                                                                                         |
-| `PageHeader`    | `components/PageHeader.tsx`            | Fixed header, blur+compress past 24px                                                                                                                              |
-| `SiteFooter`    | `components/SiteFooter.tsx`            | Wordmark + SysStatus + mono links + "A QubeTX Property"                                                                                                            |
+| Component       | File                                   | Notes                                                                                                                                                                                                     |
+| --------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Hero`          | `components/sections/Hero.tsx`         | Home "terminal" composition: LabelPill bar eyebrow, `$ qork "url"` mono line, Makira Black blue→violet gradient `QORK.ME` wordmark (`background-clip:text`), gradient hairline, shortener card, LED clock |
+| `MatrixDisplay` | `components/effects/MatrixDisplay.tsx` | Kit LED word board, blue→violet ramp. 404, login (no longer the home wordmark)                                                                                                                            |
+| `MatrixClock`   | `components/effects/MatrixClock.tsx`   | QorkMe-built on kit dotFont/canvas — live 12h clock, per-tick dot diffs                                                                                                                                   |
+| `DotGrid`       | `components/effects/DotGrid.tsx`       | The background field; reacts to pointer + `firePulse()` (a ripple fires when a link is created)                                                                                                           |
+| `UrlShortener`  | `components/UrlShortener.tsx`          | Slot rolls everywhere: SHORTEN→WORKING…, corner status IDLE→INPUT→READY→BUSY→DONE while typing, alias CHECKING→AVAILABLE/TAKEN, arrival-rolled result, COPY→COPIED                                        |
+| `SysStatus`     | `components/layout/SysStatus.tsx`      | Footer heartbeat (NOMINAL/SCANNING/SECURE)                                                                                                                                                                |
+| `PageHeader`    | `components/PageHeader.tsx`            | Fixed header, blur+compress past 24px                                                                                                                                                                     |
+| `SiteFooter`    | `components/SiteFooter.tsx`            | Wordmark + SysStatus + mono links + "A QubeTX Property"                                                                                                                                                   |
 
 Kit components live in `components/ui` (OutlineButton, TextLink, LabelPill,
 SectionHeading, StatValue, RollingLink, Magnetic, QubeTXLogo, icons),
@@ -125,7 +128,7 @@ InstallBlock, DownloadCard), `components/effects`, `lib/motion`, `lib/pretext`,
 - Reduced motion = the final state instantly (the matrix clock still ticks —
   it's content — but without sweeps).
 - Slot rolls for label changes, always (`lib/motion/SlotRoll`); arrival color
-  is `--color-arrival` sage. Copy confirmation = flash `COPIED`, never a toast.
+  is `--color-arrival` (`#3385ff`). Copy confirmation = flash `COPIED`, never a toast.
 
 ## Text measurement (Pretext)
 

@@ -1,0 +1,175 @@
+/* QorkMe hero — full QubeTX register, "terminal" composition. A mono command
+   prompt leads into the Makira Black blue→violet gradient wordmark (the
+   landing's masked-line pattern), driven by LoadSequence data-load hooks
+   (eyebrow / hl+gradient / desc / cta / company). */
+
+.hero {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--container-padding-x);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  gap: var(--space-lg);
+  container-type: inline-size;
+}
+
+.center {
+  align-items: center;
+  text-align: center;
+}
+
+/* ---- Terminal command line ---- */
+.term {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(0.8rem, 0.72rem + 0.4vw, 0.95rem);
+  letter-spacing: 0.06em;
+  color: var(--color-text-dim);
+}
+
+.termAccent {
+  color: var(--color-arrival);
+  margin-right: 8px;
+}
+
+.termArg {
+  color: var(--text-secondary);
+}
+
+/* ---- Wordmark: Makira Black, blue→violet gradient, masked rise ---- */
+.headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.75rem, 18cqw, 8rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.lineMask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em; /* keep the descender of the period inside the mask */
+  margin-bottom: -0.1em;
+}
+
+.line {
+  display: inline-block;
+}
+
+.gradientLine {
+  background-image: var(--gradient-brand);
+  background-size: 220% 100%;
+  background-position: 0% 0%; /* final; LoadSequence sweeps from 120% */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Gradient hairline ---- */
+.rule {
+  width: clamp(96px, 22cqw, 220px);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gradient-brand);
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: ruleIn 0.7s var(--ease-out) 1s both;
+}
+
+@keyframes ruleIn {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---- Blinking cursor ---- */
+.cursor {
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--color-arrival);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---- Card + clock ---- */
+.card {
+  width: 100%;
+}
+
+.clock {
+  display: flex;
+  justify-content: center;
+}
+
+/* ---- Large screens: let the composition fill TV-class glass ---- */
+@media (min-width: 1600px) {
+  .content {
+    max-width: 840px;
+    gap: var(--space-xl);
+  }
+  .headline {
+    font-size: clamp(2.75rem, 18cqw, 9.5rem);
+  }
+}
+
+@media (min-width: 2560px) {
+  .content {
+    max-width: 960px;
+  }
+  .headline {
+    font-size: clamp(2.75rem, 17cqw, 11rem);
+  }
+}
+
+/* ---- Short viewports (landscape phones, split-screen): shrink the wordmark
+   by height so the shortener card stays near the fold ---- */
+@media (max-height: 600px) {
+  .hero {
+    padding-block: var(--space-md);
+  }
+  .content {
+    gap: var(--space-sm);
+  }
+  .headline {
+    font-size: clamp(1.75rem, 12vh, 4.5rem);
+  }
+}
+
+@media (max-height: 430px) {
+  .content {
+    gap: var(--space-xs);
+  }
+  .headline {
+    font-size: clamp(1.5rem, 11vh, 3.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rule {
+    animation: none;
+    transform: scaleX(1);
+  }
+  .cursor {
+    animation: none;
+  }
+}

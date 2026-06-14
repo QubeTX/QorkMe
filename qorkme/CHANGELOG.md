@@ -2,6 +2,17 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.1.0] - 2026-06-14
+
+### Changed — Full QubeTX Design System (Canonical Blue→Violet)
+
+- **Reverted the QorkMe sage/bamboo sub-brand accent to canonical QubeTX blue→violet** across `app/globals.css` tokens, stray hardcoded values, and the three canvas LUTs. Action color `#5b8a5b` → `#0066FF` (hover `#69a169` → `#3385ff`); slot-roll arrival flash `#7dc87d` → `#3385ff` (≈5.7:1 AA on void — `#0066FF` is only ~4.3:1, so arrivals use the lighter `#3385ff`); `--gradient-brand` `#4a9e5c → #c4a876` → `#2563eb → #7c3aed`; `--color-accent` `#c4a876` → `#7c3aed` (hover `#d4b896` → `#9d5cf5`); `--glow-primary` `rgba(91,138,91,.25)` → `rgba(37,99,235,.25)`; focus ring `rgba(125,200,125,.4)` → `rgba(51,133,255,.4)`; `::selection` → `rgba(37,99,235,.45)`; success `#7dc87d` → `#22c55e`. Functional semantics unchanged (warning `#d6a52e`, error `#d07a66`, info `#7aa3d0`).
+- **Canvas LUTs recolored** — `components/effects/DotGrid.tsx`, `MatrixDisplay.tsx`, and `MatrixClock.tsx` now call `buildColorRamp('#2563eb', '#7c3aed', 256)`. Structural tokens (void `#05070f`, surfaces, hairline borders, text inks) were already canonical QubeTX — untouched.
+- **Home hero redesigned to a "terminal" composition** (`components/sections/Hero.tsx` + `Hero.module.css`): `LabelPill variant="bar"` eyebrow ("URL Shortener // A QubeTX Property", decode entrance), a `$ qork "url"` mono line with a blinking cursor, the `QORK.ME` wordmark rendered as Makira Black (900) uppercase with the blue→violet brand gradient via `background-clip:text` (the QubeTX masked-line + `data-load-gradient` sweep pattern) — replacing the LED `MatrixDisplay` board — a gradient hairline, the `UrlShortener` card, then the live LED `MatrixClock`. Responsive: the wordmark/column scales up at ≥1600px and the ≥2560px TV tier and scales down on short/landscape-phone viewports so the shortener stays near the fold (verified at 360/390/768/844×390/1280/1440/1920/2560).
+- **`MatrixDisplay`** (the LED word board) is no longer used for the home wordmark; it still drives the 404 (`404`/`NOT.FOUND`) and admin-login (`SECURE`/`ACCESS`) boards, now on the blue→violet ramp.
+- **Admin console rebuilt in the QubeTX machine-report register** (`app/admin/page.tsx` + new shared `components/admin/admin.module.css`; rewrote `DatabaseHealthCard` and `AdminLinksTable`): a centered container over a subtle `DotGrid` field, a gradient-hairline heading, a 1px-gap stat grid (total links / clicks / avg-per-link), a `SYSTEM // DATABASE` panel (status chip + latency meter + table-row cells + active/inactive meter + data-freshness cells), and a hairline `LINKS` table — sortable mono headers, blue `/code` chips, `alias`/`active`/`off` tags, per-row click meters, mono pagination, inline delete — plus an error-tinted danger zone and a session row. Replaces the prior generic shadowed-card dashboard; responsive desktop table → mobile card list.
+- All micro-interactions (slot rolls, `COPY → COPIED` flash, the dot-grid `firePulse` ripple on link creation) and the footer `SysStatus` heartbeat (SCANNING/SECURE/NOMINAL) are unchanged.
+
 ## [5.0.0] - 2026-06-12
 
 ### Changed — QubeTX Design System Redesign

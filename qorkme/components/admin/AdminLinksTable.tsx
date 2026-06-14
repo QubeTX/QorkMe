@@ -1,8 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/cards/Card';
-import { Button } from '@/components/ui/Button';
 import {
   ArrowUpDown,
   ChevronLeft,
@@ -10,8 +8,8 @@ import {
   ExternalLink,
   Loader2,
   Trash2,
-  Link as LinkIcon,
 } from 'lucide-react';
+import styles from './admin.module.css';
 
 interface LinkRow {
   id: string;
@@ -34,12 +32,10 @@ interface LinksResponse {
 
 type SortColumn = 'created_at' | 'short_code' | 'click_count' | 'last_accessed_at';
 
-const SHORT_DOMAIN =
-  typeof window !== 'undefined' ? process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me' : 'qork.me';
+const SHORT_DOMAIN = process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me';
 
-function truncateUrl(url: string, max = 40): string {
-  if (url.length <= max) return url;
-  return url.slice(0, max - 1) + '\u2026';
+function truncateUrl(url: string, max = 48): string {
+  return url.length <= max ? url : url.slice(0, max - 1) + '…';
 }
 
 function formatDate(iso: string): string {
@@ -50,21 +46,20 @@ function formatDate(iso: string): string {
   }).format(new Date(iso));
 }
 
-function formatRelativeTime(iso: string | null): string {
-  if (!iso) return 'Never';
+function relativeTime(iso: string | null): string {
+  if (!iso) return 'never';
   const diff = Date.now() - new Date(iso).getTime();
   const minutes = Math.floor(diff / 60000);
-  if (minutes < 1) return 'Just now';
+  if (minutes < 1) return 'just now';
   if (minutes < 60) return `${minutes}m ago`;
   const hours = Math.floor(minutes / 60);
   if (hours < 24) return `${hours}h ago`;
   const days = Math.floor(hours / 24);
   if (days < 30) return `${days}d ago`;
-  const months = Math.floor(days / 30);
-  return `${months}mo ago`;
+  return `${Math.floor(days / 30)}mo ago`;
 }
 
-function DeleteLinkButton({
+function DeleteButton({
   id,
   shortCode,
   onDeleted,
@@ -81,7 +76,6 @@ function DeleteLinkButton({
     if (!window.confirm(`Delete /${shortCode} and all its click data? This cannot be undone.`)) {
       return;
     }
-
     setDeleting(true);
     try {
       const res = await fetch(`/api/admin/links/${id}`, { method: 'DELETE' });
@@ -101,12 +95,17 @@ function DeleteLinkButton({
 
   return (
     <button
+      type="button"
       onClick={handleDelete}
       disabled={deleting}
-      className="inline-flex items-center justify-center rounded-md p-1.5 text-[color:var(--color-text-muted)] transition-colors hover:bg-[color:var(--color-error)]/10 hover:text-[color:var(--color-error)] disabled:opacity-50"
+      className={styles.delBtn}
       aria-label={`Delete /${shortCode}`}
     >
-      {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+      {deleting ? (
+        <Loader2 size={14} className={styles.spin} aria-hidden="true" />
+      ) : (
+        <Trash2 size={14} aria-hidden="true" />
+      )}
     </button>
   );
 }
@@ -117,26 +116,16 @@ export function AdminLinksTable() {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<SortColumn>('created_at');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
-  const [actionStatus, setActionStatus] = useState<{
-    message: string;
-    tone: 'ok' | 'error';
-  } | null>(null);
+  const [status, setStatus] = useState<{ message: string; tone: 'ok' | 'error' } | null>(null);
 
   const fetchLinks = useCallback(async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams({
-        page: String(page),
-        pageSize: '25',
-        sort,
-        order,
-      });
+      const params = new URLSearchParams({ page: String(page), pageSize: '25', sort, order });
       const res = await fetch(`/api/admin/links?${params}`);
-      if (res.ok) {
-        setLinks(await res.json());
-      }
+      if (res.ok) setLinks(await res.json());
     } catch {
-      // Network error
+      /* network error */
     } finally {
       setLoading(false);
     }
@@ -158,229 +147,198 @@ export function AdminLinksTable() {
 
   const maxClicks = links?.data?.length ? Math.max(...links.data.map((l) => l.click_count), 1) : 1;
 
-  const cardStyle = {
-    background: 'var(--color-surface)',
-    borderColor: 'var(--color-border)',
-    boxShadow: '0 12px 30px -18px rgba(38, 38, 35, 0.35)',
-  };
-
-  const SortButton = ({ col, children }: { col: SortColumn; children: React.ReactNode }) => (
+  const Sort = ({ col, children }: { col: SortColumn; children: React.ReactNode }) => (
     <button
+      type="button"
       onClick={() => toggleSort(col)}
-      className="inline-flex items-center gap-1 text-xs font-medium uppercase tracking-wider text-[color:var(--color-text-muted)] hover:text-[color:var(--color-text-primary)] transition-colors"
+      className={`${styles.sortBtn} ${sort === col ? styles.sortActive : ''}`}
     >
       {children}
-      <ArrowUpDown
-        size={12}
-        className={sort === col ? 'text-[color:var(--color-primary)]' : 'opacity-40'}
-      />
+      <ArrowUpDown size={11} style={{ opacity: sort === col ? 1 : 0.4 }} aria-hidden="true" />
     </button>
   );
 
   return (
-    <Card style={cardStyle} hoverable={false}>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>All Short Links</CardTitle>
-        <LinkIcon size={22} className="text-[color:var(--color-accent)]" aria-hidden="true" />
-      </CardHeader>
-      <CardContent className="pt-6">
-        {actionStatus && (
-          <p
-            role="status"
-            className="mb-2 font-mono text-xs"
-            style={{
-              color: actionStatus.tone === 'ok' ? 'var(--color-arrival)' : 'var(--color-error)',
-            }}
-          >
-            {actionStatus.tone === 'ok' ? '' : 'ERR // '}
-            {actionStatus.message}
-          </p>
-        )}
-        {loading && !links ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 size={24} className="animate-spin text-[color:var(--color-text-muted)]" />
-          </div>
-        ) : !links || links.data.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 py-12 text-center">
-            <LinkIcon size={32} className="text-[color:var(--color-text-muted)]" />
-            <p className="text-sm text-[color:var(--color-text-muted)]">No links yet</p>
-          </div>
-        ) : (
-          <>
-            {/* Desktop Table */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="admin-table w-full text-sm">
-                <thead>
-                  <tr
-                    className="border-b-2"
-                    style={{
-                      borderColor: 'var(--color-border)',
-                      background: 'color-mix(in srgb, var(--color-surface-muted) 30%, transparent)',
-                    }}
-                  >
-                    <th className="pb-3 pt-2 text-left">
-                      <SortButton col="short_code">Code</SortButton>
-                    </th>
-                    <th className="pb-3 pt-2 text-left">
-                      <span className="text-xs font-medium uppercase tracking-wider text-[color:var(--color-text-muted)]">
-                        Destination
-                      </span>
-                    </th>
-                    <th className="pb-3 pt-2 text-right">
-                      <SortButton col="click_count">Clicks</SortButton>
-                    </th>
-                    <th className="pb-3 pt-2 pl-4 text-left">
-                      <SortButton col="created_at">Created</SortButton>
-                    </th>
-                    <th className="pb-3 pt-2 pl-4 text-left">
-                      <SortButton col="last_accessed_at">Last Active</SortButton>
-                    </th>
-                    <th className="pb-3 pt-2 text-right">
-                      <span className="sr-only">Actions</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {links.data.map((link) => {
-                    const barWidth = (link.click_count / maxClicks) * 100;
-                    return (
-                      <tr
-                        key={link.id}
-                        className="border-b"
-                        style={{
-                          borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
-                        }}
-                      >
-                        <td className="py-3 pr-4">
-                          <a
-                            href={`https://${SHORT_DOMAIN}/${link.short_code}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 font-semibold text-sm font-mono text-[color:var(--color-primary)] hover:underline"
-                          >
-                            /{link.short_code}
-                            <ExternalLink size={11} className="opacity-50" />
-                          </a>
-                        </td>
-                        <td className="py-3 pr-4">
-                          <span
-                            className="text-[color:var(--color-text-secondary)]"
-                            title={link.long_url}
-                          >
-                            {truncateUrl(link.long_url)}
-                          </span>
-                        </td>
-                        <td className="py-3 pr-4 text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            <div
-                              className="h-1.5 rounded-full"
-                              style={{
-                                width: `${Math.max(barWidth, 4)}%`,
-                                maxWidth: '60px',
-                                background: 'var(--color-primary)',
-                                opacity: 0.35,
-                              }}
-                            />
-                            <span className="font-mono text-[color:var(--color-text-primary)]">
-                              {link.click_count.toLocaleString()}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
-                          {formatDate(link.created_at)}
-                        </td>
-                        <td className="py-3 pl-4 pr-4 text-[color:var(--color-text-muted)]">
-                          {formatRelativeTime(link.last_accessed_at)}
-                        </td>
-                        <td className="py-3 text-right">
-                          <DeleteLinkButton
-                            id={link.id}
-                            shortCode={link.short_code}
-                            onDeleted={fetchLinks}
-                            onStatus={(message, tone) => setActionStatus({ message, tone })}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+    <section className={styles.panel} aria-label="Short links">
+      <div className={styles.panelHead}>
+        <span className={styles.panelTitle}>
+          LINKS // <b>{links ? links.total.toLocaleString() : '—'}</b>
+        </span>
+      </div>
 
-            {/* Mobile Card Layout */}
-            <div className="flex flex-col gap-3 md:hidden">
-              {links.data.map((link) => (
-                <div
-                  key={link.id}
-                  className="rounded-lg border p-4"
-                  style={{
-                    borderColor: 'var(--color-border)',
-                    background: 'var(--color-surface-muted)',
-                  }}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex flex-col gap-1 min-w-0">
+      {status && (
+        <p
+          role="status"
+          className={styles.statusLine}
+          style={{
+            color: status.tone === 'ok' ? 'var(--color-arrival)' : 'var(--color-error)',
+            paddingTop: 12,
+          }}
+        >
+          {status.tone === 'ok' ? '' : 'ERR // '}
+          {status.message}
+        </p>
+      )}
+
+      {loading && !links ? (
+        <div className={styles.center}>
+          <Loader2 size={20} className={styles.spin} aria-hidden="true" />
+          <span className={styles.muted}>LOADING…</span>
+        </div>
+      ) : !links || links.data.length === 0 ? (
+        <div className={styles.center}>
+          <span className={styles.muted}>NO LINKS YET</span>
+        </div>
+      ) : (
+        <>
+          {/* Desktop table */}
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>
+                    <Sort col="short_code">Code</Sort>
+                  </th>
+                  <th>Destination</th>
+                  <th className={styles.alignRight}>
+                    <Sort col="click_count">Clicks</Sort>
+                  </th>
+                  <th>Status</th>
+                  <th>
+                    <Sort col="created_at">Created</Sort>
+                  </th>
+                  <th>
+                    <Sort col="last_accessed_at">Last active</Sort>
+                  </th>
+                  <th className={styles.alignRight}>
+                    <span className="sr-only">Actions</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {links.data.map((link) => (
+                  <tr key={link.id}>
+                    <td>
                       <a
                         href={`https://${SHORT_DOMAIN}/${link.short_code}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 font-mono text-sm text-[color:var(--color-primary)] hover:underline"
+                        className={styles.code}
                       >
                         /{link.short_code}
-                        <ExternalLink size={10} className="opacity-50" />
+                        <ExternalLink size={11} style={{ opacity: 0.5 }} aria-hidden="true" />
                       </a>
-                      <p
-                        className="text-xs text-[color:var(--color-text-muted)] truncate"
-                        title={link.long_url}
+                      {link.custom_alias && <span className={styles.aliasChip}>alias</span>}
+                    </td>
+                    <td>
+                      <span className={styles.dest} title={link.long_url}>
+                        {truncateUrl(link.long_url)}
+                      </span>
+                    </td>
+                    <td className={styles.alignRight}>
+                      <div className={styles.clicks}>
+                        <span
+                          className={styles.clickBar}
+                          style={{ width: `${Math.max((link.click_count / maxClicks) * 100, 6)}%` }}
+                          aria-hidden="true"
+                        />
+                        <span className={styles.clickNum}>{link.click_count.toLocaleString()}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span
+                        className={`${styles.statusTag} ${
+                          link.is_active ? styles.statusActive : styles.statusInactive
+                        }`}
                       >
-                        {link.long_url}
-                      </p>
-                    </div>
-                    <DeleteLinkButton
-                      id={link.id}
-                      shortCode={link.short_code}
-                      onDeleted={fetchLinks}
-                      onStatus={(message, tone) => setActionStatus({ message, tone })}
-                    />
-                  </div>
-                  <div className="mt-3 flex items-center gap-4 text-xs text-[color:var(--color-text-muted)]">
-                    <span className="font-mono">{link.click_count} clicks</span>
-                    <span>{formatDate(link.created_at)}</span>
-                    <span>{formatRelativeTime(link.last_accessed_at)}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                        {link.is_active ? 'active' : 'off'}
+                      </span>
+                    </td>
+                    <td className={styles.cellDim}>{formatDate(link.created_at)}</td>
+                    <td className={styles.cellDim}>{relativeTime(link.last_accessed_at)}</td>
+                    <td className={styles.alignRight}>
+                      <DeleteButton
+                        id={link.id}
+                        shortCode={link.short_code}
+                        onDeleted={fetchLinks}
+                        onStatus={(message, tone) => setStatus({ message, tone })}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-            {/* Pagination */}
-            {links.totalPages > 1 && (
-              <div className="mt-6 flex items-center justify-between">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page <= 1 || loading}
-                  onClick={() => setPage((p) => p - 1)}
-                >
-                  <ChevronLeft size={14} />
-                  Previous
-                </Button>
-                <span className="text-sm text-[color:var(--color-text-muted)]">
-                  Page {links.page} of {links.totalPages}
-                </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page >= links.totalPages || loading}
-                  onClick={() => setPage((p) => p + 1)}
-                >
-                  Next
-                  <ChevronRight size={14} />
-                </Button>
+          {/* Mobile cards */}
+          <div className={styles.mList}>
+            {links.data.map((link) => (
+              <div key={link.id} className={styles.mCard}>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-w-0 flex-col gap-1">
+                    <a
+                      href={`https://${SHORT_DOMAIN}/${link.short_code}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.code}
+                    >
+                      /{link.short_code}
+                      <ExternalLink size={10} style={{ opacity: 0.5 }} aria-hidden="true" />
+                    </a>
+                    <span className={`${styles.dest} truncate`} title={link.long_url}>
+                      {link.long_url}
+                    </span>
+                  </div>
+                  <DeleteButton
+                    id={link.id}
+                    shortCode={link.short_code}
+                    onDeleted={fetchLinks}
+                    onStatus={(message, tone) => setStatus({ message, tone })}
+                  />
+                </div>
+                <div className={styles.mMeta}>
+                  <span className={styles.cellDim}>{link.click_count.toLocaleString()} clicks</span>
+                  <span className={styles.cellDim}>{formatDate(link.created_at)}</span>
+                  <span className={styles.cellDim}>{relativeTime(link.last_accessed_at)}</span>
+                  <span
+                    className={`${styles.statusTag} ${
+                      link.is_active ? styles.statusActive : styles.statusInactive
+                    }`}
+                  >
+                    {link.is_active ? 'active' : 'off'}
+                  </span>
+                </div>
               </div>
-            )}
-          </>
-        )}
-      </CardContent>
-    </Card>
+            ))}
+          </div>
+
+          {links.totalPages > 1 && (
+            <div className={styles.pager}>
+              <button
+                type="button"
+                className={styles.pagerBtn}
+                disabled={page <= 1 || loading}
+                onClick={() => setPage((p) => p - 1)}
+              >
+                <ChevronLeft size={13} aria-hidden="true" />
+                Prev
+              </button>
+              <span className={styles.pageInfo}>
+                PAGE {links.page} / {links.totalPages}
+              </span>
+              <button
+                type="button"
+                className={styles.pagerBtn}
+                disabled={page >= links.totalPages || loading}
+                onClick={() => setPage((p) => p + 1)}
+              >
+                Next
+                <ChevronRight size={13} aria-hidden="true" />
+              </button>
+            </div>
+          )}
+        </>
+      )}
+    </section>
   );
 }

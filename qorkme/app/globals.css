@@ -145,23 +145,24 @@
   --text-secondary: #94a3b8;
 
   /* =============================================================
-     QorkMe sub-brand accent — sage on the void.
-     Derived 2026-06-12; measured WCAG ratios documented in
-     docs/DESIGN_SYSTEM.md. Sage replaces QubeTX blue as the action
-     color; the bamboo-gold gradient replaces blue→violet.
+     QubeTX brand accent — blue→violet on the void (kit verbatim).
+     Full QubeTX design system; the QorkMe sage/bamboo sub-brand
+     layer has been retired. Living spec: qubetx.com/design-system.
+     `--color-arrival` is #3385ff (≈5.7:1 AA) — #0066FF is only
+     ~4.3:1, too dim for transient text on void.
      ============================================================= */
-  --color-primary: #5b8a5b; /* QorkMe sage — 5.01:1 on void (AA) */
-  --color-primary-hover: #69a169; /* 6.61:1 */
-  --color-arrival: #7dc87d; /* slot-roll arrival flash — 9.99:1 */
-  --gradient-brand: linear-gradient(90deg, #4a9e5c, #c4a876); /* 6.07:1 → 8.82:1 */
-  --glow-primary: rgba(91, 138, 91, 0.25); /* button hover glow */
-  --glow-blue: var(--glow-primary); /* kit alias — QorkMe glow is sage */
-  --primary-blue: var(--color-primary); /* kit alias — QorkMe action color */
-  --color-accent: #c4a876; /* bamboo — 8.82:1 */
-  --color-accent-hover: #d4b896; /* 10.63:1 */
+  --color-primary: #0066ff; /* QubeTX action color, focus ring, active accents */
+  --color-primary-hover: #3385ff; /* lighter blue on hover */
+  --color-arrival: #3385ff; /* slot-roll arrival flash — ≈5.7:1 AA on void */
+  --gradient-brand: linear-gradient(90deg, #2563eb, #7c3aed); /* blue → violet */
+  --glow-primary: rgba(37, 99, 235, 0.25); /* button hover glow */
+  --glow-blue: var(--glow-primary); /* kit alias */
+  --primary-blue: var(--color-primary); /* kit alias — QubeTX action color */
+  --color-accent: #7c3aed; /* gradient violet — far end of the brand ramp */
+  --color-accent-hover: #9d5cf5; /* lighter violet */
 
   /* Semantic tones (void-tuned, all ≥4.5:1 as text) */
-  --color-success: #7dc87d; /* sage arrival — 9.99:1 */
+  --color-success: #22c55e; /* QubeTX status green */
   --color-warning: #d6a52e; /* heritage ochre — 8.89:1 */
   --color-error: #d07a66; /* terracotta, lightened for void — 6.38:1 */
   --color-info: #7aa3d0; /* slate, lightened for void — 7.64:1 */
@@ -182,7 +183,7 @@
   --color-text-muted: #76869f;
   --color-text-inverse: #05070f;
   --color-border-strong: #2c3a5c;
-  --color-ring: rgba(125, 200, 125, 0.4);
+  --color-ring: rgba(51, 133, 255, 0.4);
   --color-shadow: rgba(0, 0, 0, 0.5);
   --color-shadow-hover: rgba(0, 0, 0, 0.65);
 
@@ -673,7 +674,7 @@ pre {
 }
 
 ::selection {
-  background: rgba(91, 138, 91, 0.45);
+  background: rgba(37, 99, 235, 0.45);
   color: #ffffff;
 }
 

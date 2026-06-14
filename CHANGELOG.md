@@ -2,6 +2,15 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (Full QubeTX Design System — Canonical Blue→Violet)
+
+### Changed
+
+- **Reverted the QorkMe sage/bamboo sub-brand accent to canonical QubeTX blue→violet.** Action color `#5b8a5b` → `#0066FF` (hover → `#3385ff`); slot-roll arrival flash `#7dc87d` → `#3385ff` (≈5.7:1 AA on void — `#0066FF` is only ~4.3:1, so arrivals use the lighter `#3385ff`); brand gradient and all three canvas LUTs `#4a9e5c → #c4a876` → `#2563eb → #7c3aed`; accent `#c4a876` → `#7c3aed` (hover `#9d5cf5`); glow, `::selection`, and focus ring recolored to the blue family; success `#7dc87d` → QubeTX green `#22c55e`. Functional semantics kept unchanged (warning `#d6a52e`, error `#d07a66`, info `#7aa3d0`). The three canvas surfaces (`DotGrid`, `MatrixDisplay`, `MatrixClock`) now call `buildColorRamp('#2563eb', '#7c3aed', 256)`. Structural tokens (void, surfaces, borders, text inks) were already canonical QubeTX — untouched.
+- **Redesigned the home hero to a "terminal" composition** (`components/sections/Hero.tsx`): a `LabelPill` bar eyebrow ("URL Shortener // A QubeTX Property"), a `$ qork "url"` mono line with a blinking cursor, the `QORK.ME` wordmark as Makira Black (900) uppercase with the blue→violet gradient via `background-clip:text` (replacing the LED `MatrixDisplay` board), a gradient hairline, the shortener card, then the live LED `MatrixClock`. Responsive scaling up to the TV tier (≥1600px / ≥2560px) and down for landscape phones so the shortener stays near the fold. `MatrixDisplay` still drives the 404 and admin-login boards (now blue→violet).
+- **Rebuilt the admin console in the QubeTX machine-report register** (`app/admin/page.tsx` + new `components/admin/admin.module.css`, rewritten `DatabaseHealthCard`/`AdminLinksTable`): centered container over a subtle dot field, gradient-hairline heading, 1px-gap stat grid, a `SYSTEM // DATABASE` panel (status + latency meter + table-row/freshness cells + active-ratio meter), and a hairline `LINKS` table (sortable, blue `/code` chips, alias/status tags, click meters, pagination, delete), with an error-tinted danger zone and session row — replacing the prior generic shadowed-card dashboard. Responsive desktop table → mobile cards.
+- All micro-interactions (slot rolls, copy flash, dot-grid `firePulse` on link creation) and the footer `SysStatus` heartbeat (SCANNING/SECURE/NOMINAL) are unchanged.
+
 ## 2026-06-12 (QubeTX Design System Redesign)
 
 ### Changed

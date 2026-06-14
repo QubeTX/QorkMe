@@ -2,17 +2,18 @@ export const dynamic = 'force-dynamic';
 
 import { SiteFooter } from '@/components/SiteFooter';
 import { PageHeader } from '@/components/PageHeader';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/cards/Card';
+import DotGrid from '@/components/effects/DotGrid';
+import LabelPill from '@/components/ui/LabelPill';
 import { createAdminClient, createServerClientInstance } from '@/lib/supabase/server';
 import { ADMIN_GITHUB_USERNAME, ADMIN_GITHUB_USERNAME_DISPLAY } from '@/lib/config/admin';
 import { AdminSignOutButton } from '@/components/admin/AdminSignOutButton';
 import { ClearDatabaseButton } from '@/components/admin/ClearDatabaseButton';
 import { DatabaseHealthCard } from '@/components/admin/DatabaseHealthCard';
 import { AdminLinksTable } from '@/components/admin/AdminLinksTable';
-import StatValue from '@/components/ui/StatValue';
 import { AlertTriangle } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
+import styles from '@/components/admin/admin.module.css';
 
 export default async function AdminPage() {
   const supabase = await createServerClientInstance();
@@ -42,93 +43,68 @@ export default async function AdminPage() {
 
   return (
     <div
-      className="font-makira flex min-h-screen flex-col"
+      className="font-makira relative flex min-h-screen flex-col overflow-hidden"
       style={{ background: 'var(--color-void)' }}
     >
+      {/* Dot field backdrop — ties the console to the rest of the site */}
+      <DotGrid className="fixed inset-0 z-0" />
+
       <PageHeader right={<span>AUTH // {ADMIN_GITHUB_USERNAME_DISPLAY}</span>} />
 
-      <main className="flex flex-1 flex-col" style={{ paddingTop: '112px' }}>
-        <div
-          className="mx-auto flex w-full flex-col"
-          style={{
-            maxWidth: '1200px',
-            paddingInline: 'var(--container-padding-x)',
-            paddingBottom: 'var(--section-spacing)',
-            gap: 'var(--space-xl)',
-          }}
-        >
-          {/* Header */}
-          <div className="flex flex-col" style={{ gap: 'var(--space-xs)' }}>
-            <span className="mono-label">ADMIN CONSOLE // OPERATIONAL</span>
-            <h1 style={{ fontSize: 'var(--text-h2)' }}>Console</h1>
-            <p className="text-sm text-[color:var(--color-text-secondary)]">
-              Review aggregate metrics and manage stored URLs.
-            </p>
+      <main className={styles.main} style={{ paddingTop: '112px' }}>
+        <div className={styles.container}>
+          {/* Heading */}
+          <div className={styles.heading}>
+            <LabelPill variant="bar">ADMIN CONSOLE // OPERATIONAL</LabelPill>
+            <h1 className={styles.title}>Console</h1>
+            <div className={styles.rule} aria-hidden="true" />
+            <p className={styles.subtitle}>Aggregate metrics and link operations for qork.me.</p>
           </div>
 
-          {/* Summary stats — Makira Black numerals count up on entrance */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            <Card hoverable={false}>
-              <StatValue value={totalUrls.toLocaleString()} label="Total links" />
-            </Card>
-            <Card hoverable={false}>
-              <StatValue value={totalClicks.toLocaleString()} label="Total clicks" />
-            </Card>
-            <Card hoverable={false}>
-              <StatValue value={avgClicksPerLink} label="Avg clicks / link" />
-            </Card>
+          {/* Summary stats — machine-report grid cells */}
+          <div className={styles.statGrid}>
+            <div className={styles.statCell}>
+              <span className={styles.statLabel}>Total links</span>
+              <span className={styles.statValue}>{totalUrls.toLocaleString()}</span>
+            </div>
+            <div className={styles.statCell}>
+              <span className={styles.statLabel}>Total clicks</span>
+              <span className={styles.statValue}>{totalClicks.toLocaleString()}</span>
+            </div>
+            <div className={styles.statCell}>
+              <span className={styles.statLabel}>Avg / link</span>
+              <span className={`${styles.statValue} ${styles.accent}`}>{avgClicksPerLink}</span>
+            </div>
           </div>
 
-          {/* Database health (client component, loads progressively) */}
+          {/* Database health (progressive, client) */}
           <DatabaseHealthCard />
 
-          {/* All short links (client component, loads progressively) */}
+          {/* All short links (progressive, client) */}
           <AdminLinksTable />
 
           {/* Danger zone */}
-          <Card
-            hoverable={false}
-            style={{
-              borderColor: 'color-mix(in srgb, var(--color-error) 45%, var(--color-border))',
-            }}
-          >
-            <CardHeader>
-              <div className="mb-2 flex items-center gap-3">
-                <AlertTriangle
-                  size={20}
-                  className="text-[color:var(--color-error)]"
-                  aria-hidden="true"
-                />
-                <CardTitle className="text-[color:var(--color-error)]">Danger Zone</CardTitle>
-              </div>
-              <CardDescription>
-                Permanently remove every stored URL along with associated click analytics. Supabase
-                tables remain intact.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-[color:var(--color-text-secondary)]">
-                Only use this when you need a clean slate. The action cannot be undone and cascades
-                to related click records.
+          <section className={styles.danger} aria-label="Danger zone">
+            <div className={styles.dangerHead}>
+              <AlertTriangle size={16} aria-hidden="true" />
+              <span className={styles.dangerTitle}>DANGER ZONE // DESTRUCTIVE</span>
+            </div>
+            <div className={styles.dangerBody}>
+              <p className={styles.dangerText}>
+                Permanently remove every stored URL and its click analytics. The Supabase schema is
+                preserved; the data is not recoverable.
               </p>
               <ClearDatabaseButton />
-            </CardContent>
-          </Card>
-
-          {/* Session management */}
-          <div className="flex flex-col items-start gap-4">
-            <div className="h-px w-full" style={{ background: 'var(--color-border)' }} />
-            <div className="flex w-full items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-[color:var(--color-text-primary)]">
-                  Session Management
-                </p>
-                <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">
-                  Sign out to end your admin session
-                </p>
-              </div>
-              <AdminSignOutButton />
             </div>
+          </section>
+
+          {/* Session */}
+          <div className={styles.sessionRow}>
+            <div className={styles.sessionMeta}>
+              <span className={styles.kvValue}>Session // {ADMIN_GITHUB_USERNAME_DISPLAY}</span>
+              <span className={styles.kvLabel}>Sign out to end your admin session</span>
+            </div>
+            <AdminSignOutButton />
           </div>
         </div>
       </main>

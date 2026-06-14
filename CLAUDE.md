@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. It is a **QubeTX property**: the interface runs on the QubeTX design system v3.2.1 (dark-only void `#05070f`, hairline-border surfaces, IBM Plex Mono technical register, anime.js/Framer Motion doctrine) with a QorkMe sub-brand accent layer — sage `#5b8a5b` as the action color and a sage→bamboo LED ramp powering the signature dot-matrix surfaces. Paired with intelligent short code generation and comprehensive analytics tracking. Licensed under Apache License 2.0.
+QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. It is a **QubeTX property**: the interface runs on the full QubeTX design system v3.2.1 (dark-only void `#05070f`, hairline-border surfaces, IBM Plex Mono technical register, anime.js/Framer Motion doctrine) — canonical QubeTX blue `#0066FF` as the action color and a blue→violet (`#2563eb → #7c3aed`) LED ramp powering the signature dot-matrix surfaces. Paired with intelligent short code generation and comprehensive analytics tracking. Licensed under Apache License 2.0.
 
-**Design system of record:** live spec https://www.qubetx.com/design-system · stable kit permalink https://www.qubetx.com/qubetx-design-system.zip · vendored kit + agent docs at `qorkme/docs/qubetx-design-system/` · QorkMe layer documented in `qorkme/docs/DESIGN_SYSTEM.md` (with measured WCAG ratios). Cross-check changes against the live spec.
+**Design system of record:** live spec https://www.qubetx.com/design-system · stable kit permalink https://www.qubetx.com/qubetx-design-system.zip · vendored kit + agent docs at `qorkme/docs/qubetx-design-system/` · QorkMe usage documented in `qorkme/docs/DESIGN_SYSTEM.md` (with measured WCAG ratios). Cross-check changes against the live spec.
 
 ## Technology Stack
 
@@ -84,8 +84,9 @@ npm run ci           # Full local CI: lint + type-check + format:check + test + 
 
 - **`components/`**: React components organized by function
   - `ui/`: Form primitives (`Button.tsx`, `Input.tsx`) + vendored QubeTX kit components (OutlineButton, TextLink, LabelPill, SectionHeading, StatValue, RollingLink, RoutedText, Magnetic, QubeTXLogo, icons registry)
-  - `effects/`: Vendored kit canvas/motion surfaces — DotGrid (background field, sage→bamboo ramp, `firePulse()`), MatrixDisplay (LED word board), MatrixClock (QorkMe live LED clock), LoadSequence (entrance choreography), SmoothScroll (Lenis), CustomCursor, ScrollProgress, ScrollTrace (unused), BootScreen (vendored, unmounted)
+  - `effects/`: Vendored kit canvas/motion surfaces — DotGrid (background field, blue→violet ramp, `firePulse()`), MatrixDisplay (LED word board), MatrixClock (QorkMe live LED clock), LoadSequence (entrance choreography), SmoothScroll (Lenis), CustomCursor, ScrollProgress, ScrollTrace (unused), BootScreen (vendored, unmounted)
   - `terminal/`: Vendored technical-register kit (TerminalFrame, CommandTable, CapabilityRows, InstallBlock, DownloadCard)
+  - `sections/`: Page sections — Hero (home "terminal" composition: LabelPill bar eyebrow, `$ qork "url"` mono line with blinking cursor, Makira Black blue→violet gradient `QORK.ME` wordmark via `background-clip:text`, gradient hairline, UrlShortener card, live LED MatrixClock)
   - `layout/`: SysStatus (footer slot-roll heartbeat)
   - `cards/`: Card primitives (Card/CardHeader/CardTitle/CardDescription/CardContent — QubeTX-restyled)
   - `admin/`: Admin console components (AdminSignInButton, AdminSignOutButton, ClearDatabaseButton, DatabaseHealthCard, AdminLinksTable — inline mono feedback, no toasts)
@@ -240,7 +241,7 @@ Complete troubleshooting guide: `qorkme/docs/UI_LAYOUT_GUIDE.md`
 
 ### Dot-Field Background (DotGrid)
 
-The home and 404 pages float on the QubeTX canvas dot field, recolored to the QorkMe sage→bamboo ramp:
+The home and 404 pages float on the QubeTX canvas dot field, on the canonical blue→violet ramp:
 
 - **Component**: `qorkme/components/effects/DotGrid.tsx` (vendored kit, LUT divergence documented in-file)
 - **Architecture**: anime.js animates plain dot objects (breathe/pulse channels); Canvas 2D only blits; feathered TL→BR ramp; ≤1400 dots; IO-paused offscreen; rebuilds via `resizeCoordinator` (no ResizeObserver)
@@ -294,10 +295,10 @@ Configure in repository Settings -> Secrets and variables -> Actions:
 
 ## Design System
 
-**QubeTX v3.2.1 base + QorkMe sub-brand accent.** Live spec: https://www.qubetx.com/design-system · kit permalink: https://www.qubetx.com/qubetx-design-system.zip · vendored kit at `qorkme/docs/qubetx-design-system/`.
+**Full QubeTX design system v3.2.1.** Live spec: https://www.qubetx.com/design-system · kit permalink: https://www.qubetx.com/qubetx-design-system.zip · vendored kit at `qorkme/docs/qubetx-design-system/`.
 
 - **Dark only** — void `#05070f` page background, surfaces `#0d1117`/`#111827`, 1px hairline borders `#1a2236` (hover `#2c3a5c`) do the elevation work (no large shadows). Text: `#ffffff` / `#94a3b8` / `#76869f` dim (contrast-tuned — never adjust). No theme toggle.
-- **QorkMe accent (measured on void, see `qorkme/docs/DESIGN_SYSTEM.md`)**: sage `#5b8a5b` action (5.01:1 AA), hover `#69a169`, arrival flash `#7dc87d` (slot rolls, success), gradient/LED ramp `#4a9e5c → #c4a876`, bamboo `#c4a876`. Semantics: warning ochre `#d6a52e`, error `#d07a66`, info `#7aa3d0`.
+- **QubeTX accent (measured on void, see `qorkme/docs/DESIGN_SYSTEM.md`)**: blue `#0066FF` action (~4.3:1 — a UI accent for borders/buttons/icons, not body text), hover `#3385ff`, arrival flash `#3385ff` (slot rolls; ≈5.7:1 AA), gradient/LED ramp `#2563eb → #7c3aed` (blue→violet), violet accent `#7c3aed` (hover `#9d5cf5`), success `#22c55e`. Semantics: warning ochre `#d6a52e`, error `#d07a66`, info `#7aa3d0`.
 - **Typography**: Makira (Black 900 uppercase headings/wordmarks, −0.02em) + IBM Plex Mono technical register (labels, buttons, statuses, short URLs; `--text-mono-label` 0.7rem/0.12em). Sentence case in storage, UPPERCASE via CSS.
 - **Radii**: 2px chips · 4px pills · 6px panels/buttons · 999px pill tabs. **Spacing**: 8px ladder + clamp()-based page rhythm; `--container-max` 1440px (1800px ≥2560px).
 - **Motion**: house curve `cubic-bezier(0.25, 1, 0.5, 1)`; slot rolls for every label change; one owner per property; no ResizeObserver; IO triggers + Lenis scrubbing; reduced motion = instant final state. Playbook: `qorkme/docs/qubetx-design-system/MOTION_GUIDE.md`.
@@ -411,7 +412,7 @@ Every redirect logs:
 
 ### LED Matrix Surfaces (Canvas, Kit Architecture)
 
-- **`qorkme/components/effects/MatrixDisplay.tsx`** — kit LED word board: anime.js sweeps words in/out left→right, sage→bamboo LUT, IO-paused, `resizeCoordinator` rebuilds, reduced motion renders the first word statically. Used for the home `QORK.ME` wordmark, 404 (`404`/`NOT.FOUND`), and admin login (`SECURE`/`ACCESS`).
+- **`qorkme/components/effects/MatrixDisplay.tsx`** — kit LED word board: anime.js sweeps words in/out left→right, blue→violet LUT, IO-paused, `resizeCoordinator` rebuilds, reduced motion renders the first word statically. Used for 404 (`404`/`NOT.FOUND`) and admin login (`SECURE`/`ACCESS`). **No longer used for the home wordmark** — the home `QORK.ME` is now a Makira Black blue→violet gradient headline (see `components/sections/Hero.tsx`), not an LED board.
 - **`qorkme/components/effects/MatrixClock.tsx`** — QorkMe's live 12-hour LED clock on the same dotFont/canvas architecture. Real wall-clock time ("the terminal is honest"); only changed dots animate per tick; `seconds` prop (home renders a seconds instance ≥768px and a no-seconds instance below via dual-instance pattern); client-only (canvas has no hydration surface).
 - **`qorkme/lib/motion/dotFont.ts`** — 5×7 bitmap font; QorkMe divergence adds digits 0-9 and `:`.
 - Canvas components size from their **containers** — wrappers must carry explicit width/height (clamp()-based), which is how responsiveness collapses the old dual cell-size render paths.
@@ -424,7 +425,7 @@ Implementation: `qorkme/components/UrlShortener.tsx` + `UrlShortener.module.css`
 - Card corner status rolls while typing: `IDLE → INPUT → READY → BUSY → DONE`
 - Custom-alias availability rolls `CHECKING → AVAILABLE / TAKEN / INVALID` (debounced GET)
 - Result short URL arrival-rolls from a masked placeholder; `COPY → COPIED` flash (1.4s revert, `FAILED` on clipboard error)
-- Success fires a sage `firePulse` ripple through the DotGrid
+- Success fires a `firePulse` ripple through the DotGrid
 - Errors are inline mono `ERR //` lines (`role="alert"`) — no toasts anywhere in the app
 
 ## Development Troubleshooting
@@ -483,7 +484,7 @@ Create route handler in `qorkme/app/api/` following Next.js App Router conventio
 
 ### Modify matrix display or clock
 
-- `qorkme/components/effects/MatrixDisplay.tsx` - LED word board (kit, sage→bamboo LUT)
+- `qorkme/components/effects/MatrixDisplay.tsx` - LED word board (kit, blue→violet LUT)
 - `qorkme/components/effects/MatrixClock.tsx` - live 12-hour LED clock (per-tick dot diffs)
 - `qorkme/lib/motion/dotFont.ts` - 5×7 glyph bitmaps (A-Z, 0-9, `.`, `-`, `:`, space)
 - Canvas-only rendering (client-side; no hydration surface); containers must have explicit dimensions
@@ -491,7 +492,7 @@ Create route handler in `qorkme/app/api/` following Next.js App Router conventio
 ## Documentation
 
 - **Setup guide**: `qorkme/README.md` - Complete installation and configuration
-- **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - QubeTX base + QorkMe sub-brand (sage/bamboo on void) with measured WCAG ratios; vendored kit + agent docs at `qorkme/docs/qubetx-design-system/`; live spec https://www.qubetx.com/design-system
+- **Design system**: `qorkme/docs/DESIGN_SYSTEM.md` - full QubeTX system (blue→violet on void) with measured WCAG ratios; vendored kit + agent docs at `qorkme/docs/qubetx-design-system/`; live spec https://www.qubetx.com/design-system
 - **UI/Layout guide**: `qorkme/docs/UI_LAYOUT_GUIDE.md` - Critical Tailwind v4 gotchas, flexbox patterns, troubleshooting
 - **Vercel deployment**: `qorkme/docs/VERCEL_SETUP.md` - CI/CD configuration
 - **General deployment**: `qorkme/docs/DEPLOYMENT.md` - Multi-platform options

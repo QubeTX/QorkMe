@@ -20,9 +20,8 @@ import { subscribe as subscribeResize } from '@/lib/pretext/resizeCoordinator';
 
 type MatrixDot = { x: number; y: number; col: number; lit: number };
 
-// QorkMe divergence from the upstream kit: the LED ramp runs sage -> bamboo
-// (--gradient-brand) instead of QubeTX blue -> violet
-const LUT = buildColorRamp('#4a9e5c', '#c4a876', 256);
+// QubeTX brand ramp: the LED board runs blue -> violet (--gradient-brand)
+const LUT = buildColorRamp('#2563eb', '#7c3aed', 256);
 const DPR_CAP = 1.5;
 const HOLD_MS = 2300;
 const SWEEP_MS = 650;

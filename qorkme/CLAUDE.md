@@ -64,15 +64,15 @@ For components needing different props at different breakpoints, render separate
 </div>
 ```
 
-## Design System — QubeTX v3.2.1 + QorkMe sub-brand
+## Design System — full QubeTX v3.2.1
 
-QorkMe runs on the **QubeTX design system** (dark-only, void `#05070f`) with a QorkMe sage/bamboo accent layer. Full spec + measured WCAG ratios in `docs/DESIGN_SYSTEM.md`. The vendored kit (tokens, motion library, components, agent docs) lives at `docs/qubetx-design-system/`; **live spec: https://www.qubetx.com/design-system ; stable kit permalink: https://www.qubetx.com/qubetx-design-system.zip** — cross-check against the live version, re-download the zip to refresh the vendored kit.
+QorkMe runs on the **full QubeTX design system** (dark-only, void `#05070f`, canonical blue→violet). Full spec + measured WCAG ratios in `docs/DESIGN_SYSTEM.md`. The vendored kit (tokens, motion library, components, agent docs) lives at `docs/qubetx-design-system/`; **live spec: https://www.qubetx.com/design-system ; stable kit permalink: https://www.qubetx.com/qubetx-design-system.zip** — cross-check against the live version, re-download the zip to refresh the vendored kit.
 
 **Key facts:**
 
 - **Dark only** — no light mode, no theme toggle.
 - Structural tokens (surfaces `#0d1117`/`#111827`, hairline borders `#1a2236`/`#2c3a5c`, text `#fff`/`#94a3b8`/`#76869f`) are QubeTX verbatim — never fork. Borders do elevation work; no large shadows.
-- QorkMe accent: sage `#5b8a5b` action (5.01:1 AA on void), arrival flash `#7dc87d`, gradient/LED ramp `#4a9e5c → #c4a876` (sage→bamboo), bamboo accent `#c4a876`. Semantics: warning `#d6a52e`, error `#d07a66`, info `#7aa3d0` (void-tuned).
+- QubeTX accent: blue `#0066FF` action (~4.3:1 — a UI accent for borders/buttons/icons, not body text), hover `#3385ff`, arrival flash `#3385ff` (≈5.7:1 AA on void), gradient/LED ramp `#2563eb → #7c3aed` (blue→violet), violet accent `#7c3aed` (hover `#9d5cf5`), success `#22c55e`. Semantics: warning `#d6a52e`, error `#d07a66`, info `#7aa3d0` (void-tuned).
 - **Typography**: Makira (400–900, Black 900 uppercase for headings/wordmarks) + IBM Plex Mono (the technical register: labels, statuses, buttons via `.btn`, short URLs, `.mono-label` utility). Sentence case in storage, UPPERCASE via CSS.
 - **Motion doctrine** (see `docs/qubetx-design-system/MOTION_GUIDE.md` + `SKILL.md`): one owner per animated property; anime.js only via `lib/motion/anime.ts`; **no ResizeObserver** (use `lib/pretext/resizeCoordinator`); IO triggers, Lenis scrubbing; reduced motion = final state instantly; label changes ride the slot roll (`lib/motion/SlotRoll`); copy confirmation = `COPIED` flash, **never toasts**.
 - **Pretext**: wrapping body copy uses `PretextBlock` (min-height reservation); `shrinkwrap` only on left-aligned blocks; never measure letter-spaced mono labels. `@chenglou/pretext` is transpiled via `next.config.ts`.
@@ -107,14 +107,14 @@ QorkMe runs on the **QubeTX design system** (dark-only, void `#05070f`) with a Q
 
 ### Matrix / LED surfaces (canvas, kit architecture)
 
-- `components/effects/MatrixDisplay.tsx` — kit LED word board (anime.js sweeps, sage→bamboo LUT). Home wordmark `QORK.ME`, 404 `404/NOT.FOUND`, login `SECURE/ACCESS`.
+- `components/effects/MatrixDisplay.tsx` — kit LED word board (anime.js sweeps, blue→violet LUT). 404 `404/NOT.FOUND`, login `SECURE/ACCESS`. **No longer the home wordmark** — the home `QORK.ME` is now a Makira Black blue→violet gradient headline in `components/sections/Hero.tsx`.
 - `components/effects/MatrixClock.tsx` — QorkMe live 12-hour LED clock on the kit dotFont/canvas architecture; only changed dots animate per tick. `seconds` prop; dual instance for mobile (no seconds).
 - `lib/motion/dotFont.ts` — 5×7 bitmap font (QorkMe divergence: digits + colon added).
 - Canvas components size from their **container** (give wrappers explicit width/height) via `resizeCoordinator`; IO-paused offscreen; reduced motion renders static; client-only (no hydration surface).
 
 ### Dot-field background
 
-- `components/effects/DotGrid.tsx` — canvas dot field (sage→bamboo ramp), listens on **window** for pointer swells, so it never blocks clicks and the old pointer-events dance is unnecessary. `firePulse({x, y, strength})` fires a field-wide ripple — the shortener fires one when a link is created.
+- `components/effects/DotGrid.tsx` — canvas dot field (blue→violet ramp), listens on **window** for pointer swells, so it never blocks clicks and the old pointer-events dance is unnecessary. `firePulse({x, y, strength})` fires a field-wide ripple — the shortener fires one when a link is created.
 
 ### Short code algorithm
 
