@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useState, type FC } from 'react';
+import { useId, useState, type FC, type ReactNode } from 'react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { Copy } from '@/components/ui/icons';
@@ -14,6 +14,13 @@ export type InstallTarget = {
   command: string;
   /** Optional mono note under the command (requirements, scope). */
   note?: string;
+  /**
+   * QorkMe divergence: optional content rendered inside the panel when this
+   * target is the active tab — used by /install to surface the native Windows
+   * installers right beneath the Windows command. Generic ReactNode so the kit
+   * component stays presentation-agnostic.
+   */
+  extra?: ReactNode;
 };
 
 type InstallBlockProps = {
@@ -96,6 +103,7 @@ const InstallBlock: FC<InstallBlockProps> = ({ targets, title = 'Initialize' }) 
       </div>
 
       {active.note && <p className={styles.note}>{active.note}</p>}
+      {active.extra}
     </div>
   );
 };

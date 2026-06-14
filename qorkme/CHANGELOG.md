@@ -2,6 +2,17 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.5.0] - 2026-06-14
+
+### Added — Windows installers surfaced on the install page
+
+- **The `/install` Windows tab now shows the native installers inline.** Selecting Windows reveals the Global (per-machine, admin) and Corporate (per-user, no admin) MSI + EXE downloads directly beneath the command — no scrolling to the full installers section (which remains at the bottom). The `InstallBlock` kit component gained an optional per-target `extra` slot to host them.
+
+### Changed — cargo-free install messaging + qork update v1.1.1
+
+- **Install-block copy now makes clear the one-liners need no Rust/cargo** — `curl … | sh` (macOS/Linux, Intel/ARM auto-detected) and `irm … | iex` (Windows) download a prebuilt binary; only `cargo install qork` uses a Rust toolchain.
+- **qork v1.1.1**: `qork update` on macOS/Linux now prefers the prebuilt `curl`/`wget` installer over `cargo install`, keeping cargo only as a last-resort fallback — updates need no Rust toolchain and don't recompile from source. (Windows ordering unchanged.)
+
 ## [5.4.0] - 2026-06-14
 
 ### Added — Human changelog + pre-push doc gate

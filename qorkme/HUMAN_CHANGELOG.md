@@ -6,6 +6,19 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## June 14, 2026 — Easier Windows installs + faster command-line updates
+
+**Added**
+
+- The install page's Windows tab now shows the ready-to-run installers right beneath the command — the per-machine (needs admin) and per-user (no admin) editions, each as an MSI and an EXE — so they're easy to find without scrolling. The full installer list still lives at the bottom of the page.
+
+**Improved**
+
+- Clarified that the one-line install commands need no programming tools — they download a ready-built program for your computer (Mac, Linux, or Windows; Intel or ARM detected automatically). Only the optional developer command builds from source.
+- Updating the command-line tool on Mac and Linux now downloads the ready-built program instead of rebuilding from source — faster, and no developer tools required.
+
+---
+
 ## June 14, 2026 — Human changelog + pre-push documentation gate
 
 **Added**

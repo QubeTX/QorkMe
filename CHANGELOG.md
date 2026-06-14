@@ -2,6 +2,17 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (Install Page Windows Installers + qork update v1.1.1)
+
+### Added
+
+- **The `/install` Windows tab now surfaces the native installers inline** — selecting Windows shows the Global (per-machine, admin) and Corporate (per-user, no admin) MSI + EXE downloads right under the command, so they're visible without scrolling to the full installers section (which stays at the bottom). Mirrors the QubeTX Machine Report homepage pattern; the `InstallBlock` kit component gained an optional per-target `extra` slot to host them.
+
+### Changed
+
+- **Clarified that the install one-liners need no Rust/cargo** — the macOS/Linux `curl … | sh` and Windows `irm … | iex` commands download a prebuilt binary (ARM/Intel auto-detected); only the explicit `cargo install qork` path uses a Rust toolchain.
+- **qork v1.1.1 — `qork update` on macOS/Linux now prefers the prebuilt installer over cargo.** It tries the `curl`/`wget` prebuilt-binary installer first and only falls back to `cargo install qork --force` as a last resort, so updates need no Rust toolchain and don't recompile from source. Windows update ordering is unchanged.
+
 ## 2026-06-14 (Docs Accuracy Pass + Changelog Governance)
 
 ### Added

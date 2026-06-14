@@ -153,6 +153,94 @@
   color: var(--color-text-dim);
 }
 
+/* ---- Windows installers, surfaced inline under the Windows install tab ---- */
+.winInstallers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.winInstallersNote {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-label);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  color: var(--color-text-dim);
+}
+
+.winGrid {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: var(--space-md);
+  row-gap: var(--space-sm);
+}
+
+.winScope {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-arrival);
+}
+
+.winScopeDesc {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.winBtns {
+  display: flex;
+  gap: var(--space-xs);
+  justify-self: end;
+}
+
+.winBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-surface);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.winBtn:hover {
+  border-color: var(--color-border-bright);
+  color: var(--color-arrival);
+}
+
+@media (max-width: 560px) {
+  .winGrid {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-xs);
+  }
+  .winBtns {
+    justify-self: start;
+    margin-bottom: var(--space-sm);
+  }
+}
+
 /* ---- Inline link row under the downloads ---- */
 .linkRow {
   display: flex;
