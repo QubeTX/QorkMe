@@ -2,6 +2,12 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (Install Page Windows Button Polish)
+
+### Changed
+
+- **Bigger, more prominent inline Windows download buttons on `/install`** — restyled to the blue-tinted download-CTA treatment (taller hit target, accent border, blue glow on hover) used by the main download cards. On hover/focus each `↓ MSI` / `↓ EXE` label **slot-rolls into the current release version** (e.g. `v1.1.1`, fetched live) and rolls back on leave, so you see exactly which release you're downloading. New client component `app/install/WindowsInstallers.tsx`.
+
 ## 2026-06-14 (Install Page Windows Installers + qork update v1.1.1)
 
 ### Added

@@ -2,6 +2,12 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.5.1] - 2026-06-14
+
+### Changed — install-page Windows download buttons
+
+- **The inline Windows installer buttons are bigger and more prominent** — restyled to the blue-tinted download-CTA treatment (taller, accent border, `--glow-blue` lift on hover) that matches the main download cards. On hover/focus the `↓ MSI` / `↓ EXE` labels now **slot-roll into the current release version** (`v1.1.1`, fetched live) and roll back on leave — a kit slot-roll micro-interaction that doubles as a "which release am I getting?" cue. Extracted to a new client component `app/install/WindowsInstallers.tsx`.
+
 ## [5.5.0] - 2026-06-14
 
 ### Added — Windows installers surfaced on the install page
