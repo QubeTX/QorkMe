@@ -235,6 +235,7 @@ AS $$
     'active_url_count',    (SELECT COUNT(*) FROM urls WHERE is_active),
     'inactive_url_count',  (SELECT COUNT(*) FROM urls WHERE NOT is_active),
     'click_count',         (SELECT COUNT(*) FROM clicks),
+    'total_click_count',   (SELECT COALESCE(SUM(click_count), 0) FROM urls),
     'reserved_word_count', (SELECT COUNT(*) FROM reserved_words),
     'newest_url_at',       (SELECT MAX(created_at) FROM urls),
     'newest_click_at',     (SELECT MAX(clicked_at) FROM clicks),

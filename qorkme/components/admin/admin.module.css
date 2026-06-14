@@ -909,3 +909,12 @@ a.rankRow:hover .rankCode {
   letter-spacing: 0.08em;
   color: var(--color-text-dim);
 }
+
+.vizNote {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: var(--color-text-dim);
+  padding-top: 14px;
+}

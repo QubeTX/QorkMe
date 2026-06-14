@@ -101,7 +101,11 @@ export function AdminAnalytics() {
         ) : (
           <>
             <div className={styles.vizGrid}>
-              <BarChart data={data.clicks_by_day} label="Clicks" total={data.totals.clicks_14d} />
+              <BarChart
+                data={data.clicks_by_day}
+                label="Tracked clicks"
+                total={data.totals.clicks_14d}
+              />
               <BarChart
                 data={data.created_by_day}
                 label="New links"
@@ -143,7 +147,7 @@ export function AdminAnalytics() {
               {/* Device breakdown */}
               <div className={styles.vizCard}>
                 <div className={styles.vizHead}>
-                  <span className={styles.kvLabel}>Clicks by device</span>
+                  <span className={styles.kvLabel}>Tracked clicks by device</span>
                 </div>
                 {deviceTotal === 0 ? (
                   <span className={styles.muted}>No clicks yet</span>
@@ -168,6 +172,10 @@ export function AdminAnalytics() {
                 )}
               </div>
             </div>
+            <p className={styles.vizNote}>
+              Charts count detailed click events (device · time); per-link and total clicks use
+              lifetime counters.
+            </p>
           </>
         )}
       </div>

@@ -2,6 +2,12 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (Click Metric Reconciliation)
+
+### Fixed
+
+- **Admin headline TOTAL CLICKS / AVG now use the lifetime per-link counter** (`sum(urls.click_count)` via a new `total_click_count` on `admin_health_stats()`), matching the per-link Clicks column and Top Links. The detailed `clicks` table is sparse only historically — pre-2026-06-12 redirects were fire-and-forget and lost detail rows on Vercel; logging code + RLS are correct and new clicks record full detail. Charts relabeled "Tracked clicks"; the health row count relabeled "click events".
+
 ## 2026-06-14 (Admin Analytics + Viewport Fit)
 
 ### Added
