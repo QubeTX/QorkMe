@@ -93,9 +93,22 @@ arm64) — downloadable from `https://github.com/QubeTX/qork/releases/latest`.
 qork https://example.com/some/very/long/path     # prints https://qork.me/<code>
 qork "https://example.com/a b?x=1&y=2"            # quote URLs with spaces/specials
 qork https://example.com --alias launch           # custom short code
+qork https://example.com --no-check                # skip the pre-shorten liveness check
 qork --json https://example.com                    # raw JSON (same envelope as the API)
-qork update                                         # self-update
+qork help                                           # print CLI docs (also `man qork`)
+qork update                                         # self-update (install-method-aware)
+qork uninstall [--yes]                              # fully remove qork (--yes/-y skips prompt)
 ```
+
+`help`, `update`, and `uninstall` are recognized as commands (whole-word,
+case-insensitive) and never treated as URLs; a real URL (scheme or dotted host)
+always goes to the shortener. Before shortening, `qork` verifies the argument is a
+real link: it rejects accidentally-pasted text offline and refuses a live 404/410 or
+a host that doesn't resolve. Auth walls (401/403), 5xx, slow sites, and transient
+blips still shorten — pass `--no-check` to skip the check entirely. `qork uninstall`
+fully removes qork on every platform (Windows MSI/Inno EXE, cargo/script self-delete):
+binary, PATH entry, Add/Remove-Programs entry, and install marker; `--yes` is required
+for non-interactive/script use.
 
 `qork` prints only the short URL to stdout, so it pipes cleanly
 (`qork https://example.com | pbcopy`). Exit code 0 on success, 2 on error.
