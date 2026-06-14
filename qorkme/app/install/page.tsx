@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Fragment } from 'react';
 import { PageHeader } from '@/components/PageHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import LabelPill from '@/components/ui/LabelPill';
@@ -83,6 +84,52 @@ const LINUX_INSTALLERS: Installer[] = [
   },
 ];
 
+// Surfaced right under the Windows command in the install block (the curl/cargo
+// one-liners install a prebuilt binary with no Rust toolchain; on Windows the
+// double-click installers tend to work best). Global = per-machine (admin);
+// Corporate = per-user (no admin). Pick one format per edition.
+const WINDOWS_INLINE_ROWS = [
+  {
+    scope: 'Global',
+    desc: 'Per-machine → Program Files. Needs admin.',
+    msi: 'qork-x86_64-pc-windows-msvc.msi',
+    exe: 'qork-x86_64-pc-windows-msvc-setup.exe',
+  },
+  {
+    scope: 'Corporate',
+    desc: 'Per-user → %LocalAppData%. No admin.',
+    msi: 'qork-x86_64-pc-windows-msvc-corporate.msi',
+    exe: 'qork-x86_64-pc-windows-msvc-corporate-setup.exe',
+  },
+];
+
+function WindowsInstallersInline() {
+  return (
+    <div className={styles.winInstallers}>
+      <p className={styles.winInstallersNote}>
+        Prefer a double-click installer (or no Rust on the machine)? Grab a prebuilt Windows
+        installer below — same binary, packaged. Pick one format per edition.
+      </p>
+      <div className={styles.winGrid}>
+        {WINDOWS_INLINE_ROWS.map(({ scope, desc, msi, exe }) => (
+          <Fragment key={scope}>
+            <span className={styles.winScope}>{scope}</span>
+            <span className={styles.winScopeDesc}>{desc}</span>
+            <div className={styles.winBtns}>
+              <a className={styles.winBtn} href={`${RELEASE_BASE}${msi}`} download={msi}>
+                ↓ MSI
+              </a>
+              <a className={styles.winBtn} href={`${RELEASE_BASE}${exe}`} download={exe}>
+                ↓ EXE
+              </a>
+            </div>
+          </Fragment>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function InstallPage() {
   return (
     <div className={`font-makira ${styles.page}`}>
@@ -120,19 +167,20 @@ export default function InstallPage() {
                   id: 'unix',
                   label: 'macOS / Linux',
                   command: 'curl -LsSf https://qork.me/install.sh | sh',
-                  note: 'Recommended on macOS & Linux. Installs to ~/.cargo/bin — no admin.',
+                  note: 'Recommended on macOS & Linux. Downloads a prebuilt binary for your CPU (Intel or ARM) to ~/.cargo/bin — no Rust/cargo, no admin.',
                 },
                 {
                   id: 'windows',
                   label: 'Windows',
                   command: 'irm https://qork.me/install.ps1 | iex',
-                  note: 'Works everywhere — but on Windows the MSI/EXE installer below is recommended.',
+                  note: 'Downloads a prebuilt qork.exe — no Rust/cargo needed. On Windows the MSI/EXE installers below tend to work best:',
+                  extra: <WindowsInstallersInline />,
                 },
                 {
                   id: 'cargo',
                   label: 'Cargo',
                   command: 'cargo install qork',
-                  note: 'Any platform with a Rust toolchain.',
+                  note: 'For machines that already have a Rust toolchain (builds from source). The one-liners above need no Rust.',
                 },
               ]}
             />
