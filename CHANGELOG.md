@@ -2,6 +2,17 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (Admin Analytics + Viewport Fit)
+
+### Added
+
+- **Admin dashboard visualizations** — a 14-day analytics panel (clicks & new-links bar charts, top-links ranking, device breakdown) powered by a new service-role `admin_analytics()` RPC + `/api/admin/analytics`.
+- **Links table** now has live search, ALL/ACTIVE/OFF/ALIAS filters, directional sorting, a result count, and an in-table bulk **Clear all** (the standalone danger zone is retired).
+
+### Changed
+
+- **Home page fits the viewport** — pinned to `100dvh` with a height-aware hero so the hero + footer show with no scroll on desktop/laptop/tablet/portrait (verified 360–2560); very short landscape viewports scroll instead of clipping.
+
 ## 2026-06-14 (Full QubeTX Design System — Canonical Blue→Violet)
 
 ### Changed

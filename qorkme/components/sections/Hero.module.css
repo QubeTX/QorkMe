@@ -3,14 +3,34 @@
    landing's masked-line pattern), driven by LoadSequence data-load hooks
    (eyebrow / hl+gradient / desc / cta / company). */
 
+/* Home wrapper — pin to the viewport so the hero + footer fit with no scroll.
+   On very short viewports (landscape phones) fall back to natural scroll so
+   nothing is ever clipped/unreachable. */
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+@media (max-height: 560px) {
+  .page {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+}
+
 .hero {
   position: relative;
   z-index: 10;
   display: flex;
   flex: 1 1 auto;
+  min-height: 0; /* allow the hero to share the viewport with the footer */
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl) var(--container-padding-x);
+  padding: clamp(12px, 3vh, 40px) var(--container-padding-x);
 }
 
 .content {
@@ -18,7 +38,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 720px;
-  gap: var(--space-lg);
+  gap: clamp(14px, 2.3vh, 28px);
   container-type: inline-size;
 }
 
@@ -50,7 +70,7 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(2.75rem, 18cqw, 8rem);
+  font-size: clamp(2.5rem, min(16cqw, 12vh), 8rem);
   line-height: 0.9;
   letter-spacing: -0.03em;
   text-transform: uppercase;
@@ -125,10 +145,10 @@
 @media (min-width: 1600px) {
   .content {
     max-width: 840px;
-    gap: var(--space-xl);
+    gap: clamp(16px, 2.4vh, 36px);
   }
   .headline {
-    font-size: clamp(2.75rem, 18cqw, 9.5rem);
+    font-size: clamp(2.75rem, min(18cqw, 13vh), 9.5rem);
   }
 }
 
@@ -137,21 +157,25 @@
     max-width: 960px;
   }
   .headline {
-    font-size: clamp(2.75rem, 17cqw, 11rem);
+    font-size: clamp(2.75rem, min(17cqw, 14vh), 11rem);
   }
 }
 
 /* ---- Short viewports (landscape phones, split-screen): shrink the wordmark
    by height so the shortener card stays near the fold ---- */
-@media (max-height: 600px) {
+@media (max-height: 620px) {
   .hero {
-    padding-block: var(--space-md);
+    padding-block: var(--space-sm);
   }
   .content {
     gap: var(--space-sm);
   }
   .headline {
-    font-size: clamp(1.75rem, 12vh, 4.5rem);
+    font-size: clamp(1.6rem, 11vh, 4.5rem);
+  }
+  /* drop the decorative clock when height is tight so the card never clips */
+  .clock {
+    display: none;
   }
 }
 
@@ -160,7 +184,7 @@
     gap: var(--space-xs);
   }
   .headline {
-    font-size: clamp(1.5rem, 11vh, 3.25rem);
+    font-size: clamp(1.4rem, 10vh, 3rem);
   }
 }
 

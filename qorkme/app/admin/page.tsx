@@ -7,10 +7,9 @@ import LabelPill from '@/components/ui/LabelPill';
 import { createAdminClient, createServerClientInstance } from '@/lib/supabase/server';
 import { ADMIN_GITHUB_USERNAME, ADMIN_GITHUB_USERNAME_DISPLAY } from '@/lib/config/admin';
 import { AdminSignOutButton } from '@/components/admin/AdminSignOutButton';
-import { ClearDatabaseButton } from '@/components/admin/ClearDatabaseButton';
 import { DatabaseHealthCard } from '@/components/admin/DatabaseHealthCard';
+import { AdminAnalytics } from '@/components/admin/AdminAnalytics';
 import { AdminLinksTable } from '@/components/admin/AdminLinksTable';
-import { AlertTriangle } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import styles from '@/components/admin/admin.module.css';
@@ -77,26 +76,14 @@ export default async function AdminPage() {
             </div>
           </div>
 
+          {/* Visualizations (progressive, client) */}
+          <AdminAnalytics />
+
           {/* Database health (progressive, client) */}
           <DatabaseHealthCard />
 
-          {/* All short links (progressive, client) */}
+          {/* All short links — search, filter, sort, bulk clear (progressive, client) */}
           <AdminLinksTable />
-
-          {/* Danger zone */}
-          <section className={styles.danger} aria-label="Danger zone">
-            <div className={styles.dangerHead}>
-              <AlertTriangle size={16} aria-hidden="true" />
-              <span className={styles.dangerTitle}>DANGER ZONE // DESTRUCTIVE</span>
-            </div>
-            <div className={styles.dangerBody}>
-              <p className={styles.dangerText}>
-                Permanently remove every stored URL and its click analytics. The Supabase schema is
-                preserved; the data is not recoverable.
-              </p>
-              <ClearDatabaseButton />
-            </div>
-          </section>
 
           {/* Session */}
           <div className={styles.sessionRow}>
