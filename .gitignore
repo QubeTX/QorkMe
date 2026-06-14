@@ -1,0 +1,4 @@
+# Claude Code: keep shared project settings (.claude/settings.json) and hooks
+# tracked, but never commit machine-local overrides.
+.claude/settings.local.json
+.claude/*.local.json
