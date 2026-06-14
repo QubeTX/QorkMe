@@ -20,7 +20,7 @@ const PHRASES = [
   'qork update',
 ];
 
-const INTERVAL_MS = 3200;
+const INTERVAL_MS = 3700;
 
 export default function LedeCycle() {
   const [index, setIndex] = useState(0);

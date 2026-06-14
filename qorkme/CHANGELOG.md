@@ -2,6 +2,18 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.4.0] - 2026-06-14
+
+### Added — Human changelog + pre-push doc gate
+
+- **`HUMAN_CHANGELOG.md`** — a plain-English companion to this changelog (and to the repo-root `CHANGELOG.md`), restating every entry for a non-engineer reader: no version numbers, file paths, or jargon, just what changed and why it matters. A new **changelog rule** in `CLAUDE.md` requires keeping `CHANGELOG.md` and `HUMAN_CHANGELOG.md` in sync in the same commit.
+- **Git-tracked pre-push doc gate** (`.claude/settings.json` + `.claude/hooks/gate-push.mjs`): a Claude Code `PreToolUse` hook that blocks a push to `main` when the pushed commits change code/docs without updating a changelog, prompting the agent to also double-check `public/llms.txt`, the READMEs, and `CLAUDE.md`. It fails open on any error and honors a `QORK_SKIP_DOC_GATE=1` override.
+
+### Changed — qork v1.1.0 docs accuracy + install hero timing
+
+- **`/install` hero slot-roll** now holds each phrase for 3.7s before rolling (was 3.2s).
+- **qork v1.1.0 documentation accuracy pass** — corrected a stale `/api/shorten` request/response example in `README.md` to the real flat envelope (`{ id, shortCode, shortUrl, href, longUrl, isNew, domain, createdAt }`, plus the reduced `isNew:false` shape returned for an already-shortened URL); documented `--no-check`, `qork update`, `qork uninstall [--yes]`, the whole-word command rules, the two-layer safety check, and the origin-aware uninstall; and appended a v1.1.0 follow-up learnings section to `docs/qork-cli-buildout.md`. `public/llms.txt` and both `CLAUDE.md` files were verified accurate against source (unchanged).
+
 ## [5.3.2] - 2026-06-14
 
 ### Changed — qork CLI v1.1.0 (help command, URL safety check, full uninstall)
@@ -76,6 +88,12 @@
 - **`MatrixDisplay`** (the LED word board) is no longer used for the home wordmark; it still drives the 404 (`404`/`NOT.FOUND`) and admin-login (`SECURE`/`ACCESS`) boards, now on the blue→violet ramp.
 - **Admin console rebuilt in the QubeTX machine-report register** (`app/admin/page.tsx` + new shared `components/admin/admin.module.css`; rewrote `DatabaseHealthCard` and `AdminLinksTable`): a centered container over a subtle `DotGrid` field, a gradient-hairline heading, a 1px-gap stat grid (total links / clicks / avg-per-link), a `SYSTEM // DATABASE` panel (status chip + latency meter + table-row cells + active/inactive meter + data-freshness cells), and a hairline `LINKS` table — sortable mono headers, blue `/code` chips, `alias`/`active`/`off` tags, per-row click meters, mono pagination, inline delete — plus an error-tinted danger zone and a session row. Replaces the prior generic shadowed-card dashboard; responsive desktop table → mobile card list.
 - All micro-interactions (slot rolls, `COPY → COPIED` flash, the dot-grid `firePulse` ripple on link creation) and the footer `SysStatus` heartbeat (SCANNING/SECURE/NOMINAL) are unchanged.
+
+## [5.0.1] - 2026-06-12
+
+### Added — Landing-page SEO + accessibility
+
+- **`app/robots.ts` + `app/sitemap.ts`** generate a `robots.txt` and `sitemap.xml` for the site, and a small footer contrast fix — together hitting the QubeTX Lighthouse SEO/accessibility floors on the landing page and improving search-engine discoverability.
 
 ## [5.0.0] - 2026-06-12
 
@@ -481,6 +499,18 @@
 - `components/ui/interactive-grid-pattern.tsx`
 - `components/ui/matrix.tsx`
 - `components/ui/ambient-decor.tsx`
+
+## 2025-12-09 — Security (Next.js patch) + admin login redesign
+
+> Backfilled hotfix that shipped between 3.0.49 and 3.0.50 without its own version tag.
+
+### Security
+
+- **Upgraded Next.js to 15.5.7** to patch the React2Shell vulnerability (PR #15). Server-side fix — no visitor action required.
+
+### Changed
+
+- **Redesigned the admin login page** and improved the `SecureAccessMatrix` LED panel; reworked mobile matrix frame creation for smoother rendering on small screens.
 
 ## [3.0.49] - 2025-11-29
 

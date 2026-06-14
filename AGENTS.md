@@ -23,3 +23,6 @@ Use imperative commit subjects (`Refresh admin metrics`). Update both `CHANGELOG
 
 ## Security & Configuration Tips
 Store credentials in `.env.local`; never commit Supabase tokens. Mirror schema edits in `qorkme/supabase/schema.sql` and keep RLS policies intact. Review `vercel.json` and `.github/workflows/` after configuration shifts. When moving fonts, update `qorkme/public/fonts/README.md` so licensing stays accurate and deployment bundles remain compliant.
+
+## qork CLI & Public API
+This repo hosts a public shorten API and the install surface for **`qork`**, the companion CLI (separate repo [QubeTX/qork](https://github.com/QubeTX/qork), cargo-dist + crates.io, currently v1.1.0). `app/api/shorten/route.ts` serves `POST /api/shorten` (JSON `{ url, customAlias?, source? }`) and a `GET /api/shorten?url=<encoded>` convenience mode; both return the same flat envelope with a fully-qualified `href`, and `resolveSource()` tags each link `web | cli | api`. Install surface: `app/install/page.tsx` plus the static `public/{install.sh,install.ps1,llms.txt}`. The CLI lives in its own repo — edit it there, not here. Keep these in lockstep with `qorkme/docs/qork-cli-buildout.md` and `public/llms.txt`.

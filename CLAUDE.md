@@ -512,12 +512,15 @@ Create route handler in `qorkme/app/api/` following Next.js App Router conventio
 
 ## Changelog Management
 
-Both root and application changelogs must be updated:
+This repo keeps **technical** changelogs and **plain-English** companions in parallel:
 
-- **Root changelog**: `CHANGELOG.md` - Repository-level changes
-- **Application changelog**: `qorkme/CHANGELOG.md` - Application-specific updates
+- **Root changelog**: `CHANGELOG.md` — repository-level changes (technical).
+- **Application changelog**: `qorkme/CHANGELOG.md` — application-specific updates (technical).
+- **Human companions**: `HUMAN_CHANGELOG.md` (root) and `qorkme/HUMAN_CHANGELOG.md` — a plain-English version of every entry, written for a non-engineer: no version numbers, file paths, function names, or jargon — just what changed and why it matters. Category labels: **Added / Improved / Fixed / Removed / Security / Behind the scenes**.
 
-Update both files before committing changes to maintain accurate version history.
+**When you update a `CHANGELOG.md`, you must update its `HUMAN_CHANGELOG.md` in the same commit.** Translate each entry by stripping versions/paths/identifiers/metrics/jargon and adding a short "why it matters" clause; purely internal work still gets a one-line "Behind the scenes" entry. The two files must stay in lockstep — skipping entries is not allowed. Update both the root and application changelog families before committing, and run `npx prettier --check .` from `qorkme/` first (then fix any issues) so CI stays green.
+
+A git-tracked **pre-push doc gate** enforces this: `.claude/settings.json` registers a Claude Code `PreToolUse` hook (`.claude/hooks/gate-push.mjs`) that, before a push to `main`, blocks the push if the to-be-pushed commits change code/docs without touching a changelog — also a reminder to re-check `qorkme/public/llms.txt`, the READMEs, and the `CLAUDE.md` files. It fails open on any error and can be bypassed for an intentional push with `QORK_SKIP_DOC_GATE=1`.
 
 ## Font Asset Management
 

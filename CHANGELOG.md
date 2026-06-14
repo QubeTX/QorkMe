@@ -2,6 +2,18 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (Docs Accuracy Pass + Changelog Governance)
+
+### Added
+
+- **Plain-English `HUMAN_CHANGELOG.md`** companions to both technical changelogs (repo-root and `qorkme/`) — every entry restated for a non-engineer reader, with no version numbers, file paths, or jargon. A standing **changelog rule** in `CLAUDE.md` now requires future edits to keep each `CHANGELOG.md` and its `HUMAN_CHANGELOG.md` in lockstep in the same commit.
+- **Git-tracked pre-push doc gate** (`.claude/settings.json` + `.claude/hooks/gate-push.mjs`) — a Claude Code `PreToolUse` hook that, before a push to `main`, inspects the to-be-pushed commits and blocks the push if they change code/docs without touching a changelog, reminding the agent to also double-check `public/llms.txt`, the READMEs, and `CLAUDE.md`. It fails open on any error and honors a `QORK_SKIP_DOC_GATE=1` escape hatch.
+
+### Changed
+
+- **Slowed the `/install` hero slot-roll cadence** from 3.2s to 3.7s per phrase, so each tagline/example command holds a beat longer before it rolls to the next.
+- **qork v1.1.0 documentation accuracy pass** across `qorkme/README.md`, `AGENTS.md`, `CODEX_PROJECT.md`, and `qorkme/docs/qork-cli-buildout.md` (plus the qork repo's own `README.md`): corrected a stale `/api/shorten` request/response example in the README to the real flat `{ id, shortCode, shortUrl, href, longUrl, isNew, domain, createdAt }` envelope (and the reduced `isNew:false` form returned for an already-shortened URL); documented `--no-check`, `qork update`, and `qork uninstall [--yes]` plus the whole-word command rules; the native-installer matrix and per-OS install locations; the two-layer pre-shorten safety check; the origin-aware uninstall; and the five-workflow release topology. `public/llms.txt` and both `CLAUDE.md` files were verified accurate against source (no change needed).
+
 ## 2026-06-14 (qork CLI v1.1.0)
 
 ### Changed
@@ -53,6 +65,12 @@
 - **Redesigned the home hero to a "terminal" composition** (`components/sections/Hero.tsx`): a `LabelPill` bar eyebrow ("URL Shortener // A QubeTX Property"), a `$ qork "url"` mono line with a blinking cursor, the `QORK.ME` wordmark as Makira Black (900) uppercase with the blue→violet gradient via `background-clip:text` (replacing the LED `MatrixDisplay` board), a gradient hairline, the shortener card, then the live LED `MatrixClock`. Responsive scaling up to the TV tier (≥1600px / ≥2560px) and down for landscape phones so the shortener stays near the fold. `MatrixDisplay` still drives the 404 and admin-login boards (now blue→violet).
 - **Rebuilt the admin console in the QubeTX machine-report register** (`app/admin/page.tsx` + new `components/admin/admin.module.css`, rewritten `DatabaseHealthCard`/`AdminLinksTable`): centered container over a subtle dot field, gradient-hairline heading, 1px-gap stat grid, a `SYSTEM // DATABASE` panel (status + latency meter + table-row/freshness cells + active-ratio meter), and a hairline `LINKS` table (sortable, blue `/code` chips, alias/status tags, click meters, pagination, delete), with an error-tinted danger zone and session row — replacing the prior generic shadowed-card dashboard. Responsive desktop table → mobile cards.
 - All micro-interactions (slot rolls, copy flash, dot-grid `firePulse` on link creation) and the footer `SysStatus` heartbeat (SCANNING/SECURE/NOMINAL) are unchanged.
+
+## 2026-06-12 (Landing-page SEO + Accessibility)
+
+### Added
+
+- **`robots.ts` + `sitemap.ts`** so the landing page serves a `robots.txt` and `sitemap.xml` (with a small footer contrast tweak) — meeting the QubeTX Lighthouse SEO/accessibility floors and improving search-engine discoverability.
 
 ## 2026-06-12 (QubeTX Design System Redesign)
 
@@ -464,6 +482,16 @@
 - `qorkme/components/ui/interactive-grid-pattern.tsx`
 - `qorkme/components/ui/matrix.tsx`
 - `qorkme/components/ui/ambient-decor.tsx`
+
+## 2025-12-09 (Security — Next.js 15.5.7 + Admin Login Redesign)
+
+### Security
+
+- **Upgraded Next.js to 15.5.7 to patch the React2Shell vulnerability** (merged via PR #15). No action needed by visitors — the fix ships server-side.
+
+### Changed
+
+- **Redesigned the admin login layout** and refined the `SecureAccessMatrix` LED panel, including reworked mobile matrix frame creation for smoother rendering on small screens.
 
 ## 2025-11-29 (Interactive Grid Pointer Events Fix)
 

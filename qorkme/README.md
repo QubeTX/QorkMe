@@ -41,9 +41,16 @@ Shorten URLs straight from your terminal with **`qork`**, a cross-platform Rust 
 qork https://example.com/some/very/long/path     # → https://qork.me/ka9m
 qork "https://example.com/a b?x=1&y=2"            # quote URLs with spaces/specials
 qork https://example.com --alias launch            # custom short code
+qork https://example.com --no-check                # skip the pre-shorten liveness check
 qork --json https://example.com                     # raw JSON for scripts/agents
 qork help                                           # CLI docs (also `man qork`)
+qork update                                         # self-update (install-method-aware)
+qork uninstall [--yes]                              # fully remove qork (--yes/-y skips the prompt)
 ```
+
+`help`, `update`, and `uninstall` are recognized as whole-word, case-insensitive commands and are
+never treated as URLs. Other flags: `--no-color`, `--api-base <URL>` (or `QORK_API_BASE`),
+`-h/--help`, `-V/--version`.
 
 Before shortening, `qork` runs a quick safety check — it rejects accidentally-pasted
 text offline and refuses a dead link (a live 404/410 or a host that won't resolve);
@@ -426,34 +433,33 @@ QorkMe is optimized for Vercel deployment with a complete CI/CD pipeline using G
 
 ### Basic URL Shortening
 
-```typescript
-// POST /api/shorten
-{
-  "longUrl": "https://example.com/very/long/path/to/resource"
-}
+```jsonc
+// POST /api/shorten  — body
+{ "url": "https://example.com/very/long/path/to/resource" }
 
-// Response
+// Response (flat envelope)
 {
-  "success": true,
-  "data": {
-    "id": "uuid",
-    "shortCode": "revo",
-    "shortUrl": "https://qork.me/revo",
-    "longUrl": "https://example.com/very/long/path/to/resource"
-  }
+  "id": "uuid",
+  "shortCode": "revo",
+  "shortUrl": "qork.me/revo",
+  "href": "https://qork.me/revo",
+  "longUrl": "https://example.com/very/long/path/to/resource",
+  "isNew": true,
+  "domain": "example.com",
+  "createdAt": "2026-06-14T09:57:58Z"
 }
 ```
 
+`href` is the fully-qualified short link; `shortUrl` is the same without the scheme. When the URL
+was already shortened, the response is `{ shortCode, shortUrl, href, isNew: false }` (no new row).
+
 ### Custom Alias
 
-```typescript
-// POST /api/shorten
-{
-  "longUrl": "https://mysite.com",
-  "customAlias": "mysite"
-}
+```jsonc
+// POST /api/shorten  — body
+{ "url": "https://mysite.com", "customAlias": "mysite" }
 
-// Creates: https://qork.me/mysite
+// Creates: https://qork.me/mysite  (409 if the alias is already taken)
 ```
 
 ## Performance & Scalability

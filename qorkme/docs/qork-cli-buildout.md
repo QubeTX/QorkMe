@@ -113,3 +113,80 @@ curl -s "https://qork.me/api/shorten?url=https%3A%2F%2Fexample.com"   # JSON wit
 # Source attribution (admin / SQL)
 SELECT source, count(*) FROM urls GROUP BY 1;   # web | cli | api
 ```
+
+## v1.1.0 — follow-up learnings
+
+v1.1.0 (still GitHub Releases + crates.io) added three things: a `qork help` command, a
+pre-shorten safety check, and a full origin-aware `qork uninstall`. The notes below are the
+"why it's built this way" for the next person. Source of truth: `qork/src/{cli.rs,command.rs,
+check.rs,update.rs}` + `qork/nfpm.yaml`.
+
+1. **The `qork help` bug → whole-word command resolution.** Before v1.1.0, `qork help` was treated
+   as a URL: the API/CLI prepend `https://` to a schemeless arg, so `help` became `https://help`
+   and got _shortened_ (you'd get a short link for a nonexistent site). Fix: command resolution
+   moved out of `cli.rs` into `command.rs::Cli::resolve()`, which matches the bare positional
+   `help` / `update` / `uninstall` **as whole words, case-insensitively** (`eq_ignore_ascii_case`,
+   not a substring/prefix match) before falling through to "shorten this URL". The flags
+   (`--help` / `--update` / `--uninstall`) and the bare words are equivalent. `command.rs` is kept
+   separate from `cli.rs` specifically because `build.rs` `include!`s `cli.rs` to render the man
+   page and only needs the arg _shape_, not the runtime dispatch.
+
+2. **The pre-shorten check (`check.rs`) is a typo/dead-link guard, NOT an uptime gate.** Two layers,
+   both skipped by `--no-check`:
+   - **Offline structural** (instant, no network): the input must parse as an http/https URL whose
+     host has a dot, is an IP, or is an IPv6 literal. A bare word (`asdf`, or a mistyped command)
+     normalizes to `https://asdf` → no dot → rejected here with zero network calls. This is also the
+     belt-and-braces backstop that keeps a mistyped command from being shortened.
+   - **Online ping** (one HEAD request, follows up to 8 redirects, 10s timeout, browser-ish UA): it
+     blocks **only** on a live `404`/`410` (`Verdict::Dead`) or a DNS-resolution failure
+     (`Verdict::NoSuchHost` — "never valid from the start"). _Everything else proceeds_: 401/403
+     (auth walls), 405/429, 5xx, timeouts, connection-refused, TLS quirks all still shorten. The
+     ping uses a `Mozilla/5.0 (compatible; qork/<ver>; +https://qork.me)` UA because some servers
+     404/403 unknown agents — but the real shorten POST still identifies as `qork/<ver>` so source
+     attribution (`resolveSource()` ⇒ `cli`) is unaffected.
+
+3. **Full origin-aware uninstall (`update.rs::uninstall`).** qork installs ONLY a binary + PATH +
+   the Windows marker (no shell alias, no auto-run, no migrate-cleanup — those tr300/wb300
+   behaviors are deliberately stripped), so a complete removal is correspondingly lean. Branches:
+   - **Windows MSI** (Global or Corporate): scan the three Uninstall registry roots (HKLM 64-bit,
+     HKLM WOW6432Node, HKCU) for qork's exact DisplayName (`qork` or `qork (Corporate Edition)` —
+     exact match, never substring, so `qorkscrew` can't be hit), then run its `UninstallString`
+     **rewritten from `/I` to `/X`** (registry often records repair mode) with `/passive
+/norestart`. Global prompts UAC; Corporate is silent.
+   - **Windows Inno EXE**: run the recorded `QuietUninstallString`/`UninstallString` with `/SILENT
+/SUPPRESSMSGBOXES /NORESTART`.
+   - **Windows cargo / shell / PowerShell / unknown**: a running `.exe` **can't delete itself** on
+     Windows, so spawn a **detached** `cmd /c "(ping 127.0.0.1 -n 3 >nul & del /f /q "<exe>")"`
+     helper (DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP) that waits ~2s for this process to exit
+     and then deletes the binary. `ping … -n 3` is the portable sleep (no `timeout`, which breaks
+     when stdin is redirected).
+   - **macOS / Linux**: a running Unix binary _can_ be unlinked, so `std::fs::remove_file` the exe
+     directly.
+   - Every path also deletes the cargo-dist receipt and the `HKCU\Software\Qork` marker (idempotent)
+     and notes (doesn't edit) the PATH line the installer added. `--yes`/`-y` skips the prompt and
+     is **required** when stdin isn't a TTY (so scripts are explicit) — otherwise qork refuses.
+   - The downloaded-installer paths SHA256-verify against the `.sha256` sidecar before running, the
+     same MITM/corruption guard `qork update` uses.
+
+4. **The nfpm `${QORK_BIN}` glob bug.** `nfpm.yaml`'s `contents.src: ${QORK_BIN}` failed at package
+   time with `glob failed: ${QORK_BIN}: no matching files` — nfpm's own env-var expansion does NOT
+   apply to the `contents.src` glob. Fix in `unix-installers.yml`: `sed`-render a concrete per-arch
+   config (`nfpm-amd64.yaml` / `nfpm-arm64.yaml`) substituting `${QORK_ARCH}` / `${QORK_VERSION}` /
+   `${QORK_BIN}` ourselves (the `|` sed delimiter keeps the binary path's slashes literal), then
+   `nfpm package --config` that. Dependency-free and unambiguous.
+
+5. **Man pages in deb/rpm/pkg.** `build.rs` renders `man/qork.1` from the clap definition; the
+   `.deb`/`.rpm` (nfpm) install it to `/usr/share/man/man1/qork.1` and the macOS `.pkg`
+   (unix-installers.yml) to `/usr/local/share/man/man1/qork.1`, so `man qork` works on those
+   installs. (The one-liner/cargo/Windows installs don't lay down a man page — `qork help` is the
+   portable equivalent.) Note the install locations differ per channel: `.pkg` → `/usr/local/bin`,
+   `.deb`/`.rpm` → `/usr/bin`, Windows Global → `C:\Program Files\qork\bin`, Windows Corporate →
+   `%LocalAppData%\Programs\qork\bin`.
+
+6. **`/install` page slot-roll `LedeCycle`** (`app/install/LedeCycle.tsx`). The install hero's
+   `$ …` lede is a client island that cycles a tagline + a handful of real example commands
+   (`qork https://… --alias launch`, `qork --json …`, `qork update`, …) on a 3.7s interval, rolling
+   each transition through the kit `SlotRoll` (`@/lib/motion/SlotRoll`). On-brand with the home hero
+   rather than a static heading. Accessibility: the visual rolling line is `aria-hidden` while a
+   stable `sr-only` "Shorten URLs from your terminal." is exposed to assistive tech; under
+   `prefers-reduced-motion` the interval never starts (the line holds the first phrase).

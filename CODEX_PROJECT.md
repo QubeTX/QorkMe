@@ -10,6 +10,7 @@ QorkMe delivers branded short links, QR codes, server-side analytics logging, an
 
 ## Goals & Current Status
 - ✅ Core URL shortening with custom aliases, QR export, and analytics logging (data is captured but no analytics dashboard is exposed to end users; admin console reveals aggregate metrics for the authorized GitHub admin only).
+- ✅ Public shorten API + companion CLI — `POST /api/shorten` (JSON `{ url, customAlias?, source? }`) and a `GET /api/shorten?url=<encoded>` convenience mode return the same envelope with a fully-qualified `href`; each link records its `source` (`web | cli | api`). The **`qork`** CLI (separate repo [QubeTX/qork](https://github.com/QubeTX/qork), cargo-dist + crates.io, v1.1.0) calls that API; this repo hosts only the install surface (`app/install/`, `public/{install.sh,install.ps1,llms.txt}`). See `qorkme/docs/qork-cli-buildout.md`.
 - ✅ Responsive, theme-aware front end using Tailwind CSS v4 tokens and bespoke glassmorphism.
 - ✅ Supabase schema + setup guides checked into `supabase/`.
 - ✅ Vitest suite protects the shortcode engine, `/api/shorten` route handlers, Supabase client factories, and the `UrlShortener` UI; pursue deeper integration coverage next (redirect analytics, Supabase RPCs, visual regressions).
