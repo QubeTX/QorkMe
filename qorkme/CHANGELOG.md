@@ -2,6 +2,24 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.3.0] - 2026-06-14
+
+### Added — `qork` CLI, public shorten API, and source attribution
+
+- **`qork` command-line client** (new repo [QubeTX/qork](https://github.com/QubeTX/qork), published to crates.io): a cross-platform Rust CLI that shortens URLs via the qork.me API. `qork <url>` prints the short link; `--alias` requests a custom code, `--json` emits the raw envelope, and `qork update` / `qork uninstall` self-manage. Prebuilt binaries for macOS, Linux, and Windows (Intel + ARM) via cargo-dist. Install with `curl -LsSf https://qork.me/install.sh | sh`, `irm https://qork.me/install.ps1 | iex`, or `cargo install qork`.
+- **`/install` page** (`app/install/page.tsx`): OS-tabbed install one-liners (`InstallBlock`), a sample-session `TerminalFrame`, a command-reference `CommandTable`, per-platform `DownloadCard`s linking to GitHub release assets, a live version badge, and a "for agents / API" section. Linked from the home hero's `$ qork "url"` line (now a link) and a new footer **qork CLI** link.
+- **Branded installer wrappers** `public/install.sh` + `public/install.ps1` (thin pass-throughs to the cargo-dist installers), and **`public/llms.txt`** — a full agent guide to the API + CLI, served at `https://qork.me/llms.txt`.
+- **`GET /api/shorten?url=<encoded>` convenience mode** so curl/agents can shorten with a single GET (same JSON as POST, optional `&alias=`). Both verbs now also return a fully-qualified **`href`** field.
+
+### Added — Creation-source attribution (web | cli | api)
+
+- **`urls.source` column** records where each link was created. The admin analytics console gains a **"New links by source"** breakdown (`admin_analytics()` extended with `source_breakdown`). `/api/shorten` resolves the source from an explicit `source` field, a `qork/*` User-Agent (⇒ `cli`), or defaults to `api`; the website client (`UrlShortener.tsx`) now sends `web`. Existing links backfill to `web`.
+- Reserved `install`, `cli`, `download`, `llms` in `lib/shortcode/reserved.ts` + the DB `reserved_words` table so a short code can't shadow the new routes/assets.
+
+### Database (`supabase/migrations/`)
+
+- `add_url_source_attribution` — adds `urls.source VARCHAR(16) NOT NULL DEFAULT 'web'` (backfills all existing rows to `web`), recreates `get_or_create_short_url` with a `p_source` parameter stored on insert, and adds an all-time `source_breakdown` to `admin_analytics()`; mirrored in `schema.sql`.
+
 ## [5.2.1] - 2026-06-14
 
 ### Fixed — Click metric reconciliation

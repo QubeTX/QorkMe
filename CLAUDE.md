@@ -375,6 +375,14 @@ Test files mirror source structure (e.g., `lib/shortcode/generator.ts` → `test
   - Paginated links table with sorting
   - Danger zone: Purge all data (keeps schema intact)
 
+## qork CLI (companion program)
+
+`qork` is a cross-platform Rust URL-shortener CLI in a **separate repo** (`QubeTX/qork`, distributed via cargo-dist + crates.io) that calls this site's `/api/shorten`. This repo hosts only the install surface and the API:
+
+- **`qorkme/app/install/page.tsx`** — install/usage/downloads page (built from the vendored `components/terminal/` kit), linked from the home hero `$ qork "url"` line and the footer "qork CLI" link.
+- **`qorkme/public/install.sh` / `install.ps1`** — branded wrappers (`qork.me/install.sh|ps1`) that pass through to the `QubeTX/qork` cargo-dist installers; **`qorkme/public/llms.txt`** is the agent guide at `qork.me/llms.txt`. Static `public/` files and the `/install` route take precedence over the `[shortCode]` redirect.
+- **API**: `POST /api/shorten` and a `GET /api/shorten?url=<encoded>` convenience mode return the same JSON (now with a fully-qualified `href`). Every link records a `source` (`web | cli | api`) via `resolveSource()` — explicit `source` field › `qork/*` User-Agent ⇒ `cli` › `api`; the web client sends `web`. Stored in `urls.source`, shown in the admin "New links by source" breakdown (`admin_analytics().source_breakdown`). CORS doesn't apply to the CLI (a non-browser client), so no `vercel.json` change is needed.
+
 ## Key Implementation Details
 
 ### Case-Insensitive Short Codes

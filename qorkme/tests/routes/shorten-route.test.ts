@@ -91,6 +91,14 @@ function createSupabaseStub(
 const mockedCreateServerClientInstance = vi.mocked(createServerClientInstance);
 const generateCandidatesMock = vi.mocked(ShortCodeGenerator.generateCandidates);
 
+// A POST request stub. `headers` lets a test simulate a CLI User-Agent.
+function postRequest(body: unknown, headers?: HeadersInit): NextRequest {
+  return {
+    json: async () => body,
+    headers: new Headers(headers ?? {}),
+  } as unknown as NextRequest;
+}
+
 beforeEach(() => {
   vi.resetAllMocks();
   process.env.NEXT_PUBLIC_SHORT_DOMAIN = 'links.qork.me';
@@ -103,15 +111,12 @@ describe('POST /api/shorten', () => {
     const { client } = createSupabaseStub();
     mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
-    const request = {
-      json: async () => ({ url: 'http://localhost/internal' }),
-    } as unknown as NextRequest;
-
-    const response = await POST(request);
+    const response = await POST(postRequest({ url: 'http://localhost/internal' }));
 
     expect(response.status).toBe(400);
     const body = await response.json();
     expect(body.error).toMatch(/Cannot shorten local URLs/);
+    // Validation happens before any DB client is created.
     expect(mockedCreateServerClientInstance).not.toHaveBeenCalled();
   });
 
@@ -134,17 +139,14 @@ describe('POST /api/shorten', () => {
     });
     mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
-    const request = {
-      json: async () => ({ url: 'https://scalable.example' }),
-    } as unknown as NextRequest;
-
-    const response = await POST(request);
+    const response = await POST(postRequest({ url: 'https://scalable.example' }));
     const body = await response.json();
 
     expect(response.status).toBe(200);
     expect(body).toEqual({
       shortCode: 'rsvp',
       shortUrl: 'links.qork.me/rsvp',
+      href: 'https://links.qork.me/rsvp',
       isNew: false,
     });
     expect(rpc).toHaveBeenCalledTimes(1);
@@ -153,6 +155,7 @@ describe('POST /api/shorten', () => {
       p_candidates: ['ka9m', 'pu3n'],
       p_custom_alias: false,
       p_user_id: null,
+      p_source: 'api',
     });
   });
 
@@ -176,11 +179,7 @@ describe('POST /api/shorten', () => {
     });
     mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
-    const request = {
-      json: async () => ({ url: 'https://amazing.example' }),
-    } as unknown as NextRequest;
-
-    const response = await POST(request);
+    const response = await POST(postRequest({ url: 'https://amazing.example' }));
     const body = await response.json();
 
     expect(response.status).toBe(200);
@@ -188,6 +187,7 @@ describe('POST /api/shorten', () => {
       id: 'url-id-123',
       shortCode: 'fresh',
       shortUrl: 'links.qork.me/fresh',
+      href: 'https://links.qork.me/fresh',
       longUrl: 'https://amazing.example',
       isNew: true,
       domain: 'amazing.example',
@@ -198,6 +198,7 @@ describe('POST /api/shorten', () => {
       p_candidates: ['fresh'],
       p_custom_alias: false,
       p_user_id: 'user-42',
+      p_source: 'api',
     });
   });
 
@@ -221,11 +222,7 @@ describe('POST /api/shorten', () => {
     });
     mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
-    const request = {
-      json: async () => ({ url: 'https://crowded.example' }),
-    } as unknown as NextRequest;
-
-    const response = await POST(request);
+    const response = await POST(postRequest({ url: 'https://crowded.example' }));
     const body = await response.json();
 
     expect(response.status).toBe(200);
@@ -240,11 +237,9 @@ describe('POST /api/shorten', () => {
     });
     mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
-    const request = {
-      json: async () => ({ url: 'https://taken.example', customAlias: 'mylink' }),
-    } as unknown as NextRequest;
-
-    const response = await POST(request);
+    const response = await POST(
+      postRequest({ url: 'https://taken.example', customAlias: 'mylink' })
+    );
     const body = await response.json();
 
     expect(response.status).toBe(409);
@@ -255,6 +250,7 @@ describe('POST /api/shorten', () => {
       p_candidates: ['mylink'],
       p_custom_alias: true,
       p_user_id: null,
+      p_source: 'api',
     });
     expect(generateCandidatesMock).not.toHaveBeenCalled();
   });
@@ -277,16 +273,15 @@ describe('POST /api/shorten', () => {
     });
     mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
-    const request = {
-      json: async () => ({ url: 'https://custom.example', customAlias: 'MyLink' }),
-    } as unknown as NextRequest;
-
-    const response = await POST(request);
+    const response = await POST(
+      postRequest({ url: 'https://custom.example', customAlias: 'MyLink' })
+    );
     const body = await response.json();
 
     expect(response.status).toBe(200);
     expect(body).toMatchObject({
       shortCode: 'mylink',
+      href: 'https://links.qork.me/mylink',
       isNew: true,
     });
     expect(rpc).toHaveBeenCalledWith('get_or_create_short_url', {
@@ -294,6 +289,7 @@ describe('POST /api/shorten', () => {
       p_candidates: ['mylink'],
       p_custom_alias: true,
       p_user_id: null,
+      p_source: 'api',
     });
   });
 
@@ -304,29 +300,123 @@ describe('POST /api/shorten', () => {
     });
     mockedCreateServerClientInstance.mockResolvedValueOnce(client);
 
-    const request = {
-      json: async () => ({ url: 'https://broken.example' }),
-    } as unknown as NextRequest;
-
-    const response = await POST(request);
+    const response = await POST(postRequest({ url: 'https://broken.example' }));
     const body = await response.json();
 
     expect(response.status).toBe(500);
     expect(body.error).toMatch(/Failed to create short URL/);
   });
+
+  it('records source=web when the request body says so', async () => {
+    generateCandidatesMock.mockReturnValue(['webx']);
+    const { client, rpc } = createSupabaseStub({
+      rpcResults: [
+        {
+          data: [
+            {
+              id: 'w1',
+              short_code: 'webx',
+              long_url: 'https://site.example',
+              created_at: '2025-09-22T12:00:00.000Z',
+              is_new: true,
+            },
+          ],
+        },
+      ],
+    });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
+
+    await POST(postRequest({ url: 'https://site.example', source: 'web' }));
+
+    expect(rpc).toHaveBeenCalledWith(
+      'get_or_create_short_url',
+      expect.objectContaining({ p_source: 'web' })
+    );
+  });
+
+  it('records source=cli for a qork User-Agent', async () => {
+    generateCandidatesMock.mockReturnValue(['clix']);
+    const { client, rpc } = createSupabaseStub({
+      rpcResults: [
+        {
+          data: [
+            {
+              id: 'c1',
+              short_code: 'clix',
+              long_url: 'https://cli.example',
+              created_at: '2025-09-22T12:00:00.000Z',
+              is_new: true,
+            },
+          ],
+        },
+      ],
+    });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
+
+    await POST(postRequest({ url: 'https://cli.example' }, { 'user-agent': 'qork/1.0.0' }));
+
+    expect(rpc).toHaveBeenCalledWith(
+      'get_or_create_short_url',
+      expect.objectContaining({ p_source: 'cli' })
+    );
+  });
 });
 
 describe('GET /api/shorten', () => {
-  it('requires an alias query parameter', async () => {
+  it('errors when neither url nor alias is provided', async () => {
     const request = {
       nextUrl: new URL('https://links.qork.me/api/shorten'),
+      headers: new Headers(),
     } as unknown as NextRequest;
 
     const response = await GET(request);
     const body = await response.json();
 
     expect(response.status).toBe(400);
-    expect(body.error).toMatch(/Alias parameter is required/);
+    expect(body.error).toMatch(/Provide \?url=/);
+  });
+
+  it('shortens via the GET ?url= convenience mode (source=api)', async () => {
+    generateCandidatesMock.mockReturnValue(['ka9m']);
+    const { client, rpc } = createSupabaseStub({
+      rpcResults: [
+        {
+          data: [
+            {
+              id: 'g1',
+              short_code: 'ka9m',
+              long_url: 'https://agent.example',
+              created_at: '2025-09-22T12:00:00.000Z',
+              is_new: true,
+            },
+          ],
+        },
+      ],
+    });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
+
+    const request = {
+      nextUrl: new URL('https://links.qork.me/api/shorten?url=https%3A%2F%2Fagent.example'),
+      headers: new Headers(),
+    } as unknown as NextRequest;
+
+    const response = await GET(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body).toMatchObject({
+      shortCode: 'ka9m',
+      shortUrl: 'links.qork.me/ka9m',
+      href: 'https://links.qork.me/ka9m',
+      isNew: true,
+    });
+    expect(rpc).toHaveBeenCalledWith('get_or_create_short_url', {
+      p_long_url: 'https://agent.example',
+      p_candidates: ['ka9m'],
+      p_custom_alias: false,
+      p_user_id: null,
+      p_source: 'api',
+    });
   });
 
   it('indicates when an alias is unavailable', async () => {
@@ -338,6 +428,7 @@ describe('GET /api/shorten', () => {
 
     const request = {
       nextUrl: new URL('https://links.qork.me/api/shorten?alias=reserved'),
+      headers: new Headers(),
     } as unknown as NextRequest;
 
     const response = await GET(request);
@@ -356,6 +447,7 @@ describe('GET /api/shorten', () => {
 
     const request = {
       nextUrl: new URL('https://links.qork.me/api/shorten?alias=open'),
+      headers: new Headers(),
     } as unknown as NextRequest;
 
     const response = await GET(request);

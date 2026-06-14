@@ -33,6 +33,58 @@ A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and S
 - **Performance Optimized**: Database indexes and caching strategies
 - **Security First**: Input validation, sanitization, and protected API routes
 
+## Command-Line Tool (`qork`)
+
+Shorten URLs straight from your terminal with **`qork`**, a cross-platform Rust CLI ([QubeTX/qork](https://github.com/QubeTX/qork)):
+
+```bash
+qork https://example.com/some/very/long/path     # → https://qork.me/ka9m
+qork "https://example.com/a b?x=1&y=2"            # quote URLs with spaces/specials
+qork https://example.com --alias launch            # custom short code
+qork --json https://example.com                     # raw JSON for scripts/agents
+```
+
+Install (no Rust toolchain required):
+
+```bash
+# macOS / Linux
+curl -LsSf https://qork.me/install.sh | sh
+# Windows (PowerShell)
+irm https://qork.me/install.ps1 | iex
+# Cargo
+cargo install qork
+```
+
+Full install guide + per-platform downloads: **https://qork.me/install**.
+
+## Public API
+
+`POST /api/shorten` (JSON body) or `GET /api/shorten?url=<url-encoded>` (convenience mode for curl/agents) — both return the same envelope.
+
+```bash
+# POST — best for long URLs with their own query strings
+curl -X POST https://qork.me/api/shorten \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com","source":"api"}'
+
+# GET convenience mode
+curl "https://qork.me/api/shorten?url=https%3A%2F%2Fexample.com"
+```
+
+Request fields: `url` (required), `customAlias` (optional), `source` (optional — `web` | `cli` | `api`, recorded for analytics). Response:
+
+```json
+{
+  "shortCode": "ka9m",
+  "shortUrl": "qork.me/ka9m",
+  "href": "https://qork.me/ka9m",
+  "longUrl": "https://example.com",
+  "isNew": true
+}
+```
+
+Use `href` for the full clickable link. Errors return `{ "error": "…" }` with a 4xx/5xx status. A machine-readable guide for agents lives at **https://qork.me/llms.txt**.
+
 ## Quick Start
 
 ### Prerequisites

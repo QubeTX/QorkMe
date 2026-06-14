@@ -27,11 +27,14 @@ export function SiteFooter({ className }: SiteFooterProps) {
           >
             QR Gen ↗<span className="sr-only"> (opens in a new tab)</span>
           </a>
+          <Link href="/install" className={styles.link}>
+            qork CLI
+          </Link>
           <Link href="/admin" className={styles.link}>
             Admin
           </Link>
           <span className={styles.version} aria-hidden="true">
-            v4.2.0
+            v4.3.0
           </span>
         </div>
       </div>

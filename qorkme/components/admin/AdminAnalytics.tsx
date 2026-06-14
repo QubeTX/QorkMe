@@ -14,6 +14,7 @@ interface Analytics {
   created_by_day: DayPoint[];
   top_links: { short_code: string; click_count: number }[];
   device_breakdown: { device: string; c: number }[];
+  source_breakdown: { source: string; c: number }[];
   totals: { clicks_14d: number; links_14d: number };
 }
 
@@ -74,6 +75,7 @@ export function AdminAnalytics() {
 
   const topMax = data ? Math.max(1, ...data.top_links.map((l) => l.click_count)) : 1;
   const deviceTotal = data ? data.device_breakdown.reduce((s, d) => s + d.c, 0) : 0;
+  const sourceTotal = data ? data.source_breakdown.reduce((s, d) => s + d.c, 0) : 0;
 
   return (
     <section className={styles.panel} aria-label="Analytics">
@@ -158,6 +160,34 @@ export function AdminAnalytics() {
                       return (
                         <div key={d.device} className={styles.rankRow}>
                           <span className={styles.rankLabel}>{d.device}</span>
+                          <span className={styles.rankTrack}>
+                            <span
+                              className={styles.rankFill}
+                              style={{ width: `${Math.max(3, pct)}%` }}
+                            />
+                          </span>
+                          <span className={styles.rankNum}>{pct}%</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Source breakdown — website vs CLI vs API */}
+              <div className={styles.vizCard}>
+                <div className={styles.vizHead}>
+                  <span className={styles.kvLabel}>New links by source</span>
+                </div>
+                {sourceTotal === 0 ? (
+                  <span className={styles.muted}>No links yet</span>
+                ) : (
+                  <div className={styles.rankList}>
+                    {data.source_breakdown.map((s) => {
+                      const pct = Math.round((s.c / sourceTotal) * 100);
+                      return (
+                        <div key={s.source} className={styles.rankRow}>
+                          <span className={styles.rankLabel}>{s.source}</span>
                           <span className={styles.rankTrack}>
                             <span
                               className={styles.rankFill}

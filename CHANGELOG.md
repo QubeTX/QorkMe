@@ -2,6 +2,15 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-14 (qork CLI + Public API + Source Attribution)
+
+### Added
+
+- **`qork` — a cross-platform Rust CLI** for shortening URLs from the terminal (new repo [QubeTX/qork](https://github.com/QubeTX/qork), published to crates.io). `qork <url>` prints the short link; supports `--alias`, `--json`, and `qork update` / `qork uninstall`. Prebuilt binaries for macOS/Linux/Windows (Intel + ARM) via cargo-dist. Install: `curl -LsSf https://qork.me/install.sh | sh`, `irm https://qork.me/install.ps1 | iex`, or `cargo install qork`.
+- **`/install` page** with install instructions + per-platform downloads, linked from the home hero and footer; branded `public/install.sh` / `install.ps1` wrappers; and `public/llms.txt`, an agent guide served at `https://qork.me/llms.txt`.
+- **Public shorten API** gains a `GET /api/shorten?url=` convenience mode and a fully-qualified `href` field (alongside the existing POST).
+- **Creation-source attribution** — every link records a `source` (web | cli | api), surfaced in the admin analytics "New links by source" breakdown (new `urls.source` column + extended `admin_analytics()`; existing links backfill to `web`).
+
 ## 2026-06-14 (Click Metric Reconciliation)
 
 ### Fixed
