@@ -19,13 +19,67 @@ export const metadata: Metadata = {
 
 const RELEASE_BASE = 'https://github.com/QubeTX/qork/releases/latest/download/';
 
-const DOWNLOADS: { name: string; file: string }[] = [
-  { name: 'macOS · Apple Silicon', file: 'qork-aarch64-apple-darwin.tar.xz' },
-  { name: 'macOS · Intel', file: 'qork-x86_64-apple-darwin.tar.xz' },
-  { name: 'Linux · x86_64', file: 'qork-x86_64-unknown-linux-gnu.tar.xz' },
-  { name: 'Linux · ARM64', file: 'qork-aarch64-unknown-linux-gnu.tar.xz' },
-  { name: 'Linux · x86_64 (musl)', file: 'qork-x86_64-unknown-linux-musl.tar.xz' },
-  { name: 'Windows · x86_64', file: 'qork-x86_64-pc-windows-msvc.msi' },
+type Installer = { name: string; file: string; description: string };
+
+// Windows — installers are the recommended path here. Global = per-machine
+// (admin); Corporate = per-user (no admin). Each comes as an MSI and an EXE.
+const WINDOWS_INSTALLERS: Installer[] = [
+  {
+    name: 'Global · MSI',
+    file: 'qork-x86_64-pc-windows-msvc.msi',
+    description: 'Per-machine install to Program Files. Requires administrator.',
+  },
+  {
+    name: 'Global · EXE',
+    file: 'qork-x86_64-pc-windows-msvc-setup.exe',
+    description: 'Per-machine Setup wizard. Requires administrator.',
+  },
+  {
+    name: 'Corporate · MSI',
+    file: 'qork-x86_64-pc-windows-msvc-corporate.msi',
+    description: 'Per-user install to %LocalAppData%. No admin needed.',
+  },
+  {
+    name: 'Corporate · EXE',
+    file: 'qork-x86_64-pc-windows-msvc-corporate-setup.exe',
+    description: 'Per-user Setup wizard. No admin needed.',
+  },
+];
+
+const MACOS_INSTALLERS: Installer[] = [
+  {
+    name: 'Apple Silicon (M1+)',
+    file: 'qork-aarch64-apple-darwin.pkg',
+    description: 'Unsigned .pkg — first run: right-click → Open.',
+  },
+  {
+    name: 'Intel',
+    file: 'qork-x86_64-apple-darwin.pkg',
+    description: 'Unsigned .pkg — first run: right-click → Open.',
+  },
+];
+
+const LINUX_INSTALLERS: Installer[] = [
+  {
+    name: 'Debian / Ubuntu · x86_64',
+    file: 'qork-x86_64-unknown-linux-gnu.deb',
+    description: 'Installs to /usr/bin. sudo apt install ./<file>',
+  },
+  {
+    name: 'Fedora / RHEL · x86_64',
+    file: 'qork-x86_64-unknown-linux-gnu.rpm',
+    description: 'Installs to /usr/bin. sudo dnf install ./<file>',
+  },
+  {
+    name: 'Debian / Ubuntu · ARM64',
+    file: 'qork-aarch64-unknown-linux-gnu.deb',
+    description: 'Installs to /usr/bin. sudo apt install ./<file>',
+  },
+  {
+    name: 'Fedora / RHEL · ARM64',
+    file: 'qork-aarch64-unknown-linux-gnu.rpm',
+    description: 'Installs to /usr/bin. sudo dnf install ./<file>',
+  },
 ];
 
 export default function InstallPage() {
@@ -70,19 +124,19 @@ export default function InstallPage() {
                   id: 'unix',
                   label: 'macOS / Linux',
                   command: 'curl -LsSf https://qork.me/install.sh | sh',
-                  note: 'Installs to ~/.cargo/bin — no admin required.',
+                  note: 'Recommended on macOS & Linux. Installs to ~/.cargo/bin — no admin.',
                 },
                 {
                   id: 'windows',
                   label: 'Windows',
                   command: 'irm https://qork.me/install.ps1 | iex',
-                  note: 'PowerShell. Installs to %USERPROFILE%\\.cargo\\bin.',
+                  note: 'Works everywhere — but on Windows the MSI/EXE installer below is recommended.',
                 },
                 {
                   id: 'cargo',
                   label: 'Cargo',
                   command: 'cargo install qork',
-                  note: 'If you have a Rust toolchain.',
+                  note: 'Any platform with a Rust toolchain.',
                 },
               ]}
             />
@@ -135,30 +189,75 @@ export default function InstallPage() {
           </div>
         </section>
 
-        {/* ---- Manual downloads ---- */}
+        {/* ---- Downloadable native installers ---- */}
         <section className={styles.shell}>
           <div className={styles.section}>
             <SectionHeading
-              label="03 // Downloads"
-              title="Manual install"
-              subtitle="Prefer to grab the binary yourself? Pick your platform — each archive is a single executable."
+              label="03 // Installers"
+              title="Native installers"
+              subtitle="Prefer a download? Grab a native installer for your platform. On macOS and Linux the command-line install above is the recommended path; on Windows the MSI/EXE installers work best."
             />
             <div className={styles.stack}>
-              <div className={styles.downloads}>
-                {DOWNLOADS.map(({ name, file }) => (
-                  <DownloadCard
-                    key={file}
-                    name={name}
-                    meta={file}
-                    href={`${RELEASE_BASE}${file}`}
-                    downloadName={file}
-                    cta="Download"
-                  />
-                ))}
+              <div className={styles.dlGroup}>
+                <p className={styles.dlGroupLabel}>Windows</p>
+                <div className={styles.downloads}>
+                  {WINDOWS_INSTALLERS.map(({ name, file, description }) => (
+                    <DownloadCard
+                      key={file}
+                      name={name}
+                      meta={file}
+                      href={`${RELEASE_BASE}${file}`}
+                      downloadName={file}
+                      description={description}
+                      cta="Download"
+                    />
+                  ))}
+                </div>
               </div>
+
+              <div className={styles.dlGroup}>
+                <p className={styles.dlGroupLabel}>
+                  macOS{' '}
+                  <span className={styles.dlNote}>· the curl install above is recommended</span>
+                </p>
+                <div className={styles.downloads}>
+                  {MACOS_INSTALLERS.map(({ name, file, description }) => (
+                    <DownloadCard
+                      key={file}
+                      name={name}
+                      meta={file}
+                      href={`${RELEASE_BASE}${file}`}
+                      downloadName={file}
+                      description={description}
+                      cta="Download .pkg"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.dlGroup}>
+                <p className={styles.dlGroupLabel}>
+                  Linux{' '}
+                  <span className={styles.dlNote}>· the curl install above is recommended</span>
+                </p>
+                <div className={styles.downloads}>
+                  {LINUX_INSTALLERS.map(({ name, file, description }) => (
+                    <DownloadCard
+                      key={file}
+                      name={name}
+                      meta={file}
+                      href={`${RELEASE_BASE}${file}`}
+                      downloadName={file}
+                      description={description}
+                      cta="Download"
+                    />
+                  ))}
+                </div>
+              </div>
+
               <div className={styles.linkRow}>
                 <TextLink href="https://github.com/QubeTX/qork/releases/latest" glyph="↗">
-                  All release assets
+                  All release assets &amp; raw binaries
                 </TextLink>
                 <TextLink href="https://crates.io/crates/qork" glyph="↗">
                   crates.io / qork

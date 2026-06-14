@@ -55,6 +55,14 @@ irm https://qork.me/install.ps1 | iex
 cargo install qork
 ```
 
+The command-line one-liner (`curl … | sh` / `cargo install qork`) is the recommended path on
+**macOS and Linux**; on **Windows the MSI/EXE installer is recommended** (MSIs work better on
+Windows). Native per-platform installers ship with every release — Windows `.msi`/`.exe` (Global,
+per-machine + Corporate, per-user/no-admin), macOS `.pkg` (Apple Silicon + Intel), and Linux
+`.deb`/`.rpm` (x86-64 + ARM) — downloadable from the
+[latest GitHub release](https://github.com/QubeTX/qork/releases/latest). `qork update` re-runs the
+matching installer.
+
 Full install guide + per-platform downloads: **https://qork.me/install**.
 
 ## Public API

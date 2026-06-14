@@ -82,6 +82,11 @@ irm https://qork.me/install.ps1 | iex
 cargo install qork
 ```
 
+The one-liner (`curl … | sh` / `cargo install qork`) is the recommended path on macOS/Linux; on
+Windows the MSI/EXE installer is recommended. Native installers ship with every release — Windows
+`.msi`/`.exe` (Global + Corporate), macOS `.pkg` (arm64 + x86-64), Linux `.deb`/`.rpm` (x86-64 +
+arm64) — downloadable from `https://github.com/QubeTX/qork/releases/latest`.
+
 ### Use
 
 ```

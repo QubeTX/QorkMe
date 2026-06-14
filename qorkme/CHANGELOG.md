@@ -2,6 +2,17 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## [5.3.1] - 2026-06-14
+
+### Added — native installers (Windows MSI/EXE, macOS .pkg, Linux .deb/.rpm)
+
+- **qork is now v1.0.1** (published to GitHub Releases **and** crates.io — `cargo install qork`), and every release now ships a full **native-installer matrix** alongside the shell/PowerShell one-liners, downloadable from `https://github.com/QubeTX/qork/releases/latest/download/<name>`:
+  - **Windows (4):** `qork-x86_64-pc-windows-msvc.msi` (Global MSI, per-machine, admin), `qork-x86_64-pc-windows-msvc-corporate.msi` (Corporate MSI, per-user, no admin), `qork-x86_64-pc-windows-msvc-setup.exe` (Global EXE), and `qork-x86_64-pc-windows-msvc-corporate-setup.exe` (Corporate EXE). `qork update` re-runs the matching installer via the `HKCU\Software\Qork\InstallSource` marker.
+  - **macOS (2):** `qork-aarch64-apple-darwin.pkg` and `qork-x86_64-apple-darwin.pkg` (unsigned — first run is right-click → Open).
+  - **Linux (4):** `qork-x86_64-unknown-linux-gnu.deb` / `.rpm` and `qork-aarch64-unknown-linux-gnu.deb` / `.rpm`.
+- **`/install` download section reorganized** to lead with the recommended path per OS: the command-line one-liner (`curl … | sh` / `cargo install qork`) is recommended for **macOS and Linux**, while on **Windows the MSI/EXE installer is recommended** (MSIs work better on Windows). The native-installer download cards back the rest of the matrix.
+- **Build automation — three workflows:** cargo-dist `release.yml` builds the per-target archives + shell/PowerShell installers + the Global MSI; `windows-installers.yml` builds the Corporate MSI + both Inno Setup EXEs; `unix-installers.yml` builds the macOS `.pkg` + Linux `.deb`/`.rpm` (via `nfpm`). All upload their artifacts to the GitHub Release.
+
 ## [5.3.0] - 2026-06-14
 
 ### Added — `qork` CLI, public shorten API, and source attribution
