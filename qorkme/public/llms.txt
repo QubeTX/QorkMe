@@ -1,0 +1,101 @@
+# QorkMe — URL shortener (LLM / agent guide)
+
+> QorkMe (https://qork.me) is a fast URL shortener. This file tells an agent
+> how to shorten a URL two ways: the HTTP API (best for programs/agents) and
+> the `qork` command-line tool (best for a shell/terminal). A QubeTX property.
+
+## TL;DR
+
+- Shorten via HTTP: `GET https://qork.me/api/shorten?url=<url-encoded>` → JSON with a `href`.
+- Shorten via CLI: `qork https://example.com` → prints `https://qork.me/<code>`.
+- No authentication is required. Be reasonable with volume.
+
+## HTTP API
+
+Endpoint: `https://qork.me/api/shorten`
+
+### Shorten (GET — easiest for agents)
+
+URL-encode the target and pass it as `url`:
+
+```
+curl "https://qork.me/api/shorten?url=https%3A%2F%2Fexample.com%2Fsome%2Flong%2Fpath"
+```
+
+Optional `&alias=<code>` requests a custom short code (3–50 chars; letters,
+numbers, hyphens).
+
+### Shorten (POST — recommended for long URLs with query strings)
+
+POST avoids double-encoding a URL that itself has `?`/`&`:
+
+```
+curl -X POST https://qork.me/api/shorten \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com/search?q=a+b&page=2","source":"api"}'
+```
+
+Request body fields:
+
+- `url` (string, required) — the URL to shorten. A missing scheme is assumed `https://`.
+- `customAlias` (string, optional) — a custom short code.
+- `source` (string, optional) — `web` | `cli` | `api`. Agents should send `api`.
+
+### Response (both GET and POST)
+
+```json
+{
+  "id": "…",
+  "shortCode": "ka9m",
+  "shortUrl": "qork.me/ka9m",
+  "href": "https://qork.me/ka9m",
+  "longUrl": "https://example.com/some/long/path",
+  "isNew": true,
+  "domain": "example.com",
+  "createdAt": "2026-06-14T09:57:58Z"
+}
+```
+
+- Use `href` — it is the full, clickable short link (`shortUrl` omits the scheme).
+- `isNew` is `false` when the URL was already shortened and the existing link was returned (shortening is idempotent for a given URL).
+- Errors return `{ "error": "…" }` with a 4xx/5xx status (400 invalid URL, 409 alias taken).
+
+### Notes
+
+- Local/private URLs (`localhost`, `127.0.0.1`, private ranges) and the qork.me domain itself are rejected.
+- Max URL length is 2048 characters.
+
+## CLI (`qork`)
+
+A single prebuilt binary for macOS, Linux, and Windows (Intel + ARM). Details: https://qork.me/install
+
+### Install
+
+```
+# macOS / Linux
+curl -LsSf https://qork.me/install.sh | sh
+
+# Windows (PowerShell)
+irm https://qork.me/install.ps1 | iex
+
+# With a Rust toolchain
+cargo install qork
+```
+
+### Use
+
+```
+qork https://example.com/some/very/long/path     # prints https://qork.me/<code>
+qork "https://example.com/a b?x=1&y=2"            # quote URLs with spaces/specials
+qork https://example.com --alias launch           # custom short code
+qork --json https://example.com                    # raw JSON (same envelope as the API)
+qork update                                         # self-update
+```
+
+`qork` prints only the short URL to stdout, so it pipes cleanly
+(`qork https://example.com | pbcopy`). Exit code 0 on success, 2 on error.
+
+## Source
+
+- CLI: https://github.com/QubeTX/qork  ·  crates.io: https://crates.io/crates/qork
+- Site/install page: https://qork.me/install

@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import Link from 'next/link';
 import { UrlShortener } from '@/components/UrlShortener';
 import LabelPill from '@/components/ui/LabelPill';
 import MatrixClock from '@/components/effects/MatrixClock';
@@ -23,8 +24,14 @@ const Hero: FC = () => (
       </div>
 
       <p data-load="desc" className={styles.term}>
-        <span className={styles.termAccent}>$</span>qork{' '}
-        <span className={styles.termArg}>&quot;url&quot;</span>
+        <Link
+          href="/install"
+          className={styles.termLink}
+          aria-label="Install the qork command-line tool"
+        >
+          <span className={styles.termAccent}>$</span>qork{' '}
+          <span className={styles.termArg}>&quot;url&quot;</span>
+        </Link>
         <span className={styles.cursor} aria-hidden="true">
           ▮
         </span>

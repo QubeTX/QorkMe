@@ -67,6 +67,12 @@ export const RESERVED_WORDS = new Set([
   'documentation',
   'guide',
 
+  // CLI / install (don't let a short code shadow /install, /install.sh, /llms.txt)
+  'install',
+  'cli',
+  'download',
+  'llms',
+
   // Brand protection
   'qork',
   'qorkme',

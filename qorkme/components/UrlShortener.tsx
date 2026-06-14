@@ -126,7 +126,9 @@ export function UrlShortener() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(trimmedAlias ? { url, customAlias: trimmedAlias } : { url }),
+        body: JSON.stringify(
+          trimmedAlias ? { url, customAlias: trimmedAlias, source: 'web' } : { url, source: 'web' }
+        ),
       });
 
       const data = await response.json();

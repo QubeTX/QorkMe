@@ -64,7 +64,7 @@ describe('UrlShortener', () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ url: 'https://incredible.example/landing' }),
+      body: JSON.stringify({ url: 'https://incredible.example/landing', source: 'web' }),
     });
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });

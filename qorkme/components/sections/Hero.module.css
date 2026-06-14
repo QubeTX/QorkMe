@@ -65,6 +65,30 @@
   color: var(--text-secondary);
 }
 
+/* The whole prompt is a quiet link to the /install page. */
+.termLink {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color var(--transition-fast);
+}
+
+.termLink:hover {
+  color: var(--color-arrival);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.termLink:hover .termArg {
+  color: var(--color-arrival);
+}
+
+.termLink:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
 /* ---- Wordmark: Makira Black, blue→violet gradient, masked rise ---- */
 .headline {
   margin: 0;

@@ -92,6 +92,12 @@ See [`qorkme/README.md`](qorkme/README.md) for detailed installation, configurat
 - **Custom Aliases**: Personalized short codes with validation
 - **CI/CD Pipeline**: Automated testing and deployment via GitHub Actions
 
+## Command-Line Tool & API
+
+Shorten URLs from your terminal with **`qork`**, a cross-platform Rust CLI ([QubeTX/qork](https://github.com/QubeTX/qork)): install via `curl -LsSf https://qork.me/install.sh | sh` (macOS/Linux), `irm https://qork.me/install.ps1 | iex` (Windows), or `cargo install qork`, then run `qork https://example.com`. Full guide + downloads at **https://qork.me/install**.
+
+QorkMe also exposes a public shorten API — `POST /api/shorten` or `GET /api/shorten?url=<encoded>` — returning JSON with a fully-qualified `href`. An agent-oriented guide is served at **https://qork.me/llms.txt**.
+
 ## Technology Stack
 
 - **Framework**: Next.js 15.5.3 with App Router and React 19

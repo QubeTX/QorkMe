@@ -28,6 +28,9 @@ CREATE TABLE IF NOT EXISTS urls (
   is_active BOOLEAN DEFAULT true,
   click_count INTEGER DEFAULT 0,
 
+  -- Creation origin: web | cli | api (drives the admin "by source" breakdown)
+  source VARCHAR(16) NOT NULL DEFAULT 'web',
+
   -- User tracking (optional; SET NULL so auth-user deletion degrades to anonymous)
   user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
 
@@ -161,7 +164,8 @@ CREATE OR REPLACE FUNCTION get_or_create_short_url(
   p_long_url TEXT,
   p_candidates TEXT[],
   p_custom_alias BOOLEAN DEFAULT false,
-  p_user_id UUID DEFAULT NULL
+  p_user_id UUID DEFAULT NULL,
+  p_source TEXT DEFAULT 'web'
 )
 RETURNS TABLE (
   id UUID,
@@ -177,6 +181,7 @@ DECLARE
   v_existing RECORD;
   v_candidate TEXT;
   v_row RECORD;
+  v_source TEXT := COALESCE(NULLIF(lower(p_source), ''), 'web');
 BEGIN
   -- Duplicate detection (auto-generated codes only). The MD5 predicate hits
   -- idx_long_url_hash; the equality predicate guards hash collisions.
@@ -205,8 +210,8 @@ BEGIN
     CONTINUE WHEN EXISTS (SELECT 1 FROM urls u WHERE u.short_code_lower = LOWER(v_candidate));
 
     BEGIN
-      INSERT INTO urls (short_code, long_url, custom_alias, user_id)
-      VALUES (v_candidate, p_long_url, p_custom_alias, p_user_id)
+      INSERT INTO urls (short_code, long_url, custom_alias, user_id, source)
+      VALUES (v_candidate, p_long_url, p_custom_alias, p_user_id, v_source)
       RETURNING urls.id, urls.short_code, urls.long_url, urls.created_at
         INTO v_row;
 
@@ -300,6 +305,14 @@ AS $$
         GROUP BY 1
         ORDER BY c DESC
         LIMIT 5
+      ) t
+    ),
+    'source_breakdown', (
+      SELECT COALESCE(json_agg(json_build_object('source', t.source, 'c', t.c) ORDER BY t.c DESC), '[]'::json)
+      FROM (
+        SELECT COALESCE(NULLIF(source, ''), 'web') AS source, count(*) AS c
+        FROM urls
+        GROUP BY 1
       ) t
     ),
     'totals', json_build_object(

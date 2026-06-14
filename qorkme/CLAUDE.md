@@ -125,6 +125,13 @@ QorkMe runs on the **full QubeTX design system** (dark-only, void `#05070f`, can
 
 `lib/shortcode/generator.ts` — consonant-vowel alternating patterns for memorable 4-char codes. `generateCandidates(count, minLength)` emits a shortest-first batch (4 chars while the namespace has room, +1 char as it fills, timestamp last resort); the `get_or_create_short_url` RPC walks the batch atomically (duplicate detection + reserved filtering + availability + insert in ONE round trip). Reserved words: `lib/shortcode/reserved.ts` is canonical, mirrored in the DB `reserved_words` table.
 
+## qork CLI & public API
+
+- **`qork`** is a separate cross-platform Rust CLI (repo **QubeTX/qork**, `cargo-dist` + crates.io) that shortens URLs via this site's API. The binary lives in its own repo; this site only hosts the install surface + the API it calls.
+- **`app/install/page.tsx`** — the install/usage/downloads page, built from the vendored `components/terminal/` kit (`InstallBlock`, `TerminalFrame`, `CommandTable`, `DownloadCard`) + `LatestVersion.tsx` (a client island that fetches the latest release tag). Linked from the home hero `$ qork "url"` line and the footer "qork CLI" link.
+- **`public/install.sh` + `public/install.ps1`** — branded wrappers (`qork.me/install.sh|ps1`) that pass through to `github.com/QubeTX/qork/releases/latest/download/qork-installer.{sh,ps1}`. **`public/llms.txt`** — agent guide served at `qork.me/llms.txt`. These static `public/` files (and the `/install` route) take precedence over the `[shortCode]` redirect.
+- **`/api/shorten`** — `POST` (JSON `{ url, customAlias?, source? }`) and a `GET ?url=<encoded>` convenience mode return the same envelope, now including a fully-qualified **`href`**. `resolveSource()` tags each link `web | cli | api` (explicit `source` field › `qork/*` User-Agent ⇒ `cli` › `api`); the web client (`UrlShortener.tsx`) sends `web`. Stored in `urls.source`; surfaced in the admin **New links by source** card via `admin_analytics().source_breakdown`. CORS is irrelevant to the CLI (a non-browser client), so no `vercel.json` change is needed.
+
 ## Testing
 
 Vitest 4 with two projects configured in `vitest.config.ts`:
