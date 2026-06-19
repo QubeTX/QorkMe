@@ -2,6 +2,14 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-19 (Install Page Polish — Windows downloads padding, terminal pacing, API spacing)
+
+### Changed
+
+- **The inline Windows installer block on `/install` now has padding** — the `GLOBAL`/`CORPORATE` rows and `↓ MSI` / `↓ EXE` buttons are inset to align with the command/notes above and gain bottom spacing, instead of hugging the panel edges (the divider stays full-bleed). (`qorkme/app/install/install.module.css`.)
+- **The `QORK // SAMPLE SESSION` terminal demo now holds ~1.4s after each printed result before the next command types in** — a real-terminal beat between output and the next input, added to the `TerminalFrame` boot-print cadence as a hold on every output→input (`accent`→`prompt`) transition (reduced motion unaffected). (`qorkme/components/terminal/TerminalFrame.tsx`.)
+- **The `QORK // API` panel separates its `# GET` and `# POST` examples with a blank line** for readability. (`qorkme/app/install/page.tsx`.)
+
 ## 2026-06-14 (Install Page Windows Button Polish)
 
 ### Changed
