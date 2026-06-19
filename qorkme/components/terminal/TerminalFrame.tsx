@@ -34,6 +34,14 @@ type TerminalFrameProps = {
 
 const PRINT_BASE_MS = 90;
 const PRINT_JITTER_MS = 70;
+/**
+ * QorkMe divergence: when an output line (`accent`) is followed by an input
+ * line (`prompt`) — the output→next-command boundary in a sample session — the
+ * frame holds for a beat before the next command types in, the way a real
+ * terminal pauses after printing a result. Other transitions keep the fast
+ * boot-print cadence; reduced motion is unaffected (everything reveals at once).
+ */
+const OUTPUT_HOLD_MS = 1400;
 
 function timestamp(): string {
   return `[${new Date().toLocaleTimeString('en-GB', { hour12: false })}]`;
@@ -92,7 +100,14 @@ const TerminalFrame: FC<TerminalFrameProps> = ({
     body.setAttribute('data-printing', '');
     let at = 0;
     rows.forEach((row, i) => {
-      at += i === 0 ? 60 : PRINT_BASE_MS + Math.random() * PRINT_JITTER_MS;
+      // Hold on a printed result before the next command types in.
+      const afterOutput = i > 0 && lines[i - 1]?.accent && lines[i]?.prompt;
+      at +=
+        i === 0
+          ? 60
+          : afterOutput
+            ? OUTPUT_HOLD_MS
+            : PRINT_BASE_MS + Math.random() * PRINT_JITTER_MS;
       timers.push(
         window.setTimeout(() => {
           row.style.removeProperty('visibility');
@@ -105,7 +120,7 @@ const TerminalFrame: FC<TerminalFrameProps> = ({
         }, at)
       );
     });
-  }, [bootPrint, inView, reduced, timestamps]);
+  }, [bootPrint, inView, reduced, timestamps, lines]);
 
   useEffect(() => {
     const timers = timersRef.current;

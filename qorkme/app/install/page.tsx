@@ -304,6 +304,7 @@ export default function InstallPage() {
                     text: 'curl "https://qork.me/api/shorten?url=https%3A%2F%2Fexample.com"',
                     prompt: true,
                   },
+                  { text: '' },
                   { text: '# POST', accent: true },
                   {
                     text: 'curl -X POST https://qork.me/api/shorten \\',

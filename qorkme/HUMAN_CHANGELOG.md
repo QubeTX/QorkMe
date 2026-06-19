@@ -6,6 +6,16 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## June 19, 2026 — Install page polish: roomier Windows buttons, a paced demo, clearer API examples
+
+**Improved**
+
+- The Windows download buttons on the install page now have breathing room — they line up neatly with the text above them instead of touching the edges, and there's space below the last row so nothing feels cramped.
+- The little animated terminal demo now pauses for a beat after each shortened-link result before the next command types itself in, so it's easier to follow — just like watching someone actually use the tool.
+- The two API examples now have a blank line between the "GET" and "POST" snippets, so the two are easier to tell apart at a glance.
+
+---
+
 ## June 14, 2026 — Bigger Windows download buttons that show the version on hover
 
 **Improved**
