@@ -126,7 +126,8 @@ export default function InstallPage() {
                 {
                   id: 'windows',
                   label: 'Windows',
-                  command: 'irm https://qork.me/install.ps1 | iex',
+                  command:
+                    'powershell -ExecutionPolicy ByPass -c "irm https://qork.me/install.ps1 | iex"',
                   note: 'Downloads a prebuilt qork.exe — no Rust/cargo needed. On Windows the MSI/EXE installers below tend to work best:',
                   extra: <WindowsInstallers />,
                 },

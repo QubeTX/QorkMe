@@ -2,6 +2,12 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-06-23 (Install Page — Windows command uses the full PowerShell wrapper)
+
+### Changed
+
+- **The Windows install command on `/install` now uses the self-contained `powershell -ExecutionPolicy ByPass -c "irm https://qork.me/install.ps1 | iex"` form** instead of the bare `irm … | iex`. It runs from any shell and bypasses a restrictive execution policy for that single process, matching the convention shipped by tools like the Codex CLI. (`qorkme/app/install/page.tsx`.)
+
 ## 2026-06-19 (Install Page Polish — Windows downloads padding, terminal pacing, API spacing)
 
 ### Changed
