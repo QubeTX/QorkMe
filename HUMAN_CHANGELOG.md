@@ -6,6 +6,13 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## June 23, 2026 — Windows install command works from any shell
+
+**Improved**
+- The one-line Windows install command on the install page now wraps the install script in a full PowerShell command, so it runs the same whether you paste it into the regular Command Prompt, PowerShell, or the Run box — and Windows' script-safety setting won't block it. This matches how other popular command-line tools present their Windows installs.
+
+---
+
 ## June 19, 2026 — Install page polish: roomier Windows buttons, a paced demo, clearer API examples
 
 **Improved**
