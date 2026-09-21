@@ -23,10 +23,9 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
       <PageHeader />
       <main id="main-content" className="page-content" style={{ maxWidth: 800 }}>
         <BrandStage compact />
-        <h1 className="sr-only">Your short link</h1>
         <ShortUrlDisplay shortCode={url.short_code} />
-        <div className="mt-8 text-center">
-          <Link href="/" className="btn bg-primary text-white">
+        <div style={{ marginTop: 32, textAlign: 'center' }}>
+          <Link href="/" className="btn btn-primary">
             Shorten another →
           </Link>
         </div>

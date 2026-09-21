@@ -4,6 +4,8 @@
 
 ## 2026-09-21 — Dither + Hologram launch
 
+- Final mobile pass: allow long aliases to wrap inside saved-link result cards, retain rolling Copy feedback, use one visible page heading, and keep primary navigation labels white on blue.
+
 - Validation: 222 tests, lint, type checking, formatting, and the local production build pass; npm audit reports zero vulnerabilities. Include desktop screenshots and a documented 250,000-row query probe.
 
 - Replace the dark production interface with the approved warm ivory design across the main form, admin, sign-in, CLI instructions, results, and error pages. Retain responsive controls, rolling action labels, and explicit copy feedback.

@@ -15,7 +15,7 @@ export default function ErrorPage({
         <div className="message-panel">
           <h1>Let’s try that again.</h1>
           <p>This page could not load. Your existing links are still saved.</p>
-          <button type="button" className="btn bg-primary text-white" onClick={reset}>
+          <button type="button" className="btn btn-primary" onClick={reset}>
             Try again →
           </button>
         </div>

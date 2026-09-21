@@ -375,6 +375,16 @@ pre {
   box-shadow: 0 0 24px var(--glow-primary);
 }
 
+.btn-primary {
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
 .btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;

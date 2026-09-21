@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/cards/Card';
+import { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/cards/Card';
 import { Button } from '@/components/ui/Button';
 import { QrCode, ExternalLink } from 'lucide-react';
 import { useSlotRoll } from '@/lib/motion/SlotRoll';
@@ -10,30 +10,6 @@ import Image from 'next/image';
 
 interface ShortUrlDisplayProps {
   shortCode: string;
-}
-
-/** Same-length mask so the arrival roll animates every glyph. */
-function maskOf(text: string): string {
-  return text.replace(/[^./:]/g, '·');
-}
-
-function ArrivalUrl({ text }: { text: string }) {
-  const [mask] = useState(() => maskOf(text));
-  const [ref, handle] = useSlotRoll(mask, { direction: 'up' });
-
-  useEffect(() => {
-    handle.set(text);
-  }, [text, handle]);
-
-  return (
-    <span
-      ref={ref}
-      className="font-mono break-all text-[color:var(--color-text-primary)]"
-      style={{ fontSize: 'clamp(1rem, 2.5vw, 1.35rem)', fontWeight: 600 }}
-    >
-      {mask}
-    </span>
-  );
 }
 
 export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
@@ -80,9 +56,13 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
   };
 
   return (
-    <Card elevated hoverable={false} className="w-full">
+    <Card
+      hoverable={false}
+      className="w-full"
+      style={{ borderRadius: 12, background: 'var(--color-surface)' }}
+    >
       <CardHeader>
-        <CardTitle>Your short link</CardTitle>
+        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-.025em' }}>Your short link</h1>
         <CardDescription>Copy your link or make a QR code to share it.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -96,8 +76,13 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
               padding: '16px',
             }}
           >
-            <div className="flex-1">
-              <ArrivalUrl text={shortUrl} />
+            <div className="min-w-0 flex-1">
+              <span
+                className="font-mono"
+                style={{ overflowWrap: 'anywhere', fontSize: 16, fontWeight: 500 }}
+              >
+                {shortUrl}
+              </span>
             </div>
             <Button
               variant="outline"
