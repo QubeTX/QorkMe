@@ -15,7 +15,20 @@
 
 ## Release checks
 
-Local optimized production build passed on Next.js 15.5.25. Lint, TypeScript, formatting, and npm audit passed (zero reported vulnerabilities). The optimized bundle renders both effects live in Chrome. Main layout was compared at the same 1534×903 viewport as the approved prototype. CI, deployment, final production smoke, and the user-authorized link cleanup are recorded after verification.
+Local optimized production build passed on Next.js 15.5.25. Lint, TypeScript, formatting, and npm audit passed (zero reported vulnerabilities). The optimized bundle renders both effects live in Chrome. Main layout was compared at the same 1534×903 viewport as the approved prototype.
+
+## Production checks — September 21, 2026
+
+- [PR #26](https://github.com/QubeTX/QorkMe/pull/26) merged. Application commit `12a170a3ca35eb81e0cc4d1470b77837a2fadbfc` passed the Node 20 and 22 checks and [production deployment workflow](https://github.com/QubeTX/QorkMe/actions/runs/35573396990).
+- Vercel deployment `dpl_8vpnWcRFQSDhaWSrNiW8dray5Ggo` is READY and assigned to `qork.me`; its commit matches the application commit above.
+- Created `launch-prod-20260921` through the live form. Alias availability, `qork.me/` prefix, loading, result reveal, exact clipboard contents, and return to the form worked. Two redirects returned the correct destination with `no-store`; both the lifetime counter and detailed analytics recorded two visits. Duplicate aliases returned 409 and invalid URLs returned 400. The GET API returned the same flat envelope and recorded CLI source correctly.
+- GitHub sign-in worked with the existing browser session. The session survived deployment and subsequent reloads. Admin search, alias and status filters, sorting, two-page pagination, traffic analytics, and database diagnostics loaded real data. Anonymous admin requests returned 401; anonymous execution of private database functions remains denied.
+- Chrome rendered both effects live on the main, admin, CLI, and missing-link pages. Verified the centered linked-ring engraving, pointer lighting, 404 ripple feedback, motion pause, and reduced-motion setting. Main, admin, CLI, 404, and saved-link views passed 390px layout checks without horizontal overflow. The saved-link page wraps a 50-character alias, has one H1, and generates its QR code successfully.
+- The CLI page reports v1.1.1, copies the complete Windows PowerShell command, supports keyboard platform switching, and presents working install assets. The main page, install page, favicon, and installer scripts returned 200. No new application console errors appeared during the production smoke.
+- An expired disposable link immediately redirected to the missing-link page. The missing-link page returns HTTP 404.
+- With the user's explicit authorization, called the atomic `admin_purge_links()` database function: **26 URLs and 142 detailed click events removed**. Readback confirmed **0 URLs, 0 click events, and 75 reserved words preserved**. Refreshed admin showed zero totals and `NO LINKS YET`. The deleted demo immediately redirected to `/link-not-found`, and its alias became available again. The browser's destructive confirmation dialog was not exercised; the purge function and authenticated route have separate automated coverage.
+
+Production screenshots are retained in the local `qorkme-launch` artifact folder. This verification update changes documentation only; the deployed application commit remains the one identified above.
 
 ![Main page](screenshots/dither-hologram-home.png)
 

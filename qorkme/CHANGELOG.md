@@ -4,6 +4,8 @@
 
 ## 2026-09-21 — Dither + Hologram launch
 
+- Production verification: deploy the approved design, verify GitHub admin access and desktop/mobile flows, and complete the authorized cleanup of 26 links and 142 click events. Record zero remaining links and immediate missing-link behavior after deletion.
+
 - Final mobile pass: allow long aliases to wrap inside saved-link result cards, retain rolling Copy feedback, use one visible page heading, and keep primary navigation labels white on blue.
 
 - Validation: 222 tests, lint, type checking, formatting, and the local production build pass; npm audit reports zero vulnerabilities. Include desktop screenshots and a documented 250,000-row query probe.
