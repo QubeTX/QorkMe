@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NextResponse } from 'next/server';
 const { rpc, auth, revalidate } = vi.hoisted(() => ({
   rpc: vi.fn(),
@@ -12,8 +12,10 @@ import { POST } from '@/app/api/admin/purge/route';
 describe('admin purge', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(console, 'error').mockImplementation(() => {});
     auth.mockResolvedValue({ authorized: true });
   });
+  afterEach(() => vi.restoreAllMocks());
   it('rejects anonymous callers before touching data', async () => {
     auth.mockResolvedValue({ authorized: false, response: NextResponse.json({}, { status: 401 }) });
     expect((await POST()).status).toBe(401);
@@ -32,6 +34,17 @@ describe('admin purge', () => {
     const response = await POST();
     expect(response.status).toBe(500);
     expect((await response.json()).success).toBe(false);
+    expect(revalidate).not.toHaveBeenCalled();
+    expect(console.error).toHaveBeenCalledWith('Admin purge failed:', '57014');
+  });
+  it('keeps unexpected database details out of the browser response', async () => {
+    rpc.mockRejectedValue(new Error('private database connection details'));
+    const response = await POST();
+    expect(response.status).toBe(500);
+    expect(await response.json()).toEqual({
+      success: false,
+      message: 'Could not clear the links. Please retry.',
+    });
     expect(revalidate).not.toHaveBeenCalled();
   });
 });

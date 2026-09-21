@@ -408,9 +408,10 @@ DECLARE
   deleted_clicks BIGINT;
 BEGIN
   LOCK TABLE public.urls, public.clicks IN SHARE ROW EXCLUSIVE MODE;
-  DELETE FROM public.clicks;
+  -- Explicit scope is required by PostgREST's pg-safeupdate safety guard.
+  DELETE FROM public.clicks WHERE id IS NOT NULL;
   GET DIAGNOSTICS deleted_clicks = ROW_COUNT;
-  DELETE FROM public.urls;
+  DELETE FROM public.urls WHERE id IS NOT NULL;
   GET DIAGNOSTICS deleted_urls = ROW_COUNT;
   RETURN jsonb_build_object('urls', deleted_urls, 'clicks', deleted_clicks);
 END;
