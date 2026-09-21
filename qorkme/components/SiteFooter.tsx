@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { MotionToggle } from './brand/MotionPreference';
 import styles from './SiteFooter.module.css';
 
 export function SiteFooter({ className = '' }: { className?: string }) {
@@ -9,7 +8,6 @@ export function SiteFooter({ className = '' }: { className?: string }) {
         A QubeTX property
       </a>
       <nav aria-label="QorkMe links">
-        <MotionToggle />
         <a href="https://qr.qork.me" target="_blank" rel="noopener noreferrer">
           QR generator<span className="sr-only"> (opens in a new tab)</span>
         </a>

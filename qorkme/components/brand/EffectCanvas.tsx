@@ -43,9 +43,18 @@ type Props = {
   paused: boolean;
   pulse: number;
   text?: string;
+  layout?: 'brand' | 'page';
 };
 
-export function EffectCanvas({ kind, region, mask, paused, pulse, text = 'QORK.ME' }: Props) {
+export function EffectCanvas({
+  kind,
+  region,
+  mask,
+  paused,
+  pulse,
+  text = 'QORK.ME',
+  layout = 'brand',
+}: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const renderer = useRef<EffectController | null>(null);
   const preference = useRef(paused);
@@ -78,7 +87,13 @@ export function EffectCanvas({ kind, region, mask, paused, pulse, text = 'QORK.M
       }
       if (kind === 'dither') {
         const rendererModule = await import('./effects/canvas-renderer');
-        return alive ? rendererModule.createCanvasRenderer(canvas, host) : empty;
+        return alive
+          ? rendererModule.createCanvasRenderer(
+              canvas,
+              layout === 'page' ? document.documentElement : host,
+              layout
+            )
+          : empty;
       }
       const rendererModule = await import('./effects/hologram-renderer');
       return alive ? rendererModule.createHologramRenderer(canvas, host, failed) : empty;
@@ -111,15 +126,15 @@ export function EffectCanvas({ kind, region, mask, paused, pulse, text = 'QORK.M
       dispose();
       renderer.current = null;
     };
-  }, [kind, region, mask, text]);
+  }, [kind, region, mask, text, layout]);
   return (
     <div
-      className={`${styles.effect} ${kind === 'dither' ? styles.dither : styles.lettering}`}
+      className={`${styles.effect} ${kind === 'dither' ? (layout === 'page' ? styles.pageDither : styles.dither) : styles.lettering}`}
       data-render-state={state}
       aria-hidden="true"
     >
       {kind === 'dither' && <div className={styles.fallback} />}
-      <canvas ref={canvasRef} data-effect={kind} />
+      <canvas ref={canvasRef} data-effect={layout === 'page' ? 'page-dither' : kind} />
     </div>
   );
 }
