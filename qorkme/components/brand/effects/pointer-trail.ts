@@ -78,7 +78,7 @@ export function createPointerTrail(canvas: HTMLCanvasElement) {
       const y = Math.floor(index / columns);
       const threshold = (bayer[(y % 4) * 4 + (x % 4)] + 1) / 17;
       if (strength < threshold * 0.7) continue;
-      const alpha = strength * 0.32;
+      const alpha = strength * 0.36;
       ctx.fillStyle = (x + y) % 5 < 2 ? `rgba(111,64,225,${alpha})` : `rgba(38,99,225,${alpha})`;
       const px = (x + 0.5) * cell;
       const py = (y + 0.5) * cell;

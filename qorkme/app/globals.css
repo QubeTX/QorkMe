@@ -700,16 +700,6 @@ button {
 button:disabled {
   cursor: default;
 }
-.motion-toggle {
-  min-height: 44px;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-}
-.motion-toggle:hover:not(:disabled) {
-  color: var(--color-primary);
-}
 .skip-link {
   position: fixed;
   z-index: 100;

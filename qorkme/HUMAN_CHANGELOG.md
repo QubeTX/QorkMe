@@ -6,6 +6,13 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## September 21, 2026 — A little more dither
+
+- The background texture is a touch stronger and spreads farther around the homepage. On the command-line and admin pages, it now continues down the page instead of staying around the logo.
+- Removed the motion button from the footer. The site follows your device's reduced-motion preference automatically.
+
+---
+
 ## September 21, 2026 — A lighter QorkMe
 
 - A faint trail of dithered dots and letters now follows your mouse and fades behind it. It stays beneath the controls and turns off with the motion setting or reduced motion.

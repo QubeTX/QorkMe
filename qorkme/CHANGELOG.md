@@ -2,6 +2,12 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-09-21 — More room for the dither
+
+- Slightly increase dither contrast and widen the homepage field. Carry a restrained, full-height animated texture down the CLI and admin margins while keeping forms, commands, and tables clear.
+- Remove the footer motion toggle and its stored override. Effects follow the operating system's reduced-motion setting automatically.
+- Reuse the existing renderer and cleanup path; cap the page field at 24fps, 1.25 device pixels, and two million backing pixels. Retain static fallbacks and hidden-tab suspension.
+
 ## 2026-09-21 — A small dither wake
 
 - Add a subtle mouse-following trail of blue-violet dots and QORK.ME lettering behind page content while retaining the existing header effects. The trail fades in under a second and respects motion preferences.
