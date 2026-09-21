@@ -41,6 +41,18 @@ describe('InstallBlock', () => {
     expect(screen.getByText(/powershell 7\+/i)).toBeInTheDocument();
   });
 
+  it('moves focus and selection with arrow keys and wraps at the ends', () => {
+    render(<InstallBlock targets={TARGETS} />);
+    const tabs = screen.getAllByRole('tab');
+    fireEvent.keyDown(tabs[0], { key: 'ArrowLeft' });
+    expect(tabs[2]).toHaveFocus();
+    expect(tabs[2]).toHaveAttribute('aria-selected', 'true');
+    expect(tabs[0]).toHaveAttribute('tabindex', '-1');
+    fireEvent.keyDown(tabs[2], { key: 'Home' });
+    expect(tabs[0]).toHaveFocus();
+    expect(screen.getByRole('tabpanel').textContent).toContain('install.sh');
+  });
+
   it('copies the active command and slot-rolls Copy → Copied → Copy', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.assign(navigator, { clipboard: { writeText } });

@@ -20,6 +20,8 @@ import { createServerClientInstance } from '@/lib/supabase/server';
 import { ShortCodeGenerator } from '@/lib/shortcode/generator';
 import { validateUrl, validateShortCode } from '@/lib/shortcode/validator';
 
+export const dynamic = 'force-dynamic';
+
 interface ShortUrlRow {
   id: string;
   short_code: string;
@@ -82,7 +84,7 @@ async function createShortLink(
   }
 
   const supabase = await createServerClientInstance();
-  // Current user (if authenticated) — cookie read, no DB round trip.
+  // Verify the current user when a session is present.
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -151,8 +153,17 @@ async function createShortLink(
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { url, customAlias, source } = body ?? {};
+    if (Number(request.headers.get('content-length') || 0) > 16384)
+      return NextResponse.json({ error: 'Request body is too large' }, { status: 413 });
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    }
+    if (!body || typeof body !== 'object' || Array.isArray(body))
+      return NextResponse.json({ error: 'Expected a JSON object' }, { status: 400 });
+    const { url, customAlias, source } = body as Record<string, unknown>;
     const outcome = await createShortLink(url, customAlias, resolveSource(request, source));
     if (!outcome.ok) {
       return NextResponse.json({ error: outcome.error }, { status: outcome.status });
@@ -168,7 +179,7 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const url = searchParams.get('url');
-    const alias = searchParams.get('alias');
+    const alias = searchParams.get('alias')?.trim();
 
     // Convenience shorten mode for curl / agents: ?url=<encoded>[&alias=].
     // Returns the same envelope as POST. (source defaults to `api` here.)
@@ -198,13 +209,21 @@ export async function GET(request: NextRequest) {
     }
 
     const supabase = await createServerClientInstance();
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('urls')
       .select('id')
       .eq('short_code_lower', alias.toLowerCase())
-      .single();
+      .maybeSingle();
+    if (error)
+      return NextResponse.json(
+        { error: 'Unable to check availability. Please try again.' },
+        { status: 503 }
+      );
 
-    return NextResponse.json({ available: !data, alias: alias.toLowerCase() });
+    return NextResponse.json(
+      { available: !data, alias: alias.toLowerCase() },
+      { headers: { 'Cache-Control': 'no-store' } }
+    );
   } catch (error) {
     console.error('Alias check error:', error);
     return NextResponse.json({ error: 'Failed to check alias availability' }, { status: 500 });

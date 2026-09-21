@@ -24,7 +24,7 @@ type MockQueryBuilder = {
   eqCalls: Array<[string, unknown]>;
   select: Mock<(arg?: string) => MockQueryBuilder>;
   eq: Mock<(column: string, value: unknown) => MockQueryBuilder>;
-  single: Mock<() => Promise<QueryResult>>;
+  maybeSingle: Mock<() => Promise<QueryResult>>;
 };
 
 function createQueryBuilder({ singleResult }: { singleResult?: QueryResult }): MockQueryBuilder {
@@ -33,7 +33,7 @@ function createQueryBuilder({ singleResult }: { singleResult?: QueryResult }): M
     eqCalls: [],
     select: undefined as unknown as Mock<(arg?: string) => MockQueryBuilder>,
     eq: undefined as unknown as Mock<(column: string, value: unknown) => MockQueryBuilder>,
-    single: undefined as unknown as Mock<() => Promise<QueryResult>>,
+    maybeSingle: undefined as unknown as Mock<() => Promise<QueryResult>>,
   };
 
   builder.select = vi.fn((arg?: string) => {
@@ -46,7 +46,7 @@ function createQueryBuilder({ singleResult }: { singleResult?: QueryResult }): M
     return builder;
   });
 
-  builder.single = vi.fn(async () => {
+  builder.maybeSingle = vi.fn(async () => {
     return singleResult ?? { data: null, error: undefined };
   });
 
@@ -455,5 +455,29 @@ describe('GET /api/shorten', () => {
 
     expect(response.status).toBe(200);
     expect(body).toEqual({ available: true, alias: 'open' });
+  });
+});
+
+describe('shorten failure boundaries', () => {
+  it('rejects malformed JSON without contacting the database', async () => {
+    const response = await POST({
+      headers: new Headers(),
+      json: async () => {
+        throw new SyntaxError('bad JSON');
+      },
+    } as unknown as NextRequest);
+    expect(response.status).toBe(400);
+    expect(mockedCreateServerClientInstance).not.toHaveBeenCalled();
+  });
+  it('does not report availability when the database fails', async () => {
+    const { client } = createSupabaseStub({
+      builders: [createQueryBuilder({ singleResult: { data: null, error: { code: 'offline' } } })],
+    });
+    mockedCreateServerClientInstance.mockResolvedValueOnce(client);
+    const response = await GET({
+      nextUrl: new URL('https://qork.me/api/shorten?alias=available-name'),
+    } as unknown as NextRequest);
+    expect(response.status).toBe(503);
+    expect((await response.json()).available).toBeUndefined();
   });
 });

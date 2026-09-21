@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "contractId": "vgpu-examples/v1",
+  "revision": "d5a0f73cd324db6cc44806222ca77fc5045ac5c315a3d02236911533ede8186a",
+  "id": "holographic-card",
+  "title": "Holographic Card",
+  "description": "A minimal graphite card with Geist typography and an equilateral triangle outline. Approach to reveal wavy foil engravings and a triangular fractal, with sweeping pearlescent light and fine diffraction detail.",
+  "tags": ["holographic", "iridescence", "card", "fractal", "shader"],
+  "capabilities": [
+    "webgpu",
+    "fragment-shader",
+    "pointer-input",
+    "continuous-rendering",
+    "responsive-canvas"
+  ],
+  "aggregateSha256": "7855eb828f858f8efc7d20805665e0b6980796d925b6af3e08b48ff52f25c144",
+  "files": [
+    {
+      "path": "index.tsx",
+      "contentType": "text/typescript",
+      "size": 1251,
+      "sha256": "6a28c33426bfbda81b66cd4b611eb632b08b898219b762b25cfa9a3a9ce44916",
+      "url": "https://vgpu.sh/api/examples/v1/revisions/d5a0f73cd324db6cc44806222ca77fc5045ac5c315a3d02236911533ede8186a/examples/holographic-card/files/index.tsx.raw"
+    },
+    {
+      "path": "renderer.ts",
+      "contentType": "text/typescript",
+      "size": 3685,
+      "sha256": "06fdd35e03db11b936e12fa65914a1aff39fc66bdba74b15feb6bcc3d7787557",
+      "url": "https://vgpu.sh/api/examples/v1/revisions/d5a0f73cd324db6cc44806222ca77fc5045ac5c315a3d02236911533ede8186a/examples/holographic-card/files/renderer.ts.raw"
+    },
+    {
+      "path": "scene.ts",
+      "contentType": "text/typescript",
+      "size": 911,
+      "sha256": "658116424493d99483ca2326657574ade6782ab7424395a956c67371a0623b9b",
+      "url": "https://vgpu.sh/api/examples/v1/revisions/d5a0f73cd324db6cc44806222ca77fc5045ac5c315a3d02236911533ede8186a/examples/holographic-card/files/scene.ts.raw"
+    },
+    {
+      "path": "lettering.ts",
+      "contentType": "text/typescript",
+      "size": 39872,
+      "sha256": "644a7471b8a86360a97d278e99c5d925d2db658de7ec3a2fb6a019669cb9ea7c",
+      "url": "https://vgpu.sh/api/examples/v1/revisions/d5a0f73cd324db6cc44806222ca77fc5045ac5c315a3d02236911533ede8186a/examples/holographic-card/files/lettering.ts.raw"
+    },
+    {
+      "path": "shader.wgsl",
+      "contentType": "text/wgsl",
+      "size": 12114,
+      "sha256": "190136f2a6a37448cf9ece1c87c552cc85516867eb896a4459f86ca65f010b39",
+      "url": "https://vgpu.sh/api/examples/v1/revisions/d5a0f73cd324db6cc44806222ca77fc5045ac5c315a3d02236911533ede8186a/examples/holographic-card/files/shader.wgsl.raw"
+    }
+  ]
+}

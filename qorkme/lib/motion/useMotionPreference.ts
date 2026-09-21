@@ -1,6 +1,7 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
+import { useMotionPreference as useSiteMotion } from '@/components/brand/MotionPreference';
 
 /**
  * Single module-level prefers-reduced-motion store.
@@ -30,10 +31,20 @@ function subscribe(callback: () => void): () => void {
 
 /** Imperative check for non-React code paths. */
 export function prefersReducedMotion(): boolean {
-  return getMql()?.matches ?? false;
+  return (
+    (getMql()?.matches ?? false) ||
+    (typeof document !== 'undefined' &&
+      document.querySelector('.site-shell')?.getAttribute('data-paused') === 'true')
+  );
 }
 
 /** Reactive check — re-renders when the OS preference flips. */
 export function useMotionPreference(): boolean {
-  return useSyncExternalStore(subscribe, prefersReducedMotion, () => false);
+  const { paused } = useSiteMotion();
+  const reduced = useSyncExternalStore(
+    subscribe,
+    () => getMql()?.matches ?? false,
+    () => false
+  );
+  return paused || reduced;
 }

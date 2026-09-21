@@ -22,6 +22,7 @@ describe('UrlShortener', () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
   it('shows an inline error when submitting without a URL', async () => {
@@ -43,23 +44,24 @@ describe('UrlShortener', () => {
     const user = userEvent.setup();
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => ({ id: '123', shortCode: 'fresh' }),
+      json: async () => ({ id: '123', shortCode: 'fresh', href: 'https://qork.me/fresh' }),
     });
     vi.stubGlobal('fetch', fetchMock);
 
     render(<UrlShortener />);
 
-    await user.type(screen.getByLabelText(/enter your url/i), 'https://incredible.example/landing');
+    await user.type(screen.getByLabelText(/your long link/i), 'https://incredible.example/landing');
 
     await user.click(screen.getByRole('button', { name: /shorten url/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/link created/i)).toBeInTheDocument();
+      expect(screen.getByRole('status')).toHaveTextContent('Your short link is ready');
       // The short URL lands in the slot roll's accessible-name node
       expect(screen.getByText(/qork\.me\/fresh/i)).toBeInTheDocument();
     });
 
     expect(fetchMock).toHaveBeenCalledWith('/api/shorten', {
+      signal: expect.any(AbortSignal),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -79,12 +81,47 @@ describe('UrlShortener', () => {
 
     render(<UrlShortener />);
 
-    await user.type(screen.getByLabelText(/enter your url/i), 'https://example.com');
+    await user.type(screen.getByLabelText(/your long link/i), 'https://example.com');
 
     await user.click(screen.getByRole('button', { name: /shorten url/i }));
 
     await waitFor(() => {
       expect(screen.getByRole('alert')).toHaveTextContent('Invalid URL format');
     });
+  });
+
+  it('never copies automatically and only confirms a successful explicit clipboard write', async () => {
+    const user = userEvent.setup();
+    const writeText = vi
+      .spyOn(navigator.clipboard, 'writeText')
+      .mockRejectedValueOnce(new Error('denied'))
+      .mockResolvedValue(undefined);
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: true, json: async () => ({ href: 'https://qork.me/demo' }) })
+    );
+    render(<UrlShortener />);
+    await user.type(screen.getByLabelText(/your long link/i), 'https://example.com');
+    await user.click(screen.getByRole('button', { name: /shorten url/i }));
+    const copy = await screen.findByRole('button', { name: 'Copy' });
+    expect(writeText).not.toHaveBeenCalled();
+    await user.click(copy);
+    expect(await screen.findByRole('button', { name: 'Try again' })).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Could not copy');
+    await user.click(copy);
+    expect(await screen.findByRole('button', { name: 'Copied' })).toBeInTheDocument();
+    expect(writeText).toHaveBeenLastCalledWith('https://qork.me/demo');
+  });
+
+  it('aborts an in-flight request on unmount', async () => {
+    const user = userEvent.setup();
+    const fetchMock = vi.fn().mockReturnValue(new Promise(() => {}));
+    vi.stubGlobal('fetch', fetchMock);
+    const view = render(<UrlShortener />);
+    await user.type(screen.getByLabelText(/your long link/i), 'https://example.com');
+    await user.click(screen.getByRole('button', { name: /shorten url/i }));
+    const signal = fetchMock.mock.calls[0][1].signal;
+    view.unmount();
+    expect(signal.aborted).toBe(true);
   });
 });

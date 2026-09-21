@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAdminResource } from '@/hooks/useAdminResource';
 import {
   ArrowDown,
   ArrowUp,
@@ -121,8 +122,6 @@ function DeleteButton({
 }
 
 export function AdminLinksTable() {
-  const [links, setLinks] = useState<LinksResponse | null>(null);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<SortColumn>('created_at');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
@@ -134,35 +133,24 @@ export function AdminLinksTable() {
 
   // Debounce the search box
   useEffect(() => {
-    const t = setTimeout(() => setDebounced(search.trim()), 300);
+    const t = setTimeout(() => {
+      setDebounced(search.trim());
+      setPage(1);
+    }, 300);
     return () => clearTimeout(t);
   }, [search]);
 
-  // Any filter/search change returns to page 1
-  useEffect(() => {
-    setPage(1);
-  }, [debounced, statusFilter]);
-
-  const fetchLinks = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({ page: String(page), pageSize: '25', sort, order });
-      if (debounced) params.set('q', debounced);
-      if (statusFilter === 'active') params.set('status', 'active');
-      else if (statusFilter === 'inactive') params.set('status', 'inactive');
-      else if (statusFilter === 'alias') params.set('alias', 'true');
-      const res = await fetch(`/api/admin/links?${params}`);
-      if (res.ok) setLinks(await res.json());
-    } catch {
-      /* network error */
-    } finally {
-      setLoading(false);
-    }
-  }, [page, sort, order, debounced, statusFilter]);
-
-  useEffect(() => {
-    fetchLinks();
-  }, [fetchLinks]);
+  const params = new URLSearchParams({ page: String(page), pageSize: '25', sort, order });
+  if (debounced) params.set('q', debounced);
+  if (statusFilter === 'active') params.set('status', 'active');
+  else if (statusFilter === 'inactive') params.set('status', 'inactive');
+  else if (statusFilter === 'alias') params.set('alias', 'true');
+  const {
+    data: links,
+    loading,
+    error,
+    refresh: fetchLinks,
+  } = useAdminResource<LinksResponse>('/api/admin/links?' + params);
 
   const toggleSort = (col: SortColumn) => {
     if (sort === col) {
@@ -183,7 +171,7 @@ export function AdminLinksTable() {
       return;
     }
     if (window.prompt('Type DELETE to purge every stored URL.') !== 'DELETE') {
-      setStatus({ message: 'PURGE ABORTED // CONFIRMATION MISMATCH', tone: 'error' });
+      setStatus({ message: 'Deletion cancelled.', tone: 'error' });
       return;
     }
     setPurging(true);
@@ -191,7 +179,7 @@ export function AdminLinksTable() {
       const res = await fetch('/api/admin/purge', { method: 'POST' });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.success !== false) {
-        setStatus({ message: 'PURGE COMPLETE // ALL DATA CLEARED', tone: 'ok' });
+        setStatus({ message: 'All links deleted.', tone: 'ok' });
         setPage(1);
         fetchLinks();
       } else {
@@ -223,23 +211,18 @@ export function AdminLinksTable() {
 
   return (
     <section className={styles.panel} aria-label="Short links">
+      {error && (
+        <p role="alert" className={styles.error}>
+          {error}{' '}
+          <button type="button" className="btn" onClick={fetchLinks}>
+            Retry
+          </button>
+        </p>
+      )}
       <div className={styles.panelHead}>
         <span className={styles.panelTitle}>
-          LINKS // <b>{links ? links.total.toLocaleString() : '—'}</b>
+          Links · <b>{links ? links.total.toLocaleString() : '—'}</b>
         </span>
-        <button
-          type="button"
-          className={styles.clearAllBtn}
-          onClick={handleClearAll}
-          disabled={purging}
-        >
-          {purging ? (
-            <Loader2 size={12} className={styles.spin} aria-hidden="true" />
-          ) : (
-            <Trash2 size={12} aria-hidden="true" />
-          )}
-          Clear all
-        </button>
       </div>
 
       {/* Toolbar: search + status filter */}
@@ -273,7 +256,10 @@ export function AdminLinksTable() {
               key={f.key}
               type="button"
               className={`${styles.segBtn} ${statusFilter === f.key ? styles.segActive : ''}`}
-              onClick={() => setStatusFilter(f.key)}
+              onClick={() => {
+                setStatusFilter(f.key);
+                setPage(1);
+              }}
               aria-pressed={statusFilter === f.key}
             >
               {f.label}
@@ -296,7 +282,7 @@ export function AdminLinksTable() {
         </p>
       )}
 
-      {loading && !links ? (
+      {error ? null : loading && !links ? (
         <div className={styles.center}>
           <Loader2 size={20} className={styles.spin} aria-hidden="true" />
           <span className={styles.muted}>LOADING…</span>
@@ -314,18 +300,55 @@ export function AdminLinksTable() {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>
+                  <th
+                    scope="col"
+                    aria-sort={
+                      sort === 'short_code'
+                        ? order === 'asc'
+                          ? 'ascending'
+                          : 'descending'
+                        : 'none'
+                    }
+                  >
                     <Sort col="short_code">Code</Sort>
                   </th>
                   <th>Destination</th>
-                  <th className={styles.alignRight}>
+                  <th
+                    className={styles.alignRight}
+                    scope="col"
+                    aria-sort={
+                      sort === 'click_count'
+                        ? order === 'asc'
+                          ? 'ascending'
+                          : 'descending'
+                        : 'none'
+                    }
+                  >
                     <Sort col="click_count">Clicks</Sort>
                   </th>
                   <th>Status</th>
-                  <th>
+                  <th
+                    scope="col"
+                    aria-sort={
+                      sort === 'created_at'
+                        ? order === 'asc'
+                          ? 'ascending'
+                          : 'descending'
+                        : 'none'
+                    }
+                  >
                     <Sort col="created_at">Created</Sort>
                   </th>
-                  <th>
+                  <th
+                    scope="col"
+                    aria-sort={
+                      sort === 'last_accessed_at'
+                        ? order === 'asc'
+                          ? 'ascending'
+                          : 'descending'
+                        : 'none'
+                    }
+                  >
                     <Sort col="last_accessed_at">Last active</Sort>
                   </th>
                   <th className={styles.alignRight}>
@@ -462,6 +485,23 @@ export function AdminLinksTable() {
           </div>
         </>
       )}
+      <details className={styles.danger}>
+        <summary>Delete all links</summary>
+        <p>This permanently removes every link and its click history.</p>{' '}
+        <button
+          type="button"
+          className={styles.clearAllBtn}
+          onClick={handleClearAll}
+          disabled={purging}
+        >
+          {purging ? (
+            <Loader2 size={12} className={styles.spin} aria-hidden="true" />
+          ) : (
+            <Trash2 size={12} aria-hidden="true" />
+          )}
+          Clear all
+        </button>
+      </details>
     </section>
   );
 }

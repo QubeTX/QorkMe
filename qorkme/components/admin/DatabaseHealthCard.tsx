@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useAdminResource } from '@/hooks/useAdminResource';
 import { RefreshCw } from 'lucide-react';
 import styles from './admin.module.css';
 
@@ -42,24 +42,12 @@ const STATUS = {
 } as const;
 
 export function DatabaseHealthCard() {
-  const [data, setData] = useState<HealthData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetchHealth = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('/api/admin/health');
-      if (res.ok) setData(await res.json());
-    } catch {
-      /* network error — leave prior data */
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchHealth();
-  }, [fetchHealth]);
+  const {
+    data,
+    loading,
+    error,
+    refresh: fetchHealth,
+  } = useAdminResource<HealthData>('/api/admin/health');
 
   const cfg = data ? STATUS[data.status] : STATUS.operational;
   const totalUrls = data?.tables.urls ?? 0;
@@ -75,9 +63,14 @@ export function DatabaseHealthCard() {
 
   return (
     <section className={styles.panel} aria-label="Database health">
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
       <div className={styles.panelHead}>
         <span className={styles.panelTitle}>
-          SYSTEM // <b>DATABASE</b>
+          <b>Database</b>
         </span>
         <button
           type="button"
@@ -91,10 +84,10 @@ export function DatabaseHealthCard() {
       </div>
 
       <div className={styles.panelBody}>
-        {!data ? (
+        {error ? null : !data ? (
           <div className={styles.center}>
             <RefreshCw size={20} className={styles.spin} aria-hidden="true" />
-            <span className={styles.muted}>QUERYING…</span>
+            <span className={styles.muted}>Loading…</span>
           </div>
         ) : (
           <>

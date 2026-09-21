@@ -1,33 +1,22 @@
 'use client';
-
 import { useEffect, useState } from 'react';
-
-const FALLBACK = '1.0.0';
-
-/**
- * Tiny live version badge: fetches the latest GitHub release tag for the qork
- * CLI, strips a leading `v`, and renders `v<version>`. Falls back to the
- * hardcoded release on error so the badge always reads cleanly (no spinner,
- * no layout shift — the fallback is the server-rendered value).
- */
+/** Keep release information honest when GitHub is unavailable. */
 export default function LatestVersion({ className }: { className?: string }) {
-  const [version, setVersion] = useState(FALLBACK);
-
+  const [version, setVersion] = useState<string | null>(null);
   useEffect(() => {
-    let active = true;
-    fetch('https://api.github.com/repos/QubeTX/qork/releases/latest')
+    const controller = new AbortController();
+    fetch('https://api.github.com/repos/QubeTX/qork/releases/latest', { signal: controller.signal })
       .then((res) => (res.ok ? res.json() : null))
       .then((data: { tag_name?: string } | null) => {
-        if (!active || !data?.tag_name) return;
-        setVersion(data.tag_name.replace(/^v/, '') || FALLBACK);
+        if (!controller.signal.aborted && data?.tag_name && /^v?\d+\.\d+\.\d+/.test(data.tag_name))
+          setVersion(data.tag_name);
       })
-      .catch(() => {
-        /* keep the fallback */
-      });
-    return () => {
-      active = false;
-    };
+      .catch(() => {});
+    return () => controller.abort();
   }, []);
-
-  return <span className={className}>v{version}</span>;
+  return (
+    <a href="https://github.com/QubeTX/qork/releases/latest" className={className}>
+      {version ? `${version} · Release notes ↗` : 'Latest release ↗'}
+    </a>
+  );
 }

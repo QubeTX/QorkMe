@@ -65,3 +65,6 @@
   letter-spacing: 0.1em;
   color: var(--color-text-dim);
 }
+.wrap {
+  overflow-x: auto;
+}

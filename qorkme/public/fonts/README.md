@@ -31,3 +31,7 @@ This directory contains the Makira Sans Serif and IBM Plex Mono font files in WO
 - **Mono / code / short-URL display:** IBM Plex Mono Regular (400)
 
 See `app/globals.css` for @font-face declarations and `docs/DESIGN_SYSTEM.md` for complete typography specifications.
+
+## Favicon
+
+The September 2026 favicon uses an outlined Q from Makira Black, with a blue-violet fill and ivory background. SVG, ICO, PNG, and Apple-touch variants share that outline; no new font files were added or moved. Existing font licenses still apply.

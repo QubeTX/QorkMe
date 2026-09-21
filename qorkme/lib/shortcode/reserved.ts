@@ -45,6 +45,7 @@ export const RESERVED_WORDS = new Set([
 
   // HTTP status codes
   '404',
+  'link-not-found',
   '500',
   '403',
   '401',

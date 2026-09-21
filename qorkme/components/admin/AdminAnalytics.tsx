@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useAdminResource } from '@/hooks/useAdminResource';
 import { RefreshCw } from 'lucide-react';
 import styles from './admin.module.css';
 
@@ -54,24 +54,12 @@ function BarChart({ data, label, total }: { data: DayPoint[]; label: string; tot
 }
 
 export function AdminAnalytics() {
-  const [data, setData] = useState<Analytics | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetchAnalytics = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('/api/admin/analytics');
-      if (res.ok) setData(await res.json());
-    } catch {
-      /* network error */
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchAnalytics();
-  }, [fetchAnalytics]);
+  const {
+    data,
+    loading,
+    error,
+    refresh: fetchAnalytics,
+  } = useAdminResource<Analytics>('/api/admin/analytics');
 
   const topMax = data ? Math.max(1, ...data.top_links.map((l) => l.click_count)) : 1;
   const deviceTotal = data ? data.device_breakdown.reduce((s, d) => s + d.c, 0) : 0;
@@ -79,9 +67,14 @@ export function AdminAnalytics() {
 
   return (
     <section className={styles.panel} aria-label="Analytics">
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
       <div className={styles.panelHead}>
         <span className={styles.panelTitle}>
-          ANALYTICS // <b>14-DAY WINDOW</b>
+          Activity <b>· Last 14 days</b>
         </span>
         <button
           type="button"
@@ -95,10 +88,10 @@ export function AdminAnalytics() {
       </div>
 
       <div className={styles.panelBody}>
-        {!data ? (
+        {error ? null : !data ? (
           <div className={styles.center}>
             <RefreshCw size={20} className={styles.spin} aria-hidden="true" />
-            <span className={styles.muted}>QUERYING…</span>
+            <span className={styles.muted}>Loading…</span>
           </div>
         ) : (
           <>

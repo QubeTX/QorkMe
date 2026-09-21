@@ -9,6 +9,7 @@ export interface Database {
   public: {
     Tables: {
       urls: {
+        Relationships: [];
         Row: {
           id: string;
           short_code: string;
@@ -24,6 +25,7 @@ export interface Database {
           last_accessed_at: string | null;
           is_active: boolean;
           click_count: number;
+          source: 'web' | 'cli' | 'api';
           user_id: string | null;
         };
         Insert: {
@@ -40,6 +42,7 @@ export interface Database {
           last_accessed_at?: string | null;
           is_active?: boolean;
           click_count?: number;
+          source?: 'web' | 'cli' | 'api';
           user_id?: string | null;
         };
         Update: {
@@ -56,10 +59,12 @@ export interface Database {
           last_accessed_at?: string | null;
           is_active?: boolean;
           click_count?: number;
+          source?: 'web' | 'cli' | 'api';
           user_id?: string | null;
         };
       };
       clicks: {
+        Relationships: [];
         Row: {
           id: string;
           url_id: string;
@@ -110,6 +115,7 @@ export interface Database {
         };
       };
       reserved_words: {
+        Relationships: [];
         Row: {
           word: string;
         };
@@ -121,6 +127,7 @@ export interface Database {
         };
       };
       tags: {
+        Relationships: [];
         Row: {
           id: string;
           name: string;
@@ -141,6 +148,7 @@ export interface Database {
         };
       };
       url_tags: {
+        Relationships: [];
         Row: {
           url_id: string;
           tag_id: string;
@@ -159,6 +167,10 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      admin_purge_links: {
+        Args: Record<string, never>;
+        Returns: { urls: number; clicks: number };
+      };
       check_short_code_available: {
         Args: { code: string };
         Returns: boolean;
@@ -177,6 +189,7 @@ export interface Database {
           p_candidates: string[];
           p_custom_alias?: boolean;
           p_user_id?: string | null;
+          p_source?: string;
         };
         Returns: {
           id: string;
@@ -189,6 +202,7 @@ export interface Database {
       admin_health_stats: {
         Args: Record<string, never>;
         Returns: {
+          total_click_count: number;
           url_count: number;
           active_url_count: number;
           inactive_url_count: number;

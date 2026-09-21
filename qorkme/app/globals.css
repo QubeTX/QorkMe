@@ -81,56 +81,42 @@
 }
 
 :root {
-  /* =============================================================
-     QubeTX design tokens v3.2.1 — structural layer (kit verbatim).
-     Source: docs/qubetx-design-system/tokens/qubetx-tokens.css
-     Living spec: https://www.qubetx.com/design-system
-     Kit permalink: https://www.qubetx.com/qubetx-design-system.zip
-     `--color-text-dim` is contrast-tuned (≥4.5:1 AA on void) — never adjust.
-     ============================================================= */
   --font-stack-sans: var(--font-makira), ui-sans-serif, system-ui, sans-serif;
   --font-stack-mono: var(--font-plex-mono), ui-monospace, 'Cascadia Mono', monospace;
 
-  --color-void: #05070f; /* page/hero/header background */
-  --color-surface-raised: #111827; /* hovered cells, dropdown panels */
-  --color-border: #1a2236; /* 1px hairlines, grid-cell gaps, pills */
-  --color-border-bright: #2c3a5c; /* hovered borders */
-  --color-text-dim: #76869f; /* mono labels, corner metadata — 5.44:1 on void */
+  --color-void: #f6f4ef;
+  --color-surface-raised: #f1f0ec;
+  --color-border: #dedbd5;
+  --color-border-bright: #b5b8c5;
+  --color-text-dim: #656a7b;
 
-  /* Motion — THE easing for all CSS transitions */
   --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
 
-  /* Content container cap — widens for TV-class glass (≥2560px) */
   --container-max: 1440px;
 
-  /* Typography scale */
   --text-display: clamp(2.4rem, 1rem + 7.5vw, 6.75rem);
   --text-h2: clamp(1.75rem, 1rem + 3vw, 3rem);
   --text-h3: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
   --text-mono-label: 0.7rem;
   --text-body: clamp(0.9375rem, 0.875rem + 0.35vw, 1.0625rem);
 
-  /* Spacing system — 8px grid */
   --grid-unit: 8px;
-  --space-xs: calc(var(--grid-unit) * 1); /* 8px */
-  --space-sm: calc(var(--grid-unit) * 2); /* 16px */
-  --space-md: calc(var(--grid-unit) * 3); /* 24px */
-  --space-lg: calc(var(--grid-unit) * 4); /* 32px */
-  --space-xl: calc(var(--grid-unit) * 6); /* 48px */
-  --space-2xl: calc(var(--grid-unit) * 8); /* 64px */
-  --space-3xl: calc(var(--grid-unit) * 12); /* 96px */
+  --space-xs: calc(var(--grid-unit) * 1);
+  --space-sm: calc(var(--grid-unit) * 2);
+  --space-md: calc(var(--grid-unit) * 3);
+  --space-lg: calc(var(--grid-unit) * 4);
+  --space-xl: calc(var(--grid-unit) * 6);
+  --space-2xl: calc(var(--grid-unit) * 8);
+  --space-3xl: calc(var(--grid-unit) * 12);
 
-  /* Responsive layout */
   --container-padding-x: clamp(16px, 4vw, 32px);
   --container-padding-y: clamp(48px, 8vw, 64px);
   --section-spacing: clamp(48px, 10vw, 96px);
   --content-spacing: clamp(32px, 6vw, 48px);
 
-  /* Touch targets */
   --touch-target-min: 44px;
   --button-height-min: 48px;
 
-  /* Auxiliary type scale */
   --text-base: clamp(14px, calc(0.875rem + 0.25vw), 16px);
   --text-sm: clamp(12px, calc(0.75rem + 0.25vw), 14px);
   --text-lg: clamp(16px, calc(1rem + 0.5vw), 20px);
@@ -138,51 +124,38 @@
   --text-2xl: clamp(24px, calc(1.5rem + 1.5vw), 36px);
   --text-3xl: clamp(32px, calc(2rem + 2vw), 48px);
 
-  /* QubeTX kit legacy aliases (vendored modules reference these) */
-  --dark-bg: #0a0f1c;
-  --card-bg: #0d1117;
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
+  --dark-bg: #f6f4ef;
+  --card-bg: #fdfcf9;
+  --text-primary: #172137;
+  --text-secondary: #5f687a;
 
-  /* =============================================================
-     QubeTX brand accent — blue→violet on the void (kit verbatim).
-     Full QubeTX design system; the QorkMe sage/bamboo sub-brand
-     layer has been retired. Living spec: qubetx.com/design-system.
-     `--color-arrival` is #3385ff (≈5.7:1 AA) — #0066FF is only
-     ~4.3:1, too dim for transient text on void.
-     ============================================================= */
-  --color-primary: #0066ff; /* QubeTX action color, focus ring, active accents */
-  --color-primary-hover: #3385ff; /* lighter blue on hover */
-  --color-arrival: #3385ff; /* slot-roll arrival flash — ≈5.7:1 AA on void */
-  --gradient-brand: linear-gradient(90deg, #2563eb, #7c3aed); /* blue → violet */
-  --glow-primary: rgba(37, 99, 235, 0.25); /* button hover glow */
-  --glow-blue: var(--glow-primary); /* kit alias */
-  --primary-blue: var(--color-primary); /* kit alias — QubeTX action color */
-  --color-accent: #7c3aed; /* gradient violet — far end of the brand ramp */
-  --color-accent-hover: #9d5cf5; /* lighter violet */
+  --color-primary: #1757e8;
+  --color-primary-hover: #214fc7;
+  --color-arrival: #214fc7;
+  --gradient-brand: linear-gradient(90deg, #2563eb, #7c3aed);
+  --glow-primary: rgba(37, 99, 235, 0.25);
+  --glow-blue: var(--glow-primary);
+  --primary-blue: var(--color-primary);
+  --color-accent: #7c3aed;
+  --color-accent-hover: #6425d0;
 
-  /* Semantic tones (void-tuned, all ≥4.5:1 as text) */
-  --color-success: #22c55e; /* QubeTX status green */
-  --color-warning: #d6a52e; /* heritage ochre — 8.89:1 */
-  --color-error: #d07a66; /* terracotta, lightened for void — 6.38:1 */
-  --color-info: #7aa3d0; /* slate, lightened for void — 7.64:1 */
+  --color-success: #287255;
+  --color-warning: #825900;
+  --color-error: #a23e32;
+  --color-info: #375fa7;
 
-  /* =============================================================
-     Legacy compat aliases — pre-QubeTX components reference these.
-     Mapped onto QubeTX structure; retire as pages migrate.
-     ============================================================= */
   --color-background: var(--color-void);
-  --color-background-accent: #070a14; /* stripe alt */
-  --color-surface: #0d1117;
-  --color-surface-elevated: #111827;
-  --color-surface-muted: #1a2236;
-  --color-secondary: #94a3b8;
-  --color-secondary-hover: #cbd5e1;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #76869f;
-  --color-text-inverse: #05070f;
-  --color-border-strong: #2c3a5c;
+  --color-background-accent: #f1f0ec;
+  --color-surface: #fdfcf9;
+  --color-surface-elevated: #f1f0ec;
+  --color-surface-muted: #dedbd5;
+  --color-secondary: #5f687a;
+  --color-secondary-hover: #455268;
+  --color-text-primary: #172137;
+  --color-text-secondary: #5f687a;
+  --color-text-muted: #656a7b;
+  --color-text-inverse: #ffffff;
+  --color-border-strong: #b5b8c5;
   --color-ring: rgba(51, 133, 255, 0.4);
   --color-shadow: rgba(0, 0, 0, 0.5);
   --color-shadow-hover: rgba(0, 0, 0, 0.65);
@@ -190,7 +163,6 @@
   --container-padding: var(--container-padding-x);
   --card-padding: clamp(20px, 2vw + 12px, 32px);
 
-  /* Radius scale — QubeTX: 2px chips · 4px pills/bars · 6px panels/buttons */
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 6px;
@@ -206,23 +178,19 @@
   --weight-body-strong: 500;
   --weight-ui-strong: 700;
   --weight-display-strong: 900;
-  --weight-ui-button: 900;
+  --weight-ui-button: 600;
 
   --transition-fast: 140ms var(--ease-out);
   --transition-base: 240ms var(--ease-out);
   --transition-slow: 420ms var(--ease-out);
 }
 
-/* TV tier — container widens on ≥2560px glass */
 @media (min-width: 2560px) {
   :root {
     --container-max: 1800px;
   }
 }
 
-/* Standalone font mapping (QorkMe self-hosts @font-face — no next/font, so
-   the literal families satisfy the stacks; this mirrors the kit's documented
-   standalone fallback) */
 :root {
   --font-makira: 'Makira';
   --font-plex-mono: 'IBM Plex Mono';
@@ -268,7 +236,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   font-size: 16px;
 }
 
@@ -295,12 +263,10 @@ h6 {
   color: var(--text-primary);
 }
 
-/* QubeTX heading register: Makira Black, uppercase via CSS (storage stays
-   sentence case), tight leading */
 h1,
 h2 {
   font-weight: 900;
-  text-transform: uppercase;
+  text-transform: none;
   letter-spacing: -0.02em;
   line-height: 1.05;
 }
@@ -358,18 +324,15 @@ pre {
   font-family: var(--font-stack-mono);
 }
 
-/* Mono micro-label — pills, nav, corner metadata (uppercase via CSS) */
 .mono-label {
   font-family: var(--font-stack-mono);
   font-size: var(--text-mono-label);
   font-weight: 500;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-text-dim);
 }
 
-/* Card surface — 1px hairline does the elevation work (QubeTX: borders over
-   shadows) */
 .card {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -390,11 +353,11 @@ pre {
 }
 
 .btn {
-  font-family: var(--font-stack-mono);
+  font-family: var(--font-stack-sans);
   font-weight: 600;
   font-size: 0.82rem;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
+  text-transform: none;
   border-radius: var(--radius-lg);
   display: inline-flex;
   align-items: center;
@@ -507,8 +470,6 @@ pre {
   letter-spacing: 0.01em;
 }
 
-/* Makira scope — apply to a page wrapper to override all text.
-   Excludes code/pre and .font-mono elements so IBM Plex Mono surfaces. */
 .font-makira,
 .font-makira *:not(code):not(pre):not(.font-mono):not(.font-mono *),
 .font-makira input,
@@ -524,9 +485,8 @@ pre {
   font-family: var(--font-stack-mono) !important;
 }
 
-/* Admin table styling — striping and hover accent */
 .admin-table tbody tr:nth-child(even) {
-  background: #070a14;
+  background: #f1f0ec;
 }
 
 .admin-table tbody tr {
@@ -629,7 +589,6 @@ pre {
   animation: fadeIn 0.55s var(--ease-out) 1.2s both;
 }
 
-/* Disable entrance animations on mobile for performance */
 @media (max-width: 767px) {
   .animate-fadeIn-delay-200,
   .animate-fadeIn-delay-300,
@@ -675,10 +634,9 @@ pre {
 
 ::selection {
   background: rgba(37, 99, 235, 0.45);
-  color: #ffffff;
+  color: #172137;
 }
 
-/* Screen reader only - visually hidden but accessible */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -691,7 +649,6 @@ pre {
   border-width: 0;
 }
 
-/* Touch targets — enforced under coarse pointers only (QubeTX rule) */
 @media (pointer: coarse) {
   button,
   a[role='button'],
@@ -699,14 +656,6 @@ pre {
     min-height: var(--touch-target-min);
     min-width: var(--touch-target-min);
   }
-}
-
-/* Entrance FOUC guard — html[data-loading] is set by an inline script before
-   first paint and lifted by LoadSequence (3s failsafe). Without JS the
-   attribute never arms, so server HTML stays the visible final state. */
-html[data-loading] [data-load],
-html[data-loading] [data-load-decode] {
-  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -718,4 +667,63 @@ html[data-loading] [data-load-decode] {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+.site-shell {
+  min-height: 100dvh;
+  overflow: clip;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+}
+.motion-toggle {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+.motion-toggle:hover:not(:disabled) {
+  color: var(--color-primary);
+}
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  left: 16px;
+  top: -80px;
+  background: white;
+  padding: 12px 20px;
+  border: 2px solid var(--color-primary);
+  border-radius: 6px;
+}
+.skip-link:focus {
+  top: 12px;
+}
+[data-paused='true'] *,
+[data-paused='true'] *::before,
+[data-paused='true'] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+.page-content {
+  width: min(100%, 960px);
+  margin: auto;
+  padding: 100px 24px 72px;
+}
+.message-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  padding: clamp(24px, 5vw, 44px);
+}
+.message-panel h1 {
+  margin-bottom: 16px;
 }

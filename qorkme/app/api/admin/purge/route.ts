@@ -10,21 +10,15 @@ export async function POST() {
   try {
     const adminClient = await createAdminClient();
 
-    const placeholderId = '00000000-0000-0000-0000-000000000000';
-
-    const [{ error: clicksError }, { error: urlError }] = await Promise.all([
-      adminClient.from('clicks').delete().neq('id', placeholderId),
-      adminClient.from('urls').delete().neq('id', placeholderId),
-    ]);
-
-    if (clicksError || urlError) {
-      const message = clicksError?.message || urlError?.message || 'Failed to purge data';
+    const { data, error } = await adminClient.rpc('admin_purge_links');
+    if (error) {
+      const message = 'Could not clear the links. Please retry.';
       return NextResponse.json({ success: false, message }, { status: 500 });
     }
 
     revalidatePath('/admin');
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, deleted: data });
   } catch (purgeError) {
     const message = purgeError instanceof Error ? purgeError.message : 'Unexpected purge failure';
     return NextResponse.json({ success: false, message }, { status: 500 });

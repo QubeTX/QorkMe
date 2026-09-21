@@ -1,37 +1,18 @@
 # QorkMe - Premium URL Shortener
 
-A sophisticated, scalable URL shortener built with Next.js 15, TypeScript, and Supabase, featuring a dark-only QubeTX interface — void `#05070f` surfaces, a blue→violet (`#2563eb → #7c3aed`) brand gradient, hairline-border panels, and intelligent short code generation.
+A URL shortener built with Next.js 15, TypeScript, and Supabase. The warm ivory interface pairs a Makira wordmark with procedural dithering and pointer-reactive WebGPU holography.
 
 ## Features
 
-### Core Functionality
+- Memorable short codes and optional custom aliases, with clear loading, error, and explicit copy feedback.
+- Shared light design across the home page, GitHub-authenticated admin, CLI instructions, result pages, and interactive 404.
+- Server-paginated admin search, analytics, and deletion; database indexes support code lookup, sorting, and substring search.
+- Atomic per-destination deduplication prevents concurrent requests from creating extra automatic short codes.
+- Redirects check current link status on every request. They intentionally use `no-store` so deleted or disabled destinations do not remain usable through stale browser caches.
+- Reduced motion, a persistent motion control, and static fallbacks keep the tool usable without GPU effects.
+- Stable GET/POST shorten API and a separate cross-platform `qork` CLI.
 
-- **Smart URL Shortening**: Generate memorable short codes using consonant-vowel patterns
-- **Custom Aliases**: Create personalized short codes with case-insensitive matching
-- **QR Code Generation**: Instant QR codes for easy mobile sharing
-- **Analytics Tracking**: Comprehensive click analytics with device and geographic data
-- **Bulk Operations**: Efficient handling of multiple URLs
-- **URL Validation**: Robust URL validation and sanitization
-
-### Design & User Experience
-
-- **Animated Dot-Grid Background**: Canvas dot field on the QubeTX blue→violet ramp with pointer-reactive swells and a `firePulse` ripple when a link is created
-- **LED Matrix Surfaces**: Canvas LED word board (404, login) and a live 12-hour LED clock, both on the blue→violet color ramp
-- **Terminal Hero**: A "terminal" home composition — a `$ qork "url"` mono line and a Makira Black blue→violet gradient `QORK.ME` wordmark
-- **Hairline Surfaces**: 1px borders do the elevation work on dark void surfaces — no heavy shadows
-- **Technical Typography**: Makira Sans Serif (Black 900 uppercase headings/wordmarks) paired with IBM Plex Mono for the technical register (labels, statuses, buttons, short URLs)
-- **Slot-Roll Interactions**: Every label change rides a slot roll; inline mono `ERR //` lines instead of toasts
-- **Responsive Excellence**: Mobile-first layouts optimized for quick scanning, scaling up to a TV tier and down to landscape phones
-- **Dark Only**: A single QubeTX palette — no light mode, no theme toggle
-
-### Technical Excellence
-
-- **Next.js 15.5.3 with App Router**: Latest React 19 features and server-side rendering
-- **TypeScript 5**: Full type safety throughout the application
-- **Supabase Integration**: PostgreSQL database with real-time capabilities
-- **Scalable Architecture**: Designed to handle 200,000+ URLs efficiently
-- **Performance Optimized**: Database indexes and caching strategies
-- **Security First**: Input validation, sanitization, and protected API routes
+See [the design system](docs/DESIGN_SYSTEM.md), [source notices](docs/THIRD_PARTY_NOTICES.md), and [launch verification](docs/LAUNCH_VERIFICATION.md). The previous local prototype gallery is retired.
 
 ## Command-Line Tool (`qork`)
 
@@ -339,28 +320,15 @@ Optimized PostgreSQL schema with:
 Key performance features:
 
 - Case-insensitive lookups with generated columns
-- Partitioned analytics for high-volume tracking
-- Comprehensive indexing strategy for 200,000+ URLs
+- Indexed analytics with bounded date windows
+- Search and pagination indexes; see the 250,000-row query probe in the launch verification record
 - Row-level security for multi-tenant support
 
-## QubeTX Design System
+## Design system
 
-QorkMe runs on the full QubeTX design system (dark only):
+The approved production design is warm ivory with blue-violet dithering and holographic lettering. Makira leads the interface; IBM Plex Mono is used for code and technical details. Native focus, explicit clipboard actions, responsive layouts, and reduced-motion fallbacks take priority over decoration.
 
-- **Void Color Story**: Void `#05070f` background with hairline-border surfaces; the blue→violet (`#2563eb → #7c3aed`) brand gradient powers the wordmark, dot grid, and LED surfaces; QubeTX blue `#0066FF` is the action color
-- **Hairline Depth**: 1px borders do the elevation work — no heavy shadows
-- **Typography Balance**: Makira Sans Serif (Black 900 uppercase) leads hero moments and wordmarks while IBM Plex Mono carries the technical register — labels, statuses, buttons, and short URLs
-- **Dark Only**: A single QubeTX palette — no light mode, no theme toggle
-- **Measured Motion**: anime.js / Framer Motion under the QubeTX motion doctrine — one owner per property, slot-roll label changes, reduced motion = instant final state
-
-### Brand Logo Assets
-
-- **Qork Logo (transparent)**: `https://shaughv.s3.us-east-1.amazonaws.com/brandmark/QORK/qork-logo.svg`
-- **Qork Logo (with background)**: `https://shaughv.s3.us-east-1.amazonaws.com/brandmark/QORK/qork-logo-background.svg`
-
-The Qork logo appears in the homepage hero, site header, 404 page, admin dashboard, site footer, and as the favicon.
-
-See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for the complete QubeTX design system specification.
+See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for current guidance. Local SVG/PNG/ICO favicon assets use the actual Makira Black Q. Older remote logo assets are not required by the new site.
 
 ## Production Configuration
 
@@ -379,22 +347,7 @@ See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for the complete QubeTX desig
 
 ### CI/CD Automation
 
-The project includes two GitHub Actions workflows:
-
-#### 1. CI Testing & Quality Checks (`ci.yml`)
-
-- **Multi-Node Testing**: Tests on Node.js 18.x and 20.x
-- **Code Quality**: ESLint, Prettier, and TypeScript checks
-- **Security Scanning**: Dependency audits with npm audit and Trufflehog secret detection
-- **Preview Deployments**: Automatic preview URLs for pull requests with GitHub comments
-- **Bundle Size Analysis**: Build size reporting and optimization checks
-
-#### 2. Production Deployment (`deploy.yml`)
-
-- **Automatic Deployment**: Triggers on main branch pushes or manual workflow dispatch
-- **Vercel Integration**: Seamless production deployment with CLI v4
-- **Commit Comments**: Automatic deployment status updates with production URLs
-- **Actions Versions**: Uses actions/checkout@v4 and actions/setup-node@v4
+The root `.github/workflows/ci.yml` checks Node 20 and 22. It runs ESLint, TypeScript, Prettier, Vitest, and the production build. A push to main deploys through Vercel only after both test jobs pass. The older separate deployment workflow is disabled; nested workflows under `qorkme/.github` are reference files, not active GitHub workflows.
 
 ## Deployment & CI/CD
 

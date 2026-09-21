@@ -304,3 +304,129 @@
     padding-top: 120px;
   }
 }
+
+.cliTitle {
+  font-size: clamp(30px, 5vw, 56px);
+  text-align: center;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+.hero {
+  text-align: center;
+  padding-top: 0;
+}
+.lede {
+  text-align: center;
+}
+.hero {
+  padding-top: 92px;
+  padding-bottom: 72px;
+  align-items: center;
+  gap: 12px;
+}
+.hero > div:first-child {
+  width: 100%;
+}
+.cliTitle {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+.lede {
+  font-family: var(--font-stack-sans);
+  font-size: 18px;
+  letter-spacing: 0;
+  max-width: 48ch;
+}
+.versionBadge {
+  padding: 8px 0;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+}
+.pageNav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+}
+.pageNav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+}
+.pageNav a:hover {
+  color: var(--primary-blue);
+}
+.section {
+  gap: 24px;
+  padding-bottom: 64px;
+}
+.sectionIntro {
+  scroll-margin-top: 96px;
+}
+.sectionIntro h2 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+.sectionIntro p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 17px;
+  line-height: 1.55;
+  max-width: 65ch;
+}
+.disclosure {
+  border-top: 1px solid var(--color-border);
+  min-width: 0;
+}
+.disclosure summary {
+  padding: 18px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 17px;
+}
+.disclosure[open] summary {
+  color: var(--primary-blue);
+}
+.disclosure > div {
+  margin-bottom: 12px;
+}
+.downloads {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+.winInstallersNote,
+.winScopeDesc {
+  font-family: var(--font-stack-sans);
+  font-size: 14px;
+  letter-spacing: 0;
+}
+.winScope {
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+@media (max-width: 560px) {
+  .hero {
+    padding-top: 80px;
+    padding-bottom: 48px;
+  }
+  .shell {
+    padding-inline: 20px;
+  }
+  .cliTitle {
+    max-width: 12ch;
+  }
+  .lede {
+    font-size: 16px;
+  }
+}

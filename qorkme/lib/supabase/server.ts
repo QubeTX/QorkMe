@@ -5,6 +5,7 @@
 
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { fetchWithTimeout } from './fetch';
 import type { Database } from './types';
 
 export async function createServerClientInstance() {
@@ -14,6 +15,7 @@ export async function createServerClientInstance() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      global: { fetch: fetchWithTimeout },
       cookies: {
         getAll() {
           return cookieStore.getAll();
@@ -45,6 +47,7 @@ export async function createAnonClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      global: { fetch: fetchWithTimeout },
       auth: {
         autoRefreshToken: false,
         persistSession: false,
@@ -63,6 +66,7 @@ export async function createAdminClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_KEY!,
     {
+      global: { fetch: fetchWithTimeout },
       auth: {
         autoRefreshToken: false,
         persistSession: false,

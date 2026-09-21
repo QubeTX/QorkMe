@@ -6,6 +6,16 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## September 21, 2026 — A lighter QorkMe
+
+- The site now has a warm ivory canvas, a blue-violet holographic logo, and playful dithering. The same design carries through the admin and CLI pages.
+- Shortening stays simple: paste a link, optionally choose an alias, and copy the result. Motion can be paused, and the tool still works without graphics acceleration.
+- Missing links get an interactive new page: “This link went off-script.” The new favicon uses the Q from the actual wordmark.
+- The CLI page has clearer setup instructions and Windows download choices. Less-used commands and installers expand when needed.
+- Admin search and concurrent shortening are better prepared for larger collections. Deleted links stop redirecting immediately, and clearing links also clears their analytics in one operation.
+
+---
+
 ## June 23, 2026 — Windows install command works from any shell
 
 **Improved**

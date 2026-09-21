@@ -87,7 +87,6 @@ export function PretextBlock({
     }
 
     return adjustments;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, width, text, lineHeight, shrinkwrap, prepare, layout]);
 
   const mergedStyle = pretextStyle ? { ...style, ...pretextStyle } : style;

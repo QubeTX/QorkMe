@@ -1,10 +1,13 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
+
 Work inside `qorkme/`, the Next.js 15 app. Routes live under `qorkme/app/`: `app/page.tsx` renders the landing form, `[shortCode]/route.ts` handles redirects, and `api/shorten/route.ts` powers shortening. Shared UI belongs in `qorkme/components/`, shortcode helpers in `qorkme/lib/shortcode/`, and Supabase clients in `qorkme/lib/supabase/`. Tests mirror source paths in `qorkme/tests/`, environment docs live in `qorkme/supabase/`, and Makira Sans Serif font files live in `qorkme/public/fonts/`.
 
 ## Build, Test, and Development Commands
+
 Run all tooling from `qorkme/`:
+
 - `npm run dev` starts the Next.js dev server on http://localhost:3000.
 - `npm run lint` applies the project ESLint rules.
 - `npm run type-check` uses `tsc --noEmit` for strict type coverage.
@@ -13,16 +16,21 @@ Run all tooling from `qorkme/`:
 - `npm run build` creates the CI production bundle.
 
 ## Coding Style & Naming Conventions
-Code in TypeScript + React 19 with Tailwind utilities. Prettier enforces 2-space indents and single quotes; run the formatter before committing. Components stay PascalCase (`UrlShortener.tsx`), hooks/utilities are camelCase, and route directories remain lowercase. Use the `@/` alias for shared imports. Follow the full QubeTX design system in `qorkme/docs/DESIGN_SYSTEM.md` (dark-only void, canonical blue→violet): Makira Sans Serif for headings/wordmarks (Black 900 uppercase) and IBM Plex Mono for the technical register — labels, statuses, buttons, and short URLs.
+
+Code in TypeScript + React 19 with Tailwind utilities. Prettier enforces 2-space indents and single quotes; run the formatter before committing. Components stay PascalCase (`UrlShortener.tsx`), hooks/utilities are camelCase, and route directories remain lowercase. Use the `@/` alias for shared imports. Follow `qorkme/docs/DESIGN_SYSTEM.md`: the approved warm ivory design with blue-to-violet dither and holographic branding. Makira Black 900 for wordmarks, sentence-case UI text, and IBM Plex Mono for commands and technical details. Keep effects away from the form and respect the shared motion preference.
 
 ## Testing Guidelines
+
 Write Vitest specs under `qorkme/tests/` using the same subpath as the source file (`lib/shortcode/generator.test.ts`). Reuse `qorkme/tests/setup.ts` for globals. Cover shortcode generation, API edge cases, Supabase client error handling, and UI flows with DOM assertions. Run `npm test` before submitting changes and capture failing snapshots when fixing regressions.
 
 ## Commit & Pull Request Guidelines
+
 Use imperative commit subjects (`Refresh admin metrics`). Update both `CHANGELOG.md` and `qorkme/CHANGELOG.md` on every change, stamping the date and briefly noting scope. PRs describe intent, list local commands executed, link issues or tasks, and attach screenshots or recordings for UI updates. Document any environment variable updates, especially `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SHORT_DOMAIN`, and service keys.
 
 ## Security & Configuration Tips
+
 Store credentials in `.env.local`; never commit Supabase tokens. Mirror schema edits in `qorkme/supabase/schema.sql` and keep RLS policies intact. Review `vercel.json` and `.github/workflows/` after configuration shifts. When moving fonts, update `qorkme/public/fonts/README.md` so licensing stays accurate and deployment bundles remain compliant.
 
 ## qork CLI & Public API
-This repo hosts a public shorten API and the install surface for **`qork`**, the companion CLI (separate repo [QubeTX/qork](https://github.com/QubeTX/qork), cargo-dist + crates.io, currently v1.1.0). `app/api/shorten/route.ts` serves `POST /api/shorten` (JSON `{ url, customAlias?, source? }`) and a `GET /api/shorten?url=<encoded>` convenience mode; both return the same flat envelope with a fully-qualified `href`, and `resolveSource()` tags each link `web | cli | api`. Install surface: `app/install/page.tsx` plus the static `public/{install.sh,install.ps1,llms.txt}`. The CLI lives in its own repo — edit it there, not here. Keep these in lockstep with `qorkme/docs/qork-cli-buildout.md` and `public/llms.txt`.
+
+This repo hosts a public shorten API and the install surface for **`qork`**, the companion CLI (separate repo [QubeTX/qork](https://github.com/QubeTX/qork), cargo-dist + crates.io, currently v1.1.1). `app/api/shorten/route.ts` serves `POST /api/shorten` (JSON `{ url, customAlias?, source? }`) and a `GET /api/shorten?url=<encoded>` convenience mode; both return the same flat envelope with a fully-qualified `href`, and `resolveSource()` tags each link `web | cli | api`. Install surface: `app/install/page.tsx` plus the static `public/{install.sh,install.ps1,llms.txt}`. The CLI lives in its own repo — edit it there, not here. Keep these in lockstep with `qorkme/docs/qork-cli-buildout.md` and `public/llms.txt`.
