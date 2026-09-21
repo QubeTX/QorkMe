@@ -2,6 +2,11 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-09-21 — A small dither wake
+
+- Add a subtle mouse-following trail of blue-violet dots and QORK.ME lettering behind page content while retaining the existing header effects. The trail fades in under a second and respects motion preferences.
+- Keep the wake bounded, stop its clock when idle, clear it on scrolling/typing/navigation, and skip touch input. Verify disposal, hidden-tab behavior, and large-display memory bounds with focused lifecycle tests.
+
 ## 2026-09-21 — Dither + Hologram launch
 
 - Production verification: deploy the approved design, verify GitHub admin access and desktop/mobile flows, and complete the authorized cleanup of 26 links and 142 click events. Record zero remaining links and immediate missing-link behavior after deletion.

@@ -8,6 +8,8 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ## September 21, 2026 — A lighter QorkMe
 
+- A faint trail of dithered dots and letters now follows your mouse and fades behind it. It stays beneath the controls and turns off with the motion setting or reduced motion.
+
 - Long custom links now wrap neatly on the saved-link and QR page, including on phones.
 
 - The site now has a warm ivory canvas, a blue-violet holographic logo, and playful dithering. The same design carries through the admin and CLI pages.
