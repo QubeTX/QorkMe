@@ -2,6 +2,11 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-09-21 — Gail Rock 404 numerals
+
+- Set the large 404 artwork in Gail Rock Bold with natural monospace spacing, retaining the dither field, centered hologram engraving, and ripple interaction.
+- Load the existing SHAUGHV-hosted bold face only where used; keep the bundled IBM Plex Mono Bold fallback. Document the font source without redistributing licensed binaries.
+
 ## 2026-09-21 — Repair admin delete-all
 
 - Make the atomic purge compatible with PostgREST's pg-safeupdate guard by explicitly selecting records through their non-null primary keys. Preserve service-role-only execution and transactional deletion of links plus analytics.

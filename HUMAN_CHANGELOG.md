@@ -6,6 +6,13 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## September 21, 2026 — A cleaner 404
+
+- The oversized 404 now uses Gail Rock Bold. The digits have more room while keeping the bold look, hologram, and playful pixel effects.
+- A built-in bold font keeps the page readable if the font download fails.
+
+---
+
 ## September 21, 2026 — Repair deleting all links
 
 - Fixed a conflict between the delete-all command and the database's safety checks. Successful deletion now also refreshes the dashboard totals.
