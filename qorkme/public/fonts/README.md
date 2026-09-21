@@ -4,7 +4,7 @@ This directory contains the Makira Sans Serif and IBM Plex Mono font files in WO
 
 ## Font Families
 
-**Makira Sans Serif** — primary face for all visible type (body, UI, headings, display):
+**Makira Sans Serif** — primary face for body, UI, headings, and the QORK.ME wordmark:
 
 - `Makira-Regular.woff2` - Regular (400)
 - `Makira-Medium.woff2` - Medium (500)
@@ -35,3 +35,12 @@ See `app/globals.css` for @font-face declarations and `docs/DESIGN_SYSTEM.md` fo
 ## Favicon
 
 The September 2026 favicon uses an outlined Q from Makira Black, with a blue-violet fill and ivory background. SVG, ICO, PNG, and Apple-touch variants share that outline; no new font files were added or moved. Existing font licenses still apply.
+
+## 404 display numerals
+
+The large 404 uses **Gail Rock Bold (700)** from the existing SHAUGHV font CDN:
+[bold WOFF2](https://cdn.shaughv.com/fonts/gail-rock/woff2/Gail-Rock-Bold.woff2).
+The family is by Casloop Studio; the SHAUGHV asset registry records hosting permission.
+No Gail Rock font binaries are copied into this repository or relicensed.
+The scoped declaration in `components/brand/BrandStage.module.css` downloads the
+24 KB face only when used. IBM Plex Mono Bold is the bundled fallback.

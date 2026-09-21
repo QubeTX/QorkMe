@@ -28,7 +28,7 @@ Keep rolling Shorten/Working and Copy/Copied feedback truthful. Copy must be an 
 
 ## Error pages
 
-Missing, expired, and disabled links lead to a real HTML 404 page with an expanded dither field and holographic 404. The playful message is “This link went off-script.” The pixel ripple is optional; both keyboard and pointer can trigger it. Always retain clear routes home and back.
+Missing, expired, and disabled links lead to a real HTML 404 page with an expanded dither field and holographic 404 set in Gail Rock Bold (700), with natural monospace spacing. The display font comes from the existing SHAUGHV CDN, with bundled IBM Plex Mono Bold as its fallback. The playful message is “This link went off-script.” The pixel ripple is optional; both keyboard and pointer can trigger it. Always retain clear routes home and back.
 
 ## Sources and fonts
 

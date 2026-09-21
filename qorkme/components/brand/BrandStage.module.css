@@ -135,8 +135,10 @@
   height: clamp(270px, 31vw, 380px);
 }
 .expanded .wordmark {
-  font-size: clamp(150px, 26vw, 310px);
-  letter-spacing: -0.07em;
+  font-family: 'Gail Rock', var(--font-stack-mono);
+  font-weight: 700;
+  font-size: clamp(150px, 28vw, 340px);
+  letter-spacing: 0;
 }
 .expanded .dither {
   inset: -40px -140px -25px;
@@ -147,9 +149,16 @@
     height: 275px;
   }
   .expanded .wordmark {
-    font-size: clamp(140px, 40vw, 240px);
+    font-size: clamp(140px, 42vw, 240px);
   }
   .expanded .dither {
     inset: -20px -100px;
   }
+}
+@font-face {
+  font-family: 'Gail Rock';
+  src: url('https://cdn.shaughv.com/fonts/gail-rock/woff2/Gail-Rock-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
