@@ -680,8 +680,14 @@ pre {
 }
 
 .site-shell {
+  isolation: isolate;
   min-height: 100dvh;
   overflow: clip;
+}
+.site-shell main,
+.site-shell footer {
+  position: relative;
+  z-index: 1;
 }
 button,
 input,

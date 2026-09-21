@@ -20,6 +20,8 @@ There is one animation owner per property. All canvas renderers use the shared r
 
 The footer motion control and the operating system's reduced-motion setting apply site-wide. Reduced motion shows the final readable state. Unsupported or failed WebGPU retains the HTML gradient wordmark; failed Canvas keeps a static dotted fallback. Effects are decorative and never gate form submission, copying, or navigation.
 
+`DitherTrail` adds a small pointer wake using the same Bayer dots and character register. It sits behind page content, follows mouse movement with a slight lag, and dissolves in 850ms. Its 30fps clock sleeps when empty; scrolling, typing, hidden tabs, and route changes clear the wake. Touch input and reduced/paused motion do not draw a trail. The backing canvas is capped at 1.25 device pixels and two million total pixels, with at most 48 trail samples.
+
 Keep rolling Shorten/Working and Copy/Copied feedback truthful. Copy must be an explicit action and report success only after the clipboard write resolves. The result contracts the original URL into the shorter address without delaying access to Copy.
 
 ## Error pages

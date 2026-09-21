@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { PretextProvider } from '@/lib/pretext/PretextProvider';
 import { MotionPreference } from '@/components/brand/MotionPreference';
+import { DitherTrail } from '@/components/brand/DitherTrail';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ export default function RootLayout({
               Skip to content
             </a>
             {children}
+            <DitherTrail />
           </MotionPreference>
         </PretextProvider>
         <SpeedInsights />
