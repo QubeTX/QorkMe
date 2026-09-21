@@ -15,7 +15,11 @@
 
 ## Release checks
 
-Production build, CI, deployment, final browser smoke, and the user-authorized link cleanup are recorded here after verification.
+Local optimized production build passed on Next.js 15.5.25. Lint, TypeScript, formatting, and npm audit passed (zero reported vulnerabilities). The optimized bundle renders both effects live in Chrome. Main layout was compared at the same 1534×903 viewport as the approved prototype. CI, deployment, final production smoke, and the user-authorized link cleanup are recorded after verification.
+
+![Main page](screenshots/dither-hologram-home.png)
+
+![404 with pointer lighting](screenshots/dither-hologram-404.png)
 
 ## Practical limits
 

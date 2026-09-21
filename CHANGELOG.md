@@ -4,6 +4,8 @@
 
 ## 2026-09-21 — Dither + Hologram launch
 
+- Validation: 222 tests, lint, type checking, formatting, and the local production build pass; npm audit reports zero vulnerabilities. Include desktop screenshots and a documented 250,000-row query probe.
+
 - Replace the dark production interface with the approved warm ivory design across the main form, admin, sign-in, CLI instructions, results, and error pages. Retain responsive controls, rolling action labels, and explicit copy feedback.
 - Ship the verified vgpu holographic material with a centered linked-ring engraving, procedural ObsidianUI dithering, a larger interactive 404, and a native Makira Q favicon. Add reduced-motion, pause, static fallback, resolution caps, and resource cleanup; retire the local prototype gallery from the repository.
 - Rewrite CLI onboarding around installation and a first link, add accessible keyboard tabs, clarify Windows install scopes, and collapse alternative downloads and advanced commands. Preserve install commands and the public API contract.
