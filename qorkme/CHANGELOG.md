@@ -2,6 +2,12 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-09-21 — Repair admin delete-all
+
+- Make the atomic purge compatible with PostgREST's pg-safeupdate guard by explicitly selecting records through their non-null primary keys. Preserve service-role-only execution and transactional deletion of links plus analytics.
+- Refresh admin summary totals after successful deletion, require a positive success response, and log sanitized failure codes without exposing database details.
+- Add cancellation, failure/retry, malformed-response, and exception coverage, plus a database regression probe that always rolls back its deletions.
+
 ## 2026-09-21 — More room for the dither
 
 - Slightly increase dither contrast and widen the homepage field. Carry a restrained, full-height animated texture down the CLI and admin margins while keeping forms, commands, and tables clear.

@@ -6,6 +6,13 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## September 21, 2026 — Repair deleting all links
+
+- Fixed a conflict between the delete-all command and the database's safety checks. Successful deletion now also refreshes the dashboard totals.
+- Added checks for cancellation, errors, and retrying. Tested the database operation with an automatic rollback so existing links and click history remain intact.
+
+---
+
 ## September 21, 2026 — A little more dither
 
 - The background texture is a touch stronger and spreads farther around the homepage. On the command-line and admin pages, it now continues down the page instead of staying around the logo.

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAdminResource } from '@/hooks/useAdminResource';
 import {
   ArrowDown,
@@ -122,6 +123,7 @@ function DeleteButton({
 }
 
 export function AdminLinksTable() {
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<SortColumn>('created_at');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
@@ -175,13 +177,15 @@ export function AdminLinksTable() {
       return;
     }
     setPurging(true);
+    setStatus(null);
     try {
       const res = await fetch('/api/admin/purge', { method: 'POST' });
       const json = await res.json().catch(() => ({}));
-      if (res.ok && json.success !== false) {
+      if (res.ok && json.success === true) {
         setStatus({ message: 'All links deleted.', tone: 'ok' });
         setPage(1);
         fetchLinks();
+        router.refresh();
       } else {
         setStatus({ message: json.message || 'Purge failed', tone: 'error' });
       }
