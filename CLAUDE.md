@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-QorkMe is a production-ready URL shortener built with Next.js 15, TypeScript, and Supabase. It is a **QubeTX property**: the interface runs on the full QubeTX design system v3.2.1 (dark-only void `#05070f`, hairline-border surfaces, IBM Plex Mono technical register, anime.js/Framer Motion doctrine) — canonical QubeTX blue `#0066FF` as the action color and a blue→violet (`#2563eb → #7c3aed`) LED ramp powering the signature dot-matrix surfaces. Paired with intelligent short code generation and comprehensive analytics tracking. Licensed under Apache License 2.0.
+QorkMe is a URL shortener built with Next.js 15, TypeScript, and Supabase. It is a QubeTX property with the approved warm ivory Dither + Hologram design. Use `qorkme/docs/DESIGN_SYSTEM.md` as the current visual source of truth. Shared dither, WebGPU lettering, rolling labels, and reduced-motion controls appear across the site. Licensed under Apache License 2.0.
 
 **Design system of record:** live spec https://www.qubetx.com/design-system · stable kit permalink https://www.qubetx.com/qubetx-design-system.zip · vendored kit + agent docs at `qorkme/docs/qubetx-design-system/` · QorkMe usage documented in `qorkme/docs/DESIGN_SYSTEM.md` (with measured WCAG ratios). Cross-check changes against the live spec.
 

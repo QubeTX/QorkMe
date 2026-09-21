@@ -8,8 +8,6 @@ let subscribe: (cb: () => void) => () => void;
 describe('resizeCoordinator', () => {
   let addSpy: ReturnType<typeof vi.spyOn>;
   let removeSpy: ReturnType<typeof vi.spyOn>;
-  let _rafSpy: ReturnType<typeof vi.spyOn>;
-  let _cancelRafSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(async () => {
     // Fresh module for each test
@@ -19,11 +17,11 @@ describe('resizeCoordinator', () => {
 
     addSpy = vi.spyOn(window, 'addEventListener');
     removeSpy = vi.spyOn(window, 'removeEventListener');
-    _rafSpy = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
       cb(0);
       return 1;
     });
-    _cancelRafSpy = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {});
+    vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {});
   });
 
   afterEach(() => {

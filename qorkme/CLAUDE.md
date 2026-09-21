@@ -68,19 +68,13 @@ For components needing different props at different breakpoints, render separate
 
 An unlayered `.module.css` rule that sets `display` overrides Tailwind's layered `hidden`/`md:hidden` regardless of source order. For an element that carries a CSS-module class **and** needs responsive show/hide, do it in the module (`@media { display }`), not Tailwind classes. (Bit the admin table: `.mList { display: flex }` ignored `md:hidden`, so the desktop table and mobile cards both rendered at once.)
 
-## Design System — full QubeTX v3.2.1
+## Design system
 
-QorkMe runs on the **full QubeTX design system** (dark-only, void `#05070f`, canonical blue→violet). Full spec + measured WCAG ratios in `docs/DESIGN_SYSTEM.md`. The vendored kit (tokens, motion library, components, agent docs) lives at `docs/qubetx-design-system/`; **live spec: https://www.qubetx.com/design-system ; stable kit permalink: https://www.qubetx.com/qubetx-design-system.zip** — cross-check against the live version, re-download the zip to refresh the vendored kit.
+Use the approved warm ivory Dither + Hologram system documented in `docs/DESIGN_SYSTEM.md`. It supersedes dark-only guidance in the vendored QubeTX reference kit. Keep Makira, the blue-violet identity, and existing rolling labels. Commands and technical details use IBM Plex Mono; ordinary instructions use sentence case.
 
-**Key facts:**
+`components/brand/BrandStage` provides procedural dithering and font-masked WebGPU holography, including the centered linked-ring engraving. Effects remain outside the form and dispose on unmount. Use the existing resize coordinator, one animation owner per property, the shared footer pause control, and readable static fallbacks. Reduced motion shows the final state immediately. The custom cursor and production entrance sequence are retired.
 
-- **Dark only** — no light mode, no theme toggle.
-- Structural tokens (surfaces `#0d1117`/`#111827`, hairline borders `#1a2236`/`#2c3a5c`, text `#fff`/`#94a3b8`/`#76869f`) are QubeTX verbatim — never fork. Borders do elevation work; no large shadows.
-- QubeTX accent: blue `#0066FF` action (~4.3:1 — a UI accent for borders/buttons/icons, not body text), hover `#3385ff`, arrival flash `#3385ff` (≈5.7:1 AA on void), gradient/LED ramp `#2563eb → #7c3aed` (blue→violet), violet accent `#7c3aed` (hover `#9d5cf5`), success `#22c55e`. Semantics: warning `#d6a52e`, error `#d07a66`, info `#7aa3d0` (void-tuned).
-- **Typography**: Makira (400–900, Black 900 uppercase for headings/wordmarks) + IBM Plex Mono (the technical register: labels, statuses, buttons via `.btn`, short URLs, `.mono-label` utility). Sentence case in storage, UPPERCASE via CSS.
-- **Motion doctrine** (see `docs/qubetx-design-system/MOTION_GUIDE.md` + `SKILL.md`): one owner per animated property; anime.js only via `lib/motion/anime.ts`; **no ResizeObserver** (use `lib/pretext/resizeCoordinator`); IO triggers, Lenis scrubbing; reduced motion = final state instantly; label changes ride the slot roll (`lib/motion/SlotRoll`); copy confirmation = `COPIED` flash, **never toasts**.
-- **Pretext**: wrapping body copy uses `PretextBlock` (min-height reservation); `shrinkwrap` only on left-aligned blocks; never measure letter-spaced mono labels. `@chenglou/pretext` is transpiled via `next.config.ts`.
-- Entrances: `LoadSequence` choreography from first paint (`html[data-loading]` FOUC guard, 3s failsafe). BootScreen is vendored but unmounted.
+The main form uses explicit Copy and reports success only after the clipboard promise resolves. Admin and CLI details use progressive disclosure. No prototype app or downloaded example folder is shipped.
 
 ## Architecture Notes
 

@@ -1,15 +1,13 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { SiteFooter } from '@/components/SiteFooter';
-import LabelPill from '@/components/ui/LabelPill';
-import SectionHeading from '@/components/ui/SectionHeading';
+import { BrandStage } from '@/components/brand/BrandStage';
 import TextLink from '@/components/ui/TextLink';
 import InstallBlock from '@/components/terminal/InstallBlock';
 import TerminalFrame from '@/components/terminal/TerminalFrame';
 import CommandTable from '@/components/terminal/CommandTable';
 import DownloadCard from '@/components/terminal/DownloadCard';
 import LatestVersion from './LatestVersion';
-import LedeCycle from './LedeCycle';
 import WindowsInstallers from './WindowsInstallers';
 import styles from './install.module.css';
 
@@ -27,24 +25,24 @@ type Installer = { name: string; file: string; description: string };
 // (admin); Corporate = per-user (no admin). Each comes as an MSI and an EXE.
 const WINDOWS_INSTALLERS: Installer[] = [
   {
-    name: 'Global · MSI',
+    name: 'All users · MSI',
     file: 'qork-x86_64-pc-windows-msvc.msi',
-    description: 'Per-machine install to Program Files. Requires administrator.',
+    description: 'Installs for everyone on this PC. Requires administrator access.',
   },
   {
-    name: 'Global · EXE',
+    name: 'All users · EXE',
     file: 'qork-x86_64-pc-windows-msvc-setup.exe',
-    description: 'Per-machine Setup wizard. Requires administrator.',
+    description: 'Setup wizard for everyone on this PC. Requires administrator access.',
   },
   {
-    name: 'Corporate · MSI',
+    name: 'Just me · MSI',
     file: 'qork-x86_64-pc-windows-msvc-corporate.msi',
-    description: 'Per-user install to %LocalAppData%. No admin needed.',
+    description: 'Installs for your account. No administrator access needed.',
   },
   {
-    name: 'Corporate · EXE',
+    name: 'Just me · EXE',
     file: 'qork-x86_64-pc-windows-msvc-corporate-setup.exe',
-    description: 'Per-user Setup wizard. No admin needed.',
+    description: 'Setup wizard for your account. No administrator access needed.',
   },
 ];
 
@@ -86,56 +84,58 @@ const LINUX_INSTALLERS: Installer[] = [
 
 export default function InstallPage() {
   return (
-    <div className={`font-makira ${styles.page}`}>
-      <PageHeader right={<span>QORK // CLI</span>} />
+    <div className={`${styles.page}`}>
+      <PageHeader right={<span>Command line</span>} />
 
-      <main className={styles.main}>
+      <main id="main-content" className={styles.main}>
         {/* ---- Hero ---- */}
         <section className={styles.shell}>
           <div className={styles.hero}>
-            <div className={styles.eyebrowRow}>
-              <LabelPill variant="bar">qork // command-line client</LabelPill>
-              <LatestVersion className={styles.versionBadge} />
-            </div>
-
-            <h1 className={styles.wordmark}>
-              <span className={styles.gradientWord}>qork</span>
-            </h1>
-
-            <LedeCycle />
+            <BrandStage compact />
+            <h1 className={styles.cliTitle}>Short links. One command.</h1>
+            <p className={styles.lede}>
+              Paste a URL into your terminal. Get a short link back. No account needed.
+            </p>
+            <LatestVersion className={styles.versionBadge} />
+            <nav className={styles.pageNav} aria-label="On this page">
+              <a href="#install">Install</a>
+              <a href="#use">First link</a>
+              <a href="#downloads">Downloads</a>
+              <a href="#api">API</a>
+            </nav>
           </div>
         </section>
 
         {/* ---- Install ---- */}
         <section className={styles.shell}>
           <div className={styles.section}>
-            <SectionHeading
-              label="01 // Install"
-              title="One line, any platform"
-              subtitle="No account required. The installer drops a single static binary on your PATH."
-            />
+            <div className={styles.sectionIntro} id="install">
+              <h2>1. Get qork.</h2>
+              <p>Choose your platform, copy the command, and run it in your terminal.</p>
+            </div>
             <InstallBlock
               title="Install"
+              detectPlatform
               targets={[
                 {
                   id: 'unix',
                   label: 'macOS / Linux',
                   command: 'curl -LsSf https://qork.me/install.sh | sh',
-                  note: 'Recommended on macOS & Linux. Downloads a prebuilt binary for your CPU (Intel or ARM) to ~/.cargo/bin — no Rust/cargo, no admin.',
+                  note: 'Run in Terminal on macOS or your Linux shell. Downloads a ready-to-run binary for Intel or ARM; no Rust toolchain required.',
                 },
                 {
                   id: 'windows',
                   label: 'Windows',
                   command:
                     'powershell -ExecutionPolicy ByPass -c "irm https://qork.me/install.ps1 | iex"',
-                  note: 'Downloads a prebuilt qork.exe — no Rust/cargo needed. On Windows the MSI/EXE installers below tend to work best:',
+                  note: 'Run in PowerShell. Or choose a Windows installer below. After installing, open a new terminal so it can find qork.',
                   extra: <WindowsInstallers />,
                 },
                 {
                   id: 'cargo',
                   label: 'Cargo',
                   command: 'cargo install qork',
-                  note: 'For machines that already have a Rust toolchain (builds from source). The one-liners above need no Rust.',
+                  note: 'Already using Rust? Cargo builds qork from source. Otherwise, use the command for your platform.',
                 },
               ]}
             />
@@ -145,60 +145,64 @@ export default function InstallPage() {
         {/* ---- Usage ---- */}
         <section className={styles.shell}>
           <div className={styles.section}>
-            <SectionHeading
-              label="02 // Usage"
-              title="Pass a URL, get a link"
-              subtitle="qork prints the short URL to stdout — pipe it, copy it, script it."
-            />
+            <div className={styles.sectionIntro} id="use">
+              <h2>2. Make it shorter.</h2>
+              <p>
+                Replace the example URL with yours. qork prints a full short link, ready to copy or
+                pipe into another command.
+              </p>
+            </div>
             <div className={styles.stack}>
               <TerminalFrame
-                title="QORK // SAMPLE SESSION"
-                meta="SHELL: ~"
+                title="Your first link"
+                meta="Example output"
                 lines={[
                   { text: 'qork https://example.com/some/very/long/path', prompt: true },
                   { text: 'https://qork.me/ka9m', accent: true },
-                  { text: 'qork "https://example.com/a b?x=1&y=2"', prompt: true },
-                  { text: 'https://qork.me/pu3n', accent: true },
                   { text: 'qork https://example.com --alias launch', prompt: true },
                   { text: 'https://qork.me/launch', accent: true },
-                  { text: 'qork --json https://example.com', prompt: true },
-                  { text: '{ "shortUrl": "qork.me/ka9m", "isNew": true }', accent: true },
                 ]}
               />
               <p className={styles.prose}>
-                Quote URLs that contain spaces or shell metacharacters (<code>&amp;</code>,{' '}
-                <code>?</code>) so your shell hands the whole string to qork intact.
+                Put URLs in quotes when they contain spaces, <code>&amp;</code>, or <code>?</code>.
+                Custom aliases are optional and must be available. The links above are examples.
               </p>
               <p className={styles.prose}>
-                Before shortening, qork checks the link is real — it won&apos;t shorten pasted text
-                or a dead (404) URL. Pass <code>--no-check</code> to skip that.
+                qork checks whether a destination looks reachable before shortening it. If that
+                check gets in your way, use <code>--no-check</code> to skip it.
               </p>
-              <CommandTable
-                headers={['Command', 'Description']}
-                rows={[
-                  { command: 'qork <url>', description: 'Shorten a URL; prints the short link' },
-                  { command: 'qork <url> --alias <name>', description: 'Use a custom short code' },
-                  {
-                    command: 'qork <url> --json',
-                    description: 'Print the raw JSON (scripts/agents)',
-                  },
-                  {
-                    command: 'qork <url> --no-check',
-                    description: 'Skip the live-link safety check',
-                  },
-                  { command: 'qork help', description: 'Show help and documentation' },
-                  {
-                    command: 'qork update',
-                    description: 'Update to the latest release (per install method)',
-                  },
-                  {
-                    command: 'qork uninstall [--yes]',
-                    description: 'Fully remove qork from this system',
-                  },
-                  { command: 'qork --version', description: 'Print the version' },
-                ]}
-                footnote="Run qork --help for the full command reference."
-              />
+              <details className={styles.disclosure}>
+                <summary>More commands &amp; options</summary>
+                <CommandTable
+                  headers={['Command', 'Description']}
+                  rows={[
+                    { command: 'qork <url>', description: 'Shorten a URL; prints the short link' },
+                    {
+                      command: 'qork <url> --alias <name>',
+                      description: 'Use a custom short code',
+                    },
+                    {
+                      command: 'qork <url> --json',
+                      description: 'Return JSON for scripts; use href for the full link',
+                    },
+                    {
+                      command: 'qork <url> --no-check',
+                      description: 'Skip the destination reachability check',
+                    },
+                    { command: 'qork help', description: 'Show help and documentation' },
+                    {
+                      command: 'qork update',
+                      description: 'Update to the latest release (per install method)',
+                    },
+                    {
+                      command: 'qork uninstall [--yes]',
+                      description: 'Fully remove qork from this system',
+                    },
+                    { command: 'qork --version', description: 'Print the version' },
+                  ]}
+                  footnote="Run qork --help for the full command reference."
+                />
+              </details>
             </div>
           </div>
         </section>
@@ -206,14 +210,13 @@ export default function InstallPage() {
         {/* ---- Downloadable native installers ---- */}
         <section className={styles.shell}>
           <div className={styles.section}>
-            <SectionHeading
-              label="03 // Installers"
-              title="Native installers"
-              subtitle="Prefer a download? Grab a native installer for your platform. On macOS and Linux the command-line install above is the recommended path; on Windows the MSI/EXE installers work best."
-            />
+            <div className={styles.sectionIntro} id="downloads">
+              <h2>Prefer a download?</h2>
+              <p>Pick your operating system. Every installer contains the same qork CLI.</p>
+            </div>
             <div className={styles.stack}>
-              <div className={styles.dlGroup}>
-                <p className={styles.dlGroupLabel}>Windows</p>
+              <details className={styles.disclosure}>
+                <summary>Windows installers</summary>
                 <div className={styles.downloads}>
                   {WINDOWS_INSTALLERS.map(({ name, file, description }) => (
                     <DownloadCard
@@ -227,13 +230,10 @@ export default function InstallPage() {
                     />
                   ))}
                 </div>
-              </div>
+              </details>
 
-              <div className={styles.dlGroup}>
-                <p className={styles.dlGroupLabel}>
-                  macOS{' '}
-                  <span className={styles.dlNote}>· the curl install above is recommended</span>
-                </p>
+              <details className={styles.disclosure}>
+                <summary>macOS installers</summary>
                 <div className={styles.downloads}>
                   {MACOS_INSTALLERS.map(({ name, file, description }) => (
                     <DownloadCard
@@ -247,13 +247,10 @@ export default function InstallPage() {
                     />
                   ))}
                 </div>
-              </div>
+              </details>
 
-              <div className={styles.dlGroup}>
-                <p className={styles.dlGroupLabel}>
-                  Linux{' '}
-                  <span className={styles.dlNote}>· the curl install above is recommended</span>
-                </p>
+              <details className={styles.disclosure}>
+                <summary>Linux installers</summary>
                 <div className={styles.downloads}>
                   {LINUX_INSTALLERS.map(({ name, file, description }) => (
                     <DownloadCard
@@ -267,7 +264,7 @@ export default function InstallPage() {
                     />
                   ))}
                 </div>
-              </div>
+              </details>
 
               <div className={styles.linkRow}>
                 <TextLink href="https://github.com/QubeTX/qork/releases/latest" glyph="↗">
@@ -284,19 +281,19 @@ export default function InstallPage() {
         {/* ---- For agents / API ---- */}
         <section className={styles.shell}>
           <div className={styles.section}>
-            <SectionHeading
-              label="04 // API"
-              title="For agents"
-              subtitle="The same shortener behind a plain HTTP endpoint — no key, no SDK."
-            />
+            <div className={styles.sectionIntro} id="api">
+              <h2>Put it in a script.</h2>
+              <p>Use the HTTP API directly. No API key or SDK required.</p>
+            </div>
             <div className={styles.stack}>
               <p className={styles.prose}>
                 Both <code>GET</code> and <code>POST</code> hit{' '}
-                <code>https://qork.me/api/shorten</code> and return the same JSON. Ideal for
-                pipelines and autonomous agents that need a clean link.
+                <code>https://qork.me/api/shorten</code> and return the same JSON. Use{' '}
+                <code>href</code> for the full short link. A custom alias goes in{' '}
+                <code>customAlias</code> for POST, or <code>alias</code> for GET.
               </p>
               <TerminalFrame
-                title="QORK // API"
+                title="HTTP requests"
                 meta="POST · GET"
                 bootPrint={false}
                 lines={[
@@ -328,7 +325,7 @@ export default function InstallPage() {
                 </pre>
               </div>
               <p className={styles.prose}>
-                Full agent guide:{' '}
+                Request fields, limits, and error responses:{' '}
                 <TextLink href="https://qork.me/llms.txt" glyph="↗">
                   qork.me/llms.txt
                 </TextLink>

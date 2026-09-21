@@ -83,16 +83,14 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
     <Card elevated hoverable={false} className="w-full">
       <CardHeader>
         <CardTitle>Your short link</CardTitle>
-        <CardDescription>
-          Copy, share, or save it — your fresh redirect is ready whenever inspiration hits.
-        </CardDescription>
+        <CardDescription>Copy your link or make a QR code to share it.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-6">
           <div
             className="flex flex-col gap-4 sm:flex-row sm:items-center"
             style={{
-              background: '#070a14',
+              background: 'var(--color-surface)',
               border: '1px solid var(--color-border)',
               borderRadius: '6px',
               padding: '16px',
@@ -120,19 +118,17 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
               href={fullShortUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex"
+              className="btn bg-transparent text-primary"
             >
-              <Button variant="outline" size="sm">
-                <ExternalLink size={18} aria-hidden="true" />
-                Visit link
-                <span className="sr-only"> (opens in a new tab)</span>
-              </Button>
+              <ExternalLink size={18} aria-hidden="true" />
+              Visit link
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
 
           {qrError && (
             <p role="alert" className="font-mono text-xs text-[color:var(--color-error)]">
-              ERR // QR generation failed
+              QR generation failed. Please try again.
             </p>
           )}
 
@@ -142,7 +138,7 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
               style={{
                 border: '1px solid var(--color-border)',
                 borderRadius: '6px',
-                background: '#070a14',
+                background: 'var(--color-surface)',
               }}
             >
               <Image
@@ -155,7 +151,7 @@ export function ShortUrlDisplay({ shortCode }: ShortUrlDisplayProps) {
                 style={{ borderRadius: '4px' }}
               />
               <p className="font-mono text-xs text-[color:var(--color-text-dim)]">
-                SCAN // SHARE OFFLINE
+                Scan to open the link
               </p>
             </div>
           )}

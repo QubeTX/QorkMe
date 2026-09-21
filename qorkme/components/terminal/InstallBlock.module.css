@@ -163,3 +163,42 @@
     justify-content: center;
   }
 }
+.block {
+  border-radius: 12px;
+}
+.header {
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.tabs {
+  flex-wrap: wrap;
+}
+.tab {
+  min-height: 44px;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  padding-inline: 12px;
+}
+.copy {
+  min-height: 44px;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.note {
+  font-family: var(--font-stack-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+.command {
+  font-size: 13px;
+}
+@media (max-width: 560px) {
+  .command {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}

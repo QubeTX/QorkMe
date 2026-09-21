@@ -47,7 +47,11 @@ CREATE INDEX IF NOT EXISTS idx_click_count ON urls(click_count DESC);
 CREATE INDEX IF NOT EXISTS idx_active_urls ON urls(is_active) WHERE is_active = true;
 CREATE INDEX IF NOT EXISTS idx_long_url_hash ON urls(MD5(long_url)); -- For duplicate detection
 
--- Analytics table with partitioning support
+CREATE INDEX IF NOT EXISTS idx_urls_created_id ON urls(created_at DESC, id DESC);
+CREATE INDEX IF NOT EXISTS idx_urls_code_search ON urls USING gin(short_code gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS idx_urls_destination_search ON urls USING gin(long_url gin_trgm_ops);
+
+-- Analytics table
 CREATE TABLE IF NOT EXISTS clicks (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   url_id UUID REFERENCES urls(id) ON DELETE CASCADE,
@@ -144,7 +148,7 @@ BEGIN
   RETURN QUERY
   UPDATE urls
   SET
-    click_count = click_count + 1,
+    click_count = COALESCE(click_count, 0) + 1,
     last_accessed_at = NOW()
   WHERE short_code_lower = LOWER(p_short_code)
     AND is_active = true
@@ -186,6 +190,8 @@ BEGIN
   -- Duplicate detection (auto-generated codes only). The MD5 predicate hits
   -- idx_long_url_hash; the equality predicate guards hash collisions.
   IF p_custom_alias = false THEN
+    -- Serialize identical destinations only; unrelated links remain concurrent.
+    PERFORM pg_advisory_xact_lock(hashtextextended(p_long_url, 0));
     SELECT u.id, u.short_code, u.long_url, u.created_at
       INTO v_existing
       FROM urls u
@@ -236,16 +242,15 @@ STABLE
 SET search_path = public
 AS $$
   SELECT jsonb_build_object(
-    'url_count',           (SELECT COUNT(*) FROM urls),
-    'active_url_count',    (SELECT COUNT(*) FROM urls WHERE is_active),
-    'inactive_url_count',  (SELECT COUNT(*) FROM urls WHERE NOT is_active),
-    'click_count',         (SELECT COUNT(*) FROM clicks),
-    'total_click_count',   (SELECT COALESCE(SUM(click_count), 0) FROM urls),
-    'reserved_word_count', (SELECT COUNT(*) FROM reserved_words),
-    'newest_url_at',       (SELECT MAX(created_at) FROM urls),
-    'newest_click_at',     (SELECT MAX(clicked_at) FROM clicks),
-    'latest_access_at',    (SELECT MAX(last_accessed_at) FROM urls)
-  );
+    'url_count', u.total, 'active_url_count', u.active, 'inactive_url_count', u.inactive,
+    'click_count', c.total, 'total_click_count', u.clicks,
+    'reserved_word_count', (SELECT count(*) FROM reserved_words),
+    'newest_url_at', u.newest, 'newest_click_at', c.newest, 'latest_access_at', u.latest
+  ) FROM (
+    SELECT count(*) AS total, count(*) FILTER (WHERE is_active) AS active,
+      count(*) FILTER (WHERE NOT is_active) AS inactive, coalesce(sum(click_count), 0) AS clicks,
+      max(created_at) AS newest, max(last_accessed_at) AS latest FROM urls
+  ) u CROSS JOIN (SELECT count(*) AS total, max(clicked_at) AS newest FROM clicks) c;
 $$;
 
 REVOKE EXECUTE ON FUNCTION admin_health_stats() FROM PUBLIC;
@@ -302,6 +307,7 @@ AS $$
       FROM (
         SELECT COALESCE(NULLIF(device_type, ''), 'unknown') AS device, count(*) AS c
         FROM clicks
+        WHERE clicked_at >= current_date - interval '13 days'
         GROUP BY 1
         ORDER BY c DESC
         LIMIT 5
@@ -312,6 +318,7 @@ AS $$
       FROM (
         SELECT COALESCE(NULLIF(source, ''), 'web') AS source, count(*) AS c
         FROM urls
+        WHERE created_at >= current_date - interval '13 days'
         GROUP BY 1
       ) t
     ),
@@ -384,3 +391,29 @@ GRANT USAGE ON SCHEMA public TO anon, authenticated;
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO anon, authenticated;
+-- Keep these revocations AFTER the broad public grants for fresh installations.
+REVOKE ALL ON FUNCTION admin_analytics() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION admin_health_stats() FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION admin_analytics(), admin_health_stats() TO service_role;
+INSERT INTO reserved_words(word) VALUES ('link-not-found'), ('install'), ('cli'), ('download'), ('llms') ON CONFLICT DO NOTHING;
+-- Keep URL and click deletion atomic; only the authenticated admin server can call it.
+CREATE OR REPLACE FUNCTION public.admin_purge_links()
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, pg_temp
+AS $$
+DECLARE
+  deleted_urls BIGINT;
+  deleted_clicks BIGINT;
+BEGIN
+  LOCK TABLE public.urls, public.clicks IN SHARE ROW EXCLUSIVE MODE;
+  DELETE FROM public.clicks;
+  GET DIAGNOSTICS deleted_clicks = ROW_COUNT;
+  DELETE FROM public.urls;
+  GET DIAGNOSTICS deleted_urls = ROW_COUNT;
+  RETURN jsonb_build_object('urls', deleted_urls, 'clicks', deleted_clicks);
+END;
+$$;
+REVOKE ALL ON FUNCTION public.admin_purge_links() FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_purge_links() TO service_role;

@@ -85,16 +85,18 @@ const TerminalFrame: FC<TerminalFrameProps> = ({
   }, [bootPrint, reduced, inView]);
 
   useEffect(() => {
-    if (!bootPrint || !inView || printedRef.current) return;
-    printedRef.current = true;
     const body = bodyRef.current;
     if (!body) return;
     const rows = [...body.querySelectorAll<HTMLElement>('[data-term-line]')];
-
     if (reduced) {
+      timersRef.current.forEach((timer) => window.clearTimeout(timer));
       rows.forEach((row) => row.style.removeProperty('visibility'));
+      body.removeAttribute('data-printing');
+      printedRef.current = true;
       return;
     }
+    if (!bootPrint || !inView || printedRef.current) return;
+    printedRef.current = true;
 
     const timers = timersRef.current;
     body.setAttribute('data-printing', '');

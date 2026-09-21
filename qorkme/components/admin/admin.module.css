@@ -18,7 +18,7 @@
   padding-bottom: var(--section-spacing);
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: 24px;
 }
 
 /* ---------- Heading ---------- */
@@ -36,7 +36,7 @@
   font-size: var(--text-h2);
   line-height: 1;
   letter-spacing: -0.02em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--text-primary);
 }
 
@@ -99,7 +99,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-mono-label);
   letter-spacing: 0.12em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-text-dim);
 }
 
@@ -121,7 +121,7 @@
 
 @media (max-width: 480px) {
   .statGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -146,7 +146,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-text-dim);
 }
 
@@ -202,7 +202,7 @@
   font-family: var(--font-mono);
   font-size: 0.74rem;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .statusDot {
@@ -231,7 +231,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-mono-label);
   letter-spacing: 0.12em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-text-dim);
 }
 
@@ -284,7 +284,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-mono-label);
   letter-spacing: 0.14em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-text-dim);
   margin: 22px 0 10px;
 }
@@ -319,7 +319,7 @@
   font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-text-dim);
   border-bottom: 1px solid var(--color-border-bright);
   white-space: nowrap;
@@ -393,7 +393,7 @@
   font-family: var(--font-mono);
   font-size: 0.55rem;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-accent);
   border: 1px solid color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
   border-radius: var(--radius-sm);
@@ -441,7 +441,7 @@
   font-family: var(--font-mono);
   font-size: 0.58rem;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
+  text-transform: none;
   padding: 2px 6px;
   border-radius: var(--radius-sm);
   border: 1px solid;
@@ -502,7 +502,7 @@
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--text-primary);
   background: transparent;
   border: 1px solid var(--color-border-bright);
@@ -616,7 +616,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .dangerBody {
@@ -847,7 +847,7 @@ a.rankRow:hover .rankCode {
   font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-text-dim);
   background: transparent;
   border: none;
@@ -881,7 +881,7 @@ a.rankRow:hover .rankCode {
   font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-error);
   background: transparent;
   border: 1px solid color-mix(in srgb, var(--color-error) 45%, var(--color-border));
@@ -917,4 +917,72 @@ a.rankRow:hover .rankCode {
   line-height: 1.5;
   color: var(--color-text-dim);
   padding-top: 14px;
+}
+
+.healthDisclosure {
+  margin: 0;
+}
+.healthDisclosure > summary {
+  padding: 12px 0;
+  min-height: 44px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+.error {
+  color: var(--color-error);
+  padding: 16px 24px;
+}
+.panel {
+  background: var(--color-surface);
+  border-radius: 11px;
+}
+.statGrid {
+  border-radius: 11px;
+  overflow: hidden;
+}
+.heading {
+  margin-bottom: 0;
+}
+.title {
+  font-size: clamp(32px, 4vw, 48px);
+}
+.delBtn,
+.iconBtn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.danger {
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+.danger summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: list-item;
+  padding-block: 12px;
+}
+
+.subtitle {
+  font-family: var(--font-stack-sans);
+  font-size: 16px;
+  letter-spacing: 0;
+}
+.segBtn,
+.clearAllBtn {
+  min-height: 44px;
+}
+@media (max-width: 480px) {
+  .statCell {
+    padding: 16px 12px;
+  }
+  .statLabel {
+    letter-spacing: 0;
+    font-size: 11px;
+  }
+  .statValue {
+    font-size: 26px;
+  }
 }

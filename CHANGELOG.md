@@ -2,6 +2,15 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-09-21 — Dither + Hologram launch
+
+- Replace the dark production interface with the approved warm ivory design across the main form, admin, sign-in, CLI instructions, results, and error pages. Retain responsive controls, rolling action labels, and explicit copy feedback.
+- Ship the verified vgpu holographic material with a centered linked-ring engraving, procedural ObsidianUI dithering, a larger interactive 404, and a native Makira Q favicon. Add reduced-motion, pause, static fallback, resolution caps, and resource cleanup; retire the local prototype gallery from the repository.
+- Rewrite CLI onboarding around installation and a first link, add accessible keyboard tabs, clarify Windows install scopes, and collapse alternative downloads and advanced commands. Preserve install commands and the public API contract.
+- Protect admin authorization with verified GitHub provider identity, restrict admin database functions to the service role, cancel stale admin requests, and make clear-all deletion atomic.
+- Add indexes for paginated admin search and a per-destination transaction lock for concurrent shortening. Remove stale redirect caching so deletion and expiry apply immediately; keep click counting atomic and bound database requests with timeouts.
+- Update Next.js and vulnerable transitive dependencies, pin vgpu, include tests in CI, and document validation and source licenses.
+
 ## 2026-06-23 (Install Page — Windows command uses the full PowerShell wrapper)
 
 ### Changed

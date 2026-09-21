@@ -9,8 +9,21 @@ export async function GET(request: NextRequest) {
   if (!auth.authorized) return auth.response;
 
   const { searchParams } = request.nextUrl;
-  const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-  const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get('pageSize') || '25', 10)));
+  const page = Number(searchParams.get('page') || '1');
+  const pageSize = Number(searchParams.get('pageSize') || '25');
+  if (
+    !Number.isSafeInteger(page) ||
+    page < 1 ||
+    !Number.isSafeInteger(pageSize) ||
+    pageSize < 1 ||
+    pageSize > 100 ||
+    (page - 1) * pageSize > 100000
+  ) {
+    return NextResponse.json(
+      { success: false, message: 'Invalid page. Use search to narrow large result sets.' },
+      { status: 400 }
+    );
+  }
   const sort = searchParams.get('sort') || 'created_at';
   const order = searchParams.get('order') === 'asc' ? true : false;
 
@@ -18,7 +31,7 @@ export async function GET(request: NextRequest) {
   // Strip PostgREST-significant characters from the search term so it can't
   // break the `.or()` filter grammar; cap the length.
   const q = (searchParams.get('q') || '')
-    .replace(/[,()%*\\]/g, '')
+    .replace(/[,()%*_"\\]/g, '')
     .trim()
     .slice(0, 100);
   const status = searchParams.get('status'); // 'active' | 'inactive'
@@ -55,6 +68,7 @@ export async function GET(request: NextRequest) {
 
     const { data, error, count } = await query
       .order(sortColumn, { ascending: order })
+      .order('id', { ascending: order })
       .range(offset, offset + pageSize - 1);
 
     if (error) {

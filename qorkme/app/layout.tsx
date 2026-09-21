@@ -1,8 +1,7 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { PretextProvider } from '@/lib/pretext/PretextProvider';
-import { SmoothScroll } from '@/components/effects/SmoothScroll';
-import CustomCursor from '@/components/effects/CustomCursor';
+import { MotionPreference } from '@/components/brand/MotionPreference';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
@@ -19,6 +18,8 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 };
 
+export const viewport: Viewport = { themeColor: '#f6f4ef' };
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,23 +27,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* FOUC guard for the entrance choreography: hide [data-load] targets
-            pre-paint; LoadSequence sets real transforms and lifts the
-            attribute. 3s failsafe + no-JS never arms (server HTML = final
-            state). */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.documentElement.setAttribute('data-loading','');setTimeout(function(){document.documentElement.removeAttribute('data-loading')},3000);`,
-          }}
-        />
-      </head>
       <body>
         <PretextProvider>
-          <SmoothScroll>
-            <CustomCursor />
+          <MotionPreference>
+            <a className="skip-link" href="#main-content">
+              Skip to content
+            </a>
             {children}
-          </SmoothScroll>
+          </MotionPreference>
         </PretextProvider>
         <SpeedInsights />
       </body>

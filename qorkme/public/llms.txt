@@ -76,7 +76,7 @@ A single prebuilt binary for macOS, Linux, and Windows (Intel + ARM). Details: h
 curl -LsSf https://qork.me/install.sh | sh
 
 # Windows (PowerShell)
-irm https://qork.me/install.ps1 | iex
+powershell -ExecutionPolicy ByPass -c "irm https://qork.me/install.ps1 | iex"
 
 # With a Rust toolchain
 cargo install qork

@@ -72,17 +72,17 @@ export function ClearDatabaseButton() {
       </Button>
       {status.kind === 'aborted' && (
         <p role="status" className="font-mono text-xs text-[color:var(--color-text-dim)]">
-          PURGE ABORTED // CONFIRMATION MISMATCH
+          Nothing was deleted. The confirmation did not match.
         </p>
       )}
       {status.kind === 'done' && (
         <p role="status" className="font-mono text-xs text-[color:var(--color-arrival)]">
-          PURGE COMPLETE // ALL URL DATA CLEARED
+          All links and their analytics have been cleared.
         </p>
       )}
       {status.kind === 'error' && (
         <p role="alert" className="font-mono text-xs text-[color:var(--color-error)]">
-          ERR // {status.message}
+          {status.message}
         </p>
       )}
     </div>

@@ -1,0 +1,117 @@
+.stage {
+  user-select: none;
+  position: relative;
+  width: 100%;
+  height: 248px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+.wordmark {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  font-family: var(--font-stack-sans);
+  font-weight: 900;
+  font-size: clamp(52px, 9.6vw, 148px);
+  line-height: 1;
+  letter-spacing: -0.048em;
+  text-align: center;
+  transform: translateY(8px);
+}
+.text {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(110deg, #175afb 5%, #374afd 50%, #7031ed 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.effect {
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+}
+.effect canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.6s ease;
+}
+.effect[data-render-state='loading'] canvas,
+.effect[data-render-state='fallback'] canvas {
+  opacity: 0;
+}
+.effect[data-render-state='live'] .fallback {
+  opacity: 0;
+}
+.fallback {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(#5474d1 1px, transparent 1px);
+  background-size: 14px 14px;
+  opacity: 0.2;
+  mask-image: radial-gradient(ellipse, black, transparent 70%);
+}
+.dither {
+  inset: -28px -90px 0;
+  mask-image: radial-gradient(ellipse, black 20%, transparent 73%);
+}
+.lettering {
+  inset: 0;
+  z-index: 3;
+  overflow: visible;
+}
+.compact {
+  max-width: 700px;
+  margin: 0 auto 24px;
+  height: 180px;
+}
+.compact .wordmark {
+  font-size: clamp(52px, 8vw, 96px);
+}
+.compact .dither {
+  inset: -12px -30px 0;
+}
+@media (max-width: 640px) {
+  .stage {
+    height: 210px;
+  }
+  .wordmark {
+    font-size: clamp(45px, 12vw, 74px);
+  }
+  .dither {
+    inset: 0 -35px;
+  }
+  .compact {
+    height: 145px;
+    margin-bottom: 16px;
+  }
+  .compact .wordmark {
+    font-size: clamp(45px, 12vw, 74px);
+  }
+}
+
+.expanded {
+  height: clamp(270px, 31vw, 380px);
+}
+.expanded .wordmark {
+  font-size: clamp(150px, 26vw, 310px);
+  letter-spacing: -0.07em;
+}
+.expanded .dither {
+  inset: -40px -140px -25px;
+  mask-image: radial-gradient(ellipse, black 25%, transparent 76%);
+}
+@media (max-width: 640px) {
+  .expanded {
+    height: 275px;
+  }
+  .expanded .wordmark {
+    font-size: clamp(140px, 40vw, 240px);
+  }
+  .expanded .dither {
+    inset: -20px -100px;
+  }
+}

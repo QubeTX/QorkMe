@@ -1,300 +1,308 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { SlotRoll, useSlotRoll } from '@/lib/motion/SlotRoll';
-import { firePulse } from '@/components/effects/DotGrid';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { ArrowRight, Check } from 'lucide-react';
+import { SlotRoll } from '@/lib/motion/SlotRoll';
+import { validateShortCode, validateUrl } from '@/lib/shortcode/validator';
+import { useMotionPreference } from './brand/MotionPreference';
 import styles from './UrlShortener.module.css';
 
-/**
- * The shortener card — QorkMe's primary surface, technical register.
- * Every label change rides the slot roll: the submit button rolls
- * SHORTEN → WORKING… on Enter, the created link rolls in from a masked
- * placeholder (arrival blue settling to ink), COPY flashes COPIED, and the
- * custom-alias availability check rolls CHECKING → AVAILABLE / TAKEN.
- * Errors are honest mono lines, never toasts.
- */
-
-type Stage = 'input' | 'result';
-type AliasStatus = 'idle' | 'checking' | 'available' | 'taken' | 'invalid';
-
-const ALIAS_STATUS_TEXT: Record<AliasStatus, string> = {
-  idle: '·····',
-  checking: 'CHECKING',
-  available: 'AVAILABLE',
-  taken: 'TAKEN',
-  invalid: 'INVALID',
-};
-
-/** Same-length mask so the arrival roll animates every glyph. */
-function maskOf(text: string): string {
-  return text.replace(/[^./:]/g, '·');
-}
-
-function ArrivalUrl({ text }: { text: string }) {
-  const [mask] = useState(() => maskOf(text));
-  const [ref, handle] = useSlotRoll(mask, { direction: 'up' });
-
-  useEffect(() => {
-    handle.set(text);
-  }, [text, handle]);
-
-  return (
-    <span ref={ref} className={styles.resultUrl}>
-      {mask}
-    </span>
-  );
-}
-
-export function UrlShortener() {
-  const [stage, setStage] = useState<Stage>('input');
+type Result = { href: string; original: string };
+export function UrlShortener({ onSuccess }: { onSuccess?: () => void }) {
   const [url, setUrl] = useState('');
   const [alias, setAlias] = useState('');
   const [aliasOpen, setAliasOpen] = useState(false);
-  const [aliasStatus, setAliasStatus] = useState<AliasStatus>('idle');
-  const [shortUrl, setShortUrl] = useState('');
-  const [isExisting, setIsExisting] = useState(false);
-  const [autoCopied, setAutoCopied] = useState(false);
+  const [aliasStatus, setAliasStatus] = useState('');
   const [working, setWorking] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const [submitRef, submitLabel] = useSlotRoll('SHORTEN', { direction: 'up' });
-  const [copyRef, copyLabel] = useSlotRoll('COPY');
-  const aliasTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
+  const [error, setError] = useState('');
+  const [copy, setCopy] = useState('Copy');
+  const { paused } = useMotionPreference();
+  const pending = useRef<AbortController | null>(null);
+  const mounted = useRef(true);
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const copyEpoch = useRef(0);
+  const input = useRef<HTMLInputElement>(null);
+  const copyButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    mounted.current = true;
     return () => {
-      if (aliasTimer.current) clearTimeout(aliasTimer.current);
+      mounted.current = false;
+      pending.current?.abort();
+      if (copyTimer.current) clearTimeout(copyTimer.current);
     };
   }, []);
-
-  const checkAlias = useCallback((value: string) => {
-    if (aliasTimer.current) clearTimeout(aliasTimer.current);
-
-    const trimmed = value.trim();
-    if (!trimmed) {
-      setAliasStatus('idle');
+  useEffect(() => {
+    const value = alias.trim();
+    if (!aliasOpen || !value) {
+      setAliasStatus('');
       return;
     }
-    if (trimmed.length < 3 || !/^[a-zA-Z0-9-]+$/.test(trimmed)) {
-      setAliasStatus('invalid');
+    const validation = validateShortCode(value);
+    if (!validation.valid) {
+      setAliasStatus(validation.error!);
       return;
     }
-
-    setAliasStatus('checking');
-    aliasTimer.current = setTimeout(async () => {
+    const controller = new AbortController();
+    let active = true;
+    setAliasStatus('Checking…');
+    const timer = setTimeout(async () => {
+      const deadline = setTimeout(() => controller.abort(), 8000);
       try {
-        const res = await fetch(`/api/shorten?alias=${encodeURIComponent(trimmed)}`);
-        const data = await res.json();
-        setAliasStatus(data.available ? 'available' : 'taken');
+        const response = await fetch(`/api/shorten?alias=${encodeURIComponent(value)}`, {
+          signal: controller.signal,
+        });
+        const data = await response.json();
+        if (active)
+          setAliasStatus(
+            response.ok && typeof data.available === 'boolean'
+              ? data.available
+                ? 'Available'
+                : 'Taken — try another alias'
+              : 'Availability could not be checked. You can still try shortening.'
+          );
       } catch {
-        setAliasStatus('idle');
+        if (active)
+          setAliasStatus('Availability could not be checked. You can still try shortening.');
+      } finally {
+        clearTimeout(deadline);
       }
-    }, 450);
-  }, []);
+    }, 400);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [alias, aliasOpen]);
+  useEffect(() => {
+    if (result) copyButton.current?.focus({ preventScroll: true });
+  }, [result]);
 
-  const copyToClipboard = useCallback(
-    async (text: string, flash: boolean) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        if (flash) copyLabel.flash('COPIED');
-        return true;
-      } catch {
-        if (flash) copyLabel.flash('FAILED');
-        return false;
-      }
-    },
-    [copyLabel]
-  );
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (working) return;
-
-    if (!url.trim()) {
-      setErrorMessage('Please enter a URL');
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    if (pending.current) return;
+    const value = aliasOpen ? alias.trim() : '';
+    const validUrl = validateUrl(url);
+    const validAlias = value ? validateShortCode(value) : { valid: true };
+    if (!validUrl.valid || !validAlias.valid) {
+      setError(
+        !url.trim()
+          ? 'Please enter a URL.'
+          : (validUrl.error ?? validAlias.error ?? 'Check your link.')
+      );
       return;
     }
-
-    setErrorMessage(null);
+    const controller = new AbortController();
+    pending.current = controller;
+    const deadline = setTimeout(() => controller.abort(), 15000);
     setWorking(true);
-    submitLabel.set('WORKING…');
-
+    setError('');
     try {
-      const trimmedAlias = alias.trim();
       const response = await fetch('/api/shorten', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(
-          trimmedAlias ? { url, customAlias: trimmedAlias, source: 'web' } : { url, source: 'web' }
-        ),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          url: url.trim(),
+          ...(value ? { customAlias: value } : {}),
+          source: 'web',
+        }),
+        signal: controller.signal,
       });
-
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to shorten URL');
+      if (!response.ok)
+        throw new Error(data.error || 'Could not shorten this link. Please try again.');
+      if (typeof data.href !== 'string' || !/^https?:\/\//.test(data.href))
+        throw new Error('The server returned an incomplete link. Please try again.');
+      if (mounted.current && !controller.signal.aborted) {
+        setResult({ href: data.href, original: url.trim() });
+        setCopy('Copy');
+        onSuccess?.();
       }
-
-      const generatedShortUrl = `https://${process.env.NEXT_PUBLIC_SHORT_DOMAIN || 'qork.me'}/${data.shortCode}`;
-      setShortUrl(generatedShortUrl);
-      setIsExisting(data.isNew === false);
-      setStage('result');
-      setWorking(false);
-
-      // The "link created" beat — one blue ripple through the dot field
-      firePulse({
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        strength: 1.6,
-      });
-
-      // Auto-copy (best effort — the submit click is the user gesture).
-      // The result note only claims COPIED when the write actually landed.
-      copyToClipboard(generatedShortUrl, false).then(setAutoCopied);
-    } catch (error) {
-      console.error('Error shortening URL:', error);
-      setErrorMessage(error instanceof Error ? error.message : 'Failed to shorten URL');
-      setWorking(false);
-      submitLabel.set('SHORTEN');
+    } catch (cause) {
+      if (mounted.current)
+        setError(
+          controller.signal.aborted
+            ? 'That took too long. Please try again.'
+            : cause instanceof Error
+              ? cause.message
+              : 'Could not connect. Please try again.'
+        );
+    } finally {
+      clearTimeout(deadline);
+      if (pending.current === controller) {
+        pending.current = null;
+        if (mounted.current) setWorking(false);
+      }
     }
   };
-
-  const handleReset = () => {
-    setStage('input');
+  const reset = () => {
+    copyEpoch.current++;
+    if (copyTimer.current) clearTimeout(copyTimer.current);
+    setResult(null);
+    setError('');
+    setCopy('Copy');
     setUrl('');
     setAlias('');
     setAliasOpen(false);
-    setAliasStatus('idle');
-    setShortUrl('');
-    setIsExisting(false);
-    setAutoCopied(false);
-    setErrorMessage(null);
-    submitLabel.set('SHORTEN');
+    requestAnimationFrame(() => input.current?.focus());
   };
-
-  // Corner status — rolls as you type: IDLE → INPUT → READY → BUSY → DONE
-  const cardStatus =
-    stage === 'result'
-      ? 'DONE'
-      : working
-        ? 'BUSY'
-        : /^https?:\/\/.+\..+/.test(url.trim())
-          ? 'READY'
-          : url.trim()
-            ? 'INPUT'
-            : 'IDLE';
-
+  const copyResult = async () => {
+    if (!result) return;
+    const epoch = ++copyEpoch.current;
+    try {
+      await navigator.clipboard.writeText(result.href);
+      if (mounted.current && epoch === copyEpoch.current) setCopy('Copied');
+    } catch {
+      if (mounted.current && epoch === copyEpoch.current) setCopy('Try again');
+    }
+    if (mounted.current && epoch === copyEpoch.current) {
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopy('Copy'), 1800);
+    }
+  };
+  const label = (text: string) => (paused ? <span>{text}</span> : <SlotRoll text={text} />);
   return (
-    <div className={styles.card}>
-      <div className={styles.cardMeta} aria-hidden="true">
-        <span className={styles.monoLabel}>QORK.ME // SHORTENER</span>
-        <span className={styles.monoLabel}>
-          <SlotRoll text={cardStatus} options={{ direction: 'up' }} />
-        </span>
-      </div>
-
-      {stage === 'input' && (
-        <form onSubmit={handleSubmit} noValidate>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-            <div>
-              <label htmlFor="url-input" className={styles.fieldLabel}>
-                Enter your URL
-              </label>
+    <div className={styles.shortener}>
+      {!result ? (
+        <form onSubmit={submit} noValidate aria-label="URL shortener" aria-busy={working}>
+          <label className={styles['field-label']} htmlFor="long-link">
+            Your long link
+          </label>
+          <div className={styles['form-row']}>
+            <div className={styles['url-field']}>
               <input
-                id="url-input"
+                ref={input}
+                id="long-link"
                 type="url"
-                className={styles.input}
-                placeholder="https://example.com/your/very/long/url"
+                inputMode="url"
+                autoComplete="url"
+                spellCheck={false}
+                placeholder="https://example.com/your/long/link"
                 value={url}
+                maxLength={2048}
                 onChange={(e) => {
                   setUrl(e.target.value);
-                  setErrorMessage(null);
+                  setError('');
                 }}
+                aria-describedby={error ? 'form-error' : undefined}
+                aria-invalid={!!error}
+                disabled={working}
                 required
               />
             </div>
-
-            {!aliasOpen && (
-              <button
-                type="button"
-                className={styles.aliasToggle}
-                onClick={() => setAliasOpen(true)}
-              >
-                + custom alias
-              </button>
-            )}
-
-            {aliasOpen && (
-              <div>
-                <label htmlFor="alias-input" className={styles.fieldLabel}>
-                  Custom alias (optional)
-                </label>
-                <div className={styles.aliasRow}>
-                  <input
-                    id="alias-input"
-                    type="text"
-                    className={styles.input}
-                    placeholder="my-link"
-                    value={alias}
-                    maxLength={50}
-                    onChange={(e) => {
-                      setAlias(e.target.value);
-                      checkAlias(e.target.value);
-                    }}
-                  />
-                  {/* data-status on the wrapper drives the color (arrival blue / error) */}
-                  <span className={styles.aliasStatus} data-status={aliasStatus}>
-                    <SlotRoll text={ALIAS_STATUS_TEXT[aliasStatus]} options={{ direction: 'up' }} />
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {errorMessage && (
-              <p role="alert" className={styles.error}>
-                ERR // {errorMessage}
-              </p>
-            )}
-
             <button
+              className={styles['action-button']}
               type="submit"
-              className={styles.submit}
               disabled={working}
-              aria-label="Shorten URL"
+              aria-label={working ? 'Working…' : 'Shorten URL'}
             >
-              <span ref={submitRef}>SHORTEN</span>
+              <span className={styles['action-label']}>
+                {label(working ? 'Working…' : 'Shorten')}
+              </span>
+              <span className={styles['arrow-window']} aria-hidden="true">
+                <ArrowRight size={22} />
+                <ArrowRight size={22} className={styles['arrow-incoming']} />
+              </span>
             </button>
           </div>
-        </form>
-      )}
-
-      {stage === 'result' && (
-        <div className={styles.resultBlock}>
-          <span className={styles.resultNote} data-existing={isExisting}>
-            {isExisting
-              ? 'KNOWN URL // EXISTING LINK RETURNED'
-              : autoCopied
-                ? 'LINK CREATED // COPIED'
-                : 'LINK CREATED'}
-          </span>
-
-          <div className={styles.resultUrlRow}>
-            <ArrivalUrl text={shortUrl.replace(/^https:\/\//, '')} />
-            <button
-              type="button"
-              className={styles.copyBtn}
-              onClick={() => copyToClipboard(shortUrl, true)}
-              aria-label="Copy short link to clipboard"
-            >
-              <span ref={copyRef}>COPY</span>
-            </button>
-          </div>
-
-          <button type="button" className={styles.submit} onClick={handleReset}>
-            SHORTEN ANOTHER
+          <button
+            className={styles['alias-toggle']}
+            type="button"
+            aria-expanded={aliasOpen}
+            aria-controls="alias-field"
+            disabled={working}
+            onClick={() => setAliasOpen((v) => !v)}
+          >
+            {aliasOpen ? '−' : '+'} Custom alias
           </button>
+          {aliasOpen && (
+            <div id="alias-field" className={styles['alias-field']}>
+              <label htmlFor="alias">
+                Custom alias <span>(optional)</span>
+              </label>
+              <div className={styles['alias-input-row']}>
+                <span className={styles['alias-prefix']}>qork.me/</span>
+                <input
+                  id="alias"
+                  value={alias}
+                  maxLength={50}
+                  disabled={working}
+                  placeholder="my-link"
+                  autoComplete="off"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  onChange={(e) => setAlias(e.target.value)}
+                  aria-describedby="alias-status"
+                />
+              </div>
+              <span
+                id="alias-status"
+                className={styles['alias-status']}
+                data-available={aliasStatus === 'Available'}
+                role="status"
+              >
+                {aliasStatus}
+              </span>
+            </div>
+          )}
+          {error && (
+            <p id="form-error" className={styles['form-error']} role="alert">
+              {error}
+            </p>
+          )}
+        </form>
+      ) : (
+        <div className={styles['result-content']}>
+          <div className={styles['result-heading']}>
+            <span>
+              <Check size={18} aria-hidden="true" />
+              Your short link is ready
+            </span>
+          </div>
+          <div className={styles['form-row']}>
+            <div className={styles['result-url']}>
+              <span className={styles['result-source-ghost']} aria-hidden="true">
+                {result.original}
+              </span>
+              <a
+                className={styles['result-address']}
+                href={result.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {result.href.replace(/^https?:\/\//, '')}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </div>
+            <button
+              ref={copyButton}
+              type="button"
+              className={`${styles['action-button']} ${styles['copy-button']}`}
+              onClick={copyResult}
+              aria-label={copy}
+            >
+              <span className={styles['action-label']}>{label(copy)}</span>
+              <span className={styles['arrow-window']} aria-hidden="true">
+                {copy === 'Copied' ? <Check size={22} /> : <ArrowRight size={22} />}
+              </span>
+            </button>
+          </div>
+          <div className={styles['result-bottom']}>
+            <span className={styles['original-url']} title={result.original}>
+              {result.original}
+            </span>
+            <button type="button" className={styles['reset-button']} onClick={reset}>
+              Shorten another <ArrowRight size={14} aria-hidden="true" />
+            </button>
+          </div>
+          <p className="sr-only" role="status">
+            {copy === 'Copied'
+              ? 'Link copied to clipboard.'
+              : copy === 'Try again'
+                ? 'Could not copy. You can select and copy the link above.'
+                : 'Your short link is ready.'}
+          </p>
         </div>
       )}
     </div>

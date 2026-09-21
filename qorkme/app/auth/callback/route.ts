@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
     if (error) {
       // Redirect to admin with error
-      return NextResponse.redirect(`${origin}/admin?error=auth_failed`);
+      return NextResponse.redirect(`${origin}/admin/login?error=auth_failed`);
     }
   }
 
