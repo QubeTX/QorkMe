@@ -58,4 +58,4 @@ SOFTWARE.
 
 ## Existing QorkMe assets
 
-Makira and IBM Plex Mono files are reused in place. See `../public/fonts/README.md` for their existing licensing; they are not redistributed or relicensed by these adaptations. Shared motion and resize helpers retain their existing project ownership.
+Makira files are reused in place under their existing license. Paper Mono is bundled under SIL OFL 1.1, with its original copyright and license in `../public/fonts/PaperMono-OFL.txt`. See `../public/fonts/README.md` for font sources and usage. Shared motion and resize helpers retain their existing project ownership.
