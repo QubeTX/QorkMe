@@ -49,40 +49,16 @@
 }
 
 @font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('/fonts/IBMPlexMono-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('/fonts/IBMPlexMono-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('/fonts/IBMPlexMono-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('/fonts/IBMPlexMono-Bold.woff2') format('woff2');
-  font-weight: 700;
+  font-family: 'Paper Mono';
+  src: url('/fonts/PaperMono-Variable.woff2') format('woff2');
+  font-weight: 100 800;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
   --font-stack-sans: var(--font-makira), ui-sans-serif, system-ui, sans-serif;
-  --font-stack-mono: var(--font-plex-mono), ui-monospace, 'Cascadia Mono', monospace;
+  --font-stack-mono: var(--font-paper-mono), ui-monospace, 'Cascadia Mono', monospace;
 
   --color-void: #f6f4ef;
   --color-surface-raised: #f1f0ec;
@@ -193,7 +169,7 @@
 
 :root {
   --font-makira: 'Makira';
-  --font-plex-mono: 'IBM Plex Mono';
+  --font-paper-mono: 'Paper Mono';
 }
 
 @theme inline {

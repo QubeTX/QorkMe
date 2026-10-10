@@ -2,6 +2,11 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-10-09 — Paper Mono throughout the interface
+
+- Replace the primary IBM Plex Mono stack with the supplied Paper Mono variable WOFF2 (weights 100–800) for commands, URL fields, short links, and admin data.
+- Self-host one 53 KB font with its original SIL OFL license; retire the four unused Plex font files. Preserve Makira branding and Gail Rock 404 artwork, with Paper Mono as its monospace fallback.
+
 ## 2026-09-21 — Gail Rock 404 numerals
 
 - Set the large 404 artwork in Gail Rock Bold with natural monospace spacing, retaining the dither field, centered hologram engraving, and ripple interaction.

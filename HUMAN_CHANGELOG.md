@@ -6,6 +6,13 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## October 9, 2026 — Meet Paper Mono
+
+- Commands, links, and technical details now use Paper Mono, including the CLI guide and admin page.
+- The logo, everyday text, and expressive 404 keep their existing display styles.
+
+---
+
 ## September 21, 2026 — A cleaner 404
 
 - The oversized 404 now uses Gail Rock Bold. The digits have more room while keeping the bold look, hologram, and playful pixel effects.

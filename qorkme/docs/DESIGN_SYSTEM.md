@@ -7,7 +7,7 @@ The September 2026 launch adopts the approved Dither + Hologram prototype. QorkM
 - Page: `#f6f4ef`; form and panel surfaces: `#fdfcf9`; borders: `#dedbd5`.
 - Main ink: `#172137`; secondary ink: `#5f687a`; muted text: `#656a7b`.
 - Primary action: `#1757e8`; display gradient: blue to violet. Keep effect highlights inside the wordmark and away from text inputs.
-- Makira Black 900 for the QORK.ME mark. Use sentence case for instructions and headings. IBM Plex Mono is reserved for commands, codes, and technical details.
+- Makira Black 900 for the QORK.ME mark. Use sentence case for instructions and headings. Paper Mono is reserved for commands, codes, and technical details.
 - The main page contains one centered wordmark, one labeled URL input, one primary button, and an optional inline alias. The alias prefix is always `qork.me/`.
 - On phones the input and button stack. Inputs use at least 16px type and primary controls exceed 44px in height. Keep visible keyboard focus and descriptive labels.
 - Admin, sign-in, results, errors, and the CLI page share the palette and brand stage. Tables and documentation use progressive disclosure rather than decorative status panels.
@@ -28,7 +28,7 @@ Keep rolling Shorten/Working and Copy/Copied feedback truthful. Copy must be an 
 
 ## Error pages
 
-Missing, expired, and disabled links lead to a real HTML 404 page with an expanded dither field and holographic 404 set in Gail Rock Bold (700), with natural monospace spacing. The display font comes from the existing SHAUGHV CDN, with bundled IBM Plex Mono Bold as its fallback. The playful message is “This link went off-script.” The pixel ripple is optional; both keyboard and pointer can trigger it. Always retain clear routes home and back.
+Missing, expired, and disabled links lead to a real HTML 404 page with an expanded dither field and holographic 404 set in Gail Rock Bold (700), with natural monospace spacing. The display font comes from the existing SHAUGHV CDN, with bundled Paper Mono Bold as its fallback. The playful message is “This link went off-script.” The pixel ripple is optional; both keyboard and pointer can trigger it. Always retain clear routes home and back.
 
 ## Sources and fonts
 

@@ -236,7 +236,7 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 │   ├── theme.tsx           # Theme context provider
 │   └── utils.ts            # Utility functions
 ├── public/                  # Static assets
-│   ├── fonts/              # Makira Sans Serif + IBM Plex Mono (woff2)
+│   ├── fonts/              # Makira Sans Serif + Paper Mono (woff2)
 │   │   └── README.md       # font licensing notes
 │   ├── apple-touch-icon.png   # iOS home screen icon (180×180)
 │   ├── favicon-16x16.png      # Browser tab icon
@@ -289,7 +289,7 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
 - **Styling**: QubeTX design tokens (CSS custom properties) + CSS modules; Tailwind CSS v4 retained for layout utilities (no `tailwind.config` — `@theme` inline)
-- **Typography**: Makira Sans Serif (headings/wordmarks) + IBM Plex Mono (technical register), self-hosted woff2
+- **Typography**: Makira Sans Serif (headings/wordmarks) + Paper Mono (technical register), self-hosted woff2
 - **Theme System**: Dark only — a single QubeTX void palette, no light mode or theme toggle
 - **Icons**: Lucide React v0.544.0
 - **QR Codes**: qrcode v1.5.4 library
@@ -326,7 +326,7 @@ Key performance features:
 
 ## Design system
 
-The approved production design is warm ivory with blue-violet dithering and holographic lettering. Makira leads the interface; IBM Plex Mono is used for code and technical details. Native focus, explicit clipboard actions, responsive layouts, and reduced-motion fallbacks take priority over decoration.
+The approved production design is warm ivory with blue-violet dithering and holographic lettering. Makira leads the interface; Paper Mono is used for code and technical details. Native focus, explicit clipboard actions, responsive layouts, and reduced-motion fallbacks take priority over decoration.
 
 See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for current guidance. Local SVG/PNG/ICO favicon assets use the actual Makira Black Q. Older remote logo assets are not required by the new site.
 
