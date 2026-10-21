@@ -24,6 +24,8 @@ The operating system's reduced-motion setting applies site-wide; there is no foo
 
 `PageDither` extends the texture through the homepage, CLI, and admin margins, with a lighter treatment on the homepage and phones. Its center mask keeps the reading column quiet, and opaque panels keep the texture outside controls. It reuses the dither renderer at 24fps with a 1.25 device-pixel / two-million-pixel cap, shared resize coordination, static fallback, hidden-tab suspension, and route cleanup.
 
+`SiteCursor` mounts the hosted SHAUGHV cursor once in the root client layout. Its base color is `var(--color-primary)` (`#1757e8`), with the shared surface-calibrated difference blend, spring, control outlines, and circle-to-caret typing interaction. The CDN owns coarse-pointer, forced-color, reduced-motion, and native editing fallbacks; script failure leaves the native cursor available. The companion dropdown script is loaded with framework-owned cleanup so future native single selects retain the same cursor through their menus. Both instances are destroyed on unmount. Discover current APIs and versioned asset URLs through the [CDN catalog](https://cdn.shaughv.com/tree.json).
+
 Keep rolling Shorten/Working and Copy/Copied feedback truthful. Copy must be an explicit action and report success only after the clipboard write resolves. The result contracts the original URL into the shorter address without delaying access to Copy.
 
 ## Error pages

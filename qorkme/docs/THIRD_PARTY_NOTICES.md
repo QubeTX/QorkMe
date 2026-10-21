@@ -56,6 +56,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+## Hosted SHAUGHV cursor and dropdowns
+
+The shared [cursor](https://cdn.shaughv.com/cursor) and [dropdown](https://cdn.shaughv.com/dropdowns) implementations are loaded from the canonical SHAUGHV CDN, using the versioned URLs discovered in its live catalog. The cursor derives from emmetts.dev with the shared MCP interaction behavior. QorkMe customizes its base color through the documented API; no third-party script source is copied into this repository.
+
 ## Existing QorkMe assets
 
 Makira files are reused in place under their existing license. Paper Mono is bundled under SIL OFL 1.1, with its original copyright and license in `../public/fonts/PaperMono-OFL.txt`. See `../public/fonts/README.md` for font sources and usage. Shared motion and resize helpers retain their existing project ownership.
