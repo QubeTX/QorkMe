@@ -2,6 +2,12 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-10-21 — Theme the shared CDN cursor
+
+- Add the hosted SHAUGHV cursor across the site, using the primary blue theme token with shared spring motion, control outlines, and typing-caret transitions.
+- Load the companion dropdown enhancement with independent client lifecycle cleanup. Preserve native behavior if the CDN is unavailable, touch/coarse-pointer behavior, and reduced-motion accessibility.
+- Cover delayed readiness, repeated callbacks, initialization failure, and cleanup with focused integration tests.
+
 ## 2026-10-09 — Paper Mono throughout the interface
 
 - Replace the primary IBM Plex Mono stack with the supplied Paper Mono variable WOFF2 (weights 100–800) for commands, URL fields, short links, and admin data.

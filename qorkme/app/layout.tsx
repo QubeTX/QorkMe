@@ -4,6 +4,7 @@ import { PretextProvider } from '@/lib/pretext/PretextProvider';
 import { MotionPreference } from '@/components/brand/MotionPreference';
 import { DitherTrail } from '@/components/brand/DitherTrail';
 import { PageDither } from '@/components/brand/PageDither';
+import { SiteCursor } from '@/components/brand/SiteCursor';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
@@ -40,6 +41,7 @@ export default function RootLayout({
             <DitherTrail />
           </MotionPreference>
         </PretextProvider>
+        <SiteCursor />
         <SpeedInsights />
       </body>
     </html>

@@ -6,6 +6,13 @@ For the technical version with versions, file paths, and exact details, see [CHA
 
 ---
 
+## October 21, 2026 — A cursor that fits QorkMe
+
+- The shared custom cursor now follows QorkMe's blue theme, responds to links and buttons, and becomes a caret while you type.
+- Touch devices keep their usual behavior, and reduced motion removes the spring travel and field ripple.
+
+---
+
 ## October 9, 2026 — Meet Paper Mono
 
 - Commands, links, and technical details now use Paper Mono, including the CLI guide and admin page.
