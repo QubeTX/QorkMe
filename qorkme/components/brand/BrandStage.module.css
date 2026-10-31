@@ -131,6 +131,30 @@
   }
 }
 
+/* Keep each phrase on one mask; wrapping between phrases preserves the
+   single-line glyph measurements used by the shared hologram renderer. */
+.headline {
+  height: auto;
+  padding-block: 20px;
+}
+.headline .wordmark {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.24em;
+  max-width: 100%;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  transform: none;
+}
+.headline .text {
+  white-space: nowrap;
+}
+.headline .dither {
+  inset: -16px -24px;
+}
+
 .expanded {
   height: clamp(270px, 31vw, 380px);
 }

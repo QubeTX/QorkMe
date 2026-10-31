@@ -2,6 +2,11 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-10-30 — Make the docs headline the hero
+
+- Remove the duplicate QORK.ME hero wordmark from `/install`, keeping the navbar logo.
+- Apply the shared gradient, dither, and holographic effects to “Short links. One command.” instead. Mask each phrase independently for clean mobile wrapping, preserve motion/rendering fallbacks, and tighten the intro spacing.
+
 ## 2026-10-30 — Refine install-page reference links
 
 - Remove the general release-assets and crates.io links from the downloads section.

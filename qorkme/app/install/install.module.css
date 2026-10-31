@@ -1,5 +1,5 @@
 /* /install — qork CLI documentation. Warm ivory background,
-   hairline-bordered surfaces, Makira Black gradient hero wordmark, Geist
+   hairline-bordered surfaces, Makira Black holographic headline, Geist
    Mono technical register. Layout lives here (CSS module) rather than Tailwind
    utilities — large spacing utilities are unreliable under Tailwind v4. */
 
@@ -296,12 +296,6 @@
   }
 }
 
-.cliTitle {
-  font-size: clamp(30px, 5vw, 56px);
-  text-align: center;
-  line-height: 1.1;
-  margin-bottom: 18px;
-}
 .hero {
   text-align: center;
   padding-top: 0;
@@ -310,18 +304,13 @@
   text-align: center;
 }
 .hero {
-  padding-top: 92px;
+  padding-top: 144px;
   padding-bottom: 72px;
   align-items: center;
   gap: 12px;
 }
 .hero > div:first-child {
   width: 100%;
-}
-.cliTitle {
-  margin: 0;
-  font-weight: 900;
-  letter-spacing: -0.035em;
 }
 .lede {
   font-family: var(--font-stack-sans);
@@ -469,14 +458,11 @@
 }
 @media (max-width: 560px) {
   .hero {
-    padding-top: 80px;
+    padding-top: 112px;
     padding-bottom: 48px;
   }
   .shell {
     padding-inline: 20px;
-  }
-  .cliTitle {
-    max-width: 12ch;
   }
   .lede {
     font-size: 16px;
