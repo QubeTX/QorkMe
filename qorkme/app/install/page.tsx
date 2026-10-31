@@ -90,8 +90,7 @@ export default function InstallPage() {
         {/* ---- Hero ---- */}
         <section className={styles.shell}>
           <div className={styles.hero}>
-            <BrandStage compact />
-            <h1 className={styles.cliTitle}>Short links. One command.</h1>
+            <BrandStage heading variant="headline" text={['Short links.', 'One command.']} />
             <p className={styles.lede}>
               Paste a URL into your terminal. Get a short link back. No account needed.
             </p>
