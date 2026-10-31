@@ -12,7 +12,7 @@ The September 2026 launch adopts the approved Dither + Hologram prototype. QorkM
 - On phones the input and button stack. Inputs use at least 16px type and primary controls exceed 44px in height. Keep visible keyboard focus and descriptive labels.
 - Admin, sign-in, results, errors, and the CLI page share the palette and brand effects. Tables and documentation use progressive disclosure rather than decorative status panels.
 - The CLI page keeps its QORK.ME wordmark in the navbar only. Its “Short links. One command.” heading carries the shared blue-violet gradient, dither, and holographic treatment. Each phrase has its own font mask so the heading can wrap cleanly between phrases on phones, retaining the same reduced-motion and rendering fallbacks.
-- The CLI page surfaces `llms.txt` as an AI and API guide alongside the hero's release note, with a quieter reference after the API example. Keep the general release-assets and crates.io link row out of the downloads section.
+- The CLI page surfaces `llms.txt` as an AI and API guide in the hero. A quieter reference row after the API example includes `llms.txt` and the versioned release-notes link. Keep release notes out of the hero, and the general release-assets and crates.io link row out of the downloads section.
 
 ## Motion and rendering
 

@@ -95,7 +95,6 @@ export default function InstallPage() {
               Paste a URL into your terminal. Get a short link back. No account needed.
             </p>
             <div className={styles.heroResources}>
-              <LatestVersion className={styles.versionBadge} />
               <a
                 href="/llms.txt"
                 className={styles.guideLink}
@@ -326,13 +325,16 @@ export default function InstallPage() {
 }`}
                 </pre>
               </div>
-              <p className={styles.apiReference}>
-                <span>Full reference: fields, limits, and errors.</span>
-                <a href="/llms.txt" target="_blank" rel="noopener noreferrer">
-                  llms.txt <span aria-hidden="true">↗</span>
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </p>
+              <div className={styles.pageReferences}>
+                <p className={styles.apiReference}>
+                  <span>Full reference: fields, limits, and errors.</span>
+                  <a href="/llms.txt" target="_blank" rel="noopener noreferrer">
+                    llms.txt <span aria-hidden="true">↗</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </p>
+                <LatestVersion className={styles.versionBadge} />
+              </div>
             </div>
           </div>
         </section>
