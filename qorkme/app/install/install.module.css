@@ -1,5 +1,5 @@
-/* /install — qork CLI documentation. Full QubeTX register: void background,
-   hairline-bordered surfaces, Makira Black gradient hero wordmark, Paper
+/* /install — qork CLI documentation. Warm ivory background,
+   hairline-bordered surfaces, Makira Black gradient hero wordmark, Geist
    Mono technical register. Layout lives here (CSS module) rather than Tailwind
    utilities — large spacing utilities are unreliable under Tailwind v4. */
 
@@ -255,15 +255,6 @@
   }
 }
 
-/* ---- Inline link row under the downloads ---- */
-.linkRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-lg);
-  padding-top: var(--space-xs);
-}
-
 /* ---- API response block ---- */
 .responseLabel {
   margin: 0 0 var(--space-xs);
@@ -347,6 +338,67 @@
   letter-spacing: 0;
   text-transform: none;
   text-decoration: none;
+}
+.heroResources {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 20px;
+  margin-top: 8px;
+}
+.guideLink {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px 10px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.guideLink:hover,
+.guideLink:focus-visible {
+  border-color: var(--color-primary);
+}
+.guideFile {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.apiReference {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 14px;
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.apiReference a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--color-arrival);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-underline-offset: 3px;
+}
+.apiReference a:hover,
+.apiReference a:focus-visible {
+  color: var(--text-primary);
 }
 .pageNav {
   display: flex;
