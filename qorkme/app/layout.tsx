@@ -30,6 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://cdn.shaughv.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.shaughv.com/fonts/geist-mono/geist-mono.css" />
+      </head>
       <body>
         <PretextProvider>
           <MotionPreference>

@@ -58,7 +58,8 @@
 
 :root {
   --font-stack-sans: var(--font-makira), ui-sans-serif, system-ui, sans-serif;
-  --font-stack-mono: var(--font-paper-mono), ui-monospace, 'Cascadia Mono', monospace;
+  --font-stack-mono:
+    var(--font-geist-mono), var(--font-paper-mono), ui-monospace, 'Cascadia Mono', monospace;
 
   --color-void: #f6f4ef;
   --color-surface-raised: #f1f0ec;
@@ -169,6 +170,7 @@
 
 :root {
   --font-makira: 'Makira';
+  --font-geist-mono: 'Geist Mono Variable';
   --font-paper-mono: 'Paper Mono';
 }
 

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { BrandStage } from '@/components/brand/BrandStage';
-import TextLink from '@/components/ui/TextLink';
 import InstallBlock from '@/components/terminal/InstallBlock';
 import TerminalFrame from '@/components/terminal/TerminalFrame';
 import CommandTable from '@/components/terminal/CommandTable';
@@ -96,7 +95,20 @@ export default function InstallPage() {
             <p className={styles.lede}>
               Paste a URL into your terminal. Get a short link back. No account needed.
             </p>
-            <LatestVersion className={styles.versionBadge} />
+            <div className={styles.heroResources}>
+              <LatestVersion className={styles.versionBadge} />
+              <a
+                href="/llms.txt"
+                className={styles.guideLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>AI &amp; API guide</span>
+                <span className={styles.guideFile}>llms.txt</span>
+                <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </div>
             <nav className={styles.pageNav} aria-label="On this page">
               <a href="#install">Install</a>
               <a href="#use">First link</a>
@@ -265,15 +277,6 @@ export default function InstallPage() {
                   ))}
                 </div>
               </details>
-
-              <div className={styles.linkRow}>
-                <TextLink href="https://github.com/QubeTX/qork/releases/latest" glyph="↗">
-                  All release assets &amp; raw binaries
-                </TextLink>
-                <TextLink href="https://crates.io/crates/qork" glyph="↗">
-                  crates.io / qork
-                </TextLink>
-              </div>
             </div>
           </div>
         </section>
@@ -324,11 +327,12 @@ export default function InstallPage() {
 }`}
                 </pre>
               </div>
-              <p className={styles.prose}>
-                Request fields, limits, and error responses:{' '}
-                <TextLink href="https://qork.me/llms.txt" glyph="↗">
-                  qork.me/llms.txt
-                </TextLink>
+              <p className={styles.apiReference}>
+                <span>Full reference: fields, limits, and errors.</span>
+                <a href="/llms.txt" target="_blank" rel="noopener noreferrer">
+                  llms.txt <span aria-hidden="true">↗</span>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
               </p>
             </div>
           </div>

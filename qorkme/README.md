@@ -289,7 +289,7 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
 - **Styling**: QubeTX design tokens (CSS custom properties) + CSS modules; Tailwind CSS v4 retained for layout utilities (no `tailwind.config` — `@theme` inline)
-- **Typography**: Makira Sans Serif (headings/wordmarks) + Paper Mono (technical register), self-hosted woff2
+- **Typography**: Self-hosted Makira Sans Serif (headings/wordmarks) + CDN-hosted Geist Mono (technical register), with bundled Paper Mono as the mono fallback
 - **Theme System**: Dark only — a single QubeTX void palette, no light mode or theme toggle
 - **Icons**: Lucide React v0.544.0
 - **QR Codes**: qrcode v1.5.4 library
@@ -326,7 +326,7 @@ Key performance features:
 
 ## Design system
 
-The approved production design is warm ivory with blue-violet dithering and holographic lettering. Makira leads the interface; Paper Mono is used for code and technical details. Native focus, explicit clipboard actions, responsive layouts, and reduced-motion fallbacks take priority over decoration.
+The approved production design is warm ivory with blue-violet dithering and holographic lettering. Makira leads the interface; Geist Mono from the SHAUGHV CDN is used for code and technical details, with bundled Paper Mono as a fallback. Native focus, explicit clipboard actions, responsive layouts, and reduced-motion fallbacks take priority over decoration.
 
 See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for current guidance. Local SVG/PNG/ICO favicon assets use the actual Makira Black Q. Older remote logo assets are not required by the new site.
 

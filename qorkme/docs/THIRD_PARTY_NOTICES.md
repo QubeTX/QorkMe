@@ -62,4 +62,4 @@ The shared [cursor](https://cdn.shaughv.com/cursor) and [dropdown](https://cdn.s
 
 ## Existing QorkMe assets
 
-Makira files are reused in place under their existing license. Paper Mono is bundled under SIL OFL 1.1, with its original copyright and license in `../public/fonts/PaperMono-OFL.txt`. See `../public/fonts/README.md` for font sources and usage. Shared motion and resize helpers retain their existing project ownership.
+Makira files are reused in place under their existing license. Geist Mono is loaded through the [SHAUGHV CDN stylesheet](https://cdn.shaughv.com/fonts/geist-mono/geist-mono.css), with no font binaries copied into this repository. It is copyright 2024 The Geist Project Authors and licensed under SIL OFL 1.1; upstream: [vercel/geist-font](https://github.com/vercel/geist-font). Paper Mono remains bundled as a fallback under SIL OFL 1.1, with its original copyright and license in `../public/fonts/PaperMono-OFL.txt`. See `../public/fonts/README.md` for font sources and usage. Shared motion and resize helpers retain their existing project ownership.

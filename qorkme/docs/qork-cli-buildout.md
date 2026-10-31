@@ -37,6 +37,7 @@ into the QorkMe site + API. Written for the next person (or agent) who touches t
 - **`source` literals:** exactly `web | cli | api` across CLI body, `resolveSource()`, the DB column,
   the RPC, and the admin UI.
 - **Install URLs:** `qork.me/install.sh|ps1` → `github.com/QubeTX/qork/releases/latest/download/qork-installer.{sh,ps1}`.
+- **Agent guide discovery:** `/install` links to `/llms.txt` beside the hero release note and below the API response. General release-assets and crates.io links are omitted from the downloads section; platform installers remain available.
 - **Release asset names:** `qork-<target>.tar.xz` (unix archives), `qork-x86_64-pc-windows-msvc.{msi,zip}`,
   `qork-x86_64-pc-windows-msvc-corporate.msi`, `qork-x86_64-pc-windows-msvc[-corporate]-setup.exe`,
   `qork-<target>.pkg`, `qork-<target>.deb|.rpm`. Referenced verbatim by the install page + `update.rs`.

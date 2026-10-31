@@ -70,7 +70,7 @@ An unlayered `.module.css` rule that sets `display` overrides Tailwind's layered
 
 ## Design system
 
-Use the approved warm ivory Dither + Hologram system documented in `docs/DESIGN_SYSTEM.md`. It supersedes dark-only guidance in the vendored QubeTX reference kit. Keep Makira, the blue-violet identity, and existing rolling labels. Commands and technical details use Paper Mono; ordinary instructions use sentence case.
+Use the approved warm ivory Dither + Hologram system documented in `docs/DESIGN_SYSTEM.md`. It supersedes dark-only guidance in the vendored QubeTX reference kit. Keep Makira, the blue-violet identity, and existing rolling labels. Commands and technical details use CDN-hosted Geist Mono with bundled Paper Mono as a fallback; ordinary instructions use sentence case.
 
 `components/brand/BrandStage` provides procedural dithering and font-masked WebGPU holography, including the centered linked-ring engraving. Effects remain outside the form and dispose on unmount. Use the existing resize coordinator, one animation owner per property, the shared footer pause control, and readable static fallbacks. Reduced motion shows the final state immediately. The custom cursor and production entrance sequence are retired.
 

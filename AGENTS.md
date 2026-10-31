@@ -17,7 +17,7 @@ Run all tooling from `qorkme/`:
 
 ## Coding Style & Naming Conventions
 
-Code in TypeScript + React 19 with Tailwind utilities. Prettier enforces 2-space indents and single quotes; run the formatter before committing. Components stay PascalCase (`UrlShortener.tsx`), hooks/utilities are camelCase, and route directories remain lowercase. Use the `@/` alias for shared imports. Follow `qorkme/docs/DESIGN_SYSTEM.md`: the approved warm ivory design with blue-to-violet dither and holographic branding. Makira Black 900 for wordmarks, sentence-case UI text, and Paper Mono for commands and technical details. Keep effects away from the form and respect the shared motion preference.
+Code in TypeScript + React 19 with Tailwind utilities. Prettier enforces 2-space indents and single quotes; run the formatter before committing. Components stay PascalCase (`UrlShortener.tsx`), hooks/utilities are camelCase, and route directories remain lowercase. Use the `@/` alias for shared imports. Follow `qorkme/docs/DESIGN_SYSTEM.md`: the approved warm ivory design with blue-to-violet dither and holographic branding. Makira Black 900 for wordmarks, sentence-case UI text, and CDN-hosted Geist Mono for commands and technical details, with bundled Paper Mono as a fallback. Keep effects away from the form and respect the shared motion preference.
 
 ## Testing Guidelines
 

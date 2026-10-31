@@ -2,6 +2,16 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-10-30 — Refine install-page reference links
+
+- Remove the general release-assets and crates.io links from the downloads section.
+- Surface `llms.txt` as an AI and API guide beside the hero's release note, with a smaller reference line below the API response. Preserve sentence case, keyboard focus, and comfortable link targets.
+
+## 2026-10-30 — Adopt the CDN's recommended mono font
+
+- Use SHAUGHV CDN-hosted Geist Mono Variable for commands, URL fields, short links, and admin data, following the live catalog's monospace default.
+- Retain bundled Paper Mono and system monospace fallbacks; document the hosted stylesheet, weights, italics, and licensing.
+
 ## 2026-10-21 — Theme the shared CDN cursor
 
 - Add the hosted SHAUGHV cursor across the site, using the primary blue theme token with shared spring motion, control outlines, and typing-caret transitions.
