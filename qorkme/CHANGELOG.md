@@ -6,7 +6,7 @@
 
 - Serve a branded, searchable Blume guide at `/install` in the existing Next.js deployment. Preserve installation, usage, download and API bookmarks and the root installer and agent-guide URLs.
 - Show the per-user setup wizard first on Windows and the prebuilt installer command on macOS and Linux. Add an installation check and report download failures from the Unix installer.
-- Build the guide and app on Node.js 24. Test the published CLI through the site’s installer wrappers on macOS, Linux and Windows.
+- Build and test the guide and app on Node.js 22 and 24. Test the published CLI through the site’s installer wrappers on macOS, Linux and Windows.
 
 ## 2026-10-30 — Move release notes to the bottom of the docs
 

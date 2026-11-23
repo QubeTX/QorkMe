@@ -94,7 +94,7 @@ Use `href` for the full clickable link. Errors return `{ "error": "…" }` with 
 
 ### Prerequisites
 
-- Node.js 24.x
+- Node.js 22.23.4+ (22.x) or 24.x
 - A Supabase account and project
 - Git
 
