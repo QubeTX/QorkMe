@@ -2,6 +2,10 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-11-23 — Separate CLI guide sections
+
+- Add a thin divider and responsive spacing between the main sections of the install guide.
+
 ## 2026-11-23 — Patch application dependencies
 
 - Update Next.js and its ESLint configuration to 15.5.29. Refresh affected image processing, validation, source map, and test dependencies. Pin the patched MCP server SDK used by vgpu's tooling.
