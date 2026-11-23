@@ -2,6 +2,10 @@
 
 <!-- REMINDER: Always run `npx prettier --check .` from the qorkme/ directory and fix any issues BEFORE updating this changelog or committing/pushing. All changelog modifications go below this note. -->
 
+## 2026-11-23 — Patch application dependencies
+
+- Update Next.js and its ESLint configuration to 15.5.29. Refresh affected image processing, validation, source map, and test dependencies. Pin the patched MCP server SDK used by vgpu's tooling.
+
 ## 2026-11-23 — Replace the CLI guide with Blume
 
 - Serve a branded, searchable Blume guide at `/install` in the existing Next.js deployment. Preserve installation, usage, download and API bookmarks and the root installer and agent-guide URLs.

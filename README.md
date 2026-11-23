@@ -100,7 +100,7 @@ QorkMe also exposes a public shorten API — `POST /api/shorten` or `GET /api/sh
 
 ## Technology Stack
 
-- **Framework**: Next.js 15.5.3 with App Router and React 19
+- **Framework**: Next.js 15.5 with App Router and React 19
 - **Language**: TypeScript 5 for full type safety
 - **Database**: Supabase (PostgreSQL) with real-time capabilities
 - **Styling**: Tailwind CSS v4 with an earthy modern token palette
