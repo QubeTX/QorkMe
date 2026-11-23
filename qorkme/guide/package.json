@@ -1,0 +1,21 @@
+{
+  "name": "qorkme-guide",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prebuild": "node -e \"require('node:fs').copyFileSync('../public/favicon.svg', 'favicon.svg')\"",
+    "build": "blume build",
+    "postbuild": "node publish.mjs"
+  },
+  "devDependencies": {
+    "blume": "2.2.7"
+  },
+  "overrides": {
+    "@vercel/routing-utils": {
+      "path-to-regexp": "6.3.0"
+    },
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "6.1.6"
+    }
+  }
+}

@@ -23,7 +23,6 @@ function Backdrop({ home }: { home: boolean }) {
 export function PageDither() {
   const pathname = usePathname();
   const home = pathname === '/';
-  const enabled =
-    home || pathname === '/install' || pathname === '/admin' || pathname.startsWith('/admin/');
+  const enabled = home || pathname === '/admin' || pathname.startsWith('/admin/');
   return enabled ? <Backdrop key={pathname} home={home} /> : null;
 }

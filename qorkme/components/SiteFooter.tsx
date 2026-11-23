@@ -11,7 +11,9 @@ export function SiteFooter({ className = '' }: { className?: string }) {
         <a href="https://qr.qork.me" target="_blank" rel="noopener noreferrer">
           QR generator<span className="sr-only"> (opens in a new tab)</span>
         </a>
-        <Link href="/install">CLI</Link>
+        {/* Blume serves a standalone HTML document outside the Next.js router. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a href="/install">CLI</a>
         <Link href="/admin">Admin</Link>
       </nav>
     </footer>

@@ -25,7 +25,7 @@ into the QorkMe site + API. Written for the next person (or agent) who touches t
 | CLI crate                             | `QubeTX/qork` (separate repo, local clone `C:\Users\hey\git\qork`)                                                                                                       |
 | Shorten API                           | `qorkme/app/api/shorten/route.ts` (`createShortLink`, `resolveSource`)                                                                                                   |
 | Source column / RPC                   | `urls.source`; `get_or_create_short_url(p_source)`; `admin_analytics().source_breakdown` — migration `supabase/migrations/20260614110001_add_url_source_attribution.sql` |
-| Install page                          | `qorkme/app/install/{page.tsx,install.module.css,LatestVersion.tsx}`                                                                                                     |
+| Install page                          | `qorkme/guide/{content/index.mdx,blume.config.ts,theme.css}`                                                                                                             |
 | Branded install scripts / agent guide | `qorkme/public/{install.sh,install.ps1,llms.txt}`                                                                                                                        |
 | Hero/footer links                     | `components/sections/Hero.tsx`, `components/SiteFooter.tsx`                                                                                                              |
 
@@ -37,7 +37,7 @@ into the QorkMe site + API. Written for the next person (or agent) who touches t
 - **`source` literals:** exactly `web | cli | api` across CLI body, `resolveSource()`, the DB column,
   the RPC, and the admin UI.
 - **Install URLs:** `qork.me/install.sh|ps1` → `github.com/QubeTX/qork/releases/latest/download/qork-installer.{sh,ps1}`.
-- **Reference links:** `/install` surfaces `/llms.txt` in the hero and below the API response. The versioned release-notes link lives in that bottom reference row. General release-assets and crates.io links are omitted from the downloads section; platform installers remain available.
+- **Reference links:** `/install` surfaces `/llms.txt` in the guide navigation and below the API response. The latest release-notes link lives in that bottom reference row. General release-assets and crates.io links are omitted from the downloads section; platform installers remain available.
 - **Release asset names:** `qork-<target>.tar.xz` (unix archives), `qork-x86_64-pc-windows-msvc.{msi,zip}`,
   `qork-x86_64-pc-windows-msvc-corporate.msi`, `qork-x86_64-pc-windows-msvc[-corporate]-setup.exe`,
   `qork-<target>.pkg`, `qork-<target>.deb|.rpm`. Referenced verbatim by the install page + `update.rs`.
@@ -183,11 +183,3 @@ check.rs,update.rs}` + `qork/nfpm.yaml`.
    portable equivalent.) Note the install locations differ per channel: `.pkg` → `/usr/local/bin`,
    `.deb`/`.rpm` → `/usr/bin`, Windows Global → `C:\Program Files\qork\bin`, Windows Corporate →
    `%LocalAppData%\Programs\qork\bin`.
-
-6. **`/install` page slot-roll `LedeCycle`** (`app/install/LedeCycle.tsx`). The install hero's
-   `$ …` lede is a client island that cycles a tagline + a handful of real example commands
-   (`qork https://… --alias launch`, `qork --json …`, `qork update`, …) on a 3.7s interval, rolling
-   each transition through the kit `SlotRoll` (`@/lib/motion/SlotRoll`). On-brand with the home hero
-   rather than a static heading. Accessibility: the visual rolling line is `aria-hidden` while a
-   stable `sr-only` "Shorten URLs from your terminal." is exposed to assistive tech; under
-   `prefers-reduced-motion` the interval never starts (the line holds the first phrase).

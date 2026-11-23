@@ -1,0 +1,137 @@
+---
+title: Short links. One command.
+description: Shorten a URL from your terminal or a script. No account needed.
+sidebar:
+  label: CLI guide
+---
+
+## Install
+
+<Tabs param="platform">
+<Tab title="macOS / Linux">
+
+```sh
+curl -LsSf https://qork.me/install.sh | sh
+```
+
+The installer downloads a ready-to-run binary for Intel or ARM.
+
+</Tab>
+<Tab title="Windows">
+
+[Download qork for Windows](https://github.com/QubeTX/qork/releases/latest/download/qork-x86_64-pc-windows-msvc-corporate-setup.exe)
+
+Install for your account without administrator access.
+
+<details>
+<summary>Install with PowerShell</summary>
+
+```powershell
+powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "irm https://qork.me/install.ps1 | iex"
+```
+
+</details>
+
+</Tab>
+<Tab title="Cargo">
+
+Build from source with the Rust toolchain.
+
+```sh
+cargo install qork
+```
+
+</Tab>
+</Tabs>
+
+Open a new terminal and check the installation:
+
+```sh
+qork --version
+```
+
+## Your first link [#use]
+
+```sh
+qork https://example.com/some/very/long/path
+```
+
+qork prints a full short link, such as `https://qork.me/ka9m`. You can copy it or pipe it into another command. To choose your own alias, use an available name:
+
+```sh
+qork https://example.com --alias launch
+```
+
+Quote URLs containing spaces, `&`, or `?`. qork checks whether a destination looks reachable before shortening it.
+
+| Command                 | What it does                                     |
+| ----------------------- | ------------------------------------------------ |
+| `qork <url> --json`     | Print JSON. Read `href` for the full short link. |
+| `qork <url> --no-check` | Skip the destination reachability check.         |
+| `qork help`             | Show help and documentation.                     |
+| `qork --version`        | Print the installed version.                     |
+| `qork update`           | Update using the current installation method.    |
+| `qork uninstall`        | Remove qork. Add `--yes` to skip the prompt.     |
+
+## Downloads
+
+Choose the installer for your operating system and processor.
+
+### Windows
+
+Use the EXE for a setup wizard or the MSI for a managed installation. These installers run on 64-bit Intel and AMD PCs.
+
+| Install for                        | MSI                                                                                                               | EXE                                                                                                                     |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| All users (administrator required) | [All-users MSI](https://github.com/QubeTX/qork/releases/latest/download/qork-x86_64-pc-windows-msvc.msi)          | [All-users EXE](https://github.com/QubeTX/qork/releases/latest/download/qork-x86_64-pc-windows-msvc-setup.exe)          |
+| Just me                            | [Per-user MSI](https://github.com/QubeTX/qork/releases/latest/download/qork-x86_64-pc-windows-msvc-corporate.msi) | [Per-user EXE](https://github.com/QubeTX/qork/releases/latest/download/qork-x86_64-pc-windows-msvc-corporate-setup.exe) |
+
+### macOS
+
+Download the unsigned package for [Apple Silicon](https://github.com/QubeTX/qork/releases/latest/download/qork-aarch64-apple-darwin.pkg) or [Intel](https://github.com/QubeTX/qork/releases/latest/download/qork-x86_64-apple-darwin.pkg). If macOS blocks the package, use the [terminal installer](#install) or review [Apple’s guidance on opening downloaded software](https://support.apple.com/en-us/102445).
+
+### Linux
+
+| Distribution    | x86-64                                                                                                  | ARM64                                                                                                   |
+| --------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Debian / Ubuntu | [x86-64 DEB](https://github.com/QubeTX/qork/releases/latest/download/qork-x86_64-unknown-linux-gnu.deb) | [ARM64 DEB](https://github.com/QubeTX/qork/releases/latest/download/qork-aarch64-unknown-linux-gnu.deb) |
+| Fedora / RHEL   | [x86-64 RPM](https://github.com/QubeTX/qork/releases/latest/download/qork-x86_64-unknown-linux-gnu.rpm) | [ARM64 RPM](https://github.com/QubeTX/qork/releases/latest/download/qork-aarch64-unknown-linux-gnu.rpm) |
+
+From the download directory, run `sudo apt install ./<file>.deb` or `sudo dnf install ./<file>.rpm`. Both packages install qork in `/usr/bin`.
+
+## HTTP API [#api]
+
+Send a URL to `/api/shorten`. GET and POST return the same JSON. To request a custom short code, pass `alias` in the query string or `customAlias` in the JSON body.
+
+<Tabs hash={false}>
+<Tab title="GET">
+
+```sh
+curl "https://qork.me/api/shorten?url=https%3A%2F%2Fexample.com"
+```
+
+</Tab>
+<Tab title="POST">
+
+```sh
+curl -X POST https://qork.me/api/shorten \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com","source":"api"}'
+```
+
+</Tab>
+</Tabs>
+
+Read `href` for the full short link. An example response includes:
+
+```json
+{
+  "shortCode": "ka9m",
+  "shortUrl": "qork.me/ka9m",
+  "href": "https://qork.me/ka9m",
+  "longUrl": "https://example.com",
+  "isNew": true
+}
+```
+
+[API fields, limits, and errors](https://qork.me/llms.txt) · [Latest qork release notes](https://github.com/QubeTX/qork/releases/latest)

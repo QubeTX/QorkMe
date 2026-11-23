@@ -45,7 +45,7 @@ Install (no Rust toolchain required):
 # macOS / Linux
 curl -LsSf https://qork.me/install.sh | sh
 # Windows (PowerShell)
-irm https://qork.me/install.ps1 | iex
+powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "irm https://qork.me/install.ps1 | iex"
 # Cargo
 cargo install qork
 ```
@@ -59,6 +59,8 @@ per-machine + Corporate, per-user/no-admin), macOS `.pkg` (Apple Silicon + Intel
 matching installer.
 
 Full install guide + per-platform downloads: **https://qork.me/install**.
+
+Edit the guide in `guide/content/index.mdx`. Both `npm run dev` and `npm run build` generate it with Blume. After editing the guide during local development, run `npm run docs:build` and reload `/install`.
 
 ## Public API
 
@@ -92,7 +94,7 @@ Use `href` for the full clickable link. Errors return `{ "error": "…" }` with 
 
 ### Prerequisites
 
-- Node.js 18.17 or later (tested on 18.x and 20.x)
+- Node.js 22.23.4+ (22.x) or 24.x
 - A Supabase account and project
 - Git
 
@@ -285,7 +287,7 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 
 ### Tech Stack
 
-- **Framework**: Next.js 15.5.3 with App Router
+- **Framework**: Next.js 15.5 with App Router
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
 - **Styling**: QubeTX design tokens (CSS custom properties) + CSS modules; Tailwind CSS v4 retained for layout utilities (no `tailwind.config` — `@theme` inline)

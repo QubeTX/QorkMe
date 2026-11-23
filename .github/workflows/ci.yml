@@ -13,22 +13,22 @@ defaults:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        # vitest 4 requires Node >= 20.19 — Node 18 dropped from the matrix
-        node-version: [20.x, 22.x]
+        node-version: [22.x, 24.x]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: qorkme/package-lock.json
+          cache-dependency-path: |
+            qorkme/package-lock.json
+            qorkme/guide/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -60,10 +60,33 @@ jobs:
           echo "Build size report:"
           du -sh .next/
 
+  install-cli:
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install and launch qork on macOS or Linux
+        if: runner.os != 'Windows'
+        run: |
+          export QORK_UNMANAGED_INSTALL="$RUNNER_TEMP/qork-smoke"
+          sh public/install.sh
+          "$QORK_UNMANAGED_INSTALL/qork" --version
+      - name: Install and launch qork on Windows
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          $env:QORK_UNMANAGED_INSTALL = Join-Path $env:RUNNER_TEMP 'qork-smoke'
+          & ./public/install.ps1
+          & (Join-Path $env:QORK_UNMANAGED_INSTALL 'qork.exe') --version
+
   deploy-production:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: test
+    needs: [test, install-cli]
     permissions:
       contents: write
       pull-requests: write
@@ -84,9 +107,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
-          cache-dependency-path: qorkme/package-lock.json
+          cache-dependency-path: |
+            qorkme/package-lock.json
+            qorkme/guide/package-lock.json
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest

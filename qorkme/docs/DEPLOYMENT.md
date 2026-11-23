@@ -25,7 +25,7 @@ Before deployment, ensure you have:
 
 The project includes automated workflows for:
 
-- **Testing & Quality Checks**: Runs on all pushes and pull requests (Node.js 18.x and 20.x)
+- **Testing & Quality Checks**: Runs on all pushes and pull requests (Node.js 22.23.4+ (22.x) or 24.x)
 - **Preview Deployments**: Automatic preview URLs for pull requests with GitHub comments
 - **Production Deployment**: Automatic deployment to Vercel on main branch or manual dispatch
 - **Security Scanning**: Dependency audits with npm audit and Trufflehog secret detection
