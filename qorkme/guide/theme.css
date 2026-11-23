@@ -34,6 +34,12 @@
   color: transparent;
 }
 
+.prose > h2 ~ h2 {
+  margin-block-start: clamp(2rem, 4vw, 3rem);
+  border-block-start: 1px solid var(--blume-border);
+  padding-block-start: clamp(1.25rem, 2vw, 1.75rem);
+}
+
 @media (forced-colors: active) {
   .prose h1 {
     color: CanvasText;
