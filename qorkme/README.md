@@ -19,7 +19,7 @@ See [the design system](docs/DESIGN_SYSTEM.md), [source notices](docs/THIRD_PART
 Shorten URLs straight from your terminal with **`qork`**, a cross-platform Rust CLI ([QubeTX/qork](https://github.com/QubeTX/qork)):
 
 ```bash
-qork https://example.com/some/very/long/path     # â†’ https://qork.me/ka9m
+qork https://example.com/some/very/long/path     # → https://qork.me/ka9m
 qork "https://example.com/a b?x=1&y=2"            # quote URLs with spaces/specials
 qork https://example.com --alias launch            # custom short code
 qork https://example.com --no-check                # skip the pre-shorten liveness check
@@ -33,11 +33,11 @@ qork uninstall [--yes]                              # fully remove qork (--yes/-
 never treated as URLs. Other flags: `--no-color`, `--api-base <URL>` (or `QORK_API_BASE`),
 `-h/--help`, `-V/--version`.
 
-Before shortening, `qork` runs a quick safety check â€” it rejects accidentally-pasted
+Before shortening, `qork` runs a quick safety check — it rejects accidentally-pasted
 text offline and refuses a dead link (a live 404/410 or a host that won't resolve);
 auth walls (401/403), 5xx, and slow sites still shorten. Pass `--no-check` to skip it.
 `qork uninstall` fully removes qork on every platform, aware of how it was installed
-(MSI, Inno EXE, or cargo/script) â€” add `--yes` to skip the confirmation prompt.
+(MSI, Inno EXE, or cargo/script) — add `--yes` to skip the confirmation prompt.
 
 Install (no Rust toolchain required):
 
@@ -50,11 +50,11 @@ powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "irm https://qork.m
 cargo install qork
 ```
 
-The command-line one-liner (`curl â€¦ | sh` / `cargo install qork`) is the recommended path on
+The command-line one-liner (`curl … | sh` / `cargo install qork`) is the recommended path on
 **macOS and Linux**; on **Windows the MSI/EXE installer is recommended** (MSIs work better on
-Windows). Native per-platform installers ship with every release â€” Windows `.msi`/`.exe` (Global,
+Windows). Native per-platform installers ship with every release — Windows `.msi`/`.exe` (Global,
 per-machine + Corporate, per-user/no-admin), macOS `.pkg` (Apple Silicon + Intel), and Linux
-`.deb`/`.rpm` (x86-64 + ARM) â€” downloadable from the
+`.deb`/`.rpm` (x86-64 + ARM) — downloadable from the
 [latest GitHub release](https://github.com/QubeTX/qork/releases/latest). `qork update` re-runs the
 matching installer.
 
@@ -64,10 +64,10 @@ Edit the guide in `guide/content/index.mdx`. Both `npm run dev` and `npm run bui
 
 ## Public API
 
-`POST /api/shorten` (JSON body) or `GET /api/shorten?url=<url-encoded>` (convenience mode for curl/agents) â€” both return the same envelope.
+`POST /api/shorten` (JSON body) or `GET /api/shorten?url=<url-encoded>` (convenience mode for curl/agents) — both return the same envelope.
 
 ```bash
-# POST â€” best for long URLs with their own query strings
+# POST — best for long URLs with their own query strings
 curl -X POST https://qork.me/api/shorten \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com","source":"api"}'
@@ -76,7 +76,7 @@ curl -X POST https://qork.me/api/shorten \
 curl "https://qork.me/api/shorten?url=https%3A%2F%2Fexample.com"
 ```
 
-Request fields: `url` (required), `customAlias` (optional), `source` (optional â€” `web` | `cli` | `api`, recorded for analytics). Response:
+Request fields: `url` (required), `customAlias` (optional), `source` (optional — `web` | `cli` | `api`, recorded for analytics). Response:
 
 ```json
 {
@@ -88,7 +88,7 @@ Request fields: `url` (required), `customAlias` (optional), `source` (optional �
 }
 ```
 
-Use `href` for the full clickable link. Errors return `{ "error": "â€¦" }` with a 4xx/5xx status. A machine-readable guide for agents lives at **https://qork.me/llms.txt**.
+Use `href` for the full clickable link. Errors return `{ "error": "…" }` with a 4xx/5xx status. A machine-readable guide for agents lives at **https://qork.me/llms.txt**.
 
 ## Quick Start
 
@@ -169,116 +169,116 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 
 ```
 .
-â”œâ”€â”€ app/                       # Next.js 15 App Router
-â”‚   â”œâ”€â”€ [shortCode]/
-â”‚   â”‚   â””â”€â”€ route.ts          # Dynamic redirect handler
-â”‚   â”œâ”€â”€ admin/                # Admin console
-â”‚   â”‚   â”œâ”€â”€ login/
-â”‚   â”‚   â”‚   â””â”€â”€ page.tsx      # Admin login page
-â”‚   â”‚   â””â”€â”€ page.tsx          # Admin dashboard
-â”‚   â”œâ”€â”€ api/                  # API routes
-â”‚   â”‚   â”œâ”€â”€ admin/
-â”‚   â”‚   â”‚   â””â”€â”€ purge/
-â”‚   â”‚   â””â”€â”€ shorten/
-â”‚   â”‚       â””â”€â”€ route.ts      # URL shortening endpoint
-â”‚   â”œâ”€â”€ auth/
-â”‚   â”‚   â””â”€â”€ callback/
-â”‚   â”‚       â””â”€â”€ route.ts      # OAuth callback handler
-â”‚   â”œâ”€â”€ result/
-â”‚   â”‚   â””â”€â”€ [id]/
-â”‚   â”‚       â””â”€â”€ page.tsx      # Success page
-â”‚   â”œâ”€â”€ favicon.ico           # Site favicon
-â”‚   â”œâ”€â”€ globals.css           # Global styles & design tokens
-â”‚   â”œâ”€â”€ layout.tsx            # Root layout with fonts
-â”‚   â”œâ”€â”€ not-found.tsx         # 404 page
-â”‚   â””â”€â”€ page.tsx              # Homepage
-â”œâ”€â”€ components/               # React components
-â”‚   â”œâ”€â”€ admin/               # Admin console components
-â”‚   â”‚   â”œâ”€â”€ AdminSignInButton.tsx
-â”‚   â”‚   â”œâ”€â”€ AdminSignOutButton.tsx
-â”‚   â”‚   â””â”€â”€ ClearDatabaseButton.tsx
-â”‚   â”œâ”€â”€ bauhaus/
-â”‚   â”‚   â””â”€â”€ GeometricDecor.tsx
-â”‚   â”œâ”€â”€ cards/               # Card-based components
-â”‚   â”‚   â”œâ”€â”€ Card.tsx         # Base card component
-â”‚   â”‚   â”œâ”€â”€ FeatureCard.tsx  # Feature showcase card
-â”‚   â”‚   â””â”€â”€ MetricCard.tsx   # Metric display card
-â”‚   â”œâ”€â”€ ui/                  # Base UI components
-â”‚   â”‚   â”œâ”€â”€ Button.tsx       # Button component
-â”‚   â”‚   â”œâ”€â”€ Input.tsx        # Input component
-â”‚   â”‚   â”œâ”€â”€ interactive-grid-pattern.tsx  # Interactive grid background
-â”‚   â”‚   â”œâ”€â”€ matrix.tsx       # Matrix display core logic
-â”‚   â”‚   â””â”€â”€ shimmering-text.tsx  # Shimmering text effect
-â”‚   â”œâ”€â”€ ClientThemeToggle.tsx
-â”‚   â”œâ”€â”€ MatrixBackground.tsx
-â”‚   â”œâ”€â”€ MatrixDisplay.tsx
-â”‚   â”œâ”€â”€ NavigationHeader.tsx
-â”‚   â”œâ”€â”€ ResultNavigationHeader.tsx
-â”‚   â”œâ”€â”€ ShortUrlDisplay.tsx
-â”‚   â”œâ”€â”€ SiteFooter.tsx
-â”‚   â”œâ”€â”€ SiteHeader.tsx
-â”‚   â”œâ”€â”€ ThemeToggle.tsx
-â”‚   â””â”€â”€ UrlShortener.tsx
-â”œâ”€â”€ docs/                    # Documentation
-â”‚   â”œâ”€â”€ DEPLOYMENT.md        # Deployment guide
-â”‚   â”œâ”€â”€ DESIGN_SYSTEM.md     # Design system specs
-â”‚   â”œâ”€â”€ UI_LAYOUT_GUIDE.md   # UI/layout troubleshooting
-â”‚   â””â”€â”€ VERCEL_SETUP.md      # Vercel setup guide
-â”œâ”€â”€ lib/                     # Utilities and helpers
-â”‚   â”œâ”€â”€ config/
-â”‚   â”‚   â””â”€â”€ admin.ts
-â”‚   â”œâ”€â”€ shortcode/          # Short code generation
-â”‚   â”‚   â”œâ”€â”€ generator.ts    # Code generation algorithm
-â”‚   â”‚   â”œâ”€â”€ reserved.ts     # Reserved words list
-â”‚   â”‚   â””â”€â”€ validator.ts    # Validation logic
-â”‚   â”œâ”€â”€ supabase/           # Database clients
-â”‚   â”‚   â”œâ”€â”€ client.ts       # Client-side Supabase
-â”‚   â”‚   â”œâ”€â”€ server.ts       # Server-side Supabase
-â”‚   â”‚   â””â”€â”€ types.ts        # TypeScript types
-â”‚   â”œâ”€â”€ theme.tsx           # Theme context provider
-â”‚   â””â”€â”€ utils.ts            # Utility functions
-â”œâ”€â”€ public/                  # Static assets
-â”‚   â”œâ”€â”€ fonts/              # Makira Sans Serif + Paper Mono (woff2)
-â”‚   â”‚   â””â”€â”€ README.md       # font licensing notes
-â”‚   â”œâ”€â”€ apple-touch-icon.png   # iOS home screen icon (180Ã—180)
-â”‚   â”œâ”€â”€ favicon-16x16.png      # Browser tab icon
-â”‚   â”œâ”€â”€ favicon-32x32.png      # Retina browser tab icon
-â”‚   â”œâ”€â”€ favicon-48x48.png      # Windows taskbar icon
-â”‚   â”œâ”€â”€ favicon.svg            # Vector Qork logo favicon
-â”‚   â”œâ”€â”€ qork-logo.svg          # Qork brand logo (hero, header, footer)
-â”‚   â”œâ”€â”€ file.svg
-â”‚   â”œâ”€â”€ globe.svg
-â”‚   â”œâ”€â”€ icon-192.png           # PWA icon (192Ã—192)
-â”‚   â”œâ”€â”€ icon-512.png           # PWA icon (512Ã—512)
-â”‚   â”œâ”€â”€ manifest.json          # PWA manifest
-â”‚   â”œâ”€â”€ next.svg
-â”‚   â”œâ”€â”€ vercel.svg
-â”‚   â””â”€â”€ window.svg
-â”œâ”€â”€ supabase/                # Database
-â”‚   â”œâ”€â”€ SETUP_INSTRUCTIONS.md
-â”‚   â””â”€â”€ schema.sql
-â”œâ”€â”€ tests/                   # Vitest test suites
-â”‚   â”œâ”€â”€ routes/
-â”‚   â”‚   â””â”€â”€ shorten-route.test.ts
-â”‚   â”œâ”€â”€ shortcode/
-â”‚   â”‚   â””â”€â”€ generator.test.ts
-â”‚   â”œâ”€â”€ supabase/
-â”‚   â”‚   â””â”€â”€ client.test.ts
-â”‚   â”œâ”€â”€ ui/
-â”‚   â”‚   â””â”€â”€ url-shortener.test.tsx
-â”‚   â””â”€â”€ setup.ts
-â”œâ”€â”€ CHANGELOG.md             # Version history
-â”œâ”€â”€ CLAUDE.md                # AI assistant guide
-â”œâ”€â”€ README.md                # This file
-â”œâ”€â”€ eslint.config.mjs
-â”œâ”€â”€ next-env.d.ts
-â”œâ”€â”€ next.config.ts
-â”œâ”€â”€ package-lock.json
-â”œâ”€â”€ package.json
-â”œâ”€â”€ postcss.config.mjs
-â”œâ”€â”€ tsconfig.json
-â”œâ”€â”€ tsconfig.tsbuildinfo
-â””â”€â”€ vitest.config.ts
+├── app/                       # Next.js 15 App Router
+│   ├── [shortCode]/
+│   │   └── route.ts          # Dynamic redirect handler
+│   ├── admin/                # Admin console
+│   │   ├── login/
+│   │   │   └── page.tsx      # Admin login page
+│   │   └── page.tsx          # Admin dashboard
+│   ├── api/                  # API routes
+│   │   ├── admin/
+│   │   │   └── purge/
+│   │   └── shorten/
+│   │       └── route.ts      # URL shortening endpoint
+│   ├── auth/
+│   │   └── callback/
+│   │       └── route.ts      # OAuth callback handler
+│   ├── result/
+│   │   └── [id]/
+│   │       └── page.tsx      # Success page
+│   ├── favicon.ico           # Site favicon
+│   ├── globals.css           # Global styles & design tokens
+│   ├── layout.tsx            # Root layout with fonts
+│   ├── not-found.tsx         # 404 page
+│   └── page.tsx              # Homepage
+├── components/               # React components
+│   ├── admin/               # Admin console components
+│   │   ├── AdminSignInButton.tsx
+│   │   ├── AdminSignOutButton.tsx
+│   │   └── ClearDatabaseButton.tsx
+│   ├── bauhaus/
+│   │   └── GeometricDecor.tsx
+│   ├── cards/               # Card-based components
+│   │   ├── Card.tsx         # Base card component
+│   │   ├── FeatureCard.tsx  # Feature showcase card
+│   │   └── MetricCard.tsx   # Metric display card
+│   ├── ui/                  # Base UI components
+│   │   ├── Button.tsx       # Button component
+│   │   ├── Input.tsx        # Input component
+│   │   ├── interactive-grid-pattern.tsx  # Interactive grid background
+│   │   ├── matrix.tsx       # Matrix display core logic
+│   │   └── shimmering-text.tsx  # Shimmering text effect
+│   ├── ClientThemeToggle.tsx
+│   ├── MatrixBackground.tsx
+│   ├── MatrixDisplay.tsx
+│   ├── NavigationHeader.tsx
+│   ├── ResultNavigationHeader.tsx
+│   ├── ShortUrlDisplay.tsx
+│   ├── SiteFooter.tsx
+│   ├── SiteHeader.tsx
+│   ├── ThemeToggle.tsx
+│   └── UrlShortener.tsx
+├── docs/                    # Documentation
+│   ├── DEPLOYMENT.md        # Deployment guide
+│   ├── DESIGN_SYSTEM.md     # Design system specs
+│   ├── UI_LAYOUT_GUIDE.md   # UI/layout troubleshooting
+│   └── VERCEL_SETUP.md      # Vercel setup guide
+├── lib/                     # Utilities and helpers
+│   ├── config/
+│   │   └── admin.ts
+│   ├── shortcode/          # Short code generation
+│   │   ├── generator.ts    # Code generation algorithm
+│   │   ├── reserved.ts     # Reserved words list
+│   │   └── validator.ts    # Validation logic
+│   ├── supabase/           # Database clients
+│   │   ├── client.ts       # Client-side Supabase
+│   │   ├── server.ts       # Server-side Supabase
+│   │   └── types.ts        # TypeScript types
+│   ├── theme.tsx           # Theme context provider
+│   └── utils.ts            # Utility functions
+├── public/                  # Static assets
+│   ├── fonts/              # Makira Sans Serif + Paper Mono (woff2)
+│   │   └── README.md       # font licensing notes
+│   ├── apple-touch-icon.png   # iOS home screen icon (180×180)
+│   ├── favicon-16x16.png      # Browser tab icon
+│   ├── favicon-32x32.png      # Retina browser tab icon
+│   ├── favicon-48x48.png      # Windows taskbar icon
+│   ├── favicon.svg            # Vector Qork logo favicon
+│   ├── qork-logo.svg          # Qork brand logo (hero, header, footer)
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── icon-192.png           # PWA icon (192×192)
+│   ├── icon-512.png           # PWA icon (512×512)
+│   ├── manifest.json          # PWA manifest
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── supabase/                # Database
+│   ├── SETUP_INSTRUCTIONS.md
+│   └── schema.sql
+├── tests/                   # Vitest test suites
+│   ├── routes/
+│   │   └── shorten-route.test.ts
+│   ├── shortcode/
+│   │   └── generator.test.ts
+│   ├── supabase/
+│   │   └── client.test.ts
+│   ├── ui/
+│   │   └── url-shortener.test.tsx
+│   └── setup.ts
+├── CHANGELOG.md             # Version history
+├── CLAUDE.md                # AI assistant guide
+├── README.md                # This file
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── tsconfig.json
+├── tsconfig.tsbuildinfo
+└── vitest.config.ts
 
 31 directories, 87 files
 ```
@@ -290,9 +290,9 @@ Run `npm test` to execute the Vitest suite. Coverage currently includes the shor
 - **Framework**: Next.js 15.5 with App Router
 - **Language**: TypeScript 5
 - **Database**: Supabase (PostgreSQL)
-- **Styling**: QubeTX design tokens (CSS custom properties) + CSS modules; Tailwind CSS v4 retained for layout utilities (no `tailwind.config` â€” `@theme` inline)
+- **Styling**: QubeTX design tokens (CSS custom properties) + CSS modules; Tailwind CSS v4 retained for layout utilities (no `tailwind.config` — `@theme` inline)
 - **Typography**: Self-hosted Makira Sans Serif (headings/wordmarks) + CDN-hosted Geist Mono (technical register), with bundled Paper Mono as the mono fallback
-- **Theme System**: Dark only â€” a single QubeTX void palette, no light mode or theme toggle
+- **Theme System**: Dark only — a single QubeTX void palette, no light mode or theme toggle
 - **Icons**: Lucide React v0.544.0
 - **QR Codes**: qrcode v1.5.4 library
 - **Notifications**: React Hot Toast v2.6.0
@@ -389,7 +389,7 @@ QorkMe is optimized for Vercel deployment with a complete CI/CD pipeline using G
 ### Basic URL Shortening
 
 ```jsonc
-// POST /api/shorten  â€” body
+// POST /api/shorten  — body
 { "url": "https://example.com/very/long/path/to/resource" }
 
 // Response (flat envelope)
@@ -411,7 +411,7 @@ was already shortened, the response is `{ shortCode, shortUrl, href, isNew: fals
 ### Custom Alias
 
 ```jsonc
-// POST /api/shorten  â€” body
+// POST /api/shorten  — body
 { "url": "https://mysite.com", "customAlias": "mysite" }
 
 // Creates: https://qork.me/mysite  (409 if the alias is already taken)
