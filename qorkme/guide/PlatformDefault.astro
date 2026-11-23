@@ -1,0 +1,12 @@
+<!-- Set the initial platform after the panels are parsed, before Blume upgrades
+     the tabs. An explicit ?platform= selection takes priority over the default. -->
+<script is:inline>
+  {
+    const group = document.querySelector('blume-tabs[data-param="platform"]');
+    if (group && /Windows/i.test(navigator.userAgent)) {
+      const panels = Array.from(group.querySelectorAll('[data-blume-tab-panel]'));
+      const windows = panels.findIndex((panel) => panel.dataset.title === 'Windows');
+      if (windows >= 0) group.dataset.defaultTabIndex = String(windows);
+    }
+  }
+</script>

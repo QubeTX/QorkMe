@@ -1,4 +1,7 @@
 **/node_modules/**
+guide/.blume/
+guide/dist/
+public/install/
 **/.next/**
 **/next-env.d.ts
 **/*.tsbuildinfo

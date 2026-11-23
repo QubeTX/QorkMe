@@ -9,5 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 1,
     },
+    { url: `${base}/install`, changeFrequency: 'monthly', priority: 0.8 },
   ];
 }

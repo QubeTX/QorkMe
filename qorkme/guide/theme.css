@@ -1,0 +1,84 @@
+@font-face {
+  font-family: 'Geist Mono Variable';
+  src: url('https://cdn.shaughv.com/fonts/geist-mono/variable/GeistMono-Variable.woff2')
+    format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --blume-font-mono: 'Geist Mono Variable', var(--blume-font-mono-src), monospace;
+  --blume-foreground: #172137;
+  --blume-muted: #eeece6;
+  --blume-muted-foreground: #5f687a;
+  --blume-border: #dedbd5;
+  --blume-code-background: #fdfcf9;
+}
+
+[data-blume-header] {
+  border-bottom: 1px solid var(--blume-border);
+}
+
+[data-blume-header] a[href='../'] {
+  font-weight: 900;
+  letter-spacing: -0.045em;
+}
+
+.prose h1 {
+  text-wrap: balance;
+  width: fit-content;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  background: linear-gradient(105deg, #164fcd 12%, #6138b5 92%);
+  background-clip: text;
+  color: transparent;
+}
+
+@media (forced-colors: active) {
+  .prose h1 {
+    color: CanvasText;
+  }
+}
+
+/* This guide has one article. Give the reading column and its outline the desktop grid. */
+@media (min-width: 64rem) {
+  [data-blume-doc-grid] {
+    max-width: 70rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #blume-nav-drawer {
+    display: none;
+  }
+}
+
+@media (min-width: 80rem) {
+  [data-blume-doc-grid] {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+  }
+}
+
+[data-param='platform'] {
+  background: #fdfcf9;
+}
+
+[data-param='platform'] [role='tab'] {
+  min-height: 44px;
+}
+
+[data-param='platform'] [data-title='Windows'] > p:first-child a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border-radius: var(--blume-radius);
+  background: var(--blume-accent);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+[data-param='platform'] summary {
+  cursor: pointer;
+  font-weight: 600;
+}

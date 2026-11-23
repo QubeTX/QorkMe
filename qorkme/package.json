@@ -12,7 +12,11 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "ci": "npm run lint && npm run type-check && npm run format:check && npm test && npm run build"
+    "ci": "npm run lint && npm run type-check && npm run format:check && npm test && npm run build",
+    "postinstall": "npm ci --prefix guide --include=dev",
+    "docs:build": "npm run build --prefix guide",
+    "prebuild": "npm run docs:build",
+    "predev": "npm run docs:build"
   },
   "dependencies": {
     "@chenglou/pretext": "0.0.9",
@@ -54,5 +58,8 @@
   "overrides": {
     "esbuild": "^0.25.10",
     "postcss": "^8.5.23"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }

@@ -11,8 +11,7 @@ The September 2026 launch adopts the approved Dither + Hologram prototype. QorkM
 - The main page contains one centered wordmark, one labeled URL input, one primary button, and an optional inline alias. The alias prefix is always `qork.me/`.
 - On phones the input and button stack. Inputs use at least 16px type and primary controls exceed 44px in height. Keep visible keyboard focus and descriptive labels.
 - Admin, sign-in, results, errors, and the CLI page share the palette and brand effects. Tables and documentation use progressive disclosure rather than decorative status panels.
-- The CLI page keeps its QORK.ME wordmark in the navbar only. Its “Short links. One command.” heading carries the shared blue-violet gradient, dither, and holographic treatment. Each phrase has its own font mask so the heading can wrap cleanly between phrases on phones, retaining the same reduced-motion and rendering fallbacks.
-- The CLI page surfaces `llms.txt` as an AI and API guide in the hero. A quieter reference row after the API example includes `llms.txt` and the versioned release-notes link. Keep release notes out of the hero, and the general release-assets and crates.io link row out of the downloads section.
+- The Blume CLI guide uses the QORK.ME wordmark in its navbar, a blue-to-violet headline, Makira headings, and copyable commands in Geist Mono. Keep the AI and API guide in navigation and release notes below the API example.
 
 ## Motion and rendering
 
@@ -24,7 +23,7 @@ The operating system's reduced-motion setting applies site-wide; there is no foo
 
 `DitherTrail` adds a small pointer wake using the same Bayer dots and character register. It sits behind page content, follows mouse movement with a slight lag, and dissolves in 850ms. Its 30fps clock sleeps when empty; scrolling, typing, hidden tabs, and route changes clear the wake. Touch input and reduced/paused motion do not draw a trail. The backing canvas is capped at 1.25 device pixels and two million total pixels, with at most 48 trail samples.
 
-`PageDither` extends the texture through the homepage, CLI, and admin margins, with a lighter treatment on the homepage and phones. Its center mask keeps the reading column quiet, and opaque panels keep the texture outside controls. It reuses the dither renderer at 24fps with a 1.25 device-pixel / two-million-pixel cap, shared resize coordination, static fallback, hidden-tab suspension, and route cleanup.
+`PageDither` extends the texture through the homepage and admin margins, with a lighter treatment on the homepage and phones. Its center mask keeps the reading column quiet, and opaque panels keep the texture outside controls. It reuses the dither renderer at 24fps with a 1.25 device-pixel / two-million-pixel cap, shared resize coordination, static fallback, hidden-tab suspension, and route cleanup.
 
 `SiteCursor` mounts the hosted SHAUGHV cursor once in the root client layout. Its base color is `var(--color-primary)` (`#1757e8`), with the shared surface-calibrated difference blend, spring, control outlines, and circle-to-caret typing interaction. The CDN owns coarse-pointer, forced-color, reduced-motion, and native editing fallbacks; script failure leaves the native cursor available. The companion dropdown script is loaded with framework-owned cleanup so future native single selects retain the same cursor through their menus. Both instances are destroyed on unmount. Discover current APIs and versioned asset URLs through the [CDN catalog](https://cdn.shaughv.com/tree.json).
 

@@ -19,7 +19,7 @@
 Before starting, ensure you have:
 
 - [ ] GitHub account with your QorkMe repository
-- [ ] Node.js 18+ installed locally
+- [ ] Node.js 24.x installed locally
 - [ ] Git installed and configured
 - [ ] Access to domain registrar for qork.me
 - [ ] Credit card (optional - for paid features)
@@ -314,7 +314,7 @@ The production deployment workflow (`.github/workflows/deploy.yml`) is already c
 
 The CI testing workflow (`.github/workflows/ci.yml`) is already configured with:
 
-- **Multi-Node Testing**: Tests on Node.js 18.x and 20.x
+- **Build runtime**: Builds and tests on Node.js 24.x
 - **Code Quality Checks**: ESLint linting and TypeScript validation with strict checking
 - **Prettier Formatting**: Automatic code formatting validation (100-character line width)
 - **Security Scanning**: Dependency audits with npm audit and Trufflehog secret detection
